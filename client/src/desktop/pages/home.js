@@ -1,5 +1,5 @@
 import React from 'react';
-import TopNav from '../components/topNav';
+import TopNav from '../components/navigationComponents/topNav';
 
 export default class HomePage extends React.Component {
 

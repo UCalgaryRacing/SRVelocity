@@ -1,5 +1,5 @@
 import React from 'react';
-import TopNav from '../components/topNav';
+import TopNav from '../components/navigationComponents/topNav';
 
 export default class AboutPage extends React.Component {
     render = () => {
@@ -7,6 +7,6 @@ export default class AboutPage extends React.Component {
             <div id='aboutPage'>
                 <TopNav/>
             </div>
-        )
+        );
     }
 }

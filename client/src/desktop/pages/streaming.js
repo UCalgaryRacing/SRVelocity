@@ -1,7 +1,8 @@
 import React from 'react';
-import TopNav from '../components/topNav';
-import SideNavbar from '../components/sideNav';
-import StreamingContent from '../components/streamingContent';
+import TopNav from '../components/navigationComponents/topNav';
+import SideNavbar from '../components/navigationComponents/sideNav';
+import StreamingContent from '../components/streamingComponents/streamingContent';
+import Settings from '../components/settingsComponents/settings';
 
 export default class StreamingPage extends React.Component {
     constructor(props) {
@@ -14,10 +15,11 @@ export default class StreamingPage extends React.Component {
 
     render = () => {
         return (
-            <div id='streamingPage'>
+            <div id='streamingPage' style={{height: '100%'}}>
                 <TopNav/>
                 <SideNavbar streamingContent={this.streamingContent}/>
                 <StreamingContent ref={this.streamingContent}/>
+                <Settings/>
             </div>
         );
     }

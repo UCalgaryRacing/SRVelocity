@@ -1,0 +1,20 @@
+
+#dashboard #dashSelector #defaultButton {
+    background: rgb(194, 45, 45, 0.5);
+    border: 0px solid;
+}
+
+#dashboard #dashSelector #defaultButton:disabled {
+    background: rgb(194, 45, 45);
+    opacity: 1;
+}
+
+#dashboard #dashSelector #customButton {
+    background: rgb(194, 45, 45, 0.5);
+    border: 0px solid;
+}
+
+#dashboard #dashSelector #customButton:disabled {
+    background: rgb(194, 45, 45);
+    opacity: 1;
+}

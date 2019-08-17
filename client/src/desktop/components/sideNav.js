@@ -1,96 +1,100 @@
 import React from 'react';
 import SideNav, { NavItem, NavIcon, NavText } from '@trendmicro/react-sidenav';
 import '@trendmicro/react-sidenav/dist/react-sidenav.css';
+import '../styling/sideNav.css';
 
 export default class SideNavbar extends React.Component {
     render = () => {
         return (
             <React.Fragment>
-                <SideNav onSelect={(selected) => this.props.sideNav(selected)} style={{marginTop: '56px', fontSize: '2rem'}}>
+                <SideNav 
+                onToggle={() => {this.props.streamingContent.current.changeLeftMargin()}} 
+                onSelect={(selected) => {this.props.streamingContent.current.changeContent(selected)}}
+                style={{marginTop: '56px', fontSize: '2rem'}}>
                     <SideNav.Toggle/>
-                    <SideNav.Nav defaultSelected="none">
-                        <NavItem className="dash" eventKey="Dash">
+                    <SideNav.Nav defaultSelected="Dash">
+                        <NavItem eventKey="Dash">
                             <NavIcon>
-                                <img src={require('../../assets/dashboard.svg')} style={{ marginLeft: '22px', marginTop: '15px' }}></img>
+                                <img src={require('../../assets/dashboard.svg')} style={{ marginLeft: '20px', marginTop: '13px' }} alt='Dash'/>
                             </NavIcon>
                             <NavText>
-                                <b>&nbsp;&nbsp;&nbsp;Dash</b>
+                                <b>&nbsp;&nbsp;&nbsp;Dashboard</b>
                             </NavText>
                         </NavItem>
                         <NavItem eventKey="Suspension">
                             <NavIcon>
-                                <img src={require('../../assets/suspension.svg')} style={{marginLeft: '20px', marginTop: '14px'}}></img>
+                                <img src={require('../../assets/suspension.svg')} style={{marginLeft: '19px', marginTop: '10px'}} alt='Suspension'/>
                             </NavIcon>
                             <NavText>
                                 <b>&nbsp;&nbsp;&nbsp;Suspension</b>
                             </NavText>
                         </NavItem>
-                        <NavItem eventKey="powertrain">
+                        <NavItem eventKey="Powertrain">
                             <NavIcon>
-                                <img src={require('../../assets/engine.svg')} style={{ marginLeft: '19px', marginTop: '10px' }}></img>
+                                <img src={require('../../assets/engine.svg')} style={{ marginLeft: '14px', marginTop: '3px' }} alt='Powertrain'/>
                             </NavIcon>
                             <NavText>
                                 <b>&nbsp;&nbsp;&nbsp;Power Train</b>
                             </NavText>
                             <NavItem eventKey="RPM">
                                 <NavText>
-                                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>RPM</b>
+                                    <b>RPM</b>
                                 </NavText>
                             </NavItem>
-                            <NavItem eventKey="Throttle Position">
+                            <NavItem eventKey="TP">
                                 <NavText>
-                                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>Throttle Position</b>
+                                    <b>Throttle Position</b>
                                 </NavText>
                             </NavItem>
-                            <NavItem eventKey="Injector Pulse Width">
+                            <NavItem eventKey="IPW">
                                 <NavText>
-                                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>Injector Pulse Width</b>
+                                    <b>Injector Pulse Width</b>
                                 </NavText>
                             </NavItem>
                             <NavItem eventKey="Barometer">
                                 <NavText>
-                                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>Barometer</b>
+                                    <b>Barometer</b>
                                 </NavText>
                             </NavItem>
-                            <NavItem eventKey="Manifold Air Pressure">
+                            <NavItem eventKey="MAP">
                                 <NavText>
-                                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>Manifold Air Pressure</b>
+                                    <b>Manifold Air Pressure</b>
                                 </NavText>
                             </NavItem>
-                            <NavItem eventKey="Air To Fuel">
+                            <NavItem eventKey="ATF">
                                 <NavText>
-                                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>Air To Fuel</b>
+                                    <b>Air To Fuel</b>
                                 </NavText>
                             </NavItem>
-                            <NavItem eventKey="Intake Air Pressure">
+                            <NavItem eventKey="IAT">
                                 <NavText>
-                                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>Intake Air Temperature</b>
+                                    <b>Intake Air Temperature</b>
                                 </NavText>
                             </NavItem>
-                            <NavItem eventKey="Engine Temperature">
+                            <NavItem eventKey="ET">
                                 <NavText>
-                                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>Engine Temperature</b>
+                                    <b>Engine Temperature</b>
                                 </NavText>
                             </NavItem>
-                            <NavItem eventKey="Oil Pressure">
+                            <NavItem eventKey="OP">
                                 <NavText>
-                                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>Oil Pressure</b>
+                                    <b>Oil Pressure</b>
                                 </NavText>
                             </NavItem>
-                            <NavItem eventKey="Oil Temperature">
+                            <NavItem eventKey="OT">
                                 <NavText>
-                                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>Oil Temperature</b>
+                                    <b>Oil Temperature</b>
                                 </NavText>
                             </NavItem>
-                            <NavItem eventKey="Fuel Temperature">
+                            <NavItem eventKey="FT">
                                 <NavText>
-                                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>Fuel Temperature</b>
+                                    <b>Fuel Temperature</b>
                                 </NavText>
                             </NavItem>
                         </NavItem>
-                        <NavItem eventKey="Acceleration">
+                        <NavItem eventKey="Accel">
                             <NavIcon>
-                                <img src={require('../../assets/acceleration.svg')} style={{ marginLeft: '18px', marginTop: '9px' }}></img>
+                                <img src={require('../../assets/acceleration.svg')} style={{ marginLeft: '20px', marginTop: '4px' }} alt='Acceleration'/>
                             </NavIcon>
                             <NavText>
                                 <b>&nbsp;&nbsp;&nbsp;Acceleration</b>
@@ -98,7 +102,7 @@ export default class SideNavbar extends React.Component {
                         </NavItem>
                         <NavItem eventKey="Roll">
                             <NavIcon>
-                                <img src={require('../../assets/roll.svg')} style={{ marginLeft: '14px', marginTop: '9px' }}></img>
+                                <img src={require('../../assets/roll.svg')} style={{ marginLeft: '5px', marginRight: '4px', marginTop: '3px' }} alt='Roll'/>
                             </NavIcon>
                             <NavText>
                                 <b>&nbsp;&nbsp;&nbsp;Roll</b>
@@ -106,7 +110,7 @@ export default class SideNavbar extends React.Component {
                         </NavItem>
                         <NavItem eventKey="Pitch">
                             <NavIcon>
-                                <img src={require('../../assets/pitch.svg')} style={{ marginLeft: '15px', marginTop: '3px' }}></img>
+                                <img src={require('../../assets/pitch.svg')} style={{ marginLeft: '4px', marginRight: '4px', marginTop: '-10px' }} alt='Pitch'/>
                             </NavIcon>
                             <NavText>
                                 <b>&nbsp;&nbsp;&nbsp;Pitch</b>
@@ -114,15 +118,15 @@ export default class SideNavbar extends React.Component {
                         </NavItem>
                         <NavItem eventKey="Yaw">
                             <NavIcon>
-                                <img src={require('../../assets/yaw.svg')} style={{ marginLeft: '15px', marginTop: '7px' }}></img>
+                                <img src={require('../../assets/yaw.svg')} style={{ marginLeft: '4px', marginRight: '4px', marginTop: '-1px'}} alt='Yaw'/>
                             </NavIcon>
                             <NavText>
                                 <b>&nbsp;&nbsp;&nbsp;Yaw</b>
                             </NavText>
                         </NavItem>
-                        <NavItem eventKey="Track Map">
+                        <NavItem eventKey="TM">
                             <NavIcon>
-                                <img src={require('../../assets/track.svg')} style={{ marginLeft: '14px', marginTop: '6px' }}></img>
+                                <img src={require('../../assets/trackmap.svg')} style={{ marginLeft: '18px', marginTop: '12px' }} alt='TM'/>
                             </NavIcon>
                             <NavText>
                                 <b>&nbsp;&nbsp;&nbsp;Track Map</b>
@@ -130,7 +134,7 @@ export default class SideNavbar extends React.Component {
                         </NavItem>
                         <NavItem eventKey="Speed">
                             <NavIcon>
-                                <img src={require('../../assets/speed.svg')} style={{ marginLeft: '20px', marginTop: '12px' }}></img>
+                                <img src={require('../../assets/speed.svg')} style={{ marginLeft: '17px', marginTop: '12px' }} alt='Speed'/>
                             </NavIcon>
                             <NavText>
                                 <b>&nbsp;&nbsp;&nbsp;Speed</b>
@@ -138,7 +142,7 @@ export default class SideNavbar extends React.Component {
                         </NavItem>
                         <NavItem eventKey="Distance">
                             <NavIcon>
-                                <img src={require('../../assets/distance.svg')} style={{ marginLeft: '19px', marginTop: '10px' }}></img>
+                                <img src={require('../../assets/distance.svg')} style={{ marginLeft: '17px', marginTop: '10px' }} alt='Distance'/>
                             </NavIcon>
                             <NavText>
                                 <b>&nbsp;&nbsp;&nbsp;Distance</b>

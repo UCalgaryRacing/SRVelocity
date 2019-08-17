@@ -7,6 +7,8 @@ import './desktop/styling/index.css';
 import HomePage from './desktop/pages/home';
 import StreamingPage from './desktop/pages/streaming';
 import AboutPage from './desktop/pages/about';
+import SignInPage from './desktop/pages/signin';
+import ErrorPage from './desktop/pages/error';
 
 export default class App extends React.Component {
     render = () => {
@@ -17,6 +19,8 @@ export default class App extends React.Component {
                     <Route exact path="/home" component={() => <HomePage />} />
                     <Route exact path="/streaming" component={() => <StreamingPage />} />
                     <Route exact path="/about" component={() => <AboutPage />} />
+                    <Route exact path="/signIn" component={() => <SignInPage />} />
+                    <Route component={() => <ErrorPage handleModeChange={this.handleModeChange} />} />
                 </Switch>
             </Router>
         );

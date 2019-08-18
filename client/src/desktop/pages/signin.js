@@ -1,5 +1,6 @@
 import React from 'react';
 import TopNav from '../components/navigationComponents/topNav';
+import BottomNav from '../components/navigationComponents/bottomNav';
 import { Jumbotron, Row, Col, FormGroup, Form, Button} from 'react-bootstrap';
 import '../styling/signin.css';
 
@@ -57,6 +58,7 @@ export default class SignInPage extends React.Component {
                         </Col>
                     </Row>
                 </Jumbotron>
+                <BottomNav/>
             </div>
         );
     }

@@ -8,9 +8,7 @@ import HomePage from './desktop/pages/home';
 import StreamingPage from './desktop/pages/streaming';
 import AboutPage from './desktop/pages/about';
 import SignInPage from './desktop/pages/signin';
-// import LicensesPage from './desktop/pages/licenses';
-import PrivacyPage from './desktop/pages/privacy';
-import TermsPage from './desktop/pages/terms';
+import LicensesPage from './desktop/pages/licenses';
 import ErrorPage from './desktop/pages/error';
 
 export default class App extends React.Component {
@@ -23,8 +21,7 @@ export default class App extends React.Component {
                     <Route exact path="/streaming" component={() => <StreamingPage />} />
                     <Route exact path="/about" component={() => <AboutPage />} />
                     <Route exact path="/signIn" component={() => <SignInPage />} />
-                    <Route exact path="/privacy" component={() => <PrivacyPage />} />
-                    <Route exact path="/terms" component={() => <TermsPage />} />
+                    <Route exact path="/licenses" component={() => <LicensesPage />} />
                     <Route component={() => <ErrorPage handleModeChange={this.handleModeChange} />} />
                 </Switch>
             </Router>
@@ -33,7 +30,6 @@ export default class App extends React.Component {
 }
 
 ReactDOM.render(<App />, document.getElementById('root'));
-
 
 //COLOR SCHEME
 //DARK GREY: #2A2B2A

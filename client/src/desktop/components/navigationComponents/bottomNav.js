@@ -9,9 +9,7 @@ export default class BottomNav extends React.Component {
             <Navbar id='bottom'>
                 <Navbar.Brand><SocialMedia/></Navbar.Brand>
                 <Nav className='ml-auto'>
-                    <Button className='licensesButton' href='/licenses'><b>Licenses</b></Button>
-                    <Button className='privacyButton' href='/privacy'><b>Privacy</b></Button>
-                    <Button className='termsButton' href='/terms'><b>Terms</b></Button>
+                    <Button className='licensesButton' href='/licenses'><b>Licenses & Attributions</b></Button>
                 </Nav>
             </Navbar>
         );

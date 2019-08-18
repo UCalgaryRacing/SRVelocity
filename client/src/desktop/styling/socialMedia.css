@@ -1,0 +1,24 @@
+#socialMedia #facebook {
+    height: 42px !important;
+    width: 42px !important;
+    margin: 3px;
+}
+#socialMedia #facebook div svg g.social-svg-mask{
+    fill: rgba(194, 45, 45) !important;
+}
+#socialMedia #instagram {
+    height: 42px !important;
+    width: 42px !important;
+    margin: 3px;
+}
+#socialMedia #instagram div svg g.social-svg-mask{
+    fill: rgba(194, 45, 45) !important;
+}
+#socialMedia #linkedin {
+    height: 42px !important;
+    width: 42px !important;
+    margin: 3px;
+}
+#socialMedia #linkedin div svg g.social-svg-mask{
+    fill: rgba(194, 45, 45) !important;
+}

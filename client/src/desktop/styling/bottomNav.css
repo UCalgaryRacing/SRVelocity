@@ -1,0 +1,33 @@
+#bottom {
+    margin-top: auto;
+}
+#bottom .licensesButton {
+    background: transparent;
+    border: 0px solid transparent;
+    font-style: bold;
+    font-size: 20px;
+    padding-right: 1rem;
+    margin-left: 0 !important;
+    color: rgba(194, 45, 45);
+    box-shadow: 0 0 0 0.2rem rgba(255, 255, 255, 0.5) !important;
+}
+#bottom .privacyButton {
+    background: transparent;
+    border: 0px solid transparent;
+    font-style: bold;
+    font-size: 20px;
+    padding-right: 1rem;
+    margin-left: 0 !important;
+    color: rgba(194, 45, 45);
+    box-shadow: 0 0 0 0.2rem rgba(255, 255, 255, 0.5) !important;
+}
+#bottom .termsButton {
+    background: transparent;
+    border: 0px solid transparent;
+    font-style: bold;
+    font-size: 20px;
+    padding-right: 1rem;
+    margin-left: 0 !important;
+    color: rgba(194, 45, 45);
+    box-shadow: 0 0 0 0.2rem rgba(255, 255, 255, 0.5) !important;
+}

@@ -17,7 +17,7 @@ export default class StreamingContent extends React.Component {
 
     changeLeftMargin = () => {
         this.setState({
-            marginLeft: (this.state.marginLeft === '90px') ? '270px' : '80px'
+            marginLeft: (this.state.marginLeft === '80px') ? '270px' : '80px'
         });
     }
 
@@ -31,7 +31,7 @@ export default class StreamingContent extends React.Component {
         }
         else {
             return (
-                <div id='streamingContent' style={{ marginTop: '15px', marginLeft: this.state.marginLeft }}>
+                <div id='streamingContent' style={{ marginTop: '15px', transition: 'all 0.15s', marginLeft: this.state.marginLeft }}>
                     <DataPage content={this.state.content}/>
                 </div>
             );

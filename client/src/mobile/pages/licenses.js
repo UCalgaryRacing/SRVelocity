@@ -1,5 +1,5 @@
 import React from 'react';
-import TopNavM from "../components/navigationComponents/topNavM";
+import TopNavM from "../componentsM/navigationComponentsM/topNavM";
 import { Jumbotron, Container, Row, Col } from "react-bootstrap"
 
 export default class LicensePageM extends React.Component {
@@ -7,7 +7,7 @@ export default class LicensePageM extends React.Component {
         return (
             <div id='lisences'>
                 <TopNavM />
-                <Jumbotron>
+                <Jumbotron className="mb-0">
                     <Container>
                         <Row>
                             <Col>

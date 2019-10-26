@@ -6,7 +6,8 @@ export default class SignInPageM extends React.Component {
         return (
             <div id='signIn'>
                 <TopNavM />
-                <Col style={{ alignItems: 'center' }}>
+                <Jumbotron className="w-responsive text-center mx-auto p-3 mt-2">
+
                     <img src={require('../../assets/logo.svg')} style={{ width: '100%', textAlign: 'center', marginBottom: '10px' }} />
                     <Form className='emailForm' >
                         <Form.Control className='emailFormControl' ref={this.emailForm} autoComplete='on' placeHolder='Email' required />
@@ -16,7 +17,8 @@ export default class SignInPageM extends React.Component {
                     </Form>
                     <Button className='signInButton' onClick={this.handleSignIn}><b>Sign In</b></Button>
                     <Button className='forgotPasswordButton' onClick={this.handleForgotPassword}><b>I Forgot My Password</b></Button>
-                </Col>
+
+                </Jumbotron>
             </div >
         );
     }

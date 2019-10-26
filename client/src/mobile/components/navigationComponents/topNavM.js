@@ -7,6 +7,7 @@ export default class TopNavM extends React.Component {
     render() {
         return (
             <Navbar bg="dark" variant="dark" expand="lg">
+                <div Button />
                 <Navbar.Brand href="/">
                     <b>Schulich Velocity</b>
                 </Navbar.Brand>

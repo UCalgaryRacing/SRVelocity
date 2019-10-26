@@ -52,7 +52,7 @@ export default class App extends React.Component {
                         <Route exact path="/about" component={() => <AboutPageM />} />
                         <Route exact path="/signIn" component={() => <SignInPageM />} />
                         <Route exact path="/licenses" component={() => <LicensesPageM />} />
-                        <Route component={() => <ErrorPageM handleModeChange={this.handleModeChange} />} />
+                        <Route component={() => <ErrorPageM handleModeChange={this.handleModfeChange} />} />
                     </Switch>
                 </Router>
             )

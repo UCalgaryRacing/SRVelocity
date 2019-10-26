@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { Switch, BrowserRouter as Router, Route } from 'react-router-dom';
-import isMobile from 'react-device-detect';
+import { isMobile } from 'react-device-detect';
 import './desktop/styling/index.css';
 
 //Import desktop pages 
@@ -22,7 +22,7 @@ import ErrorPageM from './mobile/pages/error';
 
 export default class App extends React.Component {
     render = () => {
-        if(!isMobile) {
+        if (!isMobile) {
             return (
                 <Router>
                     <Switch>

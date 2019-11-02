@@ -4,13 +4,38 @@ import '@trendmicro/react-sidenav/dist/react-sidenav.css';
 import '../../styling/sideNav.css';
 
 export default class SideNavbar extends React.Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            topMargin: "56px"
+        }
+    }
+
+    componentWillMount = () => {
+        window.addEventListener('scroll', this.listenToScroll);
+    }
+
+    componentWillUnimount = () => {
+        window.removeEventListener('scroll', this.listenToScroll);
+    }
+
+    listenToScroll = () => {
+        let margin = window.pageYOffset;
+        margin = 56 - margin;
+        margin = margin.toString() + 'px';
+        if(window.pageYOffset < 56) this.setState({topMargin: margin});
+        else this.setState({topMargin: "0px"})
+        if(window.pageYOffset === 0) this.setState({topMargin: "56px"});
+        this.forceUpdate();
+    }
+
     render = () => {
         return (
             <React.Fragment>
                 <SideNav 
                 onToggle={() => {this.props.streamingContent.current.changeLeftMargin()}} 
                 onSelect={(selected) => {this.props.streamingContent.current.changeContent(selected)}}
-                style={{marginTop: '56px', fontSize: '2rem'}}>
+                style={{top: this.state.topMargin, fontSize: '2rem'}}>
                     <SideNav.Toggle/>
                     <SideNav.Nav defaultSelected="Dash">
                         <NavItem eventKey="Dash">

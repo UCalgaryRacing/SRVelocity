@@ -1,0 +1,13 @@
+#settingsM {
+    z-index: 2000;
+    left: 12px;
+    bottom: 10px;
+    position: fixed;
+}
+
+#settingsM img {
+    width: 40px;
+    height: 40px;
+    opacity: 0.7;
+    cursor: pointer;
+}

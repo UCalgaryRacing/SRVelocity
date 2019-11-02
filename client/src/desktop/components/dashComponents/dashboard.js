@@ -16,7 +16,7 @@ export default class StreamingDash extends React.Component {
 
     changeDash = () => {
         this.setState({
-            option: (this.state.option === 'default')?'custom':'default'
+            option: (this.state.option === 'default') ? 'custom' : 'default'
         });
     }
 
@@ -27,11 +27,11 @@ export default class StreamingDash extends React.Component {
                 <Button id='customButton' onClick={this.changeDash} disabled={(this.state.option === 'custom') ? true : false}><b>Custom</b></Button>
             </ButtonGroup >
         );
-        if (this.state.option === 'default') {
+        if (this.props.toggleDashType === 'default') {
             return (
                 <div id='dashboard'>
                     {selector}
-                    <DefaultDash/>
+                    <DefaultDash />
                 </div>
             );
         }
@@ -39,7 +39,7 @@ export default class StreamingDash extends React.Component {
             return (
                 <div id='dashboard'>
                     {selector}
-                    <CustomDash/>
+                    <CustomDash />
                 </div>
             );
         }

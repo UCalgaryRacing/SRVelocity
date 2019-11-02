@@ -1,5 +1,5 @@
 import React from 'react';
-import '../../styling/customDash.css';
+import '../../styling/dashM.css';
 
 export default class CustomDashM extends React.Component {
     render = () => {

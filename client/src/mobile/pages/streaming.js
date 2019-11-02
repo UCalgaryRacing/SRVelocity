@@ -1,14 +1,31 @@
 import React from 'react';
-import TopNav from '../componentsM/navigationComponentsM/topNavM';
+import Button from 'react-bootstrap/Button';
 import SideNavbar from '../componentsM/navigationComponentsM/sideNavM';
-import StreamingContent from '../componentsM/streamingComponentsM/streamingContentM';
-import Settings from '../componentsM/settingsComponentsM/settingsM';
+import StreamingContentM from '../componentsM/streamingComponentsM/streamingContentM';
+import SettingsM from '../componentsM/settingsComponentsM/settingsM';
 
 export default class StreamingPageM extends React.Component {
+
+    constructor(props) {
+        super(props);
+        this.streamingContent = React.createRef();
+        this.state = {
+            streamingContent: 'dashboard',
+            toggleDashType: 'default'
+        }
+        this.handleDashType = this.handleDashType.bind(this);
+    }
+
+    handleDashType = () => {
+        this.setState({
+            toggleDashType: (this.state.toggleDashType === 'default') ? 'custom' : 'default'
+        });
+
+    }
     render = () => {
         return (
-            <div id='streamingPage' style={{height: '100%'}}>
-                <SideNavbar streamingContent={this.streamingContent}/>
+            <div id='streamingPage' style={{ height: '100%' }}>
+                <StreamingContentM ref={this.streamingContent} toggleDashType={this.state.toggleDashType} />
             </div>
         );
     }

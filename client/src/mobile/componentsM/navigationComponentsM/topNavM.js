@@ -2,6 +2,7 @@ import React from 'react';
 import { Nav, Navbar, NavDropdown } from 'react-bootstrap';
 import { SocialIcon } from 'react-social-icons';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import '../../styling/topNavM.css';
 
 export default class TopNavM extends React.Component {
     state = {}
@@ -23,12 +24,15 @@ export default class TopNavM extends React.Component {
                         <Nav.Link href="/about">About</Nav.Link>
                         <NavDropdown title="Social Media" id="basic-nav-dropdown">
                             <NavDropdown.Item href="https://www.facebook.com/schulichracing/">
+                                <SocialIcon id='socialNavIcon' url='https://www.facebook.com/schulichracing/' target='_blank' />
                                 Facebook
                             </NavDropdown.Item>
                             <NavDropdown.Item href="https://www.instagram.com/schulich_fsae/">
+                                <SocialIcon id='socialNavIcon' url='https://www.instagram.com/schulich_fsae/' target='_blank' />
                                 Instagram
                             </NavDropdown.Item>
                             <NavDropdown.Item href="https://www.linkedin.com/company/schulich-racing/">
+                                <SocialIcon id='socialNavIcon' url='https://www.linkedin.com/company/schulich-racing/' target='_blank' />
                                 LinkedIn
                             </NavDropdown.Item>
                         </NavDropdown>

@@ -38,9 +38,6 @@ export default class LineGraph extends React.Component {
                         boxWidth: 5,
                         padding: 60,
                         width: '50%'
-                    },
-                    onHover: function (e) {
-                        e.target.style.cursor = 'pointer';
                     }
                 },
                 scales: {
@@ -70,7 +67,7 @@ export default class LineGraph extends React.Component {
                         },
                         scaleLabel: {
                             display: true, 
-                            labelString: "units"
+                            labelString: this.props.title
                         },
                         ticks: {
                             beginAtZero: true,
@@ -83,7 +80,8 @@ export default class LineGraph extends React.Component {
     }
 
     componentDidMount() {
-        this.interval = setInterval(() => this.tick(), 50);
+        this.interval = setInterval(() => this.tick(), 200);
+        this.state.data.datasets[0].label = this.props.title
     }
 
     pullData = () => {
@@ -105,6 +103,9 @@ export default class LineGraph extends React.Component {
     render = () => {
         return (
             <article id="graph" style={{height: '400px', marginTop: '40px', marginLeft: '20px', marginRight: '20px', marginBottom:'80px'}}>
+                <p style={{textAlign: 'center', fontSize: '1.4rem', paddingTop: '0', paddingBottom: '0', marginBottom: '-30px', marginTop: '-30px'}}>
+                    <b>{this.state.data.datasets[0].data[this.state.data.datasets[0].data.length - 1]}&nbsp;{this.props.units}</b>
+                    </p>
                 <Line data={this.state.data} options={this.state.options} ref={this.lineGraph} redraw={true}/>
             </article>
         );

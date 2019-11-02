@@ -1,124 +1,87 @@
 import React from 'react';
 import '../../styling/defaultDash.css';
-import LineGraph from '../lineGraph';
 import GraphBox from '../graphBox';
-import { Row, Col, Button } from 'react-bootstrap';
+import { Row, Col } from 'react-bootstrap';
 
 export default class DefaultDash extends React.Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            renderAllSwitch: true,
-            singleGraph: null
-        }
-    }
-
-    renderOne = (event) => {
-        event.preventDefault()
-        this.setState({
-            renderAllSwitch: false,
-            singleGraph: [this.graphs[event.target.id], <Button onClick={this.renderAll}>Close</Button>]
-        })
-    }
-
-    renderAll = (event) => {
-        this.setState({ renderAllSwitch: true })
-    }
-
-    createAll = () => {                                     //organizes the graphs into rows and columsn (2 graphs a row)
-        for (let i = 0; i < this.graphs.length; i += 2) {
-            if (i === this.graphs.length - 1) {
-                this.container.push(<Row>
-                    <Col>{this.graphs[i]}</Col>
-                </Row>)
-            } else {
-                this.container.push(<Row>
-                    <Col>{this.graphs[i]}</Col>
-                    <Col>{this.graphs[i + 1]}</Col>
-                </Row>)
-            }
-        }
-    }
-
-
     render = () => {
         return (
             <div id='defaultDash'>
                 <Row>
                     <Col style={{ marginTop: '30px' }}>
-                        <GraphBox title='RPM'/>
+                        <GraphBox title='RPM' units='RPM'/>
                     </Col>
                     <Col style={{ marginTop: '30px' }}>
-                        <GraphBox title='Suspension'/>
-                    </Col>
-                </Row>
-                <Row>
-                    <Col style={{ marginTop: '30px' }}>
-                        <GraphBox title='Throttle Position'/>
-                    </Col>
-                    <Col style={{ marginTop: '30px' }}>
-                        <GraphBox title='Injector Pulse Width'/>
+                        <GraphBox title='Air To Fuel' units=''/>
                     </Col>
                 </Row>
                 <Row>
                     <Col style={{ marginTop: '30px' }}>
-                        <GraphBox title='Barometer'/>
+                        <GraphBox title='Manifold Air Pressure' units='kPa'/>
                     </Col>
                     <Col style={{ marginTop: '30px' }}>
-                        <GraphBox title='Manifold Air Pressure'/>
-                    </Col>
-                </Row>
-                <Row>
-                    <Col style={{ marginTop: '30px' }}>
-                        <GraphBox title='Air To Fuel'/>
-                    </Col>
-                    <Col style={{ marginTop: '30px' }}>
-                        <GraphBox title='Intake Air Temperature'/>
+                        <GraphBox title='Throttle Position' units='%'/>
                     </Col>
                 </Row>
                 <Row>
                     <Col style={{ marginTop: '30px' }}>
-                        <GraphBox title='Engine Temperature'/>
+                        <GraphBox title='Engine Temperature' units='&deg;C'/>
                     </Col>
                     <Col style={{ marginTop: '30px' }}>
-                        <GraphBox title='Oil Pressure'/>
-                    </Col>
-                </Row>
-                <Row>
-                    <Col style={{ marginTop: '30px' }}>
-                        <GraphBox title='Oil Temperature'/>
-                    </Col>
-                    <Col style={{ marginTop: '30px' }}>
-                        <GraphBox title='Fuel Temperature'/>
+                        <GraphBox title='Oil Temperature' units='&deg;C'/>
                     </Col>
                 </Row>
                 <Row>
                     <Col style={{ marginTop: '30px' }}>
-                        <GraphBox title='Acceleration'/>
+                        <GraphBox title='Fuel Temperature' units='&deg;C'/>
                     </Col>
                     <Col style={{ marginTop: '30px' }}>
-                        <GraphBox title='Roll'/>
-                    </Col>
-                </Row>
-                <Row>
-                    <Col style={{ marginTop: '30px' }}>
-                        <GraphBox title='Pitch'/>
-                    </Col>
-                    <Col style={{ marginTop: '30px' }}>
-                        <GraphBox title='Yaw'/>
+                        <GraphBox title='Intake Air Temperature' units='&deg;C'/>
                     </Col>
                 </Row>
                 <Row>
                     <Col style={{ marginTop: '30px' }}>
-                        <GraphBox title='Speed'/>
+                        <GraphBox title='Oil Pressure' units='kPa'/>
                     </Col>
                     <Col style={{ marginTop: '30px' }}>
-                        <GraphBox title='Distance'/>
+                        <GraphBox title='Barometer' units='kPa'/>
                     </Col>
                 </Row>
                 <Row>
                     <Col style={{ marginTop: '30px' }}>
-                        <GraphBox title='Track Map'/>
+                        <GraphBox title='Injector Pulse Width' units='seconds'/>
+                    </Col>
+                    <Col style={{ marginTop: '30px' }}>
+                        <GraphBox title='Suspension' units='mm'/>
+                    </Col>
+                </Row>
+                <Row>
+                    <Col style={{ marginTop: '30px' }}>
+                        <GraphBox title='Acceleration' units='g'/>
+                    </Col>
+                    <Col style={{ marginTop: '30px' }}>
+                        <GraphBox title='Roll' units='&deg;'/>
+                    </Col>
+                </Row>
+                <Row>
+                    <Col style={{ marginTop: '30px' }}>
+                        <GraphBox title='Pitch' units='&deg;'/>
+                    </Col>
+                    <Col style={{ marginTop: '30px' }}>
+                        <GraphBox title='Yaw' units='&deg;'/>
+                    </Col>
+                </Row>
+                <Row>
+                    <Col style={{ marginTop: '30px' }}>
+                        <GraphBox title='Speed' units='km/h'/>
+                    </Col>
+                    <Col style={{ marginTop: '30px' }}>
+                        <GraphBox title='Distance' units='m'/>
+                    </Col>
+                </Row>
+                <Row>
+                    <Col style={{ marginTop: '30px' }}>
+                        <GraphBox title='Track Map' units=''/>
                     </Col>
                 </Row>
             </div>

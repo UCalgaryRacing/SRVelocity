@@ -22,7 +22,7 @@ export default class StreamingDash extends React.Component {
 
     render = () => {
         let selector = (
-            <ButtonGroup id='dashSelector'>
+            <ButtonGroup id='dashSelector' style={{marginTop: '60px'}}>
                 <Button id='defaultButton' onClick={this.changeDash} disabled={(this.state.option === 'default') ? true : false}><b>Default</b></Button>
                 <Button id='customButton' onClick={this.changeDash} disabled={(this.state.option === 'custom') ? true : false}><b>Custom</b></Button>
             </ButtonGroup >

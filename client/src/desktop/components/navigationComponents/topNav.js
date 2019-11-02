@@ -1,11 +1,12 @@
 import React from 'react';
 import { Nav, Navbar } from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import '../../styling/topNav.css';
 
 export default class TopNav extends React.Component {
     render = () => {
         return (
-            <Navbar bg="dark" variant="dark" style={{ background: '#2A2B2A' }}>
+            <Navbar id='topNav' bg="dark" variant="dark" style={{ background: '#2A2B2A' }}>
                 <Navbar.Brand href="/"><b>Schulich Velocity</b></Navbar.Brand>
                 <Navbar.Toggle aria-controls="responsive-navbar-nav" />
                 <Nav className="mr-auto">

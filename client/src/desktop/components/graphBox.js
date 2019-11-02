@@ -11,7 +11,7 @@ export default class GraphBox extends React.Component {
         return (
             <div id='graphBox'>
                 <p id='graphTitle'><b>{this.props.title}</b></p>
-                <LineGraph />
+                <LineGraph title={this.props.title} units={this.props.units}/>
             </div>
         );
     }

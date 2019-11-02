@@ -4,3 +4,18 @@
     flex-direction: column;
     height: 100%;
 }
+
+#homePage .jumbotron {
+    margin: 0% 25%;
+    margin-top: 50px;
+    background: white;
+}
+
+#homePage #streamingButton {
+    box-shadow: 0 0 0 0.2rem rgba(255, 255, 255, 0.5) !important;
+    background: rgb(194, 45, 45);
+    border-color: #fff;
+    width: 100%;
+    border-radius: 3rem;
+    font-size: 3rem;
+}

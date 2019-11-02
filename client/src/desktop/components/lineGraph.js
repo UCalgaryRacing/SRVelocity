@@ -62,18 +62,11 @@ export default class LineGraph extends React.Component {
                 }
             }
         }
-        this.index = props.index
-        this.data = props.data
     }
-
-    componentDidMount() {
-
-    }
-
 
     render = () => {
         return (
-            <article id="graph">
+            <article id="graph" style={{height: '400px', marginTop: '40px', marginLeft: '20px', marginRight: '20px', marginBottom:'80px'}}>
                 <Line data={this.state.data} options={this.state.options} ref={this.lineGraph} redraw={this.state.redraw} />
             </article>
         );

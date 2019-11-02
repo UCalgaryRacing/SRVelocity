@@ -1,4 +1,6 @@
 import React from 'react';
+import LineGraph from '../components/lineGraph';
+import '../styling/graphBox.css';
 
 export default class GraphBox extends React.Component {
     constructor(props) {
@@ -7,8 +9,9 @@ export default class GraphBox extends React.Component {
 
     render = () => {
         return (
-            <div>
-
+            <div id='graphBox'>
+                <p id='graphTitle'><b>{this.props.title}</b></p>
+                <LineGraph />
             </div>
         );
     }

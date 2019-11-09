@@ -9,9 +9,9 @@ export default class GraphBox extends React.Component {
 
     render = () => {
         return (
-            <div id='graphBox'>
+            <div id='graphBox' onClick={this.props.onClick}>
                 <p id='graphTitle'><b>{this.props.title}</b></p>
-                <LineGraph title={this.props.title} units={this.props.units}/>
+                <LineGraph id={this.props.id} title={this.props.title} units={this.props.units}/>
             </div>
         );
     }

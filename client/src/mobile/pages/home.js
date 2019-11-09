@@ -1,5 +1,5 @@
 import React from 'react';
-import TopNavM from '../componentsM/navigationComponentsM/topNavM';
+import TopNavM from '../components/navigationComponents/topNavM';
 import '../../desktop/styling/home.css';
 
 export default class HomePageM extends React.Component {

@@ -6,7 +6,7 @@ export default class DefaultDash extends React.Component {
         return (
             <div id='defaultDash'>
                 Default Dash
-            </div>  
+            </div>
         );
     }
 }

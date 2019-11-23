@@ -31,14 +31,15 @@ export default class LineGraph extends React.Component {
                     duration: 0
                 },
                 legend: {
-                    position: 'top',
-                    fullWidth: true,
-                    labels: {
-                        usePointStyle: true, 
-                        boxWidth: 5,
-                        padding: 60,
-                        width: '50%'
-                    }
+                    display: false
+                    // position: 'top',
+                    // fullWidth: true,
+                    // labels: {
+                    //     usePointStyle: true, 
+                    //     boxWidth: 5,
+                    //     padding: 60,
+                    //     width: '50%'
+                    // }
                 },
                 scales: {
                     xAxes: [{
@@ -102,11 +103,11 @@ export default class LineGraph extends React.Component {
 
     render = () => {
         return (
-            <article id="graph" style={{height: '400px', marginTop: '40px', marginLeft: '20px', marginRight: '20px', marginBottom:'80px'}}>
-                <p style={{textAlign: 'center', fontSize: '1.4rem', paddingTop: '0', paddingBottom: '0', marginBottom: '-30px', marginTop: '-30px'}}>
+            <article id="graph" style={{height: '500px', marginTop: '40px', marginLeft: '20px', marginRight: '20px', marginBottom:'50px'}}>
+                <p style={{textAlign: 'center', fontSize: '1.4rem', paddingTop: '0', paddingBottom: '0', marginBottom: '10px', marginTop: '-40px'}}>
                     <b>{this.state.data.datasets[0].data[this.state.data.datasets[0].data.length - 1]}&nbsp;{this.props.units}</b>
                     </p>
-                <Line data={this.state.data} options={this.state.options} ref={this.lineGraph} redraw={true}/>
+                <Line id={this.props.id} data={this.state.data} options={this.state.options} ref={this.lineGraph} redraw={true}/>
             </article>
         );
     }

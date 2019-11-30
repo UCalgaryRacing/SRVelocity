@@ -11,6 +11,10 @@ export default class Data{
     constructor() {
         //super(props);
 
+        this.params = {
+            MAX_LENGTH: 30
+        }
+
         this.labels = [0]
 
         this.datasets = [
@@ -42,14 +46,14 @@ export default class Data{
         let newTime = this.labels[this.labels.length -1 ] + 1;
         this.labels.push(newTime)
 
-        if(this.labels.length > 30) {
+        if(this.labels.length > this.params.MAX_LENGTH) {
             this.labels.shift()
         }
 
         for (var parameter of this.datasets) {
             parameter.value.push(getRandomInt(0, 10));
 
-            if (parameter.value.length > 30) {
+            if (parameter.value.length > this.params.MAX_LENGTH) {
                 parameter.value.shift();
             }
         }

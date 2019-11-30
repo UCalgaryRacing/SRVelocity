@@ -42,6 +42,7 @@ export default class LineGraph extends React.Component {
                             drawTicks: false
                         },
                         ticks: {
+                            display: false,
                             maxRotation: 0,
                             minRotation: 0,
                             padding: 15,

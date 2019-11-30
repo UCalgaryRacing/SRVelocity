@@ -15,7 +15,7 @@ export default class CalculationBoxM extends React.Component {
                     {this.props.title}
                 </h6>
                 <p>
-                    {this.props.data()}
+                    {this.props.data}
                 </p>
             </div>
         );

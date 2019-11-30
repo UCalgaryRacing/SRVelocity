@@ -58,7 +58,7 @@ export default class GraphBoxM extends React.Component {
                 <LineGraphM title={this.props.title} units={this.props.units} data={this.state.data} />
                 <Row style={{ marginRight: 0, marginLeft: 0 }}>
                     <Col style={{ paddingRight: 0, paddingLeft: 0 }}>
-                        <CalculationBoxM title='RPM*2' data={this.formulaTest1} />
+                        <CalculationBoxM title='RPM' data={this.state.data.datasets[0].data[this.state.data.datasets[0].data.length - 1]} />
                     </Col>
                     <Col style={{ paddingRight: 0, paddingLeft: 0 }}>
                         <CalculationBoxM title='RPM' data={this.state.data.datasets[0].data[this.state.data.datasets[0].data.length - 1]} />

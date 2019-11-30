@@ -1,10 +1,12 @@
 import React from 'react';
 import GraphBox from '../graphBox';
 import { Row, Col, Modal } from 'react-bootstrap';
+import Data from '../../../data'
 
 export class GraphingDashboard extends React.Component {
     constructor(props) {
         super(props);
+
         this.state = {
             graphTitles: this.props.graphInfo,
             displayModal: false,
@@ -19,6 +21,11 @@ export class GraphingDashboard extends React.Component {
         this.createGraphs()
         this.createToRender()
     }
+
+    // componentDidUpdate = () => {
+    //     this.createGraphs()
+    //     this.createToRender()
+    // }
 
     createGraphs = () => {
         var i = 0

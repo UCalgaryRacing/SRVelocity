@@ -27,13 +27,14 @@ export default class CustomDash extends React.Component {
                 { title: 'Track Map', units: '' }],
             
             selectedGraphs: [{ title: 'RPM', units: 'RPM' }]
-
-
+            
         }
-
-
     }
-    //render form.check 
+
+    // handleSelect = (event) => {
+    //     event.
+    // }
+    
     render = () => {
         return (
             <div id='customDash'>

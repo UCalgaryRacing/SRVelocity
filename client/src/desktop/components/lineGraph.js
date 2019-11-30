@@ -1,32 +1,21 @@
 import React from 'react';
 import { Line } from 'react-chartjs-2';
 
-function getRandomInt(min, max) {
-    return Math.floor(Math.random() * (max - min + 1)) + min;
-}
+
 
 export default class LineGraph extends React.Component {
     constructor(props) {
         super(props);
         this.lineGraph = React.createRef();
         this.state = {
-            currentLabel: 3, 
-            data: {
-                labels: [0, 1, 2],
-                datasets: [{
-                    data: [1, 2, 3],
-                    borderColor: 'rgb(255, 0, 0)',
-                    pointRadius: 1, 
-                    backgroundColor: 'rgb(255, 255, 255)', 
-                    lineTension: 0
-                }]
-            },
+
+            data: this.props.data,
             options: {
                 responsive: true,
-                maintainAspectRatio: false, 
-                scaleShowGridlines: false, 
-                scaleShowHorizontalLines: false, 
-                scaleShowVerticalLines: false, 
+                maintainAspectRatio: false,
+                scaleShowGridlines: false,
+                scaleShowHorizontalLines: false,
+                scaleShowVerticalLines: false,
                 animation: {
                     duration: 0
                 },
@@ -47,27 +36,27 @@ export default class LineGraph extends React.Component {
                             onRefresh: function (chart) { },
                         },
                         gridLines: {
-                            display: false, 
-                            lineWidth: 1, 
-                            zeroLineWidth: 2, 
+                            display: false,
+                            lineWidth: 1,
+                            zeroLineWidth: 2,
                             drawTicks: false
                         },
                         ticks: {
-                            maxRotation: 0, 
-                            minRotation: 0, 
-                            padding: 15, 
+                            maxRotation: 0,
+                            minRotation: 0,
+                            padding: 15,
                             maxTicksLimit: 10,
                         }
                     }],
                     yAxes: [{
                         gridLines: {
-                            display: false, 
-                            lineWidth: 1, 
-                            zeroLineWidth: 0, 
+                            display: false,
+                            lineWidth: 1,
+                            zeroLineWidth: 0,
                             drawTicks: false
                         },
                         scaleLabel: {
-                            display: true, 
+                            display: true,
                             labelString: this.props.title
                         },
                         ticks: {
@@ -76,30 +65,12 @@ export default class LineGraph extends React.Component {
                         }
                     }]
                 }
-            }
+            },
         }
+    
     }
 
-    componentDidMount() {
-        this.interval = setInterval(() => this.tick(), 200);
-        this.state.data.datasets[0].label = this.props.title
-    }
 
-    pullData = () => {
-        this.state.data.labels.push(this.state.currentLabel.toString());
-        this.state.data.datasets[0].data.push(getRandomInt(0, 10));
-        let newTime = this.state.currentLabel + 1;
-        this.setState({currentLabel: (this.state.currentLabel + 1)});
-
-        if (this.state.currentLabel - 30 > this.state.data.labels[0]) {
-            this.state.data.labels.shift();
-            this.state.data.datasets[0].data.shift();
-        }
-    }
-
-    tick = () => {
-        this.pullData();
-    }
 
     render = () => {
         return (

@@ -10,13 +10,7 @@ export default class GraphBox extends React.Component {
             currentLabel: 3,
             data: {
                 labels: Data.getInstance().getLabels(),
-                datasets: [{
-                    data: Data.getInstance().get(this.props.title),
-                    borderColor: 'rgb(255, 0, 0)',
-                    pointRadius: 1,
-                    backgroundColor: 'rgb(255, 255, 255)',
-                    lineTension: 0
-                }]
+                datasets: Data.getInstance().get(this.props.title)
             }
         }
     }
@@ -26,11 +20,13 @@ export default class GraphBox extends React.Component {
     }
 
     pullData = () => {
+        let newDatasets = Data.getInstance().get(this.props.title)
+        if (newDatasets == undefined) { //Sometimes null for some reason
+            return;
+        }
         this.setState({data: {
-            datasets: [{
-                data: Data.getInstance().get(this.props.title)
-            }]
-        }})
+            datasets: newDatasets
+        }});
     }
 
     get = (index) => {

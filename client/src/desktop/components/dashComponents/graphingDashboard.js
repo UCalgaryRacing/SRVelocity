@@ -43,7 +43,6 @@ export class GraphingDashboard extends React.Component {
             );
             i++;
         }
-
     }
 
     showGraph = (event) => {
@@ -71,8 +70,7 @@ export class GraphingDashboard extends React.Component {
                     onHide={this.hideModal} 
                     keyboard={true}
                     size = "xl"
-                    centered
-                >
+                    centered>
                         <Modal.Header closeButton>
                         </Modal.Header>
                         <Modal.Body>

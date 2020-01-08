@@ -41,12 +41,12 @@ export default class SideNavbar extends React.Component {
                                     <b>RPM</b>
                                 </NavText>
                             </NavItem>
-                            <NavItem eventKey="TP">
+                            <NavItem eventKey="Throttle Position">
                                 <NavText>
                                     <b>Throttle Position</b>
                                 </NavText>
                             </NavItem>
-                            <NavItem eventKey="IPW">
+                            <NavItem eventKey="Injector Pulse Width">
                                 <NavText>
                                     <b>Injector Pulse Width</b>
                                 </NavText>
@@ -56,37 +56,37 @@ export default class SideNavbar extends React.Component {
                                     <b>Barometer</b>
                                 </NavText>
                             </NavItem>
-                            <NavItem eventKey="MAP">
+                            <NavItem eventKey="Manifold Air Pressure">
                                 <NavText>
                                     <b>Manifold Air Pressure</b>
                                 </NavText>
                             </NavItem>
-                            <NavItem eventKey="ATF">
+                            <NavItem eventKey="Air To Fuel">
                                 <NavText>
                                     <b>Air To Fuel</b>
                                 </NavText>
                             </NavItem>
-                            <NavItem eventKey="IAT">
+                            <NavItem eventKey="Intake Air Temperature">
                                 <NavText>
                                     <b>Intake Air Temperature</b>
                                 </NavText>
                             </NavItem>
-                            <NavItem eventKey="ET">
+                            <NavItem eventKey="Engine Temperature">
                                 <NavText>
                                     <b>Engine Temperature</b>
                                 </NavText>
                             </NavItem>
-                            <NavItem eventKey="OP">
+                            <NavItem eventKey="Oil Pressure">
                                 <NavText>
                                     <b>Oil Pressure</b>
                                 </NavText>
                             </NavItem>
-                            <NavItem eventKey="OT">
+                            <NavItem eventKey="Oil Temperature">
                                 <NavText>
                                     <b>Oil Temperature</b>
                                 </NavText>
                             </NavItem>
-                            <NavItem eventKey="FT">
+                            <NavItem eventKey="Fuel Temperature">
                                 <NavText>
                                     <b>Fuel Temperature</b>
                                 </NavText>
@@ -124,7 +124,7 @@ export default class SideNavbar extends React.Component {
                                 <b>&nbsp;&nbsp;&nbsp;Yaw</b>
                             </NavText>
                         </NavItem>
-                        <NavItem eventKey="TM">
+                        <NavItem eventKey="Track Map">
                             <NavIcon>
                                 <img src={require('../../../assets/trackmap.svg')} style={{ marginLeft: '18px', marginTop: '12px' }} alt='TM'/>
                             </NavIcon>

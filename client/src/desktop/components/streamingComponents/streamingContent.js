@@ -1,6 +1,7 @@
 import React from 'react';
 import StreamingDash from '../dashComponents/dashboard';
 import DataPage from '../streamingComponents/dataPage';
+import GraphBox from '../graphBox';
 
 export default class StreamingContent extends React.Component {
     constructor(props) {

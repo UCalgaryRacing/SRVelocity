@@ -6,13 +6,11 @@ import Data from '../../../data'
 export class GraphingDashboard extends React.Component {
     constructor(props) {
         super(props);
-
         this.state = {
             graphTitles: this.props.graphInfo,
             displayModal: false,
             currentGraph: null
         }
-        
         this.graphs = []
         this.container = []
     }
@@ -21,11 +19,6 @@ export class GraphingDashboard extends React.Component {
         this.createGraphs()
         this.createToRender()
     }
-
-    // componentDidUpdate = () => {
-    //     this.createGraphs()
-    //     this.createToRender()
-    // }
 
     createGraphs = () => {
         var i = 0
@@ -48,7 +41,6 @@ export class GraphingDashboard extends React.Component {
                     </Col>
                 </Row>
             );
-
             i++;
         }
 

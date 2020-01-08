@@ -1,14 +1,11 @@
 import React from 'react';
 import { Line } from 'react-chartjs-2';
 
-
-
 export default class LineGraph extends React.Component {
     constructor(props) {
         super(props);
         this.lineGraph = React.createRef();
         this.state = {
-
             data: this.props.data,
             options: {
                 responsive: true,
@@ -21,14 +18,6 @@ export default class LineGraph extends React.Component {
                 },
                 legend: {
                     display: false
-                    // position: 'top',
-                    // fullWidth: true,
-                    // labels: {
-                    //     usePointStyle: true, 
-                    //     boxWidth: 5,
-                    //     padding: 60,
-                    //     width: '50%'
-                    // }
                 },
                 scales: {
                     xAxes: [{
@@ -39,7 +28,8 @@ export default class LineGraph extends React.Component {
                             display: false,
                             lineWidth: 1,
                             zeroLineWidth: 2,
-                            drawTicks: false
+                            drawTicks: false,
+                            color: '#494949'
                         },
                         ticks: {
                             display: false,
@@ -54,31 +44,35 @@ export default class LineGraph extends React.Component {
                             display: false,
                             lineWidth: 1,
                             zeroLineWidth: 0,
-                            drawTicks: false
+                            drawTicks: false,
+                            color: '#494949'
                         },
                         scaleLabel: {
                             display: true,
-                            labelString: this.props.title
+                            labelString: this.props.title,
+                            fontSize: 15,
+                            fontStyle: 'bold',
+                            fontColor: '#494949'
                         },
                         ticks: {
                             beginAtZero: true,
-                            padding: 15
+                            padding: 15,
+                            fontSize: 15,
+                            fontStyle: 'bold',
+                            fontColor: '#494949'
                         }
                     }]
                 }
             },
         }
-    
     }
-
-
 
     render = () => {
         return (
-            <article id="graph" style={{height: '500px', marginTop: '40px', marginLeft: '20px', marginRight: '20px', marginBottom:'50px'}}>
+            <article id="graph" style={{height: '500px', marginTop: '40px', marginLeft: '20px', marginRight: '20px', marginBottom:'100px'}}>
                 <p style={{textAlign: 'center', fontSize: '1.4rem', paddingTop: '0', paddingBottom: '0', marginBottom: '10px', marginTop: '-40px'}}>
                     <b>{this.state.data.datasets[0].data[this.state.data.datasets[0].data.length - 1]}&nbsp;{this.props.units}</b>
-                    </p>
+                </p>
                 <Line id={this.props.id} data={this.state.data} options={this.state.options} ref={this.lineGraph} redraw={true}/>
             </article>
         );

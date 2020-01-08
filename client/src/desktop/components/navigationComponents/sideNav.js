@@ -92,7 +92,7 @@ export default class SideNavbar extends React.Component {
                                 </NavText>
                             </NavItem>
                         </NavItem>
-                        <NavItem eventKey="Accel">
+                        <NavItem eventKey="Acceleration">
                             <NavIcon>
                                 <img src={require('../../../assets/acceleration.svg')} style={{ marginLeft: '20px', marginTop: '4px' }} alt='Acceleration'/>
                             </NavIcon>

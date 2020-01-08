@@ -31,7 +31,7 @@ export default class DataPage extends React.Component {
     render = () => {
         return (
             <div id='streamingData'>
-                <GraphBox title={this.props.content} id={0} units={this.graphTitles} key={0}/>
+                <GraphBox title={this.props.content} id={0} units={this.graphTitles}/>
             </div>
         );
     }

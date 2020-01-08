@@ -13,7 +13,7 @@ export default class LineGraph extends React.Component {
                 scaleShowGridlines: false,
                 scaleShowHorizontalLines: false,
                 scaleShowVerticalLines: false,
-                responsiveAnimationDuration: 0, 
+                responsiveAnimationDuration: 0,
                 animation: {
                     duration: 0
                 },
@@ -71,39 +71,85 @@ export default class LineGraph extends React.Component {
         }
     }
 
+    componentWillUnmount = () => {
+        this.forceUpdate();
+    }
+
     render = () => {
-        if(this.state.data.datasets.length < 2) {
+        if (this.state.data.datasets.length < 2) {
             return (
-                <article id="graph" style={{height: '500px', marginTop: '40px', marginLeft: '20px', marginRight: '20px', marginBottom:'100px'}}>
-                    <p style={{textAlign: 'center', fontSize: '1.4rem', paddingTop: '0', paddingBottom: '0', marginBottom: '10px', marginTop: '-40px'}}>
-                        <b>{this.state.data.datasets[0].data[this.state.data.datasets[0].data.length - 1]}&nbsp;{this.props.units}</b>   
+                <article id="graph" style={{ height: '500px', marginTop: '40px', marginLeft: '20px', marginRight: '20px', marginBottom: '100px' }}>
+                    <p style={{ textAlign: 'center', fontSize: '1.4rem', paddingTop: '0', paddingBottom: '0', marginBottom: '10px', marginTop: '-40px' }}>
+                        <b>{this.state.data.datasets[0].data[this.state.data.datasets[0].data.length - 1]}&nbsp;{this.props.units}</b>
                     </p>
-                    <Line id={this.props.id} data={this.state.data} options={this.state.options} ref={this.lineGraph} redraw={true}/>
+                    <Line id={this.props.id} data={this.state.data} options={this.state.options} ref={this.lineGraph} redraw={true} />
                 </article>
             );
         }
         else if (this.state.data.datasets.length === 3) {
             return (
-                <article id="graph" style={{height: '500px', marginTop: '40px', marginLeft: '20px', marginRight: '20px', marginBottom:'100px'}}>
-                    <div class='row' style={{textAlign: 'center', fontSize: '1.4rem', fontStyle: 'bold', paddingTop: '0', paddingBottom: '0', marginBottom: '10px', marginTop: '-40px', width: '100%'}}>
-                        <div class='col' style={{width: '20%'}}><b>X: {this.state.data.datasets[0].data[this.state.data.datasets[0].data.length - 1]}&nbsp;{this.props.units}</b></div>   
-                        <div class='col' style={{width: '20%'}}><b>Y: {this.state.data.datasets[1].data[this.state.data.datasets[0].data.length - 1]}&nbsp;{this.props.units}</b></div>  
-                        <div class='col' style={{width: '20%'}}><b>Z: {this.state.data.datasets[2].data[this.state.data.datasets[0].data.length - 1]}&nbsp;{this.props.units}</b></div>  
+                <article id="graph" style={{ height: '500px', marginTop: '40px', marginLeft: '20px', marginRight: '20px', marginBottom: '100px' }}>
+                    <div class='row' style={{ textAlign: 'center', fontSize: '1.4rem', fontStyle: 'bold', paddingTop: '0', paddingBottom: '0', marginBottom: '10px', marginTop: '-40px', width: '100%' }}>
+                        <div class='col' style={{ textAlign: 'center' }}>
+                            <div class='row' style={{ textAlign: 'center' }}>
+                                <div class='col' style={{ color: '#0072B2', fontStyle: 'bold', textAlign: 'right', padding: '0' }}><b>X:</b></div>
+                                <div class='col-xs' style={{ fontStyle: 'bold', width: '80px', textAlign: 'center' }}><b>{this.state.data.datasets[0].data[this.state.data.datasets[0].data.length - 1]}</b></div>
+                                <div class='col' style={{ fontStyle: 'bold', textAlign: 'left', padding: '0' }}><b>{this.props.units}</b></div>
+                            </div>
+                        </div>
+                        <div class='col' style={{ textAlign: 'center' }}>
+                            <div class='row' style={{ textAlign: 'center' }}>
+                                <div class='col' style={{ color: '#E69F00', fontStyle: 'bold', textAlign: 'right', padding: '0' }}><b>Y:</b></div>
+                                <div class='col-xs' style={{ fontStyle: 'bold', width: '80px', textAlign: 'center' }}><b>{this.state.data.datasets[0].data[this.state.data.datasets[0].data.length - 1]}</b></div>
+                                <div class='col' style={{ fontStyle: 'bold', textAlign: 'left', padding: '0' }}><b>{this.props.units}</b></div>
+                            </div>
+                        </div>
+                        <div class='col' style={{ textAlign: 'center' }}>
+                            <div class='row' style={{ textAlign: 'center' }}>
+                                <div class='col' style={{ color: '#009E73', fontStyle: 'bold', textAlign: 'right', padding: '0' }}><b>Z:</b></div>
+                                <div class='col-xs' style={{ fontStyle: 'bold', width: '80px', textAlign: 'center' }}><b>{this.state.data.datasets[0].data[this.state.data.datasets[0].data.length - 1]}</b></div>
+                                <div class='col' style={{ fontStyle: 'bold', textAlign: 'left', padding: '0' }}><b>{this.props.units}</b></div>
+                            </div>
+                        </div>
                     </div>
-                    <Line id={this.props.id} data={this.state.data} options={this.state.options} ref={this.lineGraph} redraw={true}/>
+                    <Line id={this.props.id} data={this.state.data} options={this.state.options} ref={this.lineGraph} redraw={true} />
                 </article>
             );
         }
         else if (this.state.data.datasets.length === 4) {
             return (
-                <article id="graph" style={{height: '500px', marginTop: '40px', marginLeft: '20px', marginRight: '20px', marginBottom:'100px'}}>
-                    <div class='row' style={{textAlign: 'center', fontSize: '1.4rem', fontStyle: 'bold', paddingTop: '0', paddingBottom: '0', marginBottom: '10px', marginTop: '-40px', width: '100%'}}>
-                        <div class='col' style={{width: '20%'}}><b>FR: {this.state.data.datasets[0].data[this.state.data.datasets[0].data.length - 1]}&nbsp;{this.props.units}</b></div>   
-                        <div class='col' style={{width: '20%'}}><b>FL: {this.state.data.datasets[1].data[this.state.data.datasets[0].data.length - 1]}&nbsp;{this.props.units}</b></div>  
-                        <div class='col' style={{width: '20%'}}><b>RR: {this.state.data.datasets[2].data[this.state.data.datasets[0].data.length - 1]}&nbsp;{this.props.units}</b></div>  
-                        <div class='col' style={{width: '20%'}}><b>RL: {this.state.data.datasets[2].data[this.state.data.datasets[0].data.length - 1]}&nbsp;{this.props.units}</b></div> 
+                <article id="graph" style={{ height: '500px', marginTop: '40px', marginLeft: '20px', marginRight: '20px', marginBottom: '100px' }}>
+                    <div class='row' style={{ textAlign: 'center', fontSize: '1.4rem', fontStyle: 'bold', paddingTop: '0', paddingBottom: '0', marginBottom: '10px', marginTop: '-40px', width: '100%' }}>
+                        <div class='col' style={{ textAlign: 'center' }}>
+                            <div class='row' style={{ textAlign: 'center' }}>
+                                <div class='col' style={{ color: '#0072B2', fontStyle: 'bold', textAlign: 'right' }}><b>FR:</b></div>
+                                <div class='col-xs' style={{ fontStyle: 'bold', width: '80px', textAlign: 'center' }}><b>{this.state.data.datasets[0].data[this.state.data.datasets[0].data.length - 1]}</b></div>
+                                <div class='col' style={{ fontStyle: 'bold', textAlign: 'left' }}><b>{this.props.units}</b></div>
+                            </div>
+                        </div>
+                        <div class='col' style={{ textAlign: 'center' }}>
+                            <div class='row' style={{ textAlign: 'center' }}>
+                                <div class='col' style={{ color: '#E69F00', fontStyle: 'bold', textAlign: 'right' }}><b>FL:</b></div>
+                                <div class='col-xs' style={{ fontStyle: 'bold', width: '80px', textAlign: 'center' }}><b>{this.state.data.datasets[0].data[this.state.data.datasets[0].data.length - 1]}</b></div>
+                                <div class='col' style={{ fontStyle: 'bold', textAlign: 'left' }}><b>{this.props.units}</b></div>
+                            </div>
+                        </div>
+                        <div class='col' style={{ textAlign: 'center' }}>
+                            <div class='row' style={{ textAlign: 'center' }}>
+                                <div class='col' style={{ color: '#009E73', fontStyle: 'bold', textAlign: 'right' }}><b>RR:</b></div>
+                                <div class='col-xs' style={{ fontStyle: 'bold', width: '80px', textAlign: 'center' }}><b>{this.state.data.datasets[0].data[this.state.data.datasets[0].data.length - 1]}</b></div>
+                                <div class='col' style={{ fontStyle: 'bold', textAlign: 'left' }}><b>{this.props.units}</b></div>
+                            </div>
+                        </div>
+                        <div class='col' style={{ textAlign: 'center' }}>
+                            <div class='row' style={{ textAlign: 'center' }}>
+                                <div class='col' style={{ color: '#CC79A7', fontStyle: 'bold', textAlign: 'right' }}><b>RL:</b></div>
+                                <div class='col-xs' style={{ fontStyle: 'bold', width: '80px', textAlign: 'center' }}><b>{this.state.data.datasets[0].data[this.state.data.datasets[0].data.length - 1]}</b></div>
+                                <div class='col' style={{ fontStyle: 'bold', textAlign: 'left' }}><b>{this.props.units}</b></div>
+                            </div>
+                        </div>
                     </div>
-                    <Line id={this.props.id} data={this.state.data} options={this.state.options} ref={this.lineGraph} redraw={true}/>
+                    <Line id={this.props.id} data={this.state.data} options={this.state.options} ref={this.lineGraph} key={Math.random()}/>
                 </article>
             );
         }

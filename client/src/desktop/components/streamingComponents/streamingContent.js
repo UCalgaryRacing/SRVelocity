@@ -14,6 +14,7 @@ export default class StreamingContent extends React.Component {
 
     changeContent = (newContent) => {
         this.setState({ content: newContent });
+        this.forceUpdate();
     }
 
     changeLeftMargin = () => {
@@ -33,7 +34,7 @@ export default class StreamingContent extends React.Component {
         else {
             return (
                 <div id='streamingContent' style={{ marginTop: '15px', transition: 'all 0.15s', marginLeft: this.state.marginLeft }}>
-                    <DataPage content={this.state.content}/>
+                    <DataPage content={this.state.content} key={Math.random()}/>
                 </div>
             );
         }

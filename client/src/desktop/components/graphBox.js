@@ -6,7 +6,7 @@ import Data from '../../data';
 export default class GraphBox extends React.Component {
     constructor(props) {
         super(props);
-        this.state  = {
+        this.state = {
             currentLabel: 3,
             data: {
                 labels: Data.getInstance().getLabels(),
@@ -17,6 +17,10 @@ export default class GraphBox extends React.Component {
 
     componentWillMount() {
         this.interval = setInterval(() => this.tick(), 200);
+    }
+
+    componentWillUnmount() {
+        clearInterval(this.interval);
     }
 
     pullData = () => {

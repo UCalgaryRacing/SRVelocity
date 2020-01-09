@@ -1,0 +1,11 @@
+#graphBoxM {
+    border-width: 1px;
+    border-color: #494949;
+    border-radius: 10px;
+}
+
+#graphTitleM {
+    margin-top: 10px;
+    text-align: center;
+    font-size: 1.5rem;
+}

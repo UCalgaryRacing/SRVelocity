@@ -12,11 +12,11 @@ export default class SignInPage extends React.Component {
     }
 
     handleEnterKey = () => {
-
+        
     }
 
     handleSignIn = () => {
-
+        
     }
 
     handleForgotPassword = () => {

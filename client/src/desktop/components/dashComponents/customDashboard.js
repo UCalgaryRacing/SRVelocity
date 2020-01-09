@@ -25,16 +25,16 @@ export default class CustomDash extends React.Component {
                 { title: 'Speed', units: 'km/h' },
                 { title: 'Distance', units: 'm' },
                 { title: 'Track Map', units: '' }],
-            
+
             selectedGraphs: [{ title: 'RPM', units: 'RPM' }]
-            
+
         }
     }
 
     // handleSelect = (event) => {
     //     event.
     // }
-    
+
     render = () => {
         return (
             <div id='customDash'>

@@ -23,7 +23,7 @@ export default class DefaultDash extends React.Component {
                 { title: 'Pitch', units: '˚' },
                 { title: 'Yaw', units: '˚' },
                 { title: 'Speed', units: 'km/h' },
-                { title: 'Distance', units: 'm' },
+                { title: 'Distance', units: 'km' },
                 { title: 'Track Map', units: '' }]
         }
     }

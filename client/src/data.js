@@ -293,7 +293,54 @@ export default class Data {
         }
         for (var parameter of this.datasets) {
             if (parameter.title !== 'Suspension' && parameter.title !== 'Acceleration' && parameter.title !== 'Track Map') {
-                parameter.value[0].data.push(getRandomInt(0, 10));
+                if(parameter.title === 'RPM') {
+                    parameter.value[0].data.push(getRandomInt(0, 10));
+                }
+                else if(parameter.title === 'Air To Fuel') {
+                    parameter.value[0].data.push(AFR[this.index]);
+                }
+                else if(parameter.title === 'Manifold Air Pressure') {
+                    parameter.value[0].data.push(MAP[this.index]);
+                }
+                else if(parameter.title === 'Throttle Position') {
+                    parameter.value[0].data.push(TPS[this.index]);
+                }
+                else if(parameter.title === 'Engine Temperature') {
+                    parameter.value[0].data.push(engineTemp[this.index]);
+                }
+                else if(parameter.title === 'Oil Temperature') {
+                    parameter.value[0].data.push(oilTemp[this.index]);
+                }
+                else if(parameter.title === 'Fuel Temperature') {
+                    parameter.value[0].data.push(fuelTemp[this.index]);
+                }
+                else if(parameter.title === 'Intake Air Temperature') {
+                    parameter.value[0].data.push(IAT[this.index]);
+                }
+                else if(parameter.title === 'Oil Pressure') {
+                    parameter.value[0].data.push(oilPressure[this.index]);
+                }
+                else if(parameter.title === 'Barometer') {
+                    parameter.value[0].data.push(baro[this.index]);
+                }
+                else if(parameter.title === 'Injector Pulse Width') {
+                    parameter.value[0].data.push(IPW[this.index]);
+                }
+                else if(parameter.title === 'Roll') {
+                    parameter.value[0].data.push(roll[this.index]);
+                }
+                else if(parameter.title === 'Pitch') {
+                    parameter.value[0].data.push(pitch[this.index]);
+                }
+                else if(parameter.title === 'Yaw') {
+                    parameter.value[0].data.push(yaw[this.index]);
+                }
+                else if(parameter.title === 'Speed') {
+                    parameter.value[0].data.push(speed[this.index]);
+                }
+                else if(parameter.title === 'Distance') {
+                    parameter.value[0].data.push(distance[this.index]);
+                }
                 if (parameter.value[0].data.length > this.params.MAX_LENGTH) {
                     parameter.value[0].data.shift();
                 }

@@ -72,6 +72,16 @@ export default class Data {
                 }]
             },
             {
+                title: 'Fuel Temperature', value: [{
+                    data: [],
+                    label: '',
+                    borderColor: 'rgb(255, 0, 0)',
+                    pointRadius: 1,
+                    backgroundColor: 'rgb(255, 255, 255, 0)',
+                    lineTension: 0
+                }]
+            },
+            {
                 title: 'Intake Air Temperature', value: [{
                     data: [],
                     label: '',
@@ -251,7 +261,7 @@ export default class Data {
                     lineTension: 0
                 }]
             }]
-        this.interval = setInterval(() => this.tick(), 200);
+        this.interval = setInterval(() => this.tick(), 100);
     }
 
     pullData = () => {

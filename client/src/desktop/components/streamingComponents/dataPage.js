@@ -28,10 +28,14 @@ export default class DataPage extends React.Component {
         }
     }
 
+    findUnitIndex = (title) => {
+        return this.state.graphTitles.findIndex(obj => obj.title === title)
+    }
+
     render = () => {
         return (
             <div id='streamingData'>
-                <GraphBox title={this.props.content} id={0} units={this.graphTitles}/>
+                <GraphBox title={this.props.content} id={0} units={this.state.graphTitles[this.findUnitIndex(this.props.content)].units}/>
             </div>
         );
     }

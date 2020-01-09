@@ -16,7 +16,7 @@ export default class GraphBox extends React.Component {
     }
 
     componentWillMount() {
-        this.interval = setInterval(() => this.tick(), 200);
+        this.interval = setInterval(() => this.tick(), 100);
     }
 
     componentWillUnmount() {

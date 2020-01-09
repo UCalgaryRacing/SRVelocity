@@ -18,7 +18,10 @@ export default class LineGraph extends React.Component {
                     duration: 0
                 },
                 hover: {
-                    animationDuration: 0
+                    mode: null
+                },
+                tooltips: {
+                    enabled: false
                 },
                 legend: {
                     display: false
@@ -100,14 +103,14 @@ export default class LineGraph extends React.Component {
                         <div class='col' style={{ textAlign: 'center' }}>
                             <div class='row' style={{ textAlign: 'center' }}>
                                 <div class='col' style={{ color: '#E69F00', fontStyle: 'bold', textAlign: 'right', padding: '0' }}><b>Y:</b></div>
-                                <div class='col-xs' style={{ fontStyle: 'bold', width: '80px', textAlign: 'center' }}><b>{this.state.data.datasets[0].data[this.state.data.datasets[0].data.length - 1]}</b></div>
+                                <div class='col-xs' style={{ fontStyle: 'bold', width: '80px', textAlign: 'center' }}><b>{this.state.data.datasets[1].data[this.state.data.datasets[1].data.length - 1]}</b></div>
                                 <div class='col' style={{ fontStyle: 'bold', textAlign: 'left', padding: '0' }}><b>{this.props.units}</b></div>
                             </div>
                         </div>
                         <div class='col' style={{ textAlign: 'center' }}>
                             <div class='row' style={{ textAlign: 'center' }}>
                                 <div class='col' style={{ color: '#009E73', fontStyle: 'bold', textAlign: 'right', padding: '0' }}><b>Z:</b></div>
-                                <div class='col-xs' style={{ fontStyle: 'bold', width: '80px', textAlign: 'center' }}><b>{this.state.data.datasets[0].data[this.state.data.datasets[0].data.length - 1]}</b></div>
+                                <div class='col-xs' style={{ fontStyle: 'bold', width: '80px', textAlign: 'center' }}><b>{this.state.data.datasets[2].data[this.state.data.datasets[2].data.length - 1]}</b></div>
                                 <div class='col' style={{ fontStyle: 'bold', textAlign: 'left', padding: '0' }}><b>{this.props.units}</b></div>
                             </div>
                         </div>
@@ -130,26 +133,26 @@ export default class LineGraph extends React.Component {
                         <div class='col' style={{ textAlign: 'center' }}>
                             <div class='row' style={{ textAlign: 'center' }}>
                                 <div class='col' style={{ color: '#E69F00', fontStyle: 'bold', textAlign: 'right' }}><b>FL:</b></div>
-                                <div class='col-xs' style={{ fontStyle: 'bold', width: '80px', textAlign: 'center' }}><b>{this.state.data.datasets[0].data[this.state.data.datasets[0].data.length - 1]}</b></div>
+                                <div class='col-xs' style={{ fontStyle: 'bold', width: '80px', textAlign: 'center' }}><b>{this.state.data.datasets[1].data[this.state.data.datasets[1].data.length - 1]}</b></div>
                                 <div class='col' style={{ fontStyle: 'bold', textAlign: 'left' }}><b>{this.props.units}</b></div>
                             </div>
                         </div>
                         <div class='col' style={{ textAlign: 'center' }}>
                             <div class='row' style={{ textAlign: 'center' }}>
                                 <div class='col' style={{ color: '#009E73', fontStyle: 'bold', textAlign: 'right' }}><b>RR:</b></div>
-                                <div class='col-xs' style={{ fontStyle: 'bold', width: '80px', textAlign: 'center' }}><b>{this.state.data.datasets[0].data[this.state.data.datasets[0].data.length - 1]}</b></div>
+                                <div class='col-xs' style={{ fontStyle: 'bold', width: '80px', textAlign: 'center' }}><b>{this.state.data.datasets[2].data[this.state.data.datasets[2].data.length - 1]}</b></div>
                                 <div class='col' style={{ fontStyle: 'bold', textAlign: 'left' }}><b>{this.props.units}</b></div>
                             </div>
                         </div>
                         <div class='col' style={{ textAlign: 'center' }}>
                             <div class='row' style={{ textAlign: 'center' }}>
                                 <div class='col' style={{ color: '#CC79A7', fontStyle: 'bold', textAlign: 'right' }}><b>RL:</b></div>
-                                <div class='col-xs' style={{ fontStyle: 'bold', width: '80px', textAlign: 'center' }}><b>{this.state.data.datasets[0].data[this.state.data.datasets[0].data.length - 1]}</b></div>
+                                <div class='col-xs' style={{ fontStyle: 'bold', width: '80px', textAlign: 'center' }}><b>{this.state.data.datasets[3].data[this.state.data.datasets[3].data.length - 1]}</b></div>
                                 <div class='col' style={{ fontStyle: 'bold', textAlign: 'left' }}><b>{this.props.units}</b></div>
                             </div>
                         </div>
                     </div>
-                    <Line id={this.props.id} data={this.state.data} options={this.state.options} ref={this.lineGraph} key={Math.random()}/>
+                    <Line id={this.props.id} data={this.state.data} options={this.state.options} ref={this.lineGraph} key={Math.random()} />
                 </article>
             );
         }

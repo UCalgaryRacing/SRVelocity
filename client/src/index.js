@@ -39,11 +39,6 @@ export default class App extends React.Component {
             );
         }
         else {
-            //Sup Ryan and James, this code basically just renders different components depending on the device that the user is using. What I would like you guys to do is see 
-            //if you can make the about, error, home, licenses, notFound, Signin, and streaming pages for mobile, follow the same colour scheme as the rest of the site but
-            //feel free to get creative! To do this, edit the code in the pages folder in the mobile folder, feel free to use the code for the desktop version as a reference. To see
-            //how the site looks on mobile, cd client then npm i then npm start, then find your IP address and enter it into your browser along with :3000, so like this: IP:3000. You should then
-            //be able to see what it's looking like. Please work on the mobile branch. Good luck guys, and have fun!
             return (
                 <Router>
                     <Switch>

@@ -13,6 +13,7 @@ export default class DataPage extends React.Component {
                 { title: 'Throttle Position', units: '%' },
                 { title: 'Engine Temperature', units: '˚C' },
                 { title: 'Oil Temperature', units: '˚C' },
+                { title: 'Fuel Temperature', units: '˚C' },
                 { title: 'Intake Air Temperature', units: '˚C' },
                 { title: 'Oil Pressure', units: 'kPa' },
                 { title: 'Barometer', units: 'kPa' },

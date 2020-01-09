@@ -27,7 +27,7 @@ export default class StreamingDash extends React.Component {
                 <Button id='customButton' onClick={this.changeDash} disabled={(this.state.option === 'custom') ? true : false}><b>Custom</b></Button>
             </ButtonGroup >
         );
-        if (this.props.toggleDashType === 'default') {
+        if (this.state.option === 'default') {
             return (
                 <div id='dashboard'>
                     {selector}

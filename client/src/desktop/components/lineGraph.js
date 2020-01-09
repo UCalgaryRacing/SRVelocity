@@ -32,8 +32,8 @@ export default class LineGraph extends React.Component {
                             onRefresh: function (chart) { },
                         },
                         gridLines: {
-                            display: false,
-                            lineWidth: 1,
+                            display: true,
+                            lineWidth: 0,
                             zeroLineWidth: 2,
                             drawTicks: false,
                             color: '#494949'
@@ -48,9 +48,9 @@ export default class LineGraph extends React.Component {
                     }],
                     yAxes: [{
                         gridLines: {
-                            display: false,
-                            lineWidth: 1,
-                            zeroLineWidth: 0,
+                            display: true,
+                            lineWidth: 0,
+                            zeroLineWidth: 2,
                             drawTicks: false,
                             color: '#494949'
                         },

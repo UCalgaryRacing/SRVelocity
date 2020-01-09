@@ -13,6 +13,7 @@ export default class CustomDash extends React.Component {
                 { title: 'Throttle Position', units: '%' },
                 { title: 'Engine Temperature', units: '&deg;C' },
                 { title: 'Oil Temperature', units: '&deg;C' },
+                { title: 'Fuel Temperature', units: '˚C' },
                 { title: 'Intake Air Temperature', units: '&deg;C' },
                 { title: 'Oil Pressure', units: 'kPa' },
                 { title: 'Barometer', units: 'kPa' },

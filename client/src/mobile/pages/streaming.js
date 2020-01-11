@@ -24,7 +24,7 @@ export default class StreamingPageM extends React.Component {
     render = () => {
         return (
             <div id='streamingPage' style={{ height: '100%' }}>
-                <SideNavM />
+                <SideNavM/>
                 <StreamingContentM ref={this.streamingContent} toggleDashType={this.state.toggleDashType} />
             </div>
         );

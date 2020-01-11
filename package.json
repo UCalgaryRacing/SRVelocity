@@ -19,6 +19,7 @@
     "lusca": "^1.6.1",
     "nodemon": "^1.19.1",
     "path": "^0.12.7",
+    "react-collapsible": "^2.6.2",
     "react-sidebar": "^3.0.2"
   }
 }

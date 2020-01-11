@@ -384,6 +384,32 @@ export default class Data {
         }
     }
 
+    getDataPoint = (index) => {
+        for (var parameter of this.datasets) {
+            if (index === parameter.title) {
+                if(parameter.title !== 'Acceleration' && parameter.title !== 'Suspension' && parameter.title !== 'Track Map') {
+                    return parameter.value[0].data[parameter.value[0].data.length - 1];
+                }
+                else if(parameter.title === 'Acceleration') {
+                    var accelArray = [];
+                    accelArray.push(parameter.value[0].data[parameter.value[0].data.length -1]);
+                    accelArray.push(parameter.value[1].data[parameter.value[1].data.length -1]);
+                    accelArray.push(parameter.value[2].data[parameter.value[2].data.length -1]);
+                    return accelArray;
+
+                }
+                else if(parameter.title === 'Suspension') {
+                    var suspArray = [];
+                    suspArray.push(parameter.value[0].data[parameter.value[0].data.length -1]);
+                    suspArray.push(parameter.value[1].data[parameter.value[1].data.length -1]);
+                    suspArray.push(parameter.value[2].data[parameter.value[2].data.length -1]);
+                    suspArray.push(parameter.value[3].data[parameter.value[3].data.length -1]);
+                    return suspArray;
+                }
+            }
+        }
+    }
+
     getLabels = () => {
         return this.labels;
     }

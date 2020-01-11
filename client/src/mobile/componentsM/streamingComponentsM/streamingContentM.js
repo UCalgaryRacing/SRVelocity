@@ -24,8 +24,8 @@ export default class StreamingContentM extends React.Component {
         }
         else {
             return (
-                <div id='streamingContent' style={{ marginTop: '15px', transition: 'all 0.15s' }}>
-                    <DataPageM content={this.state.content} />
+                <div id='streamingContent' style={{ marginTop: '-40px', transition: 'all 0.15s' }}>
+                    <DataPageM content={this.state.content} key={Math.random()}/>
                 </div>
             );
         }

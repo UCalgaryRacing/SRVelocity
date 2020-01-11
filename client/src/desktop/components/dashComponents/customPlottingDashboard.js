@@ -1,39 +1,32 @@
 import React from 'react';
 import '../../styling/customDash.css';
 import {GraphingDashboard} from "./graphingDashboard";
+import CustomGraphChoice from "./customGraphChoice";
 
 export default class CustomPlottingDash extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            graphTitles: [
-                { title: 'RPM', units: 'RPM' },
-                { title: 'Air To Fuel', units: '' },
-                { title: 'Manifold Air Pressure', units: 'kPa' },
-                { title: 'Throttle Position', units: '%' },
-                { title: 'Engine Temperature', units: '&deg;C' },
-                { title: 'Oil Temperature', units: '&deg;C' },
-                { title: 'Fuel Temperature', units: '˚C' },
-                { title: 'Intake Air Temperature', units: '&deg;C' },
-                { title: 'Oil Pressure', units: 'kPa' },
-                { title: 'Barometer', units: 'kPa' },
-                { title: 'Injector Pulse Width', units: 'seconds' },
-                { title: 'Suspension', units: 'mm' },
-                { title: 'Acceleration', units: 'g' },
-                { title: 'Roll', units: '&deg;' },
-                { title: 'Pitch', units: '&deg;' },
-                { title: 'Yaw', units: '&deg;' },
-                { title: 'Speed', units: 'km/h' },
-                { title: 'Distance', units: 'm' },
-                { title: 'Track Map', units: '' }],
-            selectedGraphs: [{ title: 'RPM', units: 'RPM' }]
+            showChoice: true,
+            selectedGraphs: []
         }
     }
 
+    enter = (graphChoices) => {
+        this.setState({
+            showChoice: false,
+            selectedGraphs: graphChoices
+        })
+    }
+
+
     render = () => {
+
         return (
             <div id='customDash'>
-                <GraphingDashboard graphInfo={this.state.selectedGraphs}></GraphingDashboard>
+                {this.state.showChoice ? 
+                    <CustomGraphChoice enter={this.enter}></CustomGraphChoice>:
+                    <GraphingDashboard graphInfo={this.state.selectedGraphs}></GraphingDashboard>}
             </div>
         );
     }

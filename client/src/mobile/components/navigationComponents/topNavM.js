@@ -4,7 +4,6 @@ import { SocialIcon } from 'react-social-icons';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 export default class TopNavM extends React.Component {
-    state = {}
     render() {
         return (
             <Navbar id="MobileNavBar" bg="dark" variant="dark" expand="lg">

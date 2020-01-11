@@ -2,15 +2,17 @@
   width: 35px;
   height: 5px;
   background-color: black;
-  margin: 6px 0;
+  position: relative;
 }
 
 .container {
   display: inline-block;
   cursor: pointer;
-  margin-top: 10px;
+  margin-top: 15px;
   margin-left: 6px;
   opacity: 0.5;
+  width: 10px;
+  position: relative;
 }
   
 .bar1, .bar2, .bar3 {

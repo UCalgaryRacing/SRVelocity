@@ -1,5 +1,6 @@
 import React from 'react';
 import { Line } from 'react-chartjs-2';
+import nodemon from 'nodemon';
 
 // function getRandomInt(min, max) {
 //     return Math.floor(Math.random() * (max - min + 1)) + min;
@@ -53,6 +54,7 @@ export default class LineGraphM extends React.Component {
                             drawTicks: false
                         },
                         ticks: {
+                            display: false,
                             maxRotation: 0,
                             minRotation: 0,
                             padding: 15,

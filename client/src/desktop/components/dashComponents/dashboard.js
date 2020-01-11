@@ -1,45 +1,81 @@
 import React from 'react';
 import ButtonGroup from 'react-bootstrap/ButtonGroup';
 import Button from 'react-bootstrap/Button';
-import DefaultDash from './defaultDashboard';
-import CustomDash from './customDashboard';
+import DefaultPlottingDash from './defaultPlottingDashboard';
+import DefaultDataDash from './defaultDataDashboard';
+import CustomPlottingDash from './customPlottingDashboard';
+import CustomDataDash from './customDataDashboard';
 import '../../styling/dashboard.css';
 
 export default class StreamingDash extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            option: 'default'
+            dashOption: 'default',
+            typeOption: 'plotting'
         }
         this.changeDash = this.changeDash.bind(this);
+        this.changeType = this.changeType.bind(this);
     }
 
     changeDash = () => {
         this.setState({
-            option: (this.state.option === 'default') ? 'custom' : 'default'
+            dashOption: (this.state.dashOption === 'default') ? 'custom' : 'default'
+        });
+    }
+
+    changeType = () => {
+        this.setState({
+            typeOption: (this.state.typeOption === 'plotting') ? 'currentData' : 'plotting'
         });
     }
 
     render = () => {
-        let selector = (
+        let dashSelector = (
             <ButtonGroup id='dashSelector' style={{marginTop: '60px'}}>
-                <Button id='defaultButton' onClick={this.changeDash} disabled={(this.state.option === 'default') ? true : false}><b>Default</b></Button>
-                <Button id='customButton' onClick={this.changeDash} disabled={(this.state.option === 'custom') ? true : false}><b>Custom</b></Button>
+                <Button id='defaultButton' onClick={this.changeDash} disabled={(this.state.dashOption === 'default') ? true : false}><b>Default</b></Button>
+                <Button id='customButton' onClick={this.changeDash} disabled={(this.state.dashOption === 'custom') ? true : false}><b>Custom</b></Button>
             </ButtonGroup >
         );
-        if (this.state.option === 'default') {
+        let typeSelector = (
+            <ButtonGroup id='dashSelector' style={{marginTop: '60px'}}>
+                <Button id='defaultButton' onClick={this.changeType} disabled={(this.state.typeOption === 'plotting') ? true : false}><b>Plotting</b></Button>
+                <Button id='customButton' onClick={this.changeType} disabled={(this.state.typeOption === 'currentData') ? true : false}><b>Current Data</b></Button>
+            </ButtonGroup >
+        );
+        if(this.state.dashOption === 'default' && this.state.typeOption === 'plotting') {
             return (
                 <div id='dashboard'>
-                    {selector}
-                    <DefaultDash />
+                    {dashSelector}&nbsp;&nbsp;
+                    {typeSelector}
+                    <DefaultPlottingDash />
                 </div>
             );
         }
-        else {
+        else if(this.state.dashOption === 'custom' && this.state.typeOption === 'plotting'){
             return (
                 <div id='dashboard'>
-                    {selector}
-                    <CustomDash />
+                    {dashSelector}&nbsp;&nbsp;
+                    {typeSelector}
+                    <CustomPlottingDash />
+                </div>
+            );
+        }
+        else if(this.state.dashOption === 'default' && this.state.typeOption === 'currentData'){
+            return (
+                <div id='dashboard'>
+                    {dashSelector}&nbsp;&nbsp;
+                    {typeSelector}
+                    <DefaultDataDash />
+                </div>
+            );
+        }
+        else if(this.state.dashOption === 'custom' && this.state.typeOption === 'currentData'){
+            return (
+                <div id='dashboard'>
+                    {dashSelector}&nbsp;&nbsp;
+                    {typeSelector}
+                    <CustomDataDash />
                 </div>
             );
         }

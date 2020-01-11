@@ -32,7 +32,6 @@ export class GraphingDashboard extends React.Component {
     }
 
     createToRender = () => {
-        let i = 0
         for (const graph of this.graphs) {
             this.container.push(
                 <Row style={{ marginTop: '30px' }}>
@@ -41,7 +40,6 @@ export class GraphingDashboard extends React.Component {
                     </Col>
                 </Row>
             );
-            i++;
         }
     }
 

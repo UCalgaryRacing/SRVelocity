@@ -1,12 +1,11 @@
 import React from 'react';
-import '../../styling/defaultDash.css';
-import {GraphingDashboard} from './graphingDashboard';
+import '../../styling/customDash.css';
 
-export default class DefaultDash extends React.Component {
+export default class CustomDataDash extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            graphTitles: [
+            dataTitles: [
                 { title: 'RPM', units: 'RPM' },
                 { title: 'Air To Fuel', units: '' },
                 { title: 'Manifold Air Pressure', units: 'kPa' },
@@ -27,13 +26,5 @@ export default class DefaultDash extends React.Component {
                 { title: 'Distance', units: 'km' },
                 { title: 'Track Map', units: '' }]
         }
-    }
-
-    render = () => {
-        return (
-            <div id='defaultDash'>
-                <GraphingDashboard graphInfo={this.state.graphTitles}></GraphingDashboard>
-            </div>
-        );
     }
 }

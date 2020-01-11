@@ -160,7 +160,7 @@ export default class Data {
                         backgroundColor: 'rgb(255, 255, 255, 0)',
                         lineTension: 0,
                         type: 'line',
-                        label: 'Rear Left'
+                        label: 'RL'
                     },
                     {
                         data: [],
@@ -170,7 +170,7 @@ export default class Data {
                         backgroundColor: 'rgb(255, 255, 255, 0)',
                         lineTension: 0,
                         type: 'line',
-                        label: 'Rear Right'
+                        label: 'RR'
                     },
                     {
                         data: [],
@@ -180,7 +180,7 @@ export default class Data {
                         backgroundColor: 'rgb(255, 255, 255, 0)',
                         lineTension: 0,
                         type: 'line',
-                        label: 'Front Left'
+                        label: 'FL'
                     },
                     {
                         data: [],
@@ -190,7 +190,7 @@ export default class Data {
                         backgroundColor: 'rgb(255, 255, 255, 0)',
                         lineTension: 0,
                         type: 'line',
-                        label: 'Front Right'
+                        label: 'FR'
                     }
                 ]
             },
@@ -380,6 +380,31 @@ export default class Data {
         for (var parameter of this.datasets) {
             if (index === parameter.title) {
                 return parameter.value;
+            }
+        }
+    }
+
+    getDataPoint = (index) => {
+        for (var parameter of this.datasets) {
+            if (index === parameter.title) {
+                if(index !== 'Acceleration' && index !== 'Suspension' && index !== 'Track Map') {
+                    return parameter.value[0].data[parameter.value[0].data.length - 1];
+                }
+                else if(index === 'Acceleration') {
+                    let accelArray = [];
+                    accelArray.push(parameter.value[0].data[parameter.value[0].data.length - 1]);
+                    accelArray.push(parameter.value[1].data[parameter.value[1].data.length - 1]);
+                    accelArray.push(parameter.value[2].data[parameter.value[2].data.length - 1]);
+                    return accelArray;
+                }
+                else if(index === 'Suspension') {
+                    let suspArray = [];
+                    suspArray.push(parameter.value[0].data[parameter.value[0].data.length - 1]);
+                    suspArray.push(parameter.value[1].data[parameter.value[1].data.length - 1]);
+                    suspArray.push(parameter.value[2].data[parameter.value[2].data.length - 1]);
+                    suspArray.push(parameter.value[3].data[parameter.value[3].data.length - 1]);
+                    return suspArray;
+                }
             }
         }
     }

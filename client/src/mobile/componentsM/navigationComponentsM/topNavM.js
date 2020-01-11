@@ -9,7 +9,7 @@ export default class TopNavM extends React.Component {
     state = {}
     render() {
         return (
-            <Navbar id="MobileNavBar" bg="dark" variant="dark" expand="lg">
+            <Navbar id="MobileNavBar" bg="dark" variant="dark" expand="lg" style={{position: 'fixed'}}>
                 <Navbar.Brand href="/">
                     <b>Schulich Velocity</b>
                 </Navbar.Brand>

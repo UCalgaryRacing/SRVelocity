@@ -8,11 +8,14 @@
 .container {
   display: inline-block;
   cursor: pointer;
-  margin-top: 15px;
+  margin-top: 70px;
   margin-left: 6px;
   opacity: 0.5;
   width: 10px;
-  position: relative;
+}
+
+.Collapsible__trigger {
+  font-weight: 700;
 }
   
 .bar1, .bar2, .bar3 {

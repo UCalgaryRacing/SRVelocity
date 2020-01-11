@@ -67,102 +67,101 @@ export default class DefaultDashM extends React.Component {
             yaw: Data.getInstance().getDataPoint('Yaw'),
             speed: Data.getInstance().getDataPoint('Speed'),
             distance: Data.getInstance().getDataPoint('Distance')
-
-        })
+        });
     }
 
     render = () => {
         return (
             <div id='defaultDash'>
-                <div style={{ background: '#0000FF', textAlign: 'center', fontWeight: '700', color: '#FFF' }}>
+                <div style={{ background: '#3CB44B', textAlign: 'center', fontWeight: '700', color: '#FFF' }}>
                     <p>Front Right (mm)</p>
                     <p>{(this.state.fr !== undefined)?this.state.fr:'0'}</p>
                 </div>
-                <div style={{ background: '#0000FF', textAlign: 'center', fontWeight: '700', color: '#FFF' }}>
+                <div style={{ background: '#3CB44B', textAlign: 'center', fontWeight: '700', color: '#FFF' }}>
                     <p>Front Left (mm)</p>
                     <p>{(this.state.fl !== undefined)?this.state.fl:'0'}</p>
                 </div>
-                <div style={{ background: '#0000FF', textAlign: 'center', fontWeight: '700', color: '#FFF' }}>
+                <div style={{ background: '#3CB44B', textAlign: 'center', fontWeight: '700', color: '#FFF' }}>
                     <p>Rear Right (mm)</p>
                     <p>{(this.state.rr !== undefined)?this.state.rr:'0'}</p>
                 </div>
-                <div style={{ background: '#0000FF', textAlign: 'center', fontWeight: '700', color: '#FFF' }}>
+                <div style={{ background: '#3CB44B', textAlign: 'center', fontWeight: '700', color: '#FFF' }}>
                     <p>Rear Left (mm)</p>
                     <p>{(this.state.rl !== undefined)?this.state.rl:'0'}</p>
                 </div>
-                <div style={{ background: '#0000FF', textAlign: 'center', fontWeight: '700', color: '#FFF' }}>
+                <div style={{ background: '#3CB44B', textAlign: 'center', fontWeight: '700', color: '#FFF' }}>
                     <p>RPM</p>
                     <p>{(this.state.rpm !== undefined)?this.state.rpm:'0'}</p>
                 </div>
-                <div style={{ background: '#0000FF', textAlign: 'center', fontWeight: '700', color: '#FFF' }}>
+                <div style={{ background: '#3CB44B', textAlign: 'center', fontWeight: '700', color: '#FFF' }}>
                     <p>Throttle Position (%)</p>
                     <p>{(this.state.tp !== undefined)?this.state.tp:'0'}</p>
                 </div>
-                <div style={{ background: '#0000FF', textAlign: 'center', fontWeight: '700', color: '#FFF' }}>
+                <div style={{ background: '#3CB44B', textAlign: 'center', fontWeight: '700', color: '#FFF' }}>
                     <p>Injector Pulse Width (seconds)</p>
                     <p>{(this.state.ipw !== undefined)?this.state.ipw:'0'}</p>
                 </div>
-                <div style={{ background: '#0000FF', textAlign: 'center', fontWeight: '700', color: '#FFF' }}>
+                <div style={{ background: '#3CB44B', textAlign: 'center', fontWeight: '700', color: '#FFF' }}>
                     <p>Barometer (kPa)</p>
                     <p>{(this.state.baro !== undefined)?this.state.baro:'0'}</p>
                 </div>
-                <div style={{ background: '#0000FF', textAlign: 'center', fontWeight: '700', color: '#FFF' }}>
+                <div style={{ background: '#3CB44B', textAlign: 'center', fontWeight: '700', color: '#FFF' }}>
                     <p>Manifold Air Pressure (kPa)</p>
                     <p>{(this.state.map !== undefined)?this.state.map:'0'}</p>
                 </div>
-                <div style={{ background: '#0000FF', textAlign: 'center', fontWeight: '700', color: '#FFF' }}>
+                <div style={{ background: '#3CB44B', textAlign: 'center', fontWeight: '700', color: '#FFF' }}>
                     <p>Air to Fuel</p>
                     <p>{(this.state.atf !== undefined)?this.state.atf:'0'}</p>
                 </div>
-                <div style={{ background: '#0000FF', textAlign: 'center', fontWeight: '700', color: '#FFF' }}>
+                <div style={{ background: '#3CB44B', textAlign: 'center', fontWeight: '700', color: '#FFF' }}>
                     <p>Intake Air Temperature (˚C)</p>
                     <p>{(this.state.iat !== undefined)?this.state.iat:'0'}</p>
                 </div>
-                <div style={{ background: '#0000FF', textAlign: 'center', fontWeight: '700', color: '#FFF' }}>
+                <div style={{ background: '#3CB44B', textAlign: 'center', fontWeight: '700', color: '#FFF' }}>
                     <p>Engine Temperature (˚C)</p>
                     <p>{(this.state.et !== undefined)?this.state.et:'0'}</p>
                 </div>
-                <div style={{ background: '#0000FF', textAlign: 'center', fontWeight: '700', color: '#FFF' }}>
+                <div style={{ background: '#3CB44B', textAlign: 'center', fontWeight: '700', color: '#FFF' }}>
                     <p>Oil Pressure (kPa)</p>
                     <p>{(this.state.op !== undefined)?this.state.op:'0'}</p>
                 </div>
-                <div style={{ background: '#0000FF', textAlign: 'center', fontWeight: '700', color: '#FFF' }}>
+                <div style={{ background: '#3CB44B', textAlign: 'center', fontWeight: '700', color: '#FFF' }}>
                     <p>Oil Temperature (˚C)</p>
                     <p>{(this.state.ot !== undefined)?this.state.ot:'0'}</p>
                 </div>
-                <div style={{ background: '#0000FF', textAlign: 'center', fontWeight: '700', color: '#FFF' }}>
+                <div style={{ background: '#3CB44B', textAlign: 'center', fontWeight: '700', color: '#FFF' }}>
                     <p>Fuel Temperature (˚C)</p>
                     <p>{(this.state.ft !== undefined)?this.state.ft:'0'}</p>
                 </div>
-                <div style={{ background: '#0000FF', textAlign: 'center', fontWeight: '700', color: '#FFF' }}>
+                <div style={{ background: '#3CB44B', textAlign: 'center', fontWeight: '700', color: '#FFF' }}>
                     <p>Acceleration X (g)</p>
                     <p>{(this.state.x !== undefined)?this.state.x:'0'}</p>
                 </div>
-                <div style={{ background: '#0000FF', textAlign: 'center', fontWeight: '700', color: '#FFF' }}>
+                <div style={{ background: '#3CB44B', textAlign: 'center', fontWeight: '700', color: '#FFF' }}>
                     <p>Acceleration Y (g)</p>
                     <p>{(this.state.y !== undefined)?this.state.y:'0'}</p>
                 </div>
-                <div style={{ background: '#0000FF', textAlign: 'center', fontWeight: '700', color: '#FFF' }}>
+                <div style={{ background: '#3CB44B', textAlign: 'center', fontWeight: '700', color: '#FFF' }}>
                     <p>Acceleration Z (g)</p>
                     <p>{(this.state.z !== undefined)?this.state.z:'0'}</p>
                 </div>
-                <div style={{ background: '#0000FF', textAlign: 'center', fontWeight: '700', color: '#FFF' }}>
+                <div style={{ background: '#3CB44B', textAlign: 'center', fontWeight: '700', color: '#FFF' }}>
                     <p>Roll (˚)</p>
                     <p>{(this.state.roll !== undefined)?this.state.roll:'0'}</p>
                 </div>
-                <div style={{ background: '#0000FF', textAlign: 'center', fontWeight: '700', color: '#FFF' }}>
+                <div style={{ background: '#3CB44B', textAlign: 'center', fontWeight: '700', color: '#FFF' }}>
                     <p>Pitch (˚)</p>
                     <p>{(this.state.pitch !== undefined)?this.state.pitch:'0'}</p>
                 </div>
-                <div style={{ background: '#0000FF', textAlign: 'center', fontWeight: '700', color: '#FFF' }}>
+                <div style={{ background: '#3CB44B', textAlign: 'center', fontWeight: '700', color: '#FFF' }}>
                     <p>Yaw (˚)</p>
                     <p>{(this.state.yaw !== undefined)?this.state.yaw:'0'}</p>
                 </div>
-                <div style={{ background: '#0000FF', textAlign: 'center', fontWeight: '700', color: '#FFF' }}>
+                <div style={{ background: '#3CB44B', textAlign: 'center', fontWeight: '700', color: '#FFF' }}>
                     <p>Speed (km/h)</p>
                     <p>{(this.state.speed !== undefined)?this.state.speed:'0'}</p>
                 </div>
-                <div style={{ background: '#0000FF', textAlign: 'center', fontWeight: '700', color: '#FFF' }}>
+                <div style={{ background: '#3CB44B', textAlign: 'center', fontWeight: '700', color: '#FFF' }}>
                     <p>Distance (km)</p>
                     <p>{(this.state.distance !== undefined)?this.state.distance:'0'}</p>
                 </div>

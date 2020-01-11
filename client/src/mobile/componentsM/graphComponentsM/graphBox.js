@@ -1,8 +1,6 @@
 import React from 'react';
 import LineGraphM from '../graphComponentsM/lineGraph';
 import Data from '../../../data';
-import CalculationBoxM from './calculationBox';
-import { Col, Row } from 'react-bootstrap'
 import '../../styling/graphBoxM.css';
 
 export default class GraphBoxM extends React.Component {

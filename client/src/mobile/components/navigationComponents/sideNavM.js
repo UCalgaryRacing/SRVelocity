@@ -4,8 +4,6 @@ import { NavItem } from '@trendmicro/react-sidenav';
 import Collapsible from 'react-collapsible'
 import Settings from '../settingsComponentsM/settingsM.js'
 import '@trendmicro/react-sidenav/dist/react-sidenav.css';
-import { Nav } from 'react-bootstrap'
-
 import '../../styling/sideNavM.css';
 import '../../styling/sideNavToggleM.css'
 import '../../styling/topNavM.css'
@@ -31,18 +29,18 @@ export default class SideNavbar extends React.Component {
 
     render() {
         return (
-            <div style={{position: 'relative', height: '60px'}}>
+            <div style={{height: '100px', zIndex: '-1'}}>
                 <Sidebar 
                     sidebar={
                         <React.Fragment>
                             <NavItem eventKey='Dashboard'>
-                                <button class="tab-button" onClick={() => {this.onSelect('Dash')}}>Dashboard</button>
+                                <button class="tab-button" onClick={() => {this.onSelect('Dash')}}><b>Dashboard</b></button>
                             </NavItem>
                             <NavItem eventKey='Suspension'>
-                                <button class="tab-button" onClick={() => {this.onSelect('Suspension')}}>Suspension</button>
+                                <button class="tab-button" onClick={() => {this.onSelect('Suspension')}}><b>Suspension</b></button>
                             </NavItem>
                             <NavItem eventKey='Powertrain'>
-                                <Collapsible trigger="Powertrain">
+                                <Collapsible trigger="Powertrain" style={{fontWeight: '700'}}>
                                     <button eventKey='RPM' class="collapse-content-button" onClick={() => {this.onSelect('RPM')}}>RPM</button>
                                     <button eventKey='Throttle Position' class="collapse-content-button" onClick={() => {this.onSelect('Throttle Position')}}>Throttle Position</button>
                                     <button eventKey='Injector Pulse Width' class="collapse-content-button" onClick={() => {this.onSelect('Injector Pulse Width')}}>Injector Pulse Width</button>
@@ -57,25 +55,25 @@ export default class SideNavbar extends React.Component {
                                 </Collapsible>
                             </NavItem>
                             <NavItem eventKey='Acceleration'>
-                                <button class="tab-button" onClick={() => {this.onSelect('Acceleration')}}>Acceleration</button>
+                                <button class="tab-button" onClick={() => {this.onSelect('Acceleration')}}><b>Acceleration</b></button>
                             </NavItem>
                             <NavItem eventKey='Roll'>
-                                <button class="tab-button" onClick={() => {this.onSelect('Roll')}}>Roll</button>
+                                <button class="tab-button" onClick={() => {this.onSelect('Roll')}}><b>Roll</b></button>
                             </NavItem>
                             <NavItem eventKey='Pitch'>
-                                <button class="tab-button" onClick={() => {this.onSelect('Pitch')}}>Pitch</button>
+                                <button class="tab-button" onClick={() => {this.onSelect('Pitch')}}><b>Pitch</b></button>
                             </NavItem>
                             <NavItem eventKey='Yaw'>
-                                <button class="tab-button" onClick={() => {this.onSelect('Yaw')}}>Yaw</button>
+                                <button class="tab-button" onClick={() => {this.onSelect('Yaw')}}><b>Yaw</b></button>
                             </NavItem>
                             <NavItem eventKey='Track Map'>
-                                <button class="tab-button" onClick={() => {this.onSelect('Track Map')}}>Track Map</button>
+                                <button class="tab-button" onClick={() => {this.onSelect('Track Map')}}><b>Track Map</b></button>
                             </NavItem>
                             <NavItem eventKey='Speed'>
-                                <button class="tab-button" onClick={() => {this.onSelect('Speed')}}>Speed</button>
+                                <button class="tab-button" onClick={() => {this.onSelect('Speed')}}><b>Speed</b></button>
                             </NavItem>
                             <NavItem eventKey='Distance'>
-                                <button class="tab-button" onClick={() => {this.onSelect('Distance')}}>Distance</button>
+                                <button class="tab-button" onClick={() => {this.onSelect('Distance')}}><b>Distance</b></button>
                             </NavItem>
                         </React.Fragment>
                     }

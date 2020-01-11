@@ -38,7 +38,7 @@ export default class LineGraphM extends React.Component {
                         gridLines: {
                             display: true,
                             lineWidth: 0,
-                            zeroLineWidth: 2,
+                            zeroLineWidth: 1,
                             drawTicks: false
                         },
                         scaleLabel: {

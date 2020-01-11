@@ -2,7 +2,6 @@ import React from 'react';
 import SideNavM from '../components/navigationComponents/sideNavM';
 import StreamingContentM from '../componentsM/streamingComponentsM/streamingContentM';
 import TopNavM from '../components/navigationComponents/topNavM';
-import SettingsM from '../componentsM/settingsComponentsM/settingsM';
 
 export default class StreamingPageM extends React.Component {
     constructor(props) {

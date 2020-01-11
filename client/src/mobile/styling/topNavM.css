@@ -4,7 +4,6 @@
     -ms-transition: all 0.3s;
     -o-transition: all 0.3s;
     transition: all 0.3s;
-
     max-height: 0;
     display: block;
     overflow: hidden;
@@ -29,4 +28,10 @@
 
 #socialNavIcon div svg g.social-svg-mask{
     fill: rgba(194, 45, 45) !important;
+}
+
+#MobileNavBar {
+    position: fixed;
+    width: 100%;
+    z-index: 1000;
 }

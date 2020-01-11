@@ -61,7 +61,7 @@ export default class LineGraph extends React.Component {
                             fontStyle: 'bold',
                             fontColor: '#494949'
                         },
-                        ticks: {
+                        ticks: { 
                             beginAtZero: true,
                             padding: 15,
                             fontSize: 15,

@@ -30,7 +30,7 @@ const constDataTitles =
     iat: ['Intake Air Temperature', '(˚C)'],
     oilPres: ['Oil Pressure', '(kPa)'],
     baro: ['Barometer', '(kPa)'],
-    ipw: ['Injector Pulse Width', '(seconds)'],
+    ipw: ['Injector Pulse Width', '(s)'],
     voltage: ['Battery Voltage', '(V)'],
     fl: ['Suspension','(mm)', [2]],
     fr: ['Suspension','(mm)',[3]],

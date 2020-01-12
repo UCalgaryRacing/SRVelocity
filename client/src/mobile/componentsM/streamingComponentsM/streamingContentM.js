@@ -18,7 +18,7 @@ export default class StreamingContentM extends React.Component {
         if (this.state.content === 'Dash') {
             return (
                 <div id='streamingContent' style={{ marginTop: '15px', transition: 'all 0.15s' }}>
-                    <StreamingDashM toggleDashType={this.props.toggleDashType} />
+                    <StreamingDashM option={this.props.option} />
                 </div>
             );
         }

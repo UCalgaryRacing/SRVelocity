@@ -8,12 +8,10 @@ import '../../styling/dashM.css';
 export default class StreamingDashM extends React.Component {
     constructor(props) {
         super(props);
-        this.state = {
-        }
     }
 
     render = () => {
-        if (this.props.toggleDashType === 'default') {
+        if (this.props.option === 'default') {
             return (
                 <div id='dashboard'>
                     <DefaultDashM />

@@ -27,7 +27,6 @@ export default class GraphingDashboard extends React.Component {
             );
             i++;
         }
-        this.setState({currentGraph: this.graphs[0]})
     }
 
     createToRender = () => {

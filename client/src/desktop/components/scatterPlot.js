@@ -60,10 +60,7 @@ export default class ScatterPlot extends React.Component {
                             color: '#494949'
                         },
                         scaleLabel: {
-                            display: false,
-                            fontSize: 15,
-                            fontStyle: 'bold',
-                            fontColor: '#494949'
+                            display: false
                         },
                         ticks: {
                             display: false,

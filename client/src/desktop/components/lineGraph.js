@@ -36,7 +36,7 @@ export default class LineGraph extends React.Component {
                             lineWidth: 0,
                             zeroLineWidth: 2,
                             drawTicks: false,
-                            color: '#494949'
+                            color: '#000'
                         },
                         ticks: {
                             display: false,
@@ -52,21 +52,17 @@ export default class LineGraph extends React.Component {
                             lineWidth: 0,
                             zeroLineWidth: 2,
                             drawTicks: false,
-                            color: '#494949'
+                            color: '#000'
                         },
                         scaleLabel: {
-                            display: true,
-                            labelString: this.props.title,
-                            fontSize: 15,
-                            fontStyle: 'bold',
-                            fontColor: '#494949'
+                            display: false
                         },
                         ticks: { 
                             beginAtZero: true,
                             padding: 15,
                             fontSize: 15,
                             fontStyle: 'bold',
-                            fontColor: '#494949'
+                            fontColor: '#000'
                         }
                     }]
                 }

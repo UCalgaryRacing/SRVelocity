@@ -1,5 +1,5 @@
 import React from 'react';
-import {Form, Button, Checkbox} from 'react-bootstrap';
+import {Form, Button} from 'react-bootstrap';
 import {constDataTitles} from '../../../constants'
 
 export default class CustomDataChoice extends React.Component {
@@ -52,11 +52,11 @@ export default class CustomDataChoice extends React.Component {
 
     render = () => {
         return (
-            <div id='graphChoice' style={{fontWeight: '700'}}>
+            <div id='graphChoice' style={{fontWeight: '600'}}>
                 <Form>
                     {this.switches}
                 </Form>
-                <Button onClick={this.submit} style={{fontWeight: '700', backgroundColor: '#C22D2D', borderColor: '#C22D2D', width: '366px', marginLeft: '-20px', marginTop: '15px'}}>Submit</Button>
+                <Button onClick={this.submit} style={{fontWeight: '600', backgroundColor: '#C22D2D', borderColor: '#C22D2D', width: '366px', marginLeft: '-20px', marginTop: '15px'}}>Submit</Button>
             </div>
         );
     }

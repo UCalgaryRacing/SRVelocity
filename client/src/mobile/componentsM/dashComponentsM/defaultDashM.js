@@ -70,7 +70,7 @@ export default class DefaultDashM extends React.Component {
 
     render = () => {
         return (
-            <div id='defaultDash'>
+            <div id='defaultDash' style={{paddingBottom: '100px'}}>
                 <div style={{ background: '#3CB44B', textAlign: 'center', fontWeight: '700', color: '#FFF' }}>
                     <p>RPM</p>
                     <p>{(this.state.rpm !== undefined)?this.state.rpm:'0'}</p>

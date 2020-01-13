@@ -1,6 +1,6 @@
 import React from 'react';
 import '../../styling/customDash.css';
-import {GraphingDashboard} from "./graphingDashboard";
+import GraphingDashboard from "./graphingDashboard";
 import CustomGraphChoice from "./customGraphChoice";
 
 export default class CustomPlottingDash extends React.Component {
@@ -19,11 +19,9 @@ export default class CustomPlottingDash extends React.Component {
         })
     }
 
-
     render = () => {
-
         return (
-            <div id='customDash'>
+            <div id='customDash' style={{fontWeight: '700'}}>
                 {this.state.showChoice ? 
                     <CustomGraphChoice enter={this.enter}></CustomGraphChoice>:
                     <GraphingDashboard graphInfo={this.state.selectedGraphs}></GraphingDashboard>}

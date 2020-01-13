@@ -12,7 +12,7 @@ export default class CustomGraphChoice extends React.Component {
         this.indexes = []
     }
 
-    componentWillMount() {
+    componentWillMount = () => {
         var i = 0
         for (const graph of this.state.graphTitles) {
             this.switches.push(
@@ -51,7 +51,7 @@ export default class CustomGraphChoice extends React.Component {
                 <Form>
                     {this.switches}
                 </Form>
-                <Button onClick={this.submit}>Submit</Button>
+                <Button onClick={this.submit} style={{fontWeight: '700', backgroundColor: '#C22D2D', borderColor: '#C22D2D', width: '366px', marginLeft: '-20px', marginTop: '15px'}}>Submit</Button>
             </div>
         );
     }

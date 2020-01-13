@@ -10,8 +10,8 @@ export default class ScatterPlot extends React.Component {
                     fill: false,
                     backgroundColor: 'rgba(0,0,0,0)',
                     pointBorderColor: 'rgba(255,0,0,1)',
-                    pointBorderWidth: 5,
-                    pointRadius: 1,
+                    pointBorderWidth: 4,
+                    pointRadius: 0.5,
                     data: this.props.data
                 }]
             },

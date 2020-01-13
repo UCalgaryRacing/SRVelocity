@@ -44,7 +44,8 @@ export default class Data {
                     data: [],
                     label: '',
                     borderColor: 'rgb(255, 0, 0)',
-                    pointRadius: 1,
+                    pointRadius: 0,
+                    borderWidth: 1.5,
                     backgroundColor: 'rgb(255, 255, 255, 0)',
                     lineTension: 0
                 }]
@@ -54,7 +55,8 @@ export default class Data {
                     data: [],
                     label: '',
                     borderColor: 'rgb(255, 0, 0)',
-                    pointRadius: 1,
+                    pointRadius: 0,
+                    borderWidth: 1.5,
                     backgroundColor: 'rgb(255, 255, 255, 0)',
                     lineTension: 0
                 }]
@@ -64,7 +66,8 @@ export default class Data {
                     data: [],
                     label: '',
                     borderColor: 'rgb(255, 0, 0)',
-                    pointRadius: 1,
+                    pointRadius: 0,
+                    borderWidth: 1.5,
                     backgroundColor: 'rgb(255, 255, 255, 0)',
                     lineTension: 0
                 }]
@@ -74,7 +77,8 @@ export default class Data {
                     data: [],
                     label: '',
                     borderColor: 'rgb(255, 0, 0)',
-                    pointRadius: 1,
+                    pointRadius: 0,
+                    borderWidth: 1.5,
                     backgroundColor: 'rgb(255, 255, 255, 0)',
                     lineTension: 0
                 }]
@@ -84,7 +88,8 @@ export default class Data {
                     data: [],
                     label: '',
                     borderColor: 'rgb(255, 0, 0)',
-                    pointRadius: 1,
+                    pointRadius: 0,
+                    borderWidth: 1.5,
                     backgroundColor: 'rgb(255, 255, 255, 0)',
                     lineTension: 0
                 }]
@@ -94,7 +99,8 @@ export default class Data {
                     data: [],
                     label: '',
                     borderColor: 'rgb(255, 0, 0)',
-                    pointRadius: 1,
+                    pointRadius: 0,
+                    borderWidth: 1.5,
                     backgroundColor: 'rgb(255, 255, 255, 0)',
                     lineTension: 0
                 }]
@@ -104,7 +110,8 @@ export default class Data {
                     data: [],
                     label: '',
                     borderColor: 'rgb(255, 0, 0)',
-                    pointRadius: 1,
+                    pointRadius: 0,
+                    borderWidth: 1.5,
                     backgroundColor: 'rgb(255, 255, 255, 0)',
                     lineTension: 0
                 }]
@@ -114,7 +121,8 @@ export default class Data {
                     data: [],
                     label: '',
                     borderColor: 'rgb(255, 0, 0)',
-                    pointRadius: 1,
+                    pointRadius: 0,
+                    borderWidth: 1.5,
                     backgroundColor: 'rgb(255, 255, 255, 0)',
                     lineTension: 0
                 }]
@@ -124,7 +132,8 @@ export default class Data {
                     data: [],
                     label: '',
                     borderColor: 'rgb(255, 0, 0)',
-                    pointRadius: 1,
+                    pointRadius: 0,
+                    borderWidth: 1.5,
                     backgroundColor: 'rgb(255, 255, 255, 0)',
                     lineTension: 0
                 }]
@@ -134,7 +143,8 @@ export default class Data {
                     data: [],
                     label: '',
                     borderColor: 'rgb(255, 0, 0)',
-                    pointRadius: 1,
+                    pointRadius: 0,
+                    borderWidth: 1.5,
                     backgroundColor: 'rgb(255, 255, 255, 0)',
                     lineTension: 0
                 }]
@@ -144,7 +154,19 @@ export default class Data {
                     data: [],
                     label: '',
                     borderColor: 'rgb(255, 0, 0)',
-                    pointRadius: 1,
+                    pointRadius: 0,
+                    borderWidth: 1.5,
+                    backgroundColor: 'rgb(255, 255, 255, 0)',
+                    lineTension: 0
+                }]
+            },
+            {
+                title: 'Battery Voltage', value: [{
+                    data: [],
+                    label: '',
+                    borderColor: 'rgb(255, 0, 0)',
+                    pointRadius: 0,
+                    borderWidth: 1.5,
                     backgroundColor: 'rgb(255, 255, 255, 0)',
                     lineTension: 0
                 }]
@@ -156,7 +178,8 @@ export default class Data {
                         data: [],
                         label: '',
                         borderColor: 'rgb(0, 114, 178)',
-                        pointRadius: 1,
+                        pointRadius: 0,
+                        borderWidth: 1.5,
                         backgroundColor: 'rgb(255, 255, 255, 0)',
                         lineTension: 0,
                         type: 'line',
@@ -166,7 +189,8 @@ export default class Data {
                         data: [],
                         label: '',
                         borderColor: 'rgb(230, 159, 0)',
-                        pointRadius: 1,
+                        pointRadius: 0,
+                        borderWidth: 1.5,
                         backgroundColor: 'rgb(255, 255, 255, 0)',
                         lineTension: 0,
                         type: 'line',
@@ -176,7 +200,8 @@ export default class Data {
                         data: [],
                         label: '',
                         borderColor: 'rgb(0, 158, 115)',
-                        pointRadius: 1,
+                        pointRadius: 0,
+                        borderWidth: 1.5,
                         backgroundColor: 'rgb(255, 255, 255, 0)',
                         lineTension: 0,
                         type: 'line',
@@ -186,7 +211,8 @@ export default class Data {
                         data: [],
                         label: '',
                         borderColor: 'rgb(204, 121, 167)',
-                        pointRadius: 1,
+                        pointRadius: 0,
+                        borderWidth: 1.5,
                         backgroundColor: 'rgb(255, 255, 255, 0)',
                         lineTension: 0,
                         type: 'line',
@@ -201,7 +227,8 @@ export default class Data {
                         data: [],
                         label: '',
                         borderColor: 'rgb(0, 114, 178)',
-                        pointRadius: 1,
+                        pointRadius: 0,
+                        borderWidth: 1.5,
                         backgroundColor: 'rgb(255, 255, 255, 0)',
                         lineTension: 0,
                         type: 'line',
@@ -211,7 +238,8 @@ export default class Data {
                         data: [],
                         label: '',
                         borderColor: 'rgb(230, 159, 0)',
-                        pointRadius: 1,
+                        pointRadius: 0,
+                        borderWidth: 1.5,
                         backgroundColor: 'rgb(255, 255, 255, 0)',
                         lineTension: 0,
                         type: 'line',
@@ -221,7 +249,8 @@ export default class Data {
                         data: [],
                         label: '',
                         borderColor: 'rgb(0, 158, 115)',
-                        pointRadius: 1,
+                        pointRadius: 0,
+                        borderWidth: 1.5,
                         backgroundColor: 'rgb(255, 255, 255, 0)',
                         lineTension: 0,
                         type: 'line',
@@ -234,7 +263,8 @@ export default class Data {
                     data: [],
                     label: '',
                     borderColor: 'rgb(255, 0, 0)',
-                    pointRadius: 1,
+                    pointRadius: 0,
+                    borderWidth: 1.5,
                     backgroundColor: 'rgb(255, 255, 255, 0)',
                     lineTension: 0
                 }]
@@ -244,7 +274,8 @@ export default class Data {
                     data: [],
                     label: '',
                     borderColor: 'rgb(255, 0, 0)',
-                    pointRadius: 1,
+                    pointRadius: 0,
+                    borderWidth: 1.5,
                     backgroundColor: 'rgb(255, 255, 255, 0)',
                     lineTension: 0
                 }]
@@ -254,7 +285,8 @@ export default class Data {
                     data: [],
                     label: '',
                     borderColor: 'rgb(255, 0, 0)',
-                    pointRadius: 1,
+                    pointRadius: 0,
+                    borderWidth: 1.5,
                     backgroundColor: 'rgb(255, 255, 255, 0)',
                     lineTension: 0
                 }]
@@ -264,7 +296,8 @@ export default class Data {
                     data: [],
                     label: '',
                     borderColor: 'rgb(255, 0, 0)',
-                    pointRadius: 1,
+                    pointRadius: 0,
+                    borderWidth: 1.5,
                     backgroundColor: 'rgb(255, 255, 255, 0)',
                     lineTension: 0
                 }]
@@ -274,7 +307,8 @@ export default class Data {
                     data: [],
                     label: '',
                     borderColor: 'rgb(255, 0, 0)',
-                    pointRadius: 1,
+                    pointRadius: 0,
+                    borderWidth: 1.5,
                     backgroundColor: 'rgb(255, 255, 255, 0)',
                     lineTension: 0
                 }]

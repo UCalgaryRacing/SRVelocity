@@ -1,9 +1,8 @@
 import React from 'react';
 import GraphBox from '../graphBox';
 import { Row, Col, Modal } from 'react-bootstrap';
-import Data from '../../../data'
 
-export class GraphingDashboard extends React.Component {
+export default class GraphingDashboard extends React.Component {
     constructor(props) {
         super(props);
         this.state = {

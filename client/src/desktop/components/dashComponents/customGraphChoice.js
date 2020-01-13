@@ -40,7 +40,7 @@ export default class CustomGraphChoice extends React.Component {
 
     render = () => {
         return (
-            <div id='graphChoice'>
+            <div id='graphChoice' style={{fontWeight: '600'}}>
                 <Form>
                     {this.switches}
                 </Form>

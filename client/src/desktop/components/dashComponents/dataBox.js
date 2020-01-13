@@ -1,9 +1,8 @@
 import React from 'react';
 import Data from '../../../data';
-import {constDataTitles, constGraphTitles} from '../../../constants';
+import {constDataTitles} from '../../../constants';
 
-
-export default class DefaultPlottingDash extends React.Component {
+export default class DataBox extends React.Component {
     constructor(props) {
         super(props);
         this.state = {

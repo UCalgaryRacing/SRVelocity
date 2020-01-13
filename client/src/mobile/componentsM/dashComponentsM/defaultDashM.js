@@ -1,8 +1,6 @@
 import React from 'react';
 import Data from '../../../data';
 import '../../styling/dashM.css';
-import GraphBoxM from '../graphComponentsM/graphBox';
-import { Row, Col } from 'react-bootstrap';
 
 export default class DefaultDashM extends React.Component {
     constructor(props) {
@@ -74,6 +72,50 @@ export default class DefaultDashM extends React.Component {
         return (
             <div id='defaultDash'>
                 <div style={{ background: '#3CB44B', textAlign: 'center', fontWeight: '700', color: '#FFF' }}>
+                    <p>RPM</p>
+                    <p>{(this.state.rpm !== undefined)?this.state.rpm:'0'}</p>
+                </div>
+                <div style={{ background: (this.state.atf < 10.5 || this.state.atf >= 16)?'#C22D2D':(((this.state.atf > 10.5 && this.state.atf < 11.5)||(this.state.atf > 14.7 && this.state.atf < 16))?'#BDA800':'#3CB44B'), textAlign: 'center', fontWeight: '700', color: '#FFF' }}>
+                    <p>Air to Fuel</p>
+                    <p>{(this.state.atf !== undefined)?this.state.atf:'0'}</p>
+                </div>
+                <div style={{ background: '#3CB44B', textAlign: 'center', fontWeight: '700', color: '#FFF' }}>
+                    <p>Manifold Air Pressure (kPa)</p>
+                    <p>{(this.state.map !== undefined)?this.state.map:'0'}</p>
+                </div>
+                <div style={{ background: '#3CB44B', textAlign: 'center', fontWeight: '700', color: '#FFF' }}>
+                    <p>Throttle Position (%)</p>
+                    <p>{(this.state.tp !== undefined)?this.state.tp:'0'}</p>
+                </div>
+                <div style={{ background: (this.state.et > 105 && this.state.et < 120)?'#BDA800':((this.state.et > 120)?'#C22D2D':'#3CB44B'), textAlign: 'center', fontWeight: '700', color: '#FFF' }}>
+                    <p>Engine Temperature (˚C)</p>
+                    <p>{(this.state.et !== undefined)?this.state.et:'0'}</p>
+                </div>
+                <div style={{ background: '#3CB44B', textAlign: 'center', fontWeight: '700', color: '#FFF' }}>
+                    <p>Fuel Temperature (˚C)</p>
+                    <p>{(this.state.ft !== undefined)?this.state.ft:'0'}</p>
+                </div>
+                <div style={{ background: '#3CB44B', textAlign: 'center', fontWeight: '700', color: '#FFF' }}>
+                    <p>Intake Air Temperature (˚C)</p>
+                    <p>{(this.state.iat !== undefined)?this.state.iat:'0'}</p>
+                </div>
+                <div style={{ background: (this.state.ot > 110 && this.state.ot < 125)?'#BDA800':((this.state.ot > 125)?'#C22D2D':'#3CB44B'), textAlign: 'center', fontWeight: '700', color: '#FFF' }}>
+                    <p>Oil Temperature (˚C)</p>
+                    <p>{(this.state.ot !== undefined)?this.state.ot:'0'}</p>
+                </div>
+                <div style={{ background: (this.state.op < 10)?'#C22D2D':'#3CB44B', textAlign: 'center', fontWeight: '700', color: '#FFF' }}>
+                    <p>Oil Pressure (kPa)</p>
+                    <p>{(this.state.op !== undefined)?this.state.op:'0'}</p>
+                </div>
+                <div style={{ background: '#3CB44B', textAlign: 'center', fontWeight: '700', color: '#FFF' }}>
+                    <p>Injector Pulse Width (seconds)</p>
+                    <p>{(this.state.ipw !== undefined)?this.state.ipw:'0'}</p>
+                </div>
+                <div style={{ background: '#3CB44B', textAlign: 'center', fontWeight: '700', color: '#FFF' }}>
+                    <p>Barometer (kPa)</p>
+                    <p>{(this.state.baro !== undefined)?this.state.baro:'0'}</p>
+                </div>
+                <div style={{ background: '#3CB44B', textAlign: 'center', fontWeight: '700', color: '#FFF' }}>
                     <p>Front Right (mm)</p>
                     <p>{(this.state.fr !== undefined)?this.state.fr:'0'}</p>
                 </div>
@@ -89,55 +131,11 @@ export default class DefaultDashM extends React.Component {
                     <p>Rear Left (mm)</p>
                     <p>{(this.state.rl !== undefined)?this.state.rl:'0'}</p>
                 </div>
-                <div style={{ background: '#3CB44B', textAlign: 'center', fontWeight: '700', color: '#FFF' }}>
-                    <p>RPM</p>
-                    <p>{(this.state.rpm !== undefined)?this.state.rpm:'0'}</p>
-                </div>
-                <div style={{ background: '#3CB44B', textAlign: 'center', fontWeight: '700', color: '#FFF' }}>
-                    <p>Throttle Position (%)</p>
-                    <p>{(this.state.tp !== undefined)?this.state.tp:'0'}</p>
-                </div>
-                <div style={{ background: '#3CB44B', textAlign: 'center', fontWeight: '700', color: '#FFF' }}>
-                    <p>Injector Pulse Width (seconds)</p>
-                    <p>{(this.state.ipw !== undefined)?this.state.ipw:'0'}</p>
-                </div>
-                <div style={{ background: '#3CB44B', textAlign: 'center', fontWeight: '700', color: '#FFF' }}>
-                    <p>Barometer (kPa)</p>
-                    <p>{(this.state.baro !== undefined)?this.state.baro:'0'}</p>
-                </div>
-                <div style={{ background: '#3CB44B', textAlign: 'center', fontWeight: '700', color: '#FFF' }}>
-                    <p>Manifold Air Pressure (kPa)</p>
-                    <p>{(this.state.map !== undefined)?this.state.map:'0'}</p>
-                </div>
-                <div style={{ background: '#3CB44B', textAlign: 'center', fontWeight: '700', color: '#FFF' }}>
-                    <p>Air to Fuel</p>
-                    <p>{(this.state.atf !== undefined)?this.state.atf:'0'}</p>
-                </div>
-                <div style={{ background: '#3CB44B', textAlign: 'center', fontWeight: '700', color: '#FFF' }}>
-                    <p>Intake Air Temperature (˚C)</p>
-                    <p>{(this.state.iat !== undefined)?this.state.iat:'0'}</p>
-                </div>
-                <div style={{ background: '#3CB44B', textAlign: 'center', fontWeight: '700', color: '#FFF' }}>
-                    <p>Engine Temperature (˚C)</p>
-                    <p>{(this.state.et !== undefined)?this.state.et:'0'}</p>
-                </div>
-                <div style={{ background: '#3CB44B', textAlign: 'center', fontWeight: '700', color: '#FFF' }}>
-                    <p>Oil Pressure (kPa)</p>
-                    <p>{(this.state.op !== undefined)?this.state.op:'0'}</p>
-                </div>
-                <div style={{ background: '#3CB44B', textAlign: 'center', fontWeight: '700', color: '#FFF' }}>
-                    <p>Oil Temperature (˚C)</p>
-                    <p>{(this.state.ot !== undefined)?this.state.ot:'0'}</p>
-                </div>
-                <div style={{ background: '#3CB44B', textAlign: 'center', fontWeight: '700', color: '#FFF' }}>
-                    <p>Fuel Temperature (˚C)</p>
-                    <p>{(this.state.ft !== undefined)?this.state.ft:'0'}</p>
-                </div>
-                <div style={{ background: '#3CB44B', textAlign: 'center', fontWeight: '700', color: '#FFF' }}>
+                <div style={{ background: (Math.abs(this.state.x) > 1)?((Math.abs(this.state.x) > 1.5)?'#C22D2D':'#BDA800'):'#3CB44B', textAlign: 'center', fontWeight: '700', color: '#FFF' }}>
                     <p>Acceleration X (g)</p>
                     <p>{(this.state.x !== undefined)?this.state.x:'0'}</p>
                 </div>
-                <div style={{ background: '#3CB44B', textAlign: 'center', fontWeight: '700', color: '#FFF' }}>
+                <div style={{ background: (Math.abs(this.state.y) > 0.8)?((Math.abs(this.state.y) > 1)?'#C22D2D':'#BDA800'):'#3CB44B', textAlign: 'center', fontWeight: '700', color: '#FFF' }}>
                     <p>Acceleration Y (g)</p>
                     <p>{(this.state.y !== undefined)?this.state.y:'0'}</p>
                 </div>

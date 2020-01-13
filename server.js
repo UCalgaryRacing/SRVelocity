@@ -5,7 +5,6 @@ const cookieParser = require('cookie-parser');
 const helmet = require('helmet');
 const lusca = require('lusca');
 const path = require('path');
-require('dotenv').config()
 const PORT = 5000;
 //Setup
 app.use(express.json());

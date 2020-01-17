@@ -37,12 +37,26 @@ export default class CustomDataChoice extends React.Component {
     selectData = event => {
         if (!event.target.id) { event.target.id = 0 }
         let i = this.indexes.indexOf(event.target.id)
-        if(i < 0) { this.indexes.push(event.target.id) } 
-        else { this.indexes.splice(i, 1) }
+        if(event.target.id === "fl") {
+            this.indexes.push("fl")
+            this.indexes.push("fr")
+            this.indexes.push("rl")
+            this.indexes.push("rr")
+        }
+        else if(event.target.id === "x") {
+            this.indexes.push("x")
+            this.indexes.push("y")
+            this.indexes.push("z")
+        }
+        else {
+            if(i < 0) { this.indexes.push(event.target.id) } 
+            else { this.indexes.splice(i, 1) }
+        }
     }
 
     submit = event => {
         this.indexes.sort()
+        console.log(this.indexes)
         let selectedData = []
         for(const i of this.indexes) {
             selectedData.push(i)

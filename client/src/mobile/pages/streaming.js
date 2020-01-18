@@ -3,7 +3,7 @@ import ButtonGroup from 'react-bootstrap/ButtonGroup';
 import Button from 'react-bootstrap/Button';
 import SideNavM from '../components/navigationComponents/sideNavM';
 import StreamingContentM from '../componentsM/streamingComponentsM/streamingContentM';
-import TopNavM from '../components/navigationComponents/topNavM';
+import TopNavM from '../componentsM/navigationComponentsM/topNavM';
 
 export default class StreamingPageM extends React.Component {
     constructor(props) {

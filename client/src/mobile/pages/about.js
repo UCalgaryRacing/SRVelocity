@@ -1,13 +1,13 @@
 import React from 'react';
 import TopNavM from '../componentsM/navigationComponentsM/topNavM';
+import { Button } from 'react-bootstrap';
 
 export default class AboutPage extends React.Component {
     render = () => {
         return (
-            <div id='aboutPage'>
+            <React.Fragment>
                 <TopNavM />
-                <h2> About Page </h2>
-            </div>
+            </React.Fragment>
         );
     }
 }

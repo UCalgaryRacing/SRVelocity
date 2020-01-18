@@ -19,7 +19,7 @@ export default class StreamingPage extends React.Component {
                 <TopNav/>
                 <SideNavbar streamingContent={this.streamingContent}/>
                 <StreamingContent ref={this.streamingContent}/>
-                <Settings/>
+                <Settings style={{ position: 'fixed' }}/>
             </div>
         );
     }

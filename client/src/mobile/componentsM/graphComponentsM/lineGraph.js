@@ -73,12 +73,17 @@ export default class LineGraphM extends React.Component {
     render = () => {
         const { deviceHeight } = this.state;
         return (
-            <article id="graph" style={{ height: deviceHeight, marginTop: '40px', marginLeft: '-40px', marginRight: '0px', marginBottom: '0px' }}>
-                <p style={{ textAlign: 'center', fontSize: '1.4rem', paddingTop: '0', paddingBottom: '0', marginBottom: '30px', marginTop: '-30px' }}>
-                    <b>{this.props.data.datasets[0].data[this.props.data.datasets[0].data.length - 1]}&nbsp;{this.props.units}</b>
-                </p>
-                <Line data={this.state.data} options={this.state.options} ref={this.lineGraph} key={Math.random()}/>
-            </article>
+            <div>
+                <div>
+                    <p style={{ textAlign: 'center', fontSize: '1.4rem', paddingTop: '0', paddingBottom: '0', marginBottom: '30px' }}>
+                        <b>{this.props.data.datasets[0].data[this.props.data.datasets[0].data.length - 1]}&nbsp;{this.props.units}</b>
+                    </p>
+                </div>
+                <div id="graphM" style={{ height: deviceHeight, marginTop: '40px', marginLeft: '-40px', marginRight: '0px', marginBottom: '0px' }}>
+                    <Line data={this.state.data} options={this.state.options} ref={this.lineGraph} key={Math.random()} />
+                </div>
+            </div >
+
         );
     }
 }

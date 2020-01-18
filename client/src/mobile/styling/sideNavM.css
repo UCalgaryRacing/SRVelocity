@@ -9,6 +9,9 @@
     color: white;
     padding: 15px 10px;
     width: 100%;
+
+    height: 55px;
+
     border: none;
     outline: none;
     text-align: center;
@@ -28,6 +31,10 @@
     color: white;
     padding: 15px 10px;
     width: 100%;
+
+    height: 55px;
+
+
     border: none;
     outline: none;
     text-align: left;

@@ -26,6 +26,11 @@ export default class LineGraph extends React.Component {
                 legend: {
                     display: false
                 },
+                elements: {
+                    line: {
+                        tension: 0 // disables bezier curves
+                    }
+                },
                 scales: {
                     xAxes: [{
                         realtime: {
@@ -57,7 +62,7 @@ export default class LineGraph extends React.Component {
                         scaleLabel: {
                             display: false
                         },
-                        ticks: { 
+                        ticks: {
                             beginAtZero: true,
                             padding: 15,
                             fontSize: 15,

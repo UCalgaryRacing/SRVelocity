@@ -1,0 +1,13 @@
+#graphChoice {
+    font-weight: 600;
+}
+
+#graphChoice #submitButton {
+    font-weight: 600;
+    background-color: #C22D2D;
+    border-color: #C22D2D;
+    width: 366px; 
+    margin-left: -20px;
+    margin-top: 15px;
+}
+

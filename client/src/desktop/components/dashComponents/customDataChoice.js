@@ -1,6 +1,8 @@
 import React from 'react';
 import {Form, Button} from 'react-bootstrap';
-import {constDataTitles} from '../../../constants'
+import {constDataTitles} from '../../../constants';
+import '../../styling/customDataChoice.css';
+
 
 export default class CustomDataChoice extends React.Component {
     constructor(props) {
@@ -37,8 +39,21 @@ export default class CustomDataChoice extends React.Component {
     selectData = event => {
         if (!event.target.id) { event.target.id = 0 }
         let i = this.indexes.indexOf(event.target.id)
-        if(i < 0) { this.indexes.push(event.target.id) } 
-        else { this.indexes.splice(i, 1) }
+        if(event.target.id === "fl") {
+            this.indexes.push("fl")
+            this.indexes.push("fr")
+            this.indexes.push("rl")
+            this.indexes.push("rr")
+        }
+        else if(event.target.id === "x") {
+            this.indexes.push("x")
+            this.indexes.push("y")
+            this.indexes.push("z")
+        }
+        else {
+            if(i < 0) { this.indexes.push(event.target.id) } 
+            else { this.indexes.splice(i, 1) }
+        }
     }
 
     submit = event => {
@@ -52,11 +67,11 @@ export default class CustomDataChoice extends React.Component {
 
     render = () => {
         return (
-            <div id='graphChoice' style={{fontWeight: '600'}}>
+            <div id='graphChoice'>
                 <Form>
                     {this.switches}
                 </Form>
-                <Button onClick={this.submit} style={{fontWeight: '600', backgroundColor: '#C22D2D', borderColor: '#C22D2D', width: '366px', marginLeft: '-20px', marginTop: '15px'}}>Submit</Button>
+                <Button id='submitButton' onClick={this.submit}>Submit</Button>
             </div>
         );
     }

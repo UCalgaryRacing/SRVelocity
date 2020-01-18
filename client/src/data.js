@@ -322,7 +322,7 @@ export default class Data {
     pullData = () => {
         let newTime = this.labels[this.labels.length - 1] + 1;
         this.labels.push(newTime)
-        if (this.labels.length > this.params.MAX_LENGTH) {
+        if (this.labels.length > 100) {
             this.labels.shift()
         }
         for (var parameter of this.datasets) {
@@ -375,7 +375,7 @@ export default class Data {
                 else if(parameter.title === 'Distance') {
                     parameter.value[0].data.push(distance[this.index]);
                 }
-                if (parameter.value[0].data.length > this.params.MAX_LENGTH) {
+                if (parameter.value[0].data.length > 100) {
                     parameter.value[0].data.shift();
                 }
             }
@@ -384,7 +384,7 @@ export default class Data {
                 parameter.value[1].data.push(frontLeft[this.index]);
                 parameter.value[2].data.push(rearRight[this.index]);
                 parameter.value[3].data.push(rearLeft[this.index]);
-                if (parameter.value[0].data.length > this.params.MAX_LENGTH) {
+                if (parameter.value[0].data.length > 100) {
                     parameter.value[0].data.shift();
                     parameter.value[1].data.shift();
                     parameter.value[2].data.shift();
@@ -395,7 +395,7 @@ export default class Data {
                 parameter.value[0].data.push(xAccel[this.index]);
                 parameter.value[1].data.push(yAccel[this.index]);
                 parameter.value[2].data.push(zAccel[this.index]);
-                if (parameter.value[0].data.length > this.params.MAX_LENGTH) {
+                if (parameter.value[0].data.length > 100) {
                     parameter.value[0].data.shift();
                     parameter.value[1].data.shift();
                     parameter.value[2].data.shift();

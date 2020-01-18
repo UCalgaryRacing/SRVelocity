@@ -1,6 +1,8 @@
 import React from 'react';
 import {Form, Button} from 'react-bootstrap';
-import {constDataTitles} from '../../../constants'
+import {constDataTitles} from '../../../constants';
+import '../../styling/customDataChoice.css';
+
 
 export default class CustomDataChoice extends React.Component {
     constructor(props) {
@@ -56,7 +58,6 @@ export default class CustomDataChoice extends React.Component {
 
     submit = event => {
         this.indexes.sort()
-        console.log(this.indexes)
         let selectedData = []
         for(const i of this.indexes) {
             selectedData.push(i)
@@ -66,11 +67,11 @@ export default class CustomDataChoice extends React.Component {
 
     render = () => {
         return (
-            <div id='graphChoice' style={{fontWeight: '600'}}>
+            <div id='graphChoice'>
                 <Form>
                     {this.switches}
                 </Form>
-                <Button onClick={this.submit} style={{fontWeight: '600', backgroundColor: '#C22D2D', borderColor: '#C22D2D', width: '366px', marginLeft: '-20px', marginTop: '15px'}}>Submit</Button>
+                <Button id='submitButton' onClick={this.submit}>Submit</Button>
             </div>
         );
     }

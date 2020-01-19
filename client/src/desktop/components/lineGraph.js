@@ -33,9 +33,6 @@ export default class LineGraph extends React.Component {
                 },
                 scales: {
                     xAxes: [{
-                        realtime: {
-                            onRefresh: function (chart) { },
-                        },
                         gridLines: {
                             display: true,
                             lineWidth: 0,

@@ -1,12 +1,10 @@
 import React from "react";
 import Sidebar from "react-sidebar"
 import { NavItem } from '@trendmicro/react-sidenav';
-import Collapsible from 'react-collapsible'
-import Settings from '../settingsComponentsM/settingsM.js'
+import Collapsible from 'react-collapsible';
 import '@trendmicro/react-sidenav/dist/react-sidenav.css';
 import '../../styling/sideNavM.css';
-import '../../styling/sideNavToggleM.css'
-import '../../styling/topNavM.css'
+import '../../styling/sideNavToggleM.css';
 
 export default class SideNavbar extends React.Component {
     constructor(props) {
@@ -29,8 +27,8 @@ export default class SideNavbar extends React.Component {
 
     render() {
         return (
-            <div style={{height: '100px', zIndex: '-1'}}>
-                <Sidebar 
+            <div style={{height: '100px'}}>
+                <Sidebar
                     sidebar={
                         <React.Fragment>
                             <NavItem eventKey='Dashboard'>
@@ -79,8 +77,7 @@ export default class SideNavbar extends React.Component {
                     }
                     open={this.state.sidebarOpen}
                     onSetOpen={this.onSetSidebarOpen}
-                    styles={{ sidebar: { width: "175px", height: "100%", background: "rgb(194, 45, 45)", position: "fixed", top: '56px' } }}
-                >
+                    styles={{ sidebar: { width: "175px", height: "100%", background: "rgb(194, 45, 45)", position: "fixed", top: '56px', zIndex: '10000'}}}>
                     <div class="container" onClick={() => this.onSetSidebarOpen(true)}>
                         <div class="bar1"></div>
                         <div class="bar2"></div>

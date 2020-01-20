@@ -1,13 +1,13 @@
 import React from 'react';
 import TopNavM from '../componentsM/navigationComponentsM/topNavM';
-import { Jumbotron, Row, Col, Button } from 'react-bootstrap';
+import { Button } from 'react-bootstrap';
 import '../../desktop/styling/home.css';
 
 
 export default class HomePageM extends React.Component {
     render = () => {
         return (
-            <React.Fragment>
+            <>
                 <TopNavM />
                 <img src={require('../../assets/logo.svg')} style={{ width: '80%', marginLeft: '40px', marginBottom: '10px', marginTop: '100px' }} />
                 <p style={{ fontSize: '2rem', marginTop: '20px', textAlign: 'center' }}>
@@ -23,7 +23,7 @@ export default class HomePageM extends React.Component {
                 <Button id='streamingButtonM' href='/streaming' style={{ width: '200px', height: '50px', backgroundColor: 'red', border: 'none', marginLeft: '80px', marginTop: '5px' }}>
                     <b style={{ fontSize: '22px' }}>Go to Streaming</b>
                 </Button>
-            </React.Fragment>
+            </>
         );
     }
 }      

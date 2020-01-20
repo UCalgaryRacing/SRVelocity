@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { Nav, Navbar, NavDropdown } from 'react-bootstrap';
 import { SocialIcon } from 'react-social-icons';
@@ -6,17 +5,13 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import '../../styling/topNavM.css';
 
 export default class TopNavM extends React.Component {
-    state = {}
     render() {
         return (
-            <Navbar id="MobileNavBar" bg="dark" variant="dark" expand="lg" style={{position: 'fixed'}}>
+            <Navbar id="MobileNavBar" bg="dark" variant="dark" expand="lg" style={{ position: 'fixed', zIndex: '10001', paddingLeft: '5px', paddingRight: '5px', width: window.innerWidth }}>
                 <Navbar.Brand href="/">
                     <b>Schulich Velocity</b>
                 </Navbar.Brand>
-                <Nav className="ml-auto mr-3">
-                    <Nav.Link href="/signIn">Sign In</Nav.Link>
-                </Nav>
-                <Navbar.Toggle aria-controls="basic-navbar-nav" />
+                <Navbar.Toggle aria-controls="basic-navbar-nav"/>
                 <Navbar.Collapse id="basic-navbar-nav">
                     <Nav className="ml-auto">
                         <Nav.Link href="/">Home</Nav.Link>

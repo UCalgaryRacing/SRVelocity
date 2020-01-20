@@ -1,6 +1,6 @@
 import React from 'react';
 import DataBox from './dataBox';
-import { Row, Col, Modal } from 'react-bootstrap';
+import { Row, Col } from 'react-bootstrap';
 
 export default class DataDashboard extends React.Component {
     constructor(props) {
@@ -28,7 +28,6 @@ export default class DataDashboard extends React.Component {
     }
 
     createToRender = () => {
-        var i = 0;
         for (let i = 0; this.dataBoxes[i]; i += 2) {
             if (this.dataBoxes[i + 1]) {
                 this.container.push(

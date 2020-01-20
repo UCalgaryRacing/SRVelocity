@@ -18,6 +18,7 @@ export default class CustomDataChoice extends React.Component {
         var i = 0;
         var suspension = false;
         var accel = false;
+        var axes = false;
         for (const data in this.state.dataTitles) {
             if(this.state.dataTitles[data][0] === 'Suspension' && !suspension) { 
                 this.switches.push(<Form.Check name={this.state.dataTitles[data][0]} label={this.state.dataTitles[data][0]} id={data} key={i} onChange={this.selectData}/>);
@@ -29,7 +30,12 @@ export default class CustomDataChoice extends React.Component {
                 accel = true; 
                 continue;
             }
-            if(this.state.dataTitles[data][0] !== 'Acceleration' && this.state.dataTitles[data][0] !== 'Suspension') { 
+            if(this.state.dataTitles[data][0] === 'Axes' && !axes) { 
+                this.switches.push(<Form.Check name={this.state.dataTitles[data][0]} label={this.state.dataTitles[data][0]} id={data} key={i} onChange={this.selectData}/>);
+                axes = true; 
+                continue;
+            }
+            if(this.state.dataTitles[data][0] !== 'Acceleration' && this.state.dataTitles[data][0] !== 'Suspension' && this.state.dataTitles[data][0] !== 'Axes') { 
                 this.switches.push(<Form.Check name={this.state.dataTitles[data][0]} label={this.state.dataTitles[data][0]} id={data} key={i} onChange={this.selectData}/>);
             }
             i++;
@@ -50,6 +56,11 @@ export default class CustomDataChoice extends React.Component {
             this.indexes.push("y")
             this.indexes.push("z")
         }
+        else if(event.target.id === "roll") {
+            this.indexes.push("roll")
+            this.indexes.push("pitch")
+            this.indexes.push("yaw")
+        }
         else {
             if(i < 0) { this.indexes.push(event.target.id) } 
             else { this.indexes.splice(i, 1) }
@@ -57,7 +68,6 @@ export default class CustomDataChoice extends React.Component {
     }
 
     submit = event => {
-        this.indexes.sort()
         let selectedData = []
         for(const i of this.indexes) {
             selectedData.push(i)

@@ -37,9 +37,9 @@ const constDataTitles =
     x: ['Acceleration', '(g)', 'X Accel', [0]],
     y: ['Acceleration','(g)', 'Y Accel', [1]],
     z: ['Acceleration','(g)', 'Z Accel', [2]],
-    roll: ['Axes', '(g)', 'Roll', [0]],
-    pitch: ['Axes', '(g)', 'Pitch', [1]],
-    yaw: ['Axes', '(g)', 'Yaw', [2]],
+    roll: ['Axes', '(˚)', 'Roll', [0]],
+    pitch: ['Axes', '(˚)', 'Pitch', [1]],
+    yaw: ['Axes', '(˚)', 'Yaw', [2]],
     speed: ['Speed', '(km/h)'],
     distance: ['Distance', '(km)']}
 

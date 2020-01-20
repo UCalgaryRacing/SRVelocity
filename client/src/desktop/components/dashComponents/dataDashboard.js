@@ -8,8 +8,8 @@ export default class DataDashboard extends React.Component {
         this.state = {
             dataTitles: this.props.dataInfo
         }
-        this.dataBoxes = []
-        this.container = []
+        this.dataBoxes = [];
+        this.container = [];
     }
 
     componentWillMount = () => {
@@ -18,12 +18,8 @@ export default class DataDashboard extends React.Component {
     }
 
     createDataBoxes = () => {
-        var i = 0;
         for (const data of this.state.dataTitles) {
-            this.dataBoxes.push(
-                <DataBox name={data} />
-            );
-            i++;
+            this.dataBoxes.push(<DataBox name={data} />);
         }
     }
 
@@ -32,23 +28,17 @@ export default class DataDashboard extends React.Component {
             if (this.dataBoxes[i + 1]) {
                 this.container.push(
                     <Row>
-                        <Col>
-                            {this.dataBoxes[i]}
-                        </Col>
-                        <Col>
-                            {this.dataBoxes[i + 1]}
-                        </Col>
+                        <Col>{this.dataBoxes[i]}</Col>
+                        <Col>{this.dataBoxes[i + 1]}</Col>
                     </Row>
-                )
+                );
             }
             else {
                 this.container.push(
                     <Row>
-                        <Col>
-                            {this.dataBoxes[i]}
-                        </Col>
+                        <Col>{this.dataBoxes[i]}</Col>
                     </Row>
-                )
+                );
             }
         }
     }
@@ -58,6 +48,6 @@ export default class DataDashboard extends React.Component {
             <div style={{ marginTop: '20px', marginRight: '15px', textAlign: 'center', color: '#FFF', fontWeight: '700' }}>
                 {this.container}
             </div>
-        )
+        );
     }
 }

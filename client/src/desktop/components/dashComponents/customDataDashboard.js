@@ -16,7 +16,7 @@ export default class CustomDataDash extends React.Component {
         this.setState({
             showChoice: false,
             selectedData: graphChoices
-        })
+        });
     }
 
     render = () => {
@@ -26,6 +26,6 @@ export default class CustomDataDash extends React.Component {
                     <CustomDataChoice enter={this.enter}/>:
                     <DataDashboard dataInfo={this.state.selectedData}/>}
             </div>
-        )
+        );
     }
 }

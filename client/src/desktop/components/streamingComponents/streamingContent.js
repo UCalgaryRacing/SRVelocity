@@ -1,7 +1,6 @@
 import React from 'react';
 import StreamingDash from '../dashComponents/dashboard';
 import DataPage from '../streamingComponents/dataPage';
-import GraphBox from '../graphBox';
 
 export default class StreamingContent extends React.Component {
     constructor(props) {
@@ -18,9 +17,7 @@ export default class StreamingContent extends React.Component {
     }
 
     changeLeftMargin = () => {
-        this.setState({
-            marginLeft: (this.state.marginLeft === '80px') ? '270px' : '80px'
-        });
+        this.setState({ marginLeft: (this.state.marginLeft === '80px') ? '270px' : '80px' });
     }
 
     render = () => {

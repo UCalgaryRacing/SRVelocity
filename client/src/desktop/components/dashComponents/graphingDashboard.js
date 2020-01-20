@@ -10,21 +10,19 @@ export default class GraphingDashboard extends React.Component {
             displayModal: false,
             currentGraph: null
         }
-        this.graphs = []
-        this.container = []
+        this.graphs = [];
+        this.container = [];
     }
 
     componentWillMount = () => {
-        this.createGraphs()
-        this.createToRender()
+        this.createGraphs();
+        this.createToRender();
     }
 
     createGraphs = () => {
         var i = 0
         for (const graph of this.state.graphTitles) {
-            this.graphs.push(
-                <GraphBox title={graph.title} id={i + 1} units={graph.units} key={i + 1} />
-            );
+            this.graphs.push(<GraphBox title={graph.title} id={i + 1} units={graph.units} key={i + 1} />);
             i++;
         }
     }
@@ -33,9 +31,7 @@ export default class GraphingDashboard extends React.Component {
         for (const graph of this.graphs) {
             this.container.push(
                 <Row style={{ marginTop: '30px' }}>
-                    <Col>
-                        {graph}
-                    </Col>
+                    <Col>{graph}</Col>
                 </Row>
             );
         }

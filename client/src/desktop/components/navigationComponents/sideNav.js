@@ -108,6 +108,14 @@ export default class SideNavbar extends React.Component {
                                 <b>&nbsp;&nbsp;&nbsp;Axes</b>
                             </NavText>
                         </NavItem>
+                        <NavItem eventKey="Battery Voltage">
+                            <NavIcon>
+                                <img src={require('../../../assets/battery.svg')} style={{ marginLeft: '15px', marginTop: '10px' }} alt='Battery'/>
+                            </NavIcon>
+                            <NavText>
+                                <b>&nbsp;&nbsp;&nbsp;Battery Voltage</b>
+                            </NavText>
+                        </NavItem>
                         <NavItem eventKey="Speed">
                             <NavIcon>
                                 <img src={require('../../../assets/speed.svg')} style={{ marginLeft: '17px', marginTop: '12px' }} alt='Speed'/>

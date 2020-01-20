@@ -14,29 +14,25 @@ export default class DataBox extends React.Component {
         }
     }
 
-    componentWillMount() {
+    componentWillMount = () => {
         this.interval = setInterval(() => this.tick(), 100);
         if(this.state.name === 'Suspension' || this.state.name === 'Acceleration' || this.state.name === 'Axes') {
-            this.setState({
-                displayName: constDataTitles[this.props.name][2]
-            })
+            this.setState({ displayName: constDataTitles[this.props.name][2] });
         }
     }
 
-    componentWillUnmount() {
+    componentWillUnmount = () => {
         clearInterval(this.interval);
     }
 
     tick = () => { //MAKE THIS WAAAY MORE EFFICIENT
-        let newValue = 0
+        let newValue = 0;
         if (this.state.name === 'Suspension' || this.state.name === 'Acceleration') {
-            let index = constDataTitles[this.props.name][3]
-            newValue = Data.getInstance().getDataPoint(this.state.name)[index]
+            let index = constDataTitles[this.props.name][3];
+            newValue = Data.getInstance().getDataPoint(this.state.name)[index];
         } 
-        else {
-            newValue = Data.getInstance().getDataPoint(this.state.name)
-        }
-        this.setState({value: newValue})
+        else { newValue = Data.getInstance().getDataPoint(this.state.name); }
+        this.setState({value: newValue});
     }
 
     getColour = () => {

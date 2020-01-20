@@ -16,7 +16,7 @@ export default class CustomPlottingDash extends React.Component {
         this.setState({
             showChoice: false,
             selectedGraphs: graphChoices
-        })
+        });
     }
 
     render = () => {

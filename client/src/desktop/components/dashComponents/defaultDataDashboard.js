@@ -7,17 +7,17 @@ import '../../styling/defaultDash.css';
 export default class DefaultDataDash extends React.Component {
     constructor(props) {
         super(props);
-        this.totalData = []
+        this.totalData = [];
         for (var sensor in constDataTitles) {
             this.totalData.push(sensor)
         }
-        this.boxes = []
-        this.layout = []
+        this.boxes = [];
+        this.layout = [];
     }
 
-    componentWillMount() {
-        this.createBoxes()
-        this.createLayout()
+    componentWillMount = () => {
+        this.createBoxes();
+        this.createLayout();
     }
 
     createLayout = () => {
@@ -25,32 +25,24 @@ export default class DefaultDataDash extends React.Component {
             if (this.boxes[i+1]) {
                 this.layout.push(
                     <Row>
-                        <Col>
-                            {this.boxes[i]}
-                        </Col>
-                        <Col>
-                            {this.boxes[i + 1]}
-                        </Col>
+                        <Col>{this.boxes[i]}</Col>
+                        <Col>{this.boxes[i + 1]}</Col>
                     </Row>
-                )
+                );
             } 
             else {
                 this.layout.push(
                     <Row>
-                        <Col>
-                            {this.boxes[i]}
-                        </Col>
+                        <Col>{this.boxes[i]}</Col>
                     </Row>
-                )
+                );
             }
         }
     }
 
     createBoxes = () => {
         for (var sensor of this.totalData) {
-            this.boxes.push(
-                <DataBox name={sensor}></DataBox>
-            )
+            this.boxes.push(<DataBox name={sensor}></DataBox>);
         }
     }
 

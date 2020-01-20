@@ -10,6 +10,7 @@ const constGraphTitles =  [
     { title: 'Oil Pressure', units: 'kPa' },
     { title: 'Barometer', units: 'kPa' },
     { title: 'Injector Pulse Width', units: 'seconds' },
+    { title: 'Battery Voltage', units: 'V' },
     { title: 'Suspension', units: 'mm' },
     { title: 'Acceleration', units: 'g' },
     { title: 'Axes', units: '˚' },

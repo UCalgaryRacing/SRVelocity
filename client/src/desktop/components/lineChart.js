@@ -1,17 +1,6 @@
 import React, { Component } from 'react';
 import '../styling/lineChart.css';
-import {
-    lightningChart,
-    emptyTick,
-    DataPatterns,
-    AxisScrollStrategies,
-    SolidLine,
-    SolidFill,
-    ColorHEX,
-    AutoCursorModes,
-    VisibleTicks,
-    FontSettings
-} from '@arction/lcjs';
+import { lightningChart, emptyTick, DataPatterns, AxisScrollStrategies, SolidLine, SolidFill, ColorHEX, AutoCursorModes, VisibleTicks, FontSettings } from '@arction/lcjs';
 
 const theme = {
     whiteFill: new SolidFill({ color: ColorHEX('#FFFFFF') }),
@@ -25,9 +14,9 @@ export default class LineChart extends Component {
         this.state = {
             data: this.props.data
         }
-        this.chartId = Math.trunc(Math.random() * 100000)
+        this.chartId = Math.trunc(Math.random() * 100000);
         this.i = 0;
-        this.setupComplete = false
+        this.setupComplete = false;
     }
 
     createChart = () => {
@@ -43,72 +32,81 @@ export default class LineChart extends Component {
             .setMouseInteractionRectangleZoom(false)
             .setMouseInteractionsWhileScrolling(false)
             .setMouseInteractionsWhileZooming(false)
+
         this.chart.engine.container.onwheel = null
 
         this.chart.getDefaultAxisY()
             .setScrollStrategy(AxisScrollStrategies.expansion)
             .setMouseInteractions(false)
+            .setStrokeStyle(new SolidLine({
+                thickness: 3,
+                fillStyle: new SolidFill({ color: ColorHEX('#C8C8C8') })
+            }))
 
-        if(this.props.title === 'RPM') {
+        if (this.props.title === 'RPM') {
             this.chart.getDefaultAxisY().setInterval(0, 15000, false, true);
         }
-        else if(this.props.title === 'Air To Fuel') {
+        else if (this.props.title === 'Air To Fuel') {
             this.chart.getDefaultAxisY().setInterval(0, 25, false, true);
         }
-        else if(this.props.title === 'Manifold Air Pressure') {
+        else if (this.props.title === 'Manifold Air Pressure') {
             this.chart.getDefaultAxisY().setInterval(0, 115, false, true);
         }
-        else if(this.props.title === 'Throttle Position') {
+        else if (this.props.title === 'Throttle Position') {
             this.chart.getDefaultAxisY().setInterval(0, 100, false, true);
         }
-        else if(this.props.title === 'Engine Temperature') {
+        else if (this.props.title === 'Engine Temperature') {
             this.chart.getDefaultAxisY().setInterval(0, 150, false, true);
         }
-        else if(this.props.title === 'Oil Temperature') {
+        else if (this.props.title === 'Oil Temperature') {
             this.chart.getDefaultAxisY().setInterval(0, 150, false, true);
         }
-        else if(this.props.title === 'Fuel Temperature') {
+        else if (this.props.title === 'Fuel Temperature') {
             this.chart.getDefaultAxisY().setInterval(0, 70, false, true);
         }
-        else if(this.props.title === 'Intake Air Temperature') {
+        else if (this.props.title === 'Intake Air Temperature') {
             this.chart.getDefaultAxisY().setInterval(0, 100, false, true);
         }
-        else if(this.props.title === 'Oil Pressure') {
+        else if (this.props.title === 'Oil Pressure') {
             this.chart.getDefaultAxisY().setInterval(0, 100, false, true);
         }
-        else if(this.props.title === 'Barometer') {
+        else if (this.props.title === 'Barometer') {
             this.chart.getDefaultAxisY().setInterval(0, 100, false, true);
         }
-        else if(this.props.title === 'Injector Pulse Width') {
+        else if (this.props.title === 'Injector Pulse Width') {
             this.chart.getDefaultAxisY().setInterval(0, 10, false, true);
         }
-        else if(this.props.title === 'Battery Voltage') {
+        else if (this.props.title === 'Battery Voltage') {
             this.chart.getDefaultAxisY().setInterval(0, 10, false, true);
         }
-        else if(this.props.title === 'Suspension') {
+        else if (this.props.title === 'Suspension') {
             this.chart.getDefaultAxisY().setInterval(0, 2, false, true);
         }
-        else if(this.props.title === 'Acceleration') {
+        else if (this.props.title === 'Acceleration') {
             this.chart.getDefaultAxisY().setInterval(-1.7, 1.7, false, true);
         }
-        else if(this.props.title === 'Axes') {
+        else if (this.props.title === 'Axes') {
             this.chart.getDefaultAxisY().setInterval(-150, 150, false, true);
         }
-        else if(this.props.title === 'Speed') {
+        else if (this.props.title === 'Speed') {
             this.chart.getDefaultAxisY().setInterval(0, 150, false, true);
         }
-        else if(this.props.title === 'Distance') {
+        else if (this.props.title === 'Distance') {
             this.chart.getDefaultAxisY().setInterval(0, 1, false, true);
         }
-        
+
         this.chart.getDefaultAxisX()
             .setScrollStrategy(AxisScrollStrategies.progressive)
             .setTickStyle(emptyTick)
             .setMouseInteractions(false)
             .setInterval(0, 30)
+            .setStrokeStyle(new SolidLine({
+                thickness: 3,
+                fillStyle: new SolidFill({ color: ColorHEX('#C8C8C8') })
+            }))
 
         var axis = this.chart.getDefaultAxisY()
-        var font = new FontSettings({ })
+        var font = new FontSettings({})
         font = font.setFamily("helvetica")
         font = font.setWeight("bold")
         var ticks = new VisibleTicks({ labelFillStyle: new SolidFill({ color: ColorHEX('#000'), tickLength: 8 }), labelFont: font })
@@ -132,7 +130,7 @@ export default class LineChart extends Component {
                 }))
                 .setMouseInteractions(false)
         }
-        if(this.props.title === 'Acceleration' || this.props.title === 'Axes' || this.props.title === 'Suspension') {
+        if (this.props.title === 'Acceleration' || this.props.title === 'Axes' || this.props.title === 'Suspension') {
             this.lineSeries2 = this.chart.addLineSeries({ dataPattern: DataPatterns.horizontalProgressive })
             this.lineSeries2
                 .setStrokeStyle(new SolidLine({
@@ -148,7 +146,7 @@ export default class LineChart extends Component {
                 }))
                 .setMouseInteractions(false)
         }
-        if(this.props.title === 'Suspension') {
+        if (this.props.title === 'Suspension') {
             this.lineSeries4 = this.chart.addLineSeries({ dataPattern: DataPatterns.horizontalProgressive })
             this.lineSeries4
                 .setStrokeStyle(new SolidLine({
@@ -200,17 +198,17 @@ export default class LineChart extends Component {
     render() {
         if (this.props.title !== 'Acceleration' && this.props.title !== 'Suspension' && this.props.title !== 'Axes') {
             return (
-                <div style={{marginBottom: '20px'}}>
+                <div style={{ marginBottom: '20px' }}>
                     <p style={{ textAlign: 'center', fontSize: '1.2rem', paddingTop: '0', paddingBottom: '0', marginTop: '10px', marginBottom: '0px' }}>
                         <b>{this.state.data.datasets[0].data[this.state.data.datasets[0].data.length - 1]}&nbsp;{this.props.units}</b>
                     </p>
-                    <div id={this.chartId} className='fill' style={{height: '500px'}} onWheel={(event) => {return true;}}></div>
+                    <div id={this.chartId} className='fill' style={{ height: '500px' }} onWheel={(event) => { return true; }}></div>
                 </div>
             );
         }
         else if (this.props.title === 'Acceleration') {
             return (
-                <div style={{marginBottom: '20px'}}>
+                <div style={{ marginBottom: '20px' }}>
                     <div class='row' style={{ textAlign: 'center', fontSize: '1.2rem', fontStyle: 'bold', paddingTop: '0', paddingBottom: '0', marginBottom: '0px', marginTop: '10px', width: '100%' }}>
                         <div class='col' style={{ textAlign: 'center' }}>
                             <div class='row' style={{ textAlign: 'center' }}>
@@ -234,13 +232,13 @@ export default class LineChart extends Component {
                             </div>
                         </div>
                     </div>
-                    <div id={this.chartId} className='fill' style={{height: '500px'}}></div>
+                    <div id={this.chartId} className='fill' style={{ height: '500px' }}></div>
                 </div>
             );
         }
         else if (this.props.title === 'Axes') {
             return (
-                <div style={{marginBottom: '20px'}}>
+                <div style={{ marginBottom: '20px' }}>
                     <div class='row' style={{ textAlign: 'center', fontSize: '1.2rem', fontStyle: 'bold', paddingTop: '0', paddingBottom: '0', marginBottom: '0px', marginTop: '10px', width: '100%' }}>
                         <div class='col' style={{ textAlign: 'center' }}>
                             <div class='row' style={{ textAlign: 'center' }}>
@@ -264,13 +262,13 @@ export default class LineChart extends Component {
                             </div>
                         </div>
                     </div>
-                    <div id={this.chartId} className='fill' style={{height: '500px'}}></div>
+                    <div id={this.chartId} className='fill' style={{ height: '500px' }}></div>
                 </div>
             );
         }
         else if (this.props.title === 'Suspension') {
             return (
-                <div style={{marginBottom: '20px'}}>
+                <div style={{ marginBottom: '20px' }}>
                     <div class='row' style={{ textAlign: 'center', fontSize: '1.2rem', fontStyle: 'bold', paddingTop: '0', paddingBottom: '0', marginBottom: '0px', marginTop: '10px', width: '100%' }}>
                         <div class='col' style={{ textAlign: 'center' }}>
                             <div class='row' style={{ textAlign: 'center' }}>
@@ -301,7 +299,7 @@ export default class LineChart extends Component {
                             </div>
                         </div>
                     </div>
-                    <div id={this.chartId} className='fill' style={{height: '500px'}}></div>
+                    <div id={this.chartId} className='fill' style={{ height: '500px' }}></div>
                 </div>
             );
         }

@@ -33,16 +33,10 @@ export default class GraphBox extends React.Component {
     }
 
     pullData = () => {
-        let newDatasets = Data.getInstance().get(this.props.title)
+        let newDatasets = Data.getInstance().get(this.props.title);
         if (newDatasets === undefined) { return; }
         if (this.props.title === 'Track Map') { this.setState({ data: newDatasets }); }
-        else {
-            this.setState({
-                data: {
-                    datasets: newDatasets
-                }
-            });
-        }
+        else { this.setState({ data: { datasets: newDatasets } }); }
     }
 
     getLabels = () => {

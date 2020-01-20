@@ -14,20 +14,14 @@ export default class StreamingDash extends React.Component {
             dashOption: 'default',
             typeOption: 'plotting'
         }
-        this.changeDash = this.changeDash.bind(this);
-        this.changeType = this.changeType.bind(this);
     }
 
     changeDash = () => {
-        this.setState({
-            dashOption: (this.state.dashOption === 'default') ? 'custom' : 'default'
-        });
+        this.setState({ dashOption: (this.state.dashOption === 'default') ? 'custom' : 'default' });
     }
 
     changeType = () => {
-        this.setState({
-            typeOption: (this.state.typeOption === 'plotting') ? 'currentData' : 'plotting'
-        });
+        this.setState({ typeOption: (this.state.typeOption === 'plotting') ? 'currentData' : 'plotting' });
     }
 
     render = () => {

@@ -1,5 +1,5 @@
 import React from 'react';
-import LineGraph from '../components/lineGraph';
+import LineChart from '../components/lineChart';
 import ScatterPlot from '../components/scatterPlot';
 import '../styling/graphBox.css';
 import Data from '../../data';
@@ -7,7 +7,7 @@ import Data from '../../data';
 export default class GraphBox extends React.Component {
     constructor(props) {
         super(props);
-        if(this.props.title === 'Track Map') {
+        if (this.props.title === 'Track Map') {
             this.state = {
                 currentLabel: 3,
                 data: Data.getInstance().get(this.props.title)
@@ -34,26 +34,14 @@ export default class GraphBox extends React.Component {
 
     pullData = () => {
         let newDatasets = Data.getInstance().get(this.props.title)
-        if (newDatasets == undefined) { //Sometimes null for some reason
-            return;
-        }
-        if (this.props.title === 'Track Map') {
-            this.setState({ data: newDatasets });
-        }
+        if (newDatasets === undefined) { return; }
+        if (this.props.title === 'Track Map') { this.setState({ data: newDatasets }); }
         else {
             this.setState({
                 data: {
                     datasets: newDatasets
                 }
             });
-        }
-    }
-
-    get = (index) => {
-        for (var parameter of this.datasets) {
-            if (index === parameter.title) {
-                return parameter.value;
-            }
         }
     }
 
@@ -68,7 +56,7 @@ export default class GraphBox extends React.Component {
     render = () => {
         if (this.props.title === 'Track Map') {
             return (
-                <div id='graphBox' onClick={this.props.onClick}>
+                <div id='graphBox' style={{width: '100%'}}>
                     <p id='graphTitle'><b>{this.props.title}</b></p>
                     <ScatterPlot id={this.props.id} data={this.state.data} title={this.props.title} units={this.props.units} />
                 </div>
@@ -76,9 +64,11 @@ export default class GraphBox extends React.Component {
         }
         else {
             return (
-                <div id='graphBox' onClick={this.props.onClick}>
+                <div id='graphBox'>
                     <p id='graphTitle'><b>{this.props.title}</b></p>
-                    <LineGraph id={this.props.id} data={this.state.data} title={this.props.title} units={this.props.units} />
+                    <div style={{marginBottom: '10px'}}>
+                        <LineChart id={this.props.id} data={this.state.data} title={this.props.title} units={this.props.units}/>
+                    </div>
                 </div>
             );
         }

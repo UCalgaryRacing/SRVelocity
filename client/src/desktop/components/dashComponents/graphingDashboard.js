@@ -1,6 +1,6 @@
 import React from 'react';
 import GraphBox from '../graphBox';
-import { Row, Col, Modal } from 'react-bootstrap';
+import { Row, Col } from 'react-bootstrap';
 
 export default class GraphingDashboard extends React.Component {
     constructor(props) {
@@ -23,7 +23,7 @@ export default class GraphingDashboard extends React.Component {
         var i = 0
         for (const graph of this.state.graphTitles) {
             this.graphs.push(
-                <GraphBox title={graph.title} id={i} units={graph.units} onClick={this.showGraph} key={i}/>
+                <GraphBox title={graph.title} id={i + 1} units={graph.units} key={i + 1} />
             );
             i++;
         }
@@ -41,39 +41,9 @@ export default class GraphingDashboard extends React.Component {
         }
     }
 
-    showGraph = (event) => {
-        event.preventDefault()
-        this.setState({
-            currentGraph: this.graphs[event.target.id]
-        })
-        this.showModal()
-    }
-
-    showModal = () => {
-        this.setState({displayModal: true})
-    }
-
-    hideModal = () => {
-        this.setState({displayModal: false})
-    }
-
     render = () => {
         return (
-            <div>
-                {this.container}
-                <Modal id = "graphModal" 
-                    show={this.state.displayModal} 
-                    onHide={this.hideModal} 
-                    keyboard={true}
-                    size = "xl"
-                    centered>
-                        <Modal.Header closeButton>
-                        </Modal.Header>
-                        <Modal.Body>
-                            {this.state.currentGraph}
-                        </Modal.Body>
-                </Modal>
-            </div>
+            <>{this.container}</>
         );
     }
 }

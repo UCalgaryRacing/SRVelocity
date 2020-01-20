@@ -10,14 +10,11 @@ const constGraphTitles =  [
     { title: 'Oil Pressure', units: 'kPa' },
     { title: 'Barometer', units: 'kPa' },
     { title: 'Injector Pulse Width', units: 'seconds' },
-    
     { title: 'Suspension', units: 'mm' },
     { title: 'Acceleration', units: 'g' },
-    { title: 'Roll', units: '˚' },
-    { title: 'Pitch', units: '˚' },
-    { title: 'Yaw', units: '˚' },
+    { title: 'Axes', units: '˚' },
     { title: 'Speed', units: 'km/h' },
-    { title: 'Distance', units: 'm' },
+    { title: 'Distance', units: 'km' },
     { title: 'Track Map', units: '' }]
 
 const constDataTitles = 
@@ -40,9 +37,9 @@ const constDataTitles =
     x: ['Acceleration', '(g)', 'X Accel', [0]],
     y: ['Acceleration','(g)', 'Y Accel', [1]],
     z: ['Acceleration','(g)', 'Z Accel', [2]],
-    roll: ['Roll', '(˚)'],
-    pitch: ['Pitch', '(˚)'],
-    yaw: ['Yaw', '(˚)'],
+    roll: ['Axes', '(g)', 'Roll', [0]],
+    pitch: ['Axes', '(g)', 'Pitch', [1]],
+    yaw: ['Axes', '(g)', 'Yaw', [2]],
     speed: ['Speed', '(km/h)'],
     distance: ['Distance', '(km)']}
 

@@ -28,7 +28,6 @@ let latitude = [40.847313,40.847263,40.847012,40.846783,40.846725,40.846684,40.8
 let speed = [0,0,80.56,59.52,43.79,33.96,27.51,22.51,18.82,14.59,11.39,9.21,7.48,6.42,5.31,4.42,3.8,0,0,0,0,0,0,0,2.22,3.81,4.92,5.72,6.19,6.19,6.19,5.96,6,5.99,5.87,5.88,5.81,5.58,5.56,5.61,5.55,5.35,5.4,5.38,5.05,5.16,5.08,5.18,4.96,4.72,4.27,3.88,3.72,3.22,3.14,2.61,2.27,2.01,1.54,1.31,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1.11,2.11,3.08,3.95,5.16,6.13,7.3,8.72,9.62,10.1,11.28,12.11,12.39,12.93,14,15.73,17.09,19.31,20.07,22.15,23.63,23.67,22.96,24.13,25.31,26.74,28.09,29.34,30.23,31.23,31.21,30.62,30.15,30.37,30.11,28.73,27.39,26.63,25.75,24.41,22.25,20.67,19.33,18.2,17.87,17.93,18.98,19.83,20.65,20.99,21.65,22.26,23,24.09,25.05,26.75,27.94,28.82,29.42,30.14,30.9,30.56,31.64,32.79,34.21,35.39,36.41,36.6,35.49,34.32,32.77,31.07,28.92,27.04,25.49,24.82,24.3,23.86,23.84,24.46,24.92,24.81,24.92,24.7,24.57,24.44,24.28,24.1,24.1,23.47,23.59,23.66,23.92,24.51,24.83,25.3,25.49,25.69,25.67,26.21,26.31,26.75,27.09,27.78,28.22,28.74,29.19,29.54,29.34,29,28.65,28.54,28.18,28.49,28.74,28.96,28.98,28.9,28.67,27.35,25.71,24.15,22.79,21.48,19.73,18.29,17.3,16.91,16.33,16.02,16.09,15.88,16.49,16.51,17.27,18.21,19.35,20.44,21.36,22.23,23.8,25.83,28.33,30.2,31.56,31.43,31.04,32.64,34.27,35.85,37.34,38.61,40.11,40.47];
 let distance = [0,0,0.003,0.007,0.01,0.012,0.014,0.015,0.016,0.017,0.018,0.018,0.019,0.019,0.02,0.02,0.02,0.02,0.02,0.02,0.02,0.02,0.02,0.02,0.02,0.02,0.021,0.021,0.021,0.022,0.022,0.022,0.023,0.023,0.023,0.024,0.024,0.024,0.025,0.025,0.025,0.025,0.026,0.026,0.026,0.027,0.027,0.027,0.027,0.028,0.028,0.028,0.028,0.029,0.029,0.029,0.029,0.029,0.029,0.029,0.029,0.029,0.029,0.029,0.029,0.029,0.029,0.029,0.029,0.029,0.029,0.029,0.029,0.029,0.029,0.029,0.029,0.029,0.029,0.029,0.029,0.029,0.029,0.029,0.029,0.029,0.029,0.029,0.029,0.029,0.029,0.029,0.029,0.029,0.029,0.029,0.029,0.029,0.029,0.029,0.029,0.029,0.029,0.03,0.03,0.03,0.03,0.031,0.031,0.032,0.032,0.033,0.034,0.034,0.035,0.036,0.037,0.038,0.039,0.039,0.04,0.042,0.044,0.045,0.046,0.048,0.049,0.051,0.052,0.054,0.056,0.057,0.059,0.061,0.062,0.063,0.066,0.067,0.069,0.07,0.072,0.073,0.074,0.075,0.076,0.077,0.078,0.079,0.08,0.081,0.083,0.084,0.085,0.086,0.088,0.089,0.09,0.092,0.093,0.095,0.097,0.098,0.1,0.102,0.104,0.106,0.107,0.109,0.112,0.114,0.115,0.117,0.119,0.121,0.122,0.124,0.125,0.127,0.128,0.129,0.131,0.132,0.133,0.135,0.136,0.137,0.139,0.14,0.141,0.143,0.144,0.145,0.147,0.148,0.149,0.151,0.152,0.154,0.155,0.156,0.158,0.159,0.161,0.162,0.164,0.165,0.167,0.169,0.17,0.172,0.173,0.175,0.177,0.178,0.18,0.181,0.183,0.185,0.186,0.188,0.189,0.191,0.192,0.194,0.195,0.196,0.197,0.198,0.199,0.2,0.201,0.202,0.202,0.203,0.204,0.205,0.206,0.207,0.208,0.21,0.211,0.212,0.213,0.215,0.217,0.218,0.22,0.222,0.223,0.225,0.227,0.229,0.231,0.234,0.236];
 
-
 export default class Data {
     static instance = null;
     constructor() {
@@ -39,283 +38,43 @@ export default class Data {
         }
         this.labels = [0]
         this.datasets = [
-            {
-                title: 'RPM', value: [{
-                    data: [],
-                    label: '',
-                    borderColor: 'rgb(255, 0, 0)',
-                    pointRadius: 0,
-                    borderWidth: 1.5,
-                    backgroundColor: 'rgb(255, 255, 255, 0)',
-                    lineTension: 0
-                }]
-            },
-            {
-                title: 'Air To Fuel', value: [{
-                    data: [],
-                    label: '',
-                    borderColor: 'rgb(255, 0, 0)',
-                    pointRadius: 0,
-                    borderWidth: 1.5,
-                    backgroundColor: 'rgb(255, 255, 255, 0)',
-                    lineTension: 0
-                }]
-            },
-            {
-                title: 'Manifold Air Pressure', value: [{
-                    data: [],
-                    label: '',
-                    borderColor: 'rgb(255, 0, 0)',
-                    pointRadius: 0,
-                    borderWidth: 1.5,
-                    backgroundColor: 'rgb(255, 255, 255, 0)',
-                    lineTension: 0
-                }]
-            },
-            {
-                title: 'Throttle Position', value: [{
-                    data: [],
-                    label: '',
-                    borderColor: 'rgb(255, 0, 0)',
-                    pointRadius: 0,
-                    borderWidth: 1.5,
-                    backgroundColor: 'rgb(255, 255, 255, 0)',
-                    lineTension: 0
-                }]
-            },
-            {
-                title: 'Engine Temperature', value: [{
-                    data: [],
-                    label: '',
-                    borderColor: 'rgb(255, 0, 0)',
-                    pointRadius: 0,
-                    borderWidth: 1.5,
-                    backgroundColor: 'rgb(255, 255, 255, 0)',
-                    lineTension: 0
-                }]
-            },
-            {
-                title: 'Oil Temperature', value: [{
-                    data: [],
-                    label: '',
-                    borderColor: 'rgb(255, 0, 0)',
-                    pointRadius: 0,
-                    borderWidth: 1.5,
-                    backgroundColor: 'rgb(255, 255, 255, 0)',
-                    lineTension: 0
-                }]
-            },
-            {
-                title: 'Fuel Temperature', value: [{
-                    data: [],
-                    label: '',
-                    borderColor: 'rgb(255, 0, 0)',
-                    pointRadius: 0,
-                    borderWidth: 1.5,
-                    backgroundColor: 'rgb(255, 255, 255, 0)',
-                    lineTension: 0
-                }]
-            },
-            {
-                title: 'Intake Air Temperature', value: [{
-                    data: [],
-                    label: '',
-                    borderColor: 'rgb(255, 0, 0)',
-                    pointRadius: 0,
-                    borderWidth: 1.5,
-                    backgroundColor: 'rgb(255, 255, 255, 0)',
-                    lineTension: 0
-                }]
-            },
-            {
-                title: 'Oil Pressure', value: [{
-                    data: [],
-                    label: '',
-                    borderColor: 'rgb(255, 0, 0)',
-                    pointRadius: 0,
-                    borderWidth: 1.5,
-                    backgroundColor: 'rgb(255, 255, 255, 0)',
-                    lineTension: 0
-                }]
-            },
-            {
-                title: 'Barometer', value: [{
-                    data: [],
-                    label: '',
-                    borderColor: 'rgb(255, 0, 0)',
-                    pointRadius: 0,
-                    borderWidth: 1.5,
-                    backgroundColor: 'rgb(255, 255, 255, 0)',
-                    lineTension: 0
-                }]
-            },
-            {
-                title: 'Injector Pulse Width', value: [{
-                    data: [],
-                    label: '',
-                    borderColor: 'rgb(255, 0, 0)',
-                    pointRadius: 0,
-                    borderWidth: 1.5,
-                    backgroundColor: 'rgb(255, 255, 255, 0)',
-                    lineTension: 0
-                }]
-            },
-            {
-                title: 'Battery Voltage', value: [{
-                    data: [],
-                    label: '',
-                    borderColor: 'rgb(255, 0, 0)',
-                    pointRadius: 0,
-                    borderWidth: 1.5,
-                    backgroundColor: 'rgb(255, 255, 255, 0)',
-                    lineTension: 0
-                }]
-            },
-            {
-                title: 'Suspension',
+            { title: 'RPM', value: [{ data: [] }] },
+            { title: 'Air To Fuel', value: [{ data: [] }] },
+            { title: 'Manifold Air Pressure', value: [{ data: [] }] },
+            { title: 'Throttle Position', value: [{ data: [] }] },
+            { title: 'Engine Temperature', value: [{ data: [] }] },
+            { title: 'Oil Temperature', value: [{ data: [] }] },
+            { title: 'Fuel Temperature', value: [{ data: [] }] },
+            { title: 'Intake Air Temperature', value: [{ data: [] }] },
+            { title: 'Oil Pressure', value: [{ data: [] }] },
+            { title: 'Barometer', value: [{ data: [] }] },
+            { title: 'Injector Pulse Width', value: [{ data: [] }] },
+            { title: 'Battery Voltage', value: [{ data: [] }] },
+            { title: 'Suspension',
                 value: [
-                    {
-                        data: [],
-                        label: '',
-                        borderColor: 'rgb(0, 114, 178)',
-                        pointRadius: 0,
-                        borderWidth: 1.5,
-                        backgroundColor: 'rgb(255, 255, 255, 0)',
-                        lineTension: 0,
-                        type: 'line',
-                        label: 'RL'
-                    },
-                    {
-                        data: [],
-                        label: '',
-                        borderColor: 'rgb(230, 159, 0)',
-                        pointRadius: 0,
-                        borderWidth: 1.5,
-                        backgroundColor: 'rgb(255, 255, 255, 0)',
-                        lineTension: 0,
-                        type: 'line',
-                        label: 'RR'
-                    },
-                    {
-                        data: [],
-                        label: '',
-                        borderColor: 'rgb(0, 158, 115)',
-                        pointRadius: 0,
-                        borderWidth: 1.5,
-                        backgroundColor: 'rgb(255, 255, 255, 0)',
-                        lineTension: 0,
-                        type: 'line',
-                        label: 'FL'
-                    },
-                    {
-                        data: [],
-                        label: '',
-                        borderColor: 'rgb(204, 121, 167)',
-                        pointRadius: 0,
-                        borderWidth: 1.5,
-                        backgroundColor: 'rgb(255, 255, 255, 0)',
-                        lineTension: 0,
-                        type: 'line',
-                        label: 'FR'
-                    }
+                    { data: [] },
+                    { data: [] },
+                    { data: [] },
+                    { data: [] }
                 ]
             },
-            {
-                title: 'Acceleration',
+            { title: 'Acceleration',
                 value: [
-                    {
-                        data: [],
-                        label: '',
-                        borderColor: 'rgb(0, 114, 178)',
-                        pointRadius: 0,
-                        borderWidth: 1.5,
-                        backgroundColor: 'rgb(255, 255, 255, 0)',
-                        lineTension: 0,
-                        type: 'line',
-                        label: 'X'
-                    },
-                    {
-                        data: [],
-                        label: '',
-                        borderColor: 'rgb(230, 159, 0)',
-                        pointRadius: 0,
-                        borderWidth: 1.5,
-                        backgroundColor: 'rgb(255, 255, 255, 0)',
-                        lineTension: 0,
-                        type: 'line',
-                        label: 'Y'
-                    },
-                    {
-                        data: [],
-                        label: '',
-                        borderColor: 'rgb(0, 158, 115)',
-                        pointRadius: 0,
-                        borderWidth: 1.5,
-                        backgroundColor: 'rgb(255, 255, 255, 0)',
-                        lineTension: 0,
-                        type: 'line',
-                        label: 'Z'
-                    }
+                    { data: [] },
+                    { data: [] },
+                    { data: [] }
                 ]
             },
-            {
-                title: 'Roll', value: [{
-                    data: [],
-                    label: '',
-                    borderColor: 'rgb(255, 0, 0)',
-                    pointRadius: 0,
-                    borderWidth: 1.5,
-                    backgroundColor: 'rgb(255, 255, 255, 0)',
-                    lineTension: 0
-                }]
+            { title: 'Axes',
+                value: [
+                    { data: [] },
+                    { data: [] },
+                    { data: [] }
+                ]
             },
-            {
-                title: 'Pitch', value: [{
-                    data: [],
-                    label: '',
-                    borderColor: 'rgb(255, 0, 0)',
-                    pointRadius: 0,
-                    borderWidth: 1.5,
-                    backgroundColor: 'rgb(255, 255, 255, 0)',
-                    lineTension: 0
-                }]
-            },
-            {
-                title: 'Yaw', value: [{
-                    data: [],
-                    label: '',
-                    borderColor: 'rgb(255, 0, 0)',
-                    pointRadius: 0,
-                    borderWidth: 1.5,
-                    backgroundColor: 'rgb(255, 255, 255, 0)',
-                    lineTension: 0
-                }]
-            },
-            {
-                title: 'Speed', value: [{
-                    data: [],
-                    label: '',
-                    borderColor: 'rgb(255, 0, 0)',
-                    pointRadius: 0,
-                    borderWidth: 1.5,
-                    backgroundColor: 'rgb(255, 255, 255, 0)',
-                    lineTension: 0
-                }]
-            },
-            {
-                title: 'Distance', value: [{
-                    data: [],
-                    label: '',
-                    borderColor: 'rgb(255, 0, 0)',
-                    pointRadius: 0,
-                    borderWidth: 1.5,
-                    backgroundColor: 'rgb(255, 255, 255, 0)',
-                    lineTension: 0
-                }]
-            },
-            {
-                title: 'Track Map', value: []
-            }]
+            { title: 'Speed', value: [{ data: [] }] },
+            { title: 'Distance', value: [{ data: [] }] },
+            { title: 'Track Map', value: [] }]
         this.interval = setInterval(() => this.tick(), 100);
     }
 
@@ -360,14 +119,8 @@ export default class Data {
                 else if(parameter.title === 'Injector Pulse Width') {
                     parameter.value[0].data.push(IPW[this.index]);
                 }
-                else if(parameter.title === 'Roll') {
-                    parameter.value[0].data.push(roll[this.index]);
-                }
-                else if(parameter.title === 'Pitch') {
-                    parameter.value[0].data.push(pitch[this.index]);
-                }
-                else if(parameter.title === 'Yaw') {
-                    parameter.value[0].data.push(yaw[this.index]);
+                else if(parameter.title === 'Battery Voltage') {
+                    parameter.value[0].data.push(IPW[this.index]);
                 }
                 else if(parameter.title === 'Speed') {
                     parameter.value[0].data.push(speed[this.index]);
@@ -395,6 +148,16 @@ export default class Data {
                 parameter.value[0].data.push(xAccel[this.index]);
                 parameter.value[1].data.push(yAccel[this.index]);
                 parameter.value[2].data.push(zAccel[this.index]);
+                if (parameter.value[0].data.length > 100) {
+                    parameter.value[0].data.shift();
+                    parameter.value[1].data.shift();
+                    parameter.value[2].data.shift();
+                }
+            }
+            else if (parameter.title === 'Axes') {
+                parameter.value[0].data.push(roll[this.index]);
+                parameter.value[1].data.push(pitch[this.index]);
+                parameter.value[2].data.push(yaw[this.index]);
                 if (parameter.value[0].data.length > 100) {
                     parameter.value[0].data.shift();
                     parameter.value[1].data.shift();
@@ -431,6 +194,13 @@ export default class Data {
                     accelArray.push(parameter.value[2].data[parameter.value[2].data.length - 1]);
                     return accelArray;
                 }
+                else if(index === 'Axes') {
+                    let axesArray = [];
+                    axesArray.push(parameter.value[0].data[parameter.value[0].data.length - 1]);
+                    axesArray.push(parameter.value[1].data[parameter.value[1].data.length - 1]);
+                    axesArray.push(parameter.value[2].data[parameter.value[2].data.length - 1]);
+                    return axesArray;
+                }
                 else if(index === 'Suspension') {
                     let suspArray = [];
                     suspArray.push(parameter.value[0].data[parameter.value[0].data.length - 1]);
@@ -439,6 +209,7 @@ export default class Data {
                     suspArray.push(parameter.value[3].data[parameter.value[3].data.length - 1]);
                     return suspArray;
                 }
+                
             }
         }
     }

@@ -6,10 +6,13 @@ export default class CustomGraphChoice extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            graphTitles: constGraphTitles
+            graphTitles: constGraphTitles,
+            over_max: false
         }
         this.switches = [];
         this.indexes = [];
+
+        this.MAX_GRAPHS = 10;
     }
 
     componentWillMount = () => {
@@ -28,6 +31,13 @@ export default class CustomGraphChoice extends React.Component {
     }
 
     submit = (event) => {
+        if(this.indexes.length > this.MAX_GRAPHS) {
+            this.setState({
+                over_max: true
+            })
+            return;
+        }
+
         let selectedGraphs = [];
         for(const i of this.indexes) { selectedGraphs.push(this.state.graphTitles[i - 1]); }
         this.props.enter(selectedGraphs);
@@ -36,6 +46,8 @@ export default class CustomGraphChoice extends React.Component {
     render = () => {
         return (
             <div id='graphChoice' style={{fontWeight: '600'}}>
+                {this.state.over_max ?
+                <p>Please select only {this.MAX_GRAPHS} graphs. ({this.indexes.length} currently chosen)</p> : null}
                 <Form>{this.switches}</Form>
                 <Button onClick={this.submit} style={{fontWeight: '600', backgroundColor: '#C22D2D', borderColor: '#C22D2D', width: '366px', marginLeft: '-20px', marginTop: '15px'}}>Submit</Button>
             </div>

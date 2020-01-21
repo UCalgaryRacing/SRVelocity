@@ -42,7 +42,7 @@ export default class CustomDataDashM extends React.Component {
 
     render = () => {
         return (
-            <div style={{ marginTop: '20px', textAlign: 'center', color: '#FFF', fontWeight: '600' }}>
+            <div style={{ textAlign: 'center', color: '#FFF', fontWeight: '600' }}>
                 {this.container}
             </div>
         )

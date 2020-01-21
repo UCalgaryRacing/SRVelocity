@@ -1,6 +1,5 @@
 import React from 'react';
-import GraphingDashboard from './graphingDashboard';
-import '../../styling/defaultDash.css';
+import PlottingDashboardM from './plottingDashboardM';
 
 export default class DefaultPlottingDash extends React.Component {
     constructor(props) {
@@ -17,15 +16,15 @@ export default class DefaultPlottingDash extends React.Component {
                 { title: 'Suspension', units: 'mm' },
                 { title: 'Acceleration', units: 'g' },
                 { title: 'Axes', units: '˚' },
-                { title: 'Track Map', units: '' }
+                //{ title: 'Track Map', units: '' }
             ]
         }
     }
 
     render = () => {
-        return (
+        return(
             <div id='defaultDash'>
-                <GraphingDashboard graphInfo={this.state.graphTitles}/>
+                <PlottingDashboardM graphInfo={this.state.graphTitles}/>
             </div>
         );
     }

@@ -55,23 +55,20 @@ export default class SideNavbar extends React.Component {
                             <NavItem eventKey='Acceleration'>
                                 <button class="tab-button" onClick={() => {this.onSelect('Acceleration')}}><b>Acceleration</b></button>
                             </NavItem>
-                            <NavItem eventKey='Roll'>
-                                <button class="tab-button" onClick={() => {this.onSelect('Roll')}}><b>Roll</b></button>
+                            <NavItem eventKey='Axes'>
+                                <button class="tab-button" onClick={() => {this.onSelect('Axes')}}><b>Axes</b></button>
                             </NavItem>
-                            <NavItem eventKey='Pitch'>
-                                <button class="tab-button" onClick={() => {this.onSelect('Pitch')}}><b>Pitch</b></button>
-                            </NavItem>
-                            <NavItem eventKey='Yaw'>
-                                <button class="tab-button" onClick={() => {this.onSelect('Yaw')}}><b>Yaw</b></button>
-                            </NavItem>
-                            <NavItem eventKey='Track Map'>
-                                <button class="tab-button" onClick={() => {this.onSelect('Track Map')}}><b>Track Map</b></button>
+                            <NavItem eventKey='Battery Voltage'>
+                                <button class="tab-button" onClick={() => {this.onSelect('Battery Voltage')}}><b>Battery</b></button>
                             </NavItem>
                             <NavItem eventKey='Speed'>
                                 <button class="tab-button" onClick={() => {this.onSelect('Speed')}}><b>Speed</b></button>
                             </NavItem>
                             <NavItem eventKey='Distance'>
                                 <button class="tab-button" onClick={() => {this.onSelect('Distance')}}><b>Distance</b></button>
+                            </NavItem>
+                            <NavItem eventKey='Track Map'>
+                                <button class="tab-button" onClick={() => {this.onSelect('Track Map')}}><b>Track Map</b></button>
                             </NavItem>
                         </React.Fragment>
                     }

@@ -16,7 +16,7 @@ export default class DataBoxM extends React.Component {
 
     componentWillMount() {
         this.interval = setInterval(() => this.tick(), 100);
-        if (this.state.name === 'Suspension' || this.state.name === 'Acceleration') {
+        if (this.state.name === 'Suspension' || this.state.name === 'Acceleration' || this.state.name === 'Axes') {
             this.setState({
                 displayName: constDataTitles[this.props.name][2]
             })
@@ -69,7 +69,7 @@ export default class DataBoxM extends React.Component {
 
     render = () => {
         return (
-            <div style={{ backgroundColor: this.getColour() }}>
+            <div style={{ backgroundColor: this.getColour(), textAlign: 'center', fontWeight: '700', color: '#FFF'}}>
                 <p>{this.state.displayName} {this.state.unit}</p>
                 <p>{(this.state.value !== undefined) ? this.state.value : '0'}</p>
             </div>

@@ -1,5 +1,5 @@
 import React from 'react';
-import LineGraphM from '../graphComponentsM/lineGraph';
+import LineChartM from './lineChartM';
 import Data from '../../../data';
 import '../../styling/graphBoxM.css';
 
@@ -23,29 +23,19 @@ export default class GraphBoxM extends React.Component {
         }
     }
 
-    componentWillMount() {
+    componentWillMount = () => {
         this.interval = setInterval(() => this.tick(), 100);
     }
 
-    componentWillUnmount() {
+    componentWillUnmount = () => {
         clearInterval(this.interval);
     }
 
     pullData = () => {
         let newDatasets = Data.getInstance().get(this.props.title)
-        if (newDatasets == undefined) { //Sometimes null for some reason
-            return;
-        }
-        if (this.props.title === 'Track Map') {
-            this.setState({ data: newDatasets });
-        }
-        else {
-            this.setState({
-                data: {
-                    datasets: newDatasets
-                }
-            });
-        }
+        if (newDatasets == undefined) { return; }
+        if (this.props.title === 'Track Map') { this.setState({ data: newDatasets }); }
+        else { this.setState({ data: {datasets: newDatasets} }); }
     }
 
     get = (index) => {
@@ -68,7 +58,7 @@ export default class GraphBoxM extends React.Component {
         return (
             <div id='graphBoxM'>
                 <p id='graphTitleM'><b>{this.props.title}</b></p>
-                <LineGraphM title={this.props.title} units={this.props.units} data={this.state.data} />
+                <LineChartM title={this.props.title} units={this.props.units} data={this.state.data} />
             </div>
         );
     }

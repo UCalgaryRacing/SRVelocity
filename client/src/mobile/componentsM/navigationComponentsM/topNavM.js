@@ -7,7 +7,7 @@ import '../../styling/topNavM.css';
 export default class TopNavM extends React.Component {
     render() {
         return (
-            <Navbar id="MobileNavBar" bg="dark" variant="dark" expand="lg" style={{ position: 'fixed', zIndex: '10001', paddingLeft: '5px', paddingRight: '5px', width: window.innerWidth }}>
+            <Navbar id="MobileNavBar" bg="dark" variant="dark" expand="lg" style={{ position: 'fixed', zIndex: '10001', paddingLeft: '20px', paddingRight: '20px', width: window.innerWidth }}>
                 <Navbar.Brand href="/">
                     <b>Schulich Velocity</b>
                 </Navbar.Brand>

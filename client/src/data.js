@@ -29,22 +29,22 @@ export default class Data {
         this.length = rearLeft.length;
         this.index = 0;
         this.params = {
-            MAX_LENGTH: 30
+            MAX_LENGTH: 100
         }
         this.labels = [0]
         this.datasets = [
-            { title: 'RPM', value: [{ data: [] }] },
-            { title: 'Air To Fuel', value: [{ data: [] }] },
-            { title: 'Manifold Air Pressure', value: [{ data: [] }] },
-            { title: 'Throttle Position', value: [{ data: [] }] },
-            { title: 'Engine Temperature', value: [{ data: [] }] },
-            { title: 'Oil Temperature', value: [{ data: [] }] },
-            { title: 'Fuel Temperature', value: [{ data: [] }] },
-            { title: 'Intake Air Temperature', value: [{ data: [] }] },
-            { title: 'Oil Pressure', value: [{ data: [] }] },
-            { title: 'Barometer', value: [{ data: [] }] },
-            { title: 'Injector Pulse Width', value: [{ data: [] }] },
-            { title: 'Battery Voltage', value: [{ data: [] }] },
+            { title: 'RPM', value: [{ data: [] }], range: 30},
+            { title: 'Air To Fuel', value: [{ data: [] }], range: 30 },
+            { title: 'Manifold Air Pressure', value: [{ data: [] }], range: 30 },
+            { title: 'Throttle Position', value: [{ data: [] }], range: 30},
+            { title: 'Engine Temperature', value: [{ data: [] }], range: 30 },
+            { title: 'Oil Temperature', value: [{ data: [] }], range: 30 },
+            { title: 'Fuel Temperature', value: [{ data: [] }], range: 30 },
+            { title: 'Intake Air Temperature', value: [{ data: [] }], range: 30 },
+            { title: 'Oil Pressure', value: [{ data: [] }], range: 30 },
+            { title: 'Barometer', value: [{ data: [] }], range: 30 },
+            { title: 'Injector Pulse Width', value: [{ data: [] }], range: 30 },
+            { title: 'Battery Voltage', value: [{ data: [] }], range: 30},
             { title: 'Suspension',
                 value: [
                     { data: [] },

@@ -1,5 +1,6 @@
 import React from 'react';
 import LineChartM from './lineChartM';
+import ScatterPlotM from './scatterPlotM';
 import Data from '../../../data';
 import '../../styling/graphBoxM.css';
 
@@ -55,11 +56,21 @@ export default class GraphBoxM extends React.Component {
     }
 
     render = () => {
-        return (
-            <div id='graphBoxM'>
-                <p id='graphTitleM'><b>{this.props.title}</b></p>
-                <LineChartM title={this.props.title} units={this.props.units} data={this.state.data} />
-            </div>
-        );
+        if (this.props.title === 'Track Map') {
+            return (
+                <div id='graphBoxM'>
+                    <p id='graphTitleM'><b>{this.props.title}</b></p>
+                    <ScatterPlotM title={this.props.title} units={this.props.units} data={this.state.data} />
+                </div>
+            );
+        }
+        else {
+            return (
+                <div id='graphBoxM'>
+                    <p id='graphTitleM'><b>{this.props.title}</b></p>
+                    <LineChartM title={this.props.title} units={this.props.units} data={this.state.data} />
+                </div>
+            );
+        }
     }
 }

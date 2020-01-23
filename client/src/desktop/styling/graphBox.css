@@ -10,3 +10,25 @@
     text-align: center;
     font-size: 1.5rem;
 }
+
+.PrivateValueLabel-offset-55 {
+    top: -25px !important;
+    font-weight: 600 !important;
+    transform-origin: top !important;
+    right: -5px;
+    transition: none !important;
+}
+
+.PrivateValueLabel-circle-56 {
+    transform: none !important;
+    border-radius: 5px !important;
+    width: 150% !important;
+    height: 25px !important;
+    text-align: center;
+}
+
+.PrivateValueLabel-label-57 {
+    transform: none !important;
+    margin-left: 3px;
+    margin-right: 3px;
+}

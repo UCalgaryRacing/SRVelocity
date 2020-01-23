@@ -99,7 +99,7 @@ export default class LineChart extends Component {
             .setScrollStrategy(AxisScrollStrategies.progressive)
             .setTickStyle(emptyTick)
             .setMouseInteractions(false)
-            .setInterval(0, 100)
+            .setInterval(0, 30)
             .setStrokeStyle(new SolidLine({
                 thickness: 3,
                 fillStyle: new SolidFill({ color: ColorHEX('#C8C8C8') })
@@ -168,6 +168,11 @@ export default class LineChart extends Component {
 
     componentDidUpdate = () => {
         this.pullData()
+    }
+
+    changeInterval = (interval) => {
+        this.chart.getDefaultAxisX()
+            .setInterval(0, interval)
     }
 
     pullData = () => {

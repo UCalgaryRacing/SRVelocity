@@ -29,7 +29,7 @@ export default class Data {
         this.length = rearLeft.length;
         this.index = 0;
         this.params = {
-            MAX_LENGTH: 100
+            MAX_LENGTH: 10000
         }
         this.labels = [0]
         this.datasets = [

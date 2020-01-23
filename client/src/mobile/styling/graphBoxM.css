@@ -2,6 +2,8 @@
     border-width: 1px;
     border-color: #494949;
     border-radius: 10px;
+    text-align: center;
+    border-style: solid;
 }
 
 #graphTitleM {
@@ -9,4 +11,26 @@
     margin-bottom: 0px;
     text-align: center;
     font-size: 1.5rem;
+}
+
+span[class^="PrivateValueLabel-offset-"] {
+    top: -25px !important;
+    font-weight: 600 !important;
+    transform-origin: top !important;
+    right: -5px;
+    transition: none !important;
+}
+
+span[class^="PrivateValueLabel-circle-"] {
+    transform: none !important;
+    border-radius: 5px !important;
+    width: 150% !important;
+    height: 25px !important;
+    text-align: center;
+}
+
+span[class^="PrivateValueLabel-label-"] {
+    transform: none !important;
+    margin-left: 3px;
+    margin-right: 3px;
 }

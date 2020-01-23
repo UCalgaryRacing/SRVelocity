@@ -1,7 +1,7 @@
 import React from 'react';
 import LineChart from '../components/lineChart';
 import ScatterPlot from '../components/scatterPlot';
-import { Typography, Slider } from '@material-ui/core';
+import { Slider } from '@material-ui/core';
 import { withStyles } from '@material-ui/core/styles';
 import '../styling/graphBox.css';
 import Data from '../../data';
@@ -28,7 +28,8 @@ export default class GraphBox extends React.Component {
         if (this.props.title === 'Track Map') {
             this.state = {
                 currentLabel: 3,
-                data: Data.getInstance().get(this.props.title)
+                data: Data.getInstance().get(this.props.title),
+                currentRange: 0.5
             }
         }
         else {
@@ -37,7 +38,8 @@ export default class GraphBox extends React.Component {
                 data: {
                     labels: Data.getInstance().getLabels(),
                     datasets: Data.getInstance().get(this.props.title)
-                }
+                },
+                currentRange: 0.5
             }
         }
     }
@@ -66,8 +68,10 @@ export default class GraphBox extends React.Component {
     }
 
     handleRangeChange = (event, value) => {
-        console.log(value)
-        this.chart.current.changeInterval(value*60);
+        if(value !== this.state.currentRange) {
+            this.chart.current.changeInterval(value * 60);
+            this.setState({currentRange: value});
+        }
     }
 
     render = () => {
@@ -84,31 +88,29 @@ export default class GraphBox extends React.Component {
                 <div id='graphBox'>
                     <p id='graphTitle'><b>{this.props.title}</b></p>
                     <div style={{ marginBottom: '10px' }}>
-                        <LineChart id={this.props.id} data={this.state.data} title={this.props.title} units={this.props.units} ref={this.chart}/>
+                        <LineChart id={this.props.id} data={this.state.data} title={this.props.title} units={this.props.units} ref={this.chart} />
                     </div>
                     <div style={{ width: '50%', margin: 'auto' }}>
-                        <Typography id="discrete-slider" gutterBottom style={{ textAlign: 'center', marginBottom: '40px' }}>
-                            Data Range
-                        </Typography>
+                        <p style={{textAlign: 'center', marginBottom: '30px'}}><b>Data Range</b></p>
                         <RangeSlider
                             defaultValue={0.5}
                             onChangeCommitted={this.handleRangeChange}
                             marks={true}
                             aria-labelledby="discrete-slider"
-                            valueLabelDisplay='auto'
+                            valueLabelDisplay='on'
                             step={0.5}
                             min={0.5}
-                            max={10} 
+                            max={10}
                             valueLabelFormat={(x) => {
                                 if (x === 0.5) {
-                                    return x + ' seconds';
+                                    return '30 seconds';
                                 }
-                                if(x !== 1) {
+                                if (x !== 1) {
                                     return x + ' minutes';
                                 }
                                 return x + ' minute';
                             }}
-                            />
+                        />
                     </div>
                 </div>
             );

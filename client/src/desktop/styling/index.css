@@ -15,8 +15,8 @@ code {
 html, body, #root{
   height: 100%;
   margin-top: 0;
+  overflow-x: hidden;
 }
-
 /* BROWSER SPECIFIC STYLING */
 ::-webkit-scrollbar{
   width: 0px;

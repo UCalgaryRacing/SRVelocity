@@ -3,6 +3,7 @@
     border-width: 1px;
     border-radius: 1rem;
     border-color: #494949;
+    min-width: 900px;
 }
 
 #graphTitle {
@@ -11,7 +12,7 @@
     font-size: 1.5rem;
 }
 
-.PrivateValueLabel-offset-55 {
+span[class^="PrivateValueLabel-offset-"] {
     top: -25px !important;
     font-weight: 600 !important;
     transform-origin: top !important;
@@ -19,7 +20,7 @@
     transition: none !important;
 }
 
-.PrivateValueLabel-circle-56 {
+span[class^="PrivateValueLabel-circle-"] {
     transform: none !important;
     border-radius: 5px !important;
     width: 150% !important;
@@ -27,7 +28,7 @@
     text-align: center;
 }
 
-.PrivateValueLabel-label-57 {
+span[class^="PrivateValueLabel-label-"] {
     transform: none !important;
     margin-left: 3px;
     margin-right: 3px;

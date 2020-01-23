@@ -33,6 +33,8 @@ export default class LineChartM extends Component {
             .setMouseInteractionsWhileZooming(false)
 
         this.chart.engine.container.onwheel = null
+        this.chart.engine.container.ontouchstart = null
+        this.chart.engine.container.ontouchmove = null
 
         this.chart.getDefaultAxisY()
             .setScrollStrategy(AxisScrollStrategies.expansion)
@@ -167,6 +169,11 @@ export default class LineChartM extends Component {
 
     componentDidUpdate = () => {
         this.pullData()
+    }
+
+    changeInterval = (interval) => {
+        this.chart.getDefaultAxisX()
+            .setInterval(0, interval)
     }
 
     pullData = () => {

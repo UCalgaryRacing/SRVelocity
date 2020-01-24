@@ -32,6 +32,10 @@ html, body, #root{
   box-shadow:none;
 }
 
+.btn-primary:focus {
+  box-shadow: 0 0 0 0.2rem rgba(194,46,45,.7) !important;
+}
+
 input[type=checkbox]:checked + label {
   color: #C22D2D;
 }

@@ -177,6 +177,7 @@ export default class LineChart extends Component {
 
     pullData = () => {
         if (this.setupComplete) {
+            //Change so data singleton only sends the most recent data point
             if (this.props.title !== 'Acceleration' && this.props.title !== 'Suspension' && this.props.title !== 'Axes') {
                 this.lineSeries1.add({ x: this.i, y: this.state.data.datasets[0].data[this.state.data.datasets[0].data.length - 1] })
             }

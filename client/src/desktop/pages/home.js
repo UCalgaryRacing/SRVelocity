@@ -10,17 +10,17 @@ export default class HomePage extends React.Component {
             <div id='homePage'>
                 <TopNav />
                 <Jumbotron>
-                    <Row style={{ textAlign: 'center' }}>
+                    <Row id="row1">
                         <Col>
-                            <img src={require('../../assets/logo.svg')} style={{ width: '100%', textAlign: 'center', marginBottom: '10px' }} />
+                            <img id='logoImg' src={require('../../assets/logo.svg')}/>
                         </Col>
                     </Row>
-                    <Row style={{ textAlign: 'center' }}>
+                    <Row id="row2">
                         <Col>
-                            <p style={{ fontSize: '3rem', marginTop: '20px' }}>
+                            <p id="welcomeHeader">
                                 <b>Welcome to Schulich Velocity!</b>
                             </p>
-                            <p style={{ fontSize: '2rem', marginTop: '20px' }}>
+                            <p id="infoPara">
                                 Schulich Velocity is telemetry software created for the SR21. It is capable of receiving data from the SR21 at 10 Hz, plotting it, and performing other analysis that
                                 helps us understand how the car is performing in real time. 
                             </p>

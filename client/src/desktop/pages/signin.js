@@ -28,12 +28,12 @@ export default class SignInPage extends React.Component {
             <div id='signIn'>
                 <TopNav />
                 <Jumbotron>
-                    <Row style={{ textAlign: 'center' }}>
+                    <Row id="row1">
                         <Col>
-                            <img src={require('../../assets/logo.svg')} style={{ width: '100%', textAlign: 'center', marginBottom: '10px' }}/>
+                            <img id="logoImg" src={require('../../assets/logo.svg')}/>
                         </Col>
                     </Row>
-                    <Row style={{ textAlign: 'center' }}>
+                    <Row id="row2">
                         <Col>
                             <Form className='emailForm'>
                                 <Form.Control className='emailFormControl' ref={this.emailForm} autoComplete='on' placeHolder='Email' required />

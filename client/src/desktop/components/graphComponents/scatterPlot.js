@@ -1,6 +1,6 @@
 import React from 'react';
 import { Scatter } from 'react-chartjs-2';
-import '../styling/scatterPlot.css'
+import '../../styling/scatterPlot.css';
 
 export default class ScatterPlot extends React.Component {
     constructor(props) {

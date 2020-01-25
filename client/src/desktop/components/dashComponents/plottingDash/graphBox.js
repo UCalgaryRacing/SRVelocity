@@ -1,10 +1,10 @@
 import React from 'react';
-import LineChart from '../components/lineChart';
-import ScatterPlot from '../components/scatterPlot';
+import LineChart from '../../graphComponents/lineChart';
+import ScatterPlot from '../../graphComponents/scatterPlot';
 import { Slider } from '@material-ui/core';
 import { withStyles } from '@material-ui/core/styles';
-import '../styling/graphBox.css';
-import Data from '../../data';
+import Data from '../../../../data';
+import '../../../styling/graphBox.css';
 
 const RangeSlider = withStyles({
     root: {

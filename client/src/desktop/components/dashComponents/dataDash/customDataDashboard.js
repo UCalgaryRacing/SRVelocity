@@ -1,7 +1,7 @@
 import React from 'react';
 import DataDashboard from './dataDashboard';
 import CustomDataChoice from "./customDataChoice";
-import '../../styling/customDash.css';
+import '../../../styling/customDash.css';
 
 export default class CustomDataDash extends React.Component {
     constructor(props) {

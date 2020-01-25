@@ -1,6 +1,6 @@
 import React from 'react';
 import {Form, Button} from 'react-bootstrap';
-import {constGraphTitles} from '../../../constants';
+import {constGraphTitles} from '../../../../constants';
 
 export default class CustomGraphChoice extends React.Component {
     constructor(props) {

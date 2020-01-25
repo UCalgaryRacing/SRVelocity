@@ -1,7 +1,7 @@
 import React from 'react';
 import { Form, Button } from 'react-bootstrap';
-import { constGraphTitles } from '../../../constants';
-import ErrorPopup from './errorPopupM';
+import { constGraphTitles } from '../../../../constants';
+import ErrorPopup from '../errorPopupM';
 
 export default class CustomPlotChoiceM extends React.Component {
     constructor(props) {

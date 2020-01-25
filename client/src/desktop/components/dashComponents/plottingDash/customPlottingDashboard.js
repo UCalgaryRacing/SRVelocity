@@ -1,5 +1,5 @@
 import React from 'react';
-import '../../styling/customDash.css';
+import '../../../styling/customDash.css';
 import GraphingDashboard from "./graphingDashboard";
 import CustomGraphChoice from "./customGraphChoice";
 

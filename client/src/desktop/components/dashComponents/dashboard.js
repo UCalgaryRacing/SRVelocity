@@ -1,11 +1,11 @@
 import React from 'react';
 import ButtonGroup from 'react-bootstrap/ButtonGroup';
 import Button from 'react-bootstrap/Button';
-import DefaultPlottingDash from './defaultPlottingDashboard';
-import DefaultDataDash from './defaultDataDashboard';
-import CustomPlottingDash from './customPlottingDashboard';
-import CustomDataDash from './customDataDashboard';
-import GraphBox from '../graphBox';
+import DefaultPlottingDash from './plottingDash/defaultPlottingDashboard';
+import DefaultDataDash from './dataDash/defaultDataDashboard';
+import CustomPlottingDash from './plottingDash/customPlottingDashboard';
+import CustomDataDash from './dataDash/customDataDashboard';
+import GraphBox from './plottingDash/graphBox';
 import '../../styling/dashboard.css';
 
 export default class StreamingDash extends React.Component {

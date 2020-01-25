@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import '../styling/lineChart.css';
+import '../../styling/lineChart.css';
 import { lightningChart, emptyTick, DataPatterns, AxisScrollStrategies, SolidLine, SolidFill, ColorHEX, AutoCursorModes, VisibleTicks, FontSettings } from '@arction/lcjs';
 
 const theme = {

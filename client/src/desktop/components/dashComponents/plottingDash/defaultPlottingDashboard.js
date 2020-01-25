@@ -1,6 +1,6 @@
 import React from 'react';
 import GraphingDashboard from './graphingDashboard';
-import '../../styling/defaultDash.css';
+import '../../../styling/defaultDash.css';
 
 export default class DefaultPlottingDash extends React.Component {
     constructor(props) {

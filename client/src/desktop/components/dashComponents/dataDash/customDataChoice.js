@@ -1,7 +1,7 @@
 import React from 'react';
 import {Form, Button} from 'react-bootstrap';
-import {constDataTitles} from '../../../constants';
-import '../../styling/customDataChoice.css';
+import {constDataTitles} from '../../../../constants';
+import '../../../styling/customDataChoice.css';
 
 export default class CustomDataChoice extends React.Component {
     constructor(props) {

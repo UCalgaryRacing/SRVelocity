@@ -1,5 +1,5 @@
 import React from 'react';
-import GraphBox from '../graphBox';
+import GraphBox from './graphBox';
 import { Row, Col } from 'react-bootstrap';
 
 export default class GraphingDashboard extends React.Component {

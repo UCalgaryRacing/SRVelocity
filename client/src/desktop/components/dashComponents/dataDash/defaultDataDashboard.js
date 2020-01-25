@@ -1,8 +1,8 @@
 import React from 'react';
 import { Row, Col } from 'react-bootstrap';
-import {constDataTitles} from '../../../constants';
+import {constDataTitles} from '../../../../constants';
 import DataBox from "./dataBox";
-import '../../styling/defaultDash.css';
+import '../../../styling/defaultDash.css';
 
 export default class DefaultDataDash extends React.Component {
     constructor(props) {

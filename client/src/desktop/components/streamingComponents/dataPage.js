@@ -1,5 +1,5 @@
 import React from 'react';
-import GraphBox from '../graphBox';
+import GraphBox from '../dashComponents/plottingDash/graphBox';
 import { constGraphTitles } from '../../../constants';
 import '../../styling/streamingData.css';
 

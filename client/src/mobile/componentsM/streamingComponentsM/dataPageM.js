@@ -1,5 +1,5 @@
 import React from 'react';
-import GraphBoxM from '../graphComponentsM/graphBoxM';
+import GraphBoxM from '../dashComponentsM/plottingDash/graphBoxM';
 
 export default class DataPageM extends React.Component {
     render = () => {

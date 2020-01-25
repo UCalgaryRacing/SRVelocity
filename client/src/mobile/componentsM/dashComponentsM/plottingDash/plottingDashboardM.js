@@ -1,5 +1,5 @@
 import React from 'react';
-import GraphBoxM from '../../graphComponentsM/graphBoxM';
+import GraphBoxM from './graphBoxM';
 import { Row, Col } from 'react-bootstrap';
 
 export default class PlottingDashboardM extends React.Component {

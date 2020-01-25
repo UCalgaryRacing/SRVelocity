@@ -1,10 +1,10 @@
 import React from 'react';
-import LineChartM from './lineChartM';
-import ScatterPlotM from './scatterPlotM';
+import LineChartM from '../../graphComponentsM/lineChartM';
+import ScatterPlotM from '../../graphComponentsM/scatterPlotM';
 import { Typography, Slider } from '@material-ui/core';
 import { withStyles } from '@material-ui/core/styles';
-import Data from '../../../data';
-import '../../styling/graphBoxM.css';
+import Data from '../../../../data';
+import '../../../styling/graphBoxM.css';
 
 const RangeSlider = withStyles({
     root: {
@@ -107,12 +107,8 @@ export default class GraphBoxM extends React.Component {
                             min={0.5}
                             max={10} 
                             valueLabelFormat={(x) => {
-                                if (x === 0.5) {
-                                    return '30 seconds';
-                                }
-                                if(x !== 1) {
-                                    return x + ' minutes';
-                                }
+                                if (x === 0.5) { return '30 seconds'; }
+                                if(x !== 1) { return x + ' minutes'; }
                                 return x + ' minute';
                             }}
                             />

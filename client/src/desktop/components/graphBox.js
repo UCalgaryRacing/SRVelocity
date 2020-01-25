@@ -29,7 +29,8 @@ export default class GraphBox extends React.Component {
             this.state = {
                 currentLabel: 3,
                 data: Data.getInstance().get(this.props.title),
-                currentRange: 0.5
+                currentRange: 0.5,
+                indicationColour: '#000'
             }
         }
         else {
@@ -39,7 +40,8 @@ export default class GraphBox extends React.Component {
                     labels: Data.getInstance().getLabels(),
                     datasets: Data.getInstance().get(this.props.title)
                 },
-                currentRange: 0.5
+                currentRange: 0.5,
+                indicationColour: '#000'
             }
         }
     }
@@ -52,25 +54,43 @@ export default class GraphBox extends React.Component {
         clearInterval(this.interval);
     }
 
-    pullData = () => {
-        let newDatasets = Data.getInstance().get(this.props.title);
-        if (newDatasets === undefined) { return; }
-        if (this.props.title === 'Track Map') { this.setState({ data: newDatasets }); }
-        else { this.setState({ data: { datasets: newDatasets } }); }
-    }
-
-    getLabels = () => {
-        return this.labels;
-    }
-
     tick = () => {
         this.pullData();
     }
 
+    pullData = () => {
+        let newDatasets = Data.getInstance().get(this.props.title);
+        if (newDatasets === undefined) { return; }
+        if (this.props.title === 'Track Map') { this.setState({ data: newDatasets }); }
+        else {
+            let newColour = this.updateColours(newDatasets[0].data[newDatasets[0].data.length - 1]);
+            this.setState({ data: { datasets: newDatasets }, indicationColour: newColour });
+        }
+    }
+
+    updateColours = (value) => {
+        if (this.props.title === 'Air To Fuel') {
+            if (value <= 10.5 || value >= 16) { return '#C22D2D'; }
+            else if ((value > 10.5 && value < 11.5) || (value > 14.7 && value < 16)) { return '#BDA800'; }
+        }
+        else if (this.props.title === 'Engine Temperature') {
+            if (value >= 120) { return '#C22D2D'; }
+            else if (value > 105 && value < 120) { return '#BDA800'; }
+        }
+        else if (this.props.title === 'Oil Temperature') {
+            if (value > 125) { return '#C22D2D'; }
+            else if (value > 110 && value <= 125) { return '#BDA800'; }
+        }
+        else if (this.props.title === 'Oil Pressure') {
+            if (value <= 10) { return '#C22D2D'; }
+        }
+        return '#000';
+    }
+
     handleRangeChange = (event, value) => {
-        if(value !== this.state.currentRange) {
+        if (value !== this.state.currentRange) {
             this.chart.current.changeInterval(value * 60);
-            this.setState({currentRange: value});
+            this.setState({ currentRange: value });
         }
     }
 
@@ -85,13 +105,13 @@ export default class GraphBox extends React.Component {
         }
         else {
             return (
-                <div id='graphBox'>
-                    <p id='graphTitle'><b>{this.props.title}</b></p>
+                <div id='graphBox' style={{ borderColor: this.state.indicationColour }}>
+                    <p id='graphTitle'><b style={{ color: this.state.indicationColour }}>{this.props.title}</b></p>
                     <div style={{ marginBottom: '10px' }}>
                         <LineChart id={this.props.id} data={this.state.data} title={this.props.title} units={this.props.units} ref={this.chart} />
                     </div>
                     <div style={{ width: '50%', margin: 'auto' }}>
-                        <p style={{textAlign: 'center', marginBottom: '30px'}}><b>Data Range</b></p>
+                        <p style={{ textAlign: 'center', marginBottom: '30px' }}><b>Data Range</b></p>
                         <RangeSlider
                             defaultValue={0.5}
                             onChangeCommitted={this.handleRangeChange}

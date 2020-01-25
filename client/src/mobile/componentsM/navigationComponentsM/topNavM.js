@@ -11,7 +11,7 @@ export default class TopNavM extends React.Component {
                 <Navbar.Brand href="/">
                     <b>Schulich Velocity</b>
                 </Navbar.Brand>
-                <Navbar.Toggle aria-controls="basic-navbar-nav"/>
+                <Navbar.Toggle aria-controls="basic-navbar-nav" />
                 <Navbar.Collapse id="basic-navbar-nav">
                     <Nav className="ml-auto">
                         <Nav.Link href="/">Home</Nav.Link>

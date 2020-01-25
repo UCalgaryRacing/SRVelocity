@@ -1,23 +1,21 @@
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
+    monospace;
+}
 body {
   margin: 0;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   font-family: "Helvetica";
+  height: 100%;
 }
 html {
-  overflow: scroll;
-  overflow-x: hidden;
-}
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
-    monospace;
-}
-html, body, #root{
   height: 100%;
-  margin-top: 0;
-  overflow-x: hidden;
 }
-/* BROWSER SPECIFIC STYLING */
+#root {
+  overflow-x: hidden;
+  overflow-y: scroll;
+}
 ::-webkit-scrollbar{
   width: 0px;
   background: transparent;

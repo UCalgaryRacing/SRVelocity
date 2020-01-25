@@ -23,13 +23,12 @@ export default class GraphingDashboard extends React.Component {
     createGraphs = () => {
         var i = 0
         for (const graph of this.state.graphTitles) {
-            if(graph.title === 'Track Map'){
-                this.graphs.push(<HeatMap key= {i+1} />)
-            }
-
-            else{
+            // if(graph.title === 'Track Map'){
+            //     //this.graphs.push(<HeatMap key= {i+1} />)
+            // }
+            //else{
                 this.graphs.push(<GraphBox title={graph.title} id={i + 1} units={graph.units} key={i + 1} />);
-            }
+            //}
             i++;
         }
     }

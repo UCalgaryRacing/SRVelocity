@@ -61,7 +61,7 @@ export default class HeatMap extends React.Component {
                 index = constDataTitles.y[3];
                 let yValue = Data.getInstance().getDataPoint(constDataTitles.y[0])[index];
 
-                newValue = xValue + yValue;
+                newValue = Math.abs(xValue) + Math.abs(yValue);
                 newValue = this.getColor(newValue, [0, 2]);
             }
 
@@ -75,7 +75,8 @@ export default class HeatMap extends React.Component {
                 newValue = this.getColor(newValue, [0, 100]);
             }
 
-            this.state.data[sensor].push(newValue);
+            console.log(newValue);
+            this.state.data[sensor] = (newValue);
         }
     }
 

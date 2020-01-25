@@ -1,6 +1,6 @@
 import React from 'react';
 import LineChart from '../components/lineChart';
-import ScatterPlot from '../components/scatterPlot';
+import HeatMap from '../components/heatMap';
 import { Slider } from '@material-ui/core';
 import { withStyles } from '@material-ui/core/styles';
 import '../styling/graphBox.css';
@@ -99,7 +99,7 @@ export default class GraphBox extends React.Component {
             return (
                 <div id='graphBox' style={{ width: '100%' }}>
                     <p id='graphTitle'><b>{this.props.title}</b></p>
-                    <ScatterPlot id={this.props.id} data={this.state.data} title={this.props.title} units={this.props.units} />
+                    <HeatMap />
                 </div>
             );
         }

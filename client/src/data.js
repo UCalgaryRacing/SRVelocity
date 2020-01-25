@@ -204,7 +204,9 @@ export default class Data {
                     suspArray.push(parameter.value[3].data[parameter.value[3].data.length - 1]);
                     return suspArray;
                 }
-                
+                else if(index === 'Track Map') {
+                    return parameter.value[parameter.value.length - 1];
+                }
             }
         }
     }

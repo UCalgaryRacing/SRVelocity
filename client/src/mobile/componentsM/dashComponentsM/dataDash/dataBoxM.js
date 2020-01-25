@@ -1,6 +1,6 @@
 import React from 'react';
-import Data from '../../../data';
-import { constDataTitles } from '../../../constants';
+import Data from '../../../../data';
+import { constDataTitles } from '../../../../constants';
 
 export default class DataBoxM extends React.Component {
     constructor(props) {

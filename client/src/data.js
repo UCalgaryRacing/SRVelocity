@@ -69,7 +69,7 @@ export default class Data {
             },
             { title: 'Speed', value: [{ data: [] }] },
             { title: 'Distance', value: [{ data: [] }] },
-            { title: 'Track Map', value: [] }]
+            { title: 'Track Map', value: [{}] }]
         this.interval = setInterval(() => this.tick(), 100);
     }
 

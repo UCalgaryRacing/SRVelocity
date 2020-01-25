@@ -1,6 +1,6 @@
 import React from 'react';
 import { Form, Button } from 'react-bootstrap';
-import { constDataTitles } from '../../../constants'
+import { constDataTitles } from '../../../../constants'
 
 export default class CustomDataChoiceM extends React.Component {
     constructor(props) {

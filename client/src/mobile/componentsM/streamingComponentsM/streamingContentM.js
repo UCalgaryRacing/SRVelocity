@@ -40,7 +40,7 @@ export default class StreamingContentM extends React.Component {
             </ButtonGroup >
         );
         let buttons = (
-            <div class='row' style={{ marginTop: '20px' }}>
+            <div class='row'>
                 <div class='col' style={{ paddingRight: '2.5px', marginLeft: '20px' }}>
                     {dashSelector}
                 </div>
@@ -51,7 +51,7 @@ export default class StreamingContentM extends React.Component {
         );
         if (this.state.content === 'Dash') {
             return (
-                <div id='streamingContent' style={{transition: 'all 0.15s' }}>
+                <div id='streamingContent' style={{transition: 'all 0.15s', marginTop: '30px'}}>
                     {buttons}
                     <StreamingDashM dashOption={this.state.dashOption} typeOption={this.state.typeOption} />
                 </div>

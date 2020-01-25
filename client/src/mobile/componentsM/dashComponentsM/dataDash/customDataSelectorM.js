@@ -1,7 +1,7 @@
 import React from 'react';
 import CustomDataDashM from './customDataDashboardM';
 import CustomDataChoiceM from './customDataChoiceM';
-import '../../styling/dashM.css';
+import '../../../styling/dashM.css';
 
 export default class CustomDataSelectorM extends React.Component {
     constructor(props) {

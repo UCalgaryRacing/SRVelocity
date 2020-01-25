@@ -1,9 +1,9 @@
 import React from 'react';
 import { Row, Col } from 'react-bootstrap';
-import { constDataTitles } from '../../../constants';
-import DataBoxM from '../dashComponentsM/dataBoxM';
+import { constDataTitles } from '../../../../constants';
+import DataBoxM from './dataBoxM';
 
-export default class DefaultDataDashM extends React.Component {
+export default class DataDashM extends React.Component {
     constructor(props) {
         super(props);
         this.totalData = [];

@@ -43,6 +43,7 @@ export default class LineChart extends Component {
                 fillStyle: new SolidFill({ color: ColorHEX('#C8C8C8') })
             }))
 
+        //Fix this
         if (this.props.title === 'RPM') {
             this.chart.getDefaultAxisY().setInterval(0, 15000, false, true);
         }
@@ -112,6 +113,7 @@ export default class LineChart extends Component {
         var ticks = new VisibleTicks({ labelFillStyle: new SolidFill({ color: ColorHEX('#000'), tickLength: 8 }), labelFont: font })
         ticks.setLabelPadding(100)
         axis.setTickStyle(ticks)
+        //Fix this with # of number values
         if (this.props.title !== 'Acceleration' && this.props.title !== 'Suspension' && this.props.title !== 'Axes') {
             this.lineSeries1 = this.chart.addLineSeries({ dataPattern: DataPatterns.horizontalProgressive })
             this.lineSeries1

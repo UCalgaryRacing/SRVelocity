@@ -1,5 +1,6 @@
 import React from 'react';
 import { Scatter } from 'react-chartjs-2';
+import '../styling/scatterPlot.css'
 
 export default class ScatterPlot extends React.Component {
     constructor(props) {
@@ -83,7 +84,7 @@ export default class ScatterPlot extends React.Component {
 
     render = () => {
         return (
-            <div id='scatterPlot' style={{ height: '500px', marginTop: '40px', marginLeft: '20px', marginRight: '20px', marginBottom: '20px' }}>
+            <div id='scatterPlot'>
                 <Scatter data={this.state.data} options={this.state.options} key={Math.random()}/>
             </div>
         );

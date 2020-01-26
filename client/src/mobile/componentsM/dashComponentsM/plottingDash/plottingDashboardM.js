@@ -30,7 +30,7 @@ export default class PlottingDashboardM extends React.Component {
     createToRender = () => {
         for (const graph of this.graphs) {
             this.container.push(
-                <Row style={{ marginTop: '30px' }}>
+                <Row style={{ marginTop: '30px', marginLeft: '5px', marginRight: '5px'}}>
                     <Col style={{padding: '0', margin: '0'}}>{graph}</Col>
                 </Row>
             );

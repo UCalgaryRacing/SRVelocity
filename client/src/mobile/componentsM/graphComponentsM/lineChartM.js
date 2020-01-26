@@ -107,7 +107,7 @@ export default class LineChartM extends Component {
             }))
 
         var axis = this.chart.getDefaultAxisY()
-        var font = new FontSettings({size: 10})
+        var font = new FontSettings({ size: 10 })
         font = font.setFamily("helvetica")
         font = font.setWeight("bold")
         var ticks = new VisibleTicks({ labelFillStyle: new SolidFill({ color: ColorHEX('#000'), tickLength: 8 }), labelFont: font })
@@ -179,23 +179,18 @@ export default class LineChartM extends Component {
     pullData = () => {
         if (this.setupComplete) {
             if (this.props.title !== 'Acceleration' && this.props.title !== 'Suspension' && this.props.title !== 'Axes') {
-                this.lineSeries1.add({ x: this.i, y: this.state.data.datasets[0].data[this.state.data.datasets[0].data.length - 1] })
+                this.lineSeries1.add({ x: this.i, y: this.state.data[0].data })
             }
-            else if (this.props.title === 'Acceleration') {
-                this.lineSeries1.add({ x: this.i, y: this.state.data.datasets[0].data[this.state.data.datasets[0].data.length - 1] })
-                this.lineSeries2.add({ x: this.i, y: this.state.data.datasets[1].data[this.state.data.datasets[1].data.length - 1] })
-                this.lineSeries3.add({ x: this.i, y: this.state.data.datasets[2].data[this.state.data.datasets[2].data.length - 1] })
-            }
-            else if (this.props.title === 'Axes') {
-                this.lineSeries1.add({ x: this.i, y: this.state.data.datasets[0].data[this.state.data.datasets[0].data.length - 1] })
-                this.lineSeries2.add({ x: this.i, y: this.state.data.datasets[1].data[this.state.data.datasets[1].data.length - 1] })
-                this.lineSeries3.add({ x: this.i, y: this.state.data.datasets[2].data[this.state.data.datasets[2].data.length - 1] })
+            else if (this.props.title === 'Acceleration' || this.props.title === 'Axes') {
+                this.lineSeries1.add({ x: this.i, y: this.state.data[0].data })
+                this.lineSeries2.add({ x: this.i, y: this.state.data[1].data })
+                this.lineSeries3.add({ x: this.i, y: this.state.data[2].data })
             }
             else if (this.props.title === 'Suspension') {
-                this.lineSeries1.add({ x: this.i, y: this.state.data.datasets[0].data[this.state.data.datasets[0].data.length - 1] })
-                this.lineSeries2.add({ x: this.i, y: this.state.data.datasets[1].data[this.state.data.datasets[1].data.length - 1] })
-                this.lineSeries3.add({ x: this.i, y: this.state.data.datasets[2].data[this.state.data.datasets[2].data.length - 1] })
-                this.lineSeries4.add({ x: this.i, y: this.state.data.datasets[3].data[this.state.data.datasets[3].data.length - 1] })
+                this.lineSeries1.add({ x: this.i, y: this.state.data[0].data })
+                this.lineSeries2.add({ x: this.i, y: this.state.data[1].data })
+                this.lineSeries3.add({ x: this.i, y: this.state.data[2].data })
+                this.lineSeries4.add({ x: this.i, y: this.state.data[3].data })
             }
             this.i++
         }
@@ -206,7 +201,7 @@ export default class LineChartM extends Component {
             return (
                 <div style={{ marginBottom: '20px' }}>
                     <p style={{ textAlign: 'center', fontSize: '1.2rem', paddingTop: '0', paddingBottom: '0', marginTop: '10px', marginBottom: '0px' }}>
-                        <b>{this.state.data.datasets[0].data[this.state.data.datasets[0].data.length - 1]}&nbsp;{this.props.units}</b>
+                        <b>{this.state.data[0].data}&nbsp;{this.props.units}</b>
                     </p>
                     <div id={this.chartId} className='fill' style={{ height: '300px' }} onWheel={(event) => { return true; }}></div>
                 </div>
@@ -219,21 +214,21 @@ export default class LineChartM extends Component {
                         <div class='col' style={{ textAlign: 'center' }}>
                             <div class='row' style={{ textAlign: 'center' }}>
                                 <div class='col' style={{ color: '#0072B2', fontStyle: 'bold', textAlign: 'right', padding: '0' }}><b>X:</b></div>
-                                <div class='col-xs' style={{ fontStyle: 'bold', width: '40px', textAlign: 'center' }}><b>{this.state.data.datasets[0].data[this.state.data.datasets[0].data.length - 1]}</b></div>
+                                <div class='col-xs' style={{ fontStyle: 'bold', width: '40px', textAlign: 'center' }}><b>{this.state.data[0].data}</b></div>
                                 <div class='col' style={{ fontStyle: 'bold', textAlign: 'left', padding: '0' }}><b>{this.props.units}</b></div>
                             </div>
                         </div>
                         <div class='col' style={{ textAlign: 'center' }}>
                             <div class='row' style={{ textAlign: 'center' }}>
                                 <div class='col' style={{ color: '#E69F00', fontStyle: 'bold', textAlign: 'right', padding: '0' }}><b>Y:</b></div>
-                                <div class='col-xs' style={{ fontStyle: 'bold', width: '40px', textAlign: 'center' }}><b>{this.state.data.datasets[1].data[this.state.data.datasets[1].data.length - 1]}</b></div>
+                                <div class='col-xs' style={{ fontStyle: 'bold', width: '40px', textAlign: 'center' }}><b>{this.state.data[1].data}</b></div>
                                 <div class='col' style={{ fontStyle: 'bold', textAlign: 'left', padding: '0' }}><b>{this.props.units}</b></div>
                             </div>
                         </div>
                         <div class='col' style={{ textAlign: 'center' }}>
                             <div class='row' style={{ textAlign: 'center' }}>
                                 <div class='col' style={{ color: '#009E73', fontStyle: 'bold', textAlign: 'right', padding: '0' }}><b>Z:</b></div>
-                                <div class='col-xs' style={{ fontStyle: 'bold', width: '40px', textAlign: 'center' }}><b>{this.state.data.datasets[2].data[this.state.data.datasets[2].data.length - 1]}</b></div>
+                                <div class='col-xs' style={{ fontStyle: 'bold', width: '40px', textAlign: 'center' }}><b>{this.state.data[2].data}</b></div>
                                 <div class='col' style={{ fontStyle: 'bold', textAlign: 'left', padding: '0' }}><b>{this.props.units}</b></div>
                             </div>
                         </div>
@@ -249,21 +244,21 @@ export default class LineChartM extends Component {
                         <div class='col' style={{ textAlign: 'center' }}>
                             <div class='row' style={{ textAlign: 'center' }}>
                                 <div class='col' style={{ color: '#0072B2', fontStyle: 'bold', textAlign: 'right', padding: '0' }}><b>Roll:</b></div>
-                                <div class='col-xs' style={{ fontStyle: 'bold', width: '40px', textAlign: 'center' }}><b>{this.state.data.datasets[0].data[this.state.data.datasets[0].data.length - 1]}</b></div>
+                                <div class='col-xs' style={{ fontStyle: 'bold', width: '40px', textAlign: 'center' }}><b>{this.state.data[0].data}</b></div>
                                 <div class='col' style={{ fontStyle: 'bold', textAlign: 'left', padding: '0' }}><b>{this.props.units}</b></div>
                             </div>
                         </div>
                         <div class='col' style={{ textAlign: 'center' }}>
                             <div class='row' style={{ textAlign: 'center' }}>
                                 <div class='col' style={{ color: '#E69F00', fontStyle: 'bold', textAlign: 'right', padding: '0' }}><b>Pitch:</b></div>
-                                <div class='col-xs' style={{ fontStyle: 'bold', width: '40px', textAlign: 'center' }}><b>{this.state.data.datasets[1].data[this.state.data.datasets[1].data.length - 1]}</b></div>
+                                <div class='col-xs' style={{ fontStyle: 'bold', width: '40px', textAlign: 'center' }}><b>{this.state.data[1].data}</b></div>
                                 <div class='col' style={{ fontStyle: 'bold', textAlign: 'left', padding: '0' }}><b>{this.props.units}</b></div>
                             </div>
                         </div>
                         <div class='col' style={{ textAlign: 'center' }}>
                             <div class='row' style={{ textAlign: 'center' }}>
                                 <div class='col' style={{ color: '#009E73', fontStyle: 'bold', textAlign: 'right', padding: '0' }}><b>Yaw:</b></div>
-                                <div class='col-xs' style={{ fontStyle: 'bold', width: '40px', textAlign: 'center' }}><b>{this.state.data.datasets[2].data[this.state.data.datasets[2].data.length - 1]}</b></div>
+                                <div class='col-xs' style={{ fontStyle: 'bold', width: '40px', textAlign: 'center' }}><b>{this.state.data[2].data}</b></div>
                                 <div class='col' style={{ fontStyle: 'bold', textAlign: 'left', padding: '0' }}><b>{this.props.units}</b></div>
                             </div>
                         </div>
@@ -279,29 +274,29 @@ export default class LineChartM extends Component {
                         <div class='col' style={{ textAlign: 'center' }}>
                             <div class='row' style={{ textAlign: 'center' }}>
                                 <div class='col' style={{ color: '#0072B2', fontStyle: 'bold', textAlign: 'right', padding: '0' }}><b>FR:</b></div>
-                                <div class='col-xs' style={{ fontStyle: 'bold', width: '35px', textAlign: 'center' }}><b>{this.state.data.datasets[0].data[this.state.data.datasets[0].data.length - 1]}</b></div>
-                                <div class='col' style={{ fontStyle: 'bold', textAlign: 'left', width: '15px', padding: '0'}}><b>{this.props.units}</b></div>
+                                <div class='col-xs' style={{ fontStyle: 'bold', width: '35px', textAlign: 'center' }}><b>{this.state.data[0].data}</b></div>
+                                <div class='col' style={{ fontStyle: 'bold', textAlign: 'left', width: '15px', padding: '0' }}><b>{this.props.units}</b></div>
                             </div>
                         </div>
                         <div class='col' style={{ textAlign: 'center' }}>
                             <div class='row' style={{ textAlign: 'center' }}>
                                 <div class='col' style={{ color: '#E69F00', fontStyle: 'bold', textAlign: 'right', padding: '0' }}><b>FL:</b></div>
-                                <div class='col-xs' style={{ fontStyle: 'bold', width: '35px', textAlign: 'center' }}><b>{this.state.data.datasets[1].data[this.state.data.datasets[1].data.length - 1]}</b></div>
-                                <div class='col' style={{ fontStyle: 'bold', textAlign: 'left', width: '15px', padding: '0'}}><b>{this.props.units}</b></div>
+                                <div class='col-xs' style={{ fontStyle: 'bold', width: '35px', textAlign: 'center' }}><b>{this.state.data[1].data}</b></div>
+                                <div class='col' style={{ fontStyle: 'bold', textAlign: 'left', width: '15px', padding: '0' }}><b>{this.props.units}</b></div>
                             </div>
                         </div>
                         <div class='col' style={{ textAlign: 'center' }}>
                             <div class='row' style={{ textAlign: 'center' }}>
                                 <div class='col' style={{ color: '#009E73', fontStyle: 'bold', textAlign: 'right', padding: '0' }}><b>RR:</b></div>
-                                <div class='col-xs' style={{ fontStyle: 'bold', width: '35px', textAlign: 'center' }}><b>{this.state.data.datasets[2].data[this.state.data.datasets[2].data.length - 1]}</b></div>
-                                <div class='col' style={{ fontStyle: 'bold', textAlign: 'left', width: '15px', padding: '0'}}><b>{this.props.units}</b></div>
+                                <div class='col-xs' style={{ fontStyle: 'bold', width: '35px', textAlign: 'center' }}><b>{this.state.data[2].data}</b></div>
+                                <div class='col' style={{ fontStyle: 'bold', textAlign: 'left', width: '15px', padding: '0' }}><b>{this.props.units}</b></div>
                             </div>
                         </div>
                         <div class='col' style={{ textAlign: 'center' }}>
                             <div class='row' style={{ textAlign: 'center' }}>
                                 <div class='col' style={{ color: '#CC79A7', fontStyle: 'bold', textAlign: 'right', padding: '0' }}><b>RL:</b></div>
-                                <div class='col-xs' style={{ fontStyle: 'bold', width: '35px', textAlign: 'center' }}><b>{this.state.data.datasets[3].data[this.state.data.datasets[3].data.length - 1]}</b></div>
-                                <div class='col' style={{ fontStyle: 'bold', textAlign: 'left', width: '15px', padding: '0'}}><b>{this.props.units}</b></div>
+                                <div class='col-xs' style={{ fontStyle: 'bold', width: '35px', textAlign: 'center' }}><b>{this.state.data[3].data}</b></div>
+                                <div class='col' style={{ fontStyle: 'bold', textAlign: 'left', width: '15px', padding: '0' }}><b>{this.props.units}</b></div>
                             </div>
                         </div>
                     </div>

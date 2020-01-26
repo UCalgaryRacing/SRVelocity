@@ -20,7 +20,7 @@ export default class CustomPlotSelectorM extends React.Component {
 
     render = () => {
         return (
-            <div style={{margin: '20px'}}>
+            <div style={{margin: '0px'}}>
                 {this.state.showChoice ?
                     <CustomPlotChoiceM enter={this.enter} /> :
                     <PlottingDashboardM graphInfo={this.state.selectedGraphs}/>}

@@ -40,11 +40,11 @@ export default class StreamingContentM extends React.Component {
             </ButtonGroup >
         );
         let buttons = (
-            <div class='row'>
-                <div class='col' style={{ paddingRight: '2.5px', marginLeft: '20px' }}>
+            <div class='row' style={{margin: '0'}}>
+                <div class='col' style={{ paddingRight: '2.5px', paddingLeft: '5px', marginLeft: '0px' }}>
                     {dashSelector}
                 </div>
-                <div class='col' style={{ textAlign: 'right', paddingLeft: '2.5px', marginRight: '20px' }}>
+                <div class='col' style={{ textAlign: 'right', paddingLeft: '2.5px', paddingRight: '5px', marginRight: '0px' }}>
                     {typeSelector}
                 </div>
             </div>

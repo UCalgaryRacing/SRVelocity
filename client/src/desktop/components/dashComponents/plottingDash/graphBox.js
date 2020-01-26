@@ -53,6 +53,7 @@ export default class GraphBox extends React.Component {
     }
 
     updateColours = (value) => {
+        //Try to refactor
         if (this.props.title === 'Air To Fuel') {
             if (value <= 10.5 || value >= 16) { return '#C22D2D'; }
             else if ((value > 10.5 && value < 11.5) || (value > 14.7 && value < 16)) { return '#BDA800'; }

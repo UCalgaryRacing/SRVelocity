@@ -14,11 +14,13 @@ export default class LineChart extends Component {
         this.chartId = Math.trunc(Math.random() * 100000);
         this.i = 0;
         this.setupComplete = false;
+        this.lineSeries = [];
+        this.colours = ['#0071B2', '#E69D00', '#009E73', '#CC79A7']; //Add more colours
     }
 
-    componentDidMount = () => {this.createChart()}
-    componentWillUnmount = () => {this.chart.dispose()}
-    componentDidUpdate = () => {this.pullData()}
+    componentDidMount = () => { this.createChart(); }
+    componentWillUnmount = () => { this.chart.dispose(); }
+    componentDidUpdate = () => { this.pullData(); }
 
     createChart = () => {
         this.chart = lightningChart().ChartXY({ containerId: this.chartId });
@@ -34,7 +36,7 @@ export default class LineChart extends Component {
             .setMouseInteractionsWhileScrolling(false)
             .setMouseInteractionsWhileZooming(false)
 
-        this.chart.engine.container.onwheel = null
+        this.chart.engine.container.onwheel = null;
 
         this.chart.getDefaultAxisY()
             .setScrollStrategy(AxisScrollStrategies.expansion)
@@ -80,10 +82,9 @@ export default class LineChart extends Component {
         var ticks = new VisibleTicks({ labelFillStyle: new SolidFill({ color: ColorHEX('#000'), tickLength: 8 }), labelFont: font })
         ticks.setLabelPadding(100)
         axis.setTickStyle(ticks)
-        //Fix this with # of number values
-        if (this.props.title !== 'Acceleration' && this.props.title !== 'Suspension' && this.props.title !== 'Axes') {
-            this.lineSeries1 = this.chart.addLineSeries({ dataPattern: DataPatterns.horizontalProgressive })
-            this.lineSeries1
+        if (this.props.data.length === undefined) {
+            this.lineSeries.push(this.chart.addLineSeries({ dataPattern: DataPatterns.horizontalProgressive }));
+            this.lineSeries[0]
                 .setStrokeStyle(new SolidLine({
                     thickness: 2,
                     fillStyle: new SolidFill({ color: ColorHEX('#C22D2D') })
@@ -91,64 +92,35 @@ export default class LineChart extends Component {
                 .setMouseInteractions(false)
         }
         else {
-            this.lineSeries1 = this.chart.addLineSeries({ dataPattern: DataPatterns.horizontalProgressive })
-            this.lineSeries1
-                .setStrokeStyle(new SolidLine({
-                    thickness: 2,
-                    fillStyle: new SolidFill({ color: ColorHEX('#0071B2') })
-                }))
-                .setMouseInteractions(false)
-        }
-        if (this.props.title === 'Acceleration' || this.props.title === 'Axes' || this.props.title === 'Suspension') {
-            this.lineSeries2 = this.chart.addLineSeries({ dataPattern: DataPatterns.horizontalProgressive })
-            this.lineSeries2
-                .setStrokeStyle(new SolidLine({
-                    thickness: 2,
-                    fillStyle: new SolidFill({ color: ColorHEX('#E69D00') })
-                }))
-                .setMouseInteractions(false)
-            this.lineSeries3 = this.chart.addLineSeries({ dataPattern: DataPatterns.horizontalProgressive })
-            this.lineSeries3
-                .setStrokeStyle(new SolidLine({
-                    thickness: 2,
-                    fillStyle: new SolidFill({ color: ColorHEX('#009E73') })
-                }))
-                .setMouseInteractions(false)
-        }
-        if (this.props.title === 'Suspension') {
-            this.lineSeries4 = this.chart.addLineSeries({ dataPattern: DataPatterns.horizontalProgressive })
-            this.lineSeries4
-                .setStrokeStyle(new SolidLine({
-                    thickness: 2,
-                    fillStyle: new SolidFill({ color: ColorHEX('#CC79A7') })
-                }))
-                .setMouseInteractions(false)
+            var i = 0;
+            while (i < this.props.data.length) {
+                this.lineSeries.push(this.chart.addLineSeries({ dataPattern: DataPatterns.horizontalProgressive }));
+                this.lineSeries[i]
+                    .setStrokeStyle(new SolidLine({
+                        thickness: 2,
+                        fillStyle: new SolidFill({ color: ColorHEX(this.colours[i]) })
+                    }))
+                    .setMouseInteractions(false)
+                i++;
+            }
         }
         this.setupComplete = true
     }
 
     changeInterval = (interval) => {
-        this.chart.getDefaultAxisX()
-            .setInterval(0, interval)
+        this.chart.getDefaultAxisX().setInterval(0, interval)
     }
 
     pullData = () => {
         let data = this.props.data
-        //Refactor this (Try array of line series)
         if (this.setupComplete) {
-            if (this.props.title !== 'Acceleration' && this.props.title !== 'Suspension' && this.props.title !== 'Axes') {
-                this.lineSeries1.add({ x: this.i, y: data})
-            }
-            else if (this.props.title === 'Acceleration' || this.props.title === 'Axes') {
-                this.lineSeries1.add({ x: this.i, y: data[0]})
-                this.lineSeries2.add({ x: this.i, y: data[1]})
-                this.lineSeries3.add({ x: this.i, y: data[2]})
-            }
-            else if (this.props.title === 'Suspension') {
-                this.lineSeries1.add({ x: this.i, y: data[0]})
-                this.lineSeries2.add({ x: this.i, y: data[1]})
-                this.lineSeries3.add({ x: this.i, y: data[2]})
-                this.lineSeries4.add({ x: this.i, y: data[3]})
+            if (data.length === undefined) { this.lineSeries[0].add({ x: this.i, y: data })}
+            else {
+                var i = 0;
+                while(i < this.props.data.length) {
+                    this.lineSeries[i].add({x: this.i, y: data[i]});
+                    i++;
+                }
             }
             this.i++
         }

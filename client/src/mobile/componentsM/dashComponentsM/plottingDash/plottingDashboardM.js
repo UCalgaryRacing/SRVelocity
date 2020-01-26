@@ -38,8 +38,6 @@ export default class PlottingDashboardM extends React.Component {
     }
 
     render = () => {
-        return (
-            <>{this.container}</>
-        );
+        return (<>{this.container}</>);
     }
 }

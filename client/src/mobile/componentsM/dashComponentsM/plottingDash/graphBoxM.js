@@ -30,7 +30,6 @@ export default class GraphBoxM extends React.Component {
             currentRange: 0.5,
             indicationColour: '#000'
         }
-
     }
 
     componentWillMount = () => { this.interval = setInterval(() => this.tick(), 100); }
@@ -73,7 +72,7 @@ export default class GraphBoxM extends React.Component {
 
     handleRangeChange = (event, value) => {
         if (value !== this.state.currentRange) {
-            this.chart.current.changeInterval(value * 60);
+            this.chart.current.changeInterval(value * 60 * 10);
             this.setState({ currentRange: value });
         }
     }

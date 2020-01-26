@@ -11,13 +11,11 @@ export default class CustomPlotSelectorM extends React.Component {
         }
     }
 
-    enter = (graphChoices) => {
-        this.setState({ showChoice: false, selectedGraphs: graphChoices });
-    }
+    enter = (graphChoices) => { this.setState({ showChoice: false, selectedGraphs: graphChoices }); }
 
     render = () => {
         return (
-            <div style={{ margin: '20px' }}>
+            <div style={{ margin: '5px' }}>
                 {this.state.showChoice ?
                     <CustomPlotChoiceM enter={this.enter} /> :
                     <PlottingDashboardM graphInfo={this.state.selectedGraphs} />}

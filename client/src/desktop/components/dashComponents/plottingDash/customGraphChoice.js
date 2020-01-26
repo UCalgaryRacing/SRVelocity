@@ -31,7 +31,7 @@ export default class CustomGraphChoice extends React.Component {
 
     submit = (event) => {
         if (this.indexes.length > this.MAX_GRAPHS) {
-            this.setState({ over_max: true })
+            this.setState({ over_max: true });
             return;
         }
         let selectedGraphs = [];

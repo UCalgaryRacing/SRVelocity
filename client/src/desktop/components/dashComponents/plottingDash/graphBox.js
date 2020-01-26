@@ -36,10 +36,7 @@ export default class GraphBox extends React.Component {
         else {
             this.state = {
                 currentLabel: 3,
-                data: {
-                    labels: Data.getInstance().getLabels(),
-                    datasets: Data.getInstance().get(this.props.title)
-                },
+                data: Data.getInstance().get(this.props.title),
                 currentRange: 0.5,
                 indicationColour: '#000'
             }
@@ -63,8 +60,8 @@ export default class GraphBox extends React.Component {
         if (newDatasets === undefined) { return; }
         if (this.props.title === 'Track Map') { this.setState({ data: newDatasets }); }
         else {
-            let newColour = this.updateColours(newDatasets[0].data[newDatasets[0].data.length - 1]);
-            this.setState({ data: { datasets: newDatasets }, indicationColour: newColour });
+            let newColour = this.updateColours(newDatasets[0]);
+            this.setState({ data: newDatasets, indicationColour: newColour });
         }
     }
 

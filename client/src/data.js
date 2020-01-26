@@ -28,47 +28,44 @@ export default class Data {
     constructor() {
         this.length = rearLeft.length;
         this.index = 0;
-        this.params = {
-            MAX_LENGTH: 10000
-        }
         this.labels = [0]
         this.datasets = [
-            { title: 'RPM', value: [{ data: [] }], range: 30},
-            { title: 'Air To Fuel', value: [{ data: [] }], range: 30 },
-            { title: 'Manifold Air Pressure', value: [{ data: [] }], range: 30 },
-            { title: 'Throttle Position', value: [{ data: [] }], range: 30},
-            { title: 'Engine Temperature', value: [{ data: [] }], range: 30 },
-            { title: 'Oil Temperature', value: [{ data: [] }], range: 30 },
-            { title: 'Fuel Temperature', value: [{ data: [] }], range: 30 },
-            { title: 'Intake Air Temperature', value: [{ data: [] }], range: 30 },
-            { title: 'Oil Pressure', value: [{ data: [] }], range: 30 },
-            { title: 'Barometer', value: [{ data: [] }], range: 30 },
-            { title: 'Injector Pulse Width', value: [{ data: [] }], range: 30 },
-            { title: 'Battery Voltage', value: [{ data: [] }], range: 30},
+            { title: 'RPM', value: [{ data: 0 }]},
+            { title: 'Air To Fuel', value: [{ data: 0 }]},
+            { title: 'Manifold Air Pressure', value: [{ data: 0 }]},
+            { title: 'Throttle Position', value: [{ data: 0 }]},
+            { title: 'Engine Temperature', value: [{ data: 0 }]},
+            { title: 'Oil Temperature', value: [{ data: 0 }]},
+            { title: 'Fuel Temperature', value: [{ data: 0 }]},
+            { title: 'Intake Air Temperature', value: [{ data: 0 }]},
+            { title: 'Oil Pressure', value: [{ data: 0 }]},
+            { title: 'Barometer', value: [{ data: 0 }]},
+            { title: 'Injector Pulse Width', value: [{ data: 0 }]},
+            { title: 'Battery Voltage', value: [{ data: 0 }]},
             { title: 'Suspension',
                 value: [
-                    { data: [] },
-                    { data: [] },
-                    { data: [] },
-                    { data: [] }
+                    { data: 0 },
+                    { data: 0 },
+                    { data: 0 },
+                    { data: 0 }
                 ]
             },
             { title: 'Acceleration',
                 value: [
-                    { data: [] },
-                    { data: [] },
-                    { data: [] }
+                    { data: 0 },
+                    { data: 0 },
+                    { data: 0 }
                 ]
             },
             { title: 'Axes',
                 value: [
-                    { data: [] },
-                    { data: [] },
-                    { data: [] }
+                    { data: 0 },
+                    { data: 0 },
+                    { data: 0 }
                 ]
             },
-            { title: 'Speed', value: [{ data: [] }] },
-            { title: 'Distance', value: [{ data: [] }] },
+            { title: 'Speed', value: [{ data: 0 }] },
+            { title: 'Distance', value: [{ data: 0 }] },
             { title: 'Track Map', value: [{}] }]
         this.interval = setInterval(() => this.tick(), 100);
     }
@@ -82,82 +79,63 @@ export default class Data {
         for (var parameter of this.datasets) {
             if (parameter.title !== 'Suspension' && parameter.title !== 'Acceleration' && parameter.title !== 'Axes' && parameter.title !== 'Track Map') {
                 if(parameter.title === 'RPM') {
-                    parameter.value[0].data.push(Math.random()*10);
+                    parameter.value[0].data = Math.random()*10;
                 }
                 else if(parameter.title === 'Air To Fuel') {
-                    parameter.value[0].data.push(AFR[this.index]);
+                    parameter.value[0].data = AFR[this.index];
                 }
                 else if(parameter.title === 'Manifold Air Pressure') {
-                    parameter.value[0].data.push(MAP[this.index]);
+                    parameter.value[0].data = MAP[this.index];
                 }
                 else if(parameter.title === 'Throttle Position') {
-                    parameter.value[0].data.push(TPS[this.index]);
+                    parameter.value[0].data = TPS[this.index];
                 }
                 else if(parameter.title === 'Engine Temperature') {
-                    parameter.value[0].data.push(engineTemp[this.index]);
+                    parameter.value[0].data = engineTemp[this.index];
                 }
                 else if(parameter.title === 'Oil Temperature') {
-                    parameter.value[0].data.push(oilTemp[this.index]);
+                    parameter.value[0].data = oilTemp[this.index];
                 }
                 else if(parameter.title === 'Fuel Temperature') {
-                    parameter.value[0].data.push(fuelTemp[this.index]);
+                    parameter.value[0].data = fuelTemp[this.index];
                 }
                 else if(parameter.title === 'Intake Air Temperature') {
-                    parameter.value[0].data.push(IAT[this.index]);
+                    parameter.value[0].data = IAT[this.index];
                 }
                 else if(parameter.title === 'Oil Pressure') {
-                    parameter.value[0].data.push(oilPressure[this.index]);
+                    parameter.value[0].data = oilPressure[this.index];
                 }
                 else if(parameter.title === 'Barometer') {
-                    parameter.value[0].data.push(baro[this.index]);
+                    parameter.value[0].data = baro[this.index];
                 }
                 else if(parameter.title === 'Injector Pulse Width') {
-                    parameter.value[0].data.push(IPW[this.index]);
+                    parameter.value[0].data = IPW[this.index];
                 }
                 else if(parameter.title === 'Battery Voltage') {
-                    parameter.value[0].data.push(IPW[this.index]);
+                    parameter.value[0].data = IPW[this.index];
                 }
                 else if(parameter.title === 'Speed') {
-                    parameter.value[0].data.push(speed[this.index]);
+                    parameter.value[0].data = speed[this.index];
                 }
                 else if(parameter.title === 'Distance') {
-                    parameter.value[0].data.push(distance[this.index]);
-                }
-                if (parameter.value[0].data.length > 100) {
-                    parameter.value[0].data.shift();
+                    parameter.value[0].data = distance[this.index];
                 }
             }
             else if (parameter.title === 'Suspension') {
-                parameter.value[0].data.push(frontRight[this.index]);
-                parameter.value[1].data.push(frontLeft[this.index]);
-                parameter.value[2].data.push(rearRight[this.index]);
-                parameter.value[3].data.push(rearLeft[this.index]);
-                if (parameter.value[0].data.length > 100) {
-                    parameter.value[0].data.shift();
-                    parameter.value[1].data.shift();
-                    parameter.value[2].data.shift();
-                    parameter.value[3].data.shift();
-                }
+                parameter.value[0].data = frontRight[this.index];
+                parameter.value[1].data = frontLeft[this.index];
+                parameter.value[2].data = rearRight[this.index];
+                parameter.value[3].data = rearLeft[this.index];
             }
             else if (parameter.title === 'Acceleration') {
-                parameter.value[0].data.push(xAccel[this.index]);
-                parameter.value[1].data.push(yAccel[this.index]);
-                parameter.value[2].data.push(zAccel[this.index]);
-                if (parameter.value[0].data.length > 100) {
-                    parameter.value[0].data.shift();
-                    parameter.value[1].data.shift();
-                    parameter.value[2].data.shift();
-                }
+                parameter.value[0].data = xAccel[this.index];
+                parameter.value[1].data = yAccel[this.index];
+                parameter.value[2].data = zAccel[this.index];
             }
             else if (parameter.title === 'Axes') {
-                parameter.value[0].data.push(roll[this.index]);
-                parameter.value[1].data.push(pitch[this.index]);
-                parameter.value[2].data.push(yaw[this.index]);
-                if (parameter.value[0].data.length > 100) {
-                    parameter.value[0].data.shift();
-                    parameter.value[1].data.shift();
-                    parameter.value[2].data.shift();
-                }
+                parameter.value[0].data = roll[this.index];
+                parameter.value[1].data = pitch[this.index];
+                parameter.value[2].data = yaw[this.index];
             }
             else {
                 parameter.value.push({x: longitude[this.index], y: latitude[this.index]});
@@ -180,28 +158,28 @@ export default class Data {
         for (var parameter of this.datasets) {
             if (index === parameter.title) {
                 if(index !== 'Acceleration' && index !== 'Suspension' && index !== 'Track Map') {
-                    return parameter.value[0].data[parameter.value[0].data.length - 1];
+                    return parameter.value[0].data;
                 }
                 else if(index === 'Acceleration') {
                     let accelArray = [];
-                    accelArray.push(parameter.value[0].data[parameter.value[0].data.length - 1]);
-                    accelArray.push(parameter.value[1].data[parameter.value[1].data.length - 1]);
-                    accelArray.push(parameter.value[2].data[parameter.value[2].data.length - 1]);
+                    accelArray.push(parameter.value[0].data);
+                    accelArray.push(parameter.value[1].data);
+                    accelArray.push(parameter.value[2].data);
                     return accelArray;
                 }
                 else if(index === 'Axes') {
                     let axesArray = [];
-                    axesArray.push(parameter.value[0].data[parameter.value[0].data.length - 1]);
-                    axesArray.push(parameter.value[1].data[parameter.value[1].data.length - 1]);
-                    axesArray.push(parameter.value[2].data[parameter.value[2].data.length - 1]);
+                    axesArray.push(parameter.value[0].data);
+                    axesArray.push(parameter.value[1].data);
+                    axesArray.push(parameter.value[2].data);
                     return axesArray;
                 }
                 else if(index === 'Suspension') {
                     let suspArray = [];
-                    suspArray.push(parameter.value[0].data[parameter.value[0].data.length - 1]);
-                    suspArray.push(parameter.value[1].data[parameter.value[1].data.length - 1]);
-                    suspArray.push(parameter.value[2].data[parameter.value[2].data.length - 1]);
-                    suspArray.push(parameter.value[3].data[parameter.value[3].data.length - 1]);
+                    suspArray.push(parameter.value[0].data);
+                    suspArray.push(parameter.value[1].data);
+                    suspArray.push(parameter.value[2].data);
+                    suspArray.push(parameter.value[3].data);
                     return suspArray;
                 }
                 

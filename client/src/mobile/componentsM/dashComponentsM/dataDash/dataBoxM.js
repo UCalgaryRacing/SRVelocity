@@ -33,14 +33,13 @@ export default class DataBoxM extends React.Component {
             let index = constDataTitles[this.props.name][3]
             newValue = Data.getInstance().getDataPoint(this.state.name)[index]
         }
-        else {
-            newValue = Data.getInstance().getDataPoint(this.state.name)
-        }
+        else { newValue = Data.getInstance().getDataPoint(this.state.name)}
         this.setState({ value: newValue })
     }
 
     getColour = () => {
         let value = this.state.value;
+        //Try to refactor
         if (this.state.name === 'Air To Fuel') {
             if (value <= 10.5 || value >= 16) { return '#C22D2D'; }
             else if ((value > 10.5 && value < 11.5) || (value > 14.7 && value < 16)) { return '#BDA800'; }

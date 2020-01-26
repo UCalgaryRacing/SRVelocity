@@ -12,19 +12,14 @@ export default class CustomDataSelectorM extends React.Component {
         }
     }
 
-    enter = (graphChoices) => {
-        this.setState({
-            showChoice: false,
-            selectedData: graphChoices
-        });
-    }
+    enter = (graphChoices) => { this.setState({ showChoice: false, selectedData: graphChoices }); }
 
     render = () => {
         return (
-            <div style={{margin: '20px'}}>
-                {this.state.showChoice ? 
-                    <CustomDataChoiceM enter={this.enter}/>:
-                    <CustomDataDashM dataInfo={this.state.selectedData}/>}
+            <div style={{ margin: '20px' }}>
+                {this.state.showChoice ?
+                    <CustomDataChoiceM enter={this.enter} /> :
+                    <CustomDataDashM dataInfo={this.state.selectedData} />}
             </div>
         );
     }

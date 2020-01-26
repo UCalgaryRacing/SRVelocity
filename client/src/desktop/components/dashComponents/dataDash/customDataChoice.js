@@ -17,6 +17,7 @@ export default class CustomDataChoice extends React.Component {
         var i = 0;
         var suspension, accel, axes = false;
         for (const data in this.state.dataTitles) {
+            //Refactor this
             if(this.state.dataTitles[data][0] === 'Suspension' && !suspension) { 
                 this.switches.push(<Form.Check name={this.state.dataTitles[data][0]} label={this.state.dataTitles[data][0]} id={data} key={i} onChange={this.selectData}/>);
                 suspension = true; 
@@ -42,6 +43,7 @@ export default class CustomDataChoice extends React.Component {
     selectData = (event) => {
         if (!event.target.id) { event.target.id = 0; }
         let i = this.indexes.indexOf(event.target.id);
+        //Refactor if possible
         if(event.target.id === "fl") {
             this.indexes.push("fl");
             this.indexes.push("fr");

@@ -11,9 +11,7 @@ export default class DataPage extends React.Component {
         }
     }
 
-    findUnitIndex = (title) => {
-        return this.state.graphTitles.findIndex(obj => obj.title === title);
-    }
+    findUnitIndex = (title) => { return this.state.graphTitles.findIndex(obj => obj.title === title);}
 
     render = () => {
         return (

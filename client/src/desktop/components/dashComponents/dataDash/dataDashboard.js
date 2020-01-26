@@ -18,9 +18,7 @@ export default class DataDashboard extends React.Component {
     }
 
     createDataBoxes = () => {
-        for (const data of this.state.dataTitles) {
-            this.dataBoxes.push(<DataBox name={data} />);
-        }
+        for (const data of this.state.dataTitles) { this.dataBoxes.push(<DataBox name={data} />); }
     }
 
     createToRender = () => {
@@ -33,13 +31,7 @@ export default class DataDashboard extends React.Component {
                     </Row>
                 );
             }
-            else {
-                this.container.push(
-                    <Row>
-                        <Col>{this.dataBoxes[i]}</Col>
-                    </Row>
-                );
-            }
+            else { this.container.push(<Row><Col>{this.dataBoxes[i]}</Col></Row>); }
         }
     }
 

@@ -25,42 +25,26 @@ export default class GraphBox extends React.Component {
     constructor(props) {
         super(props);
         this.chart = React.createRef()
-        if (this.props.title === 'Track Map') {
-            this.state = {
-                currentLabel: 3,
-                data: Data.getInstance().get(this.props.title),
-                currentRange: 0.5,
-                indicationColour: '#000'
-            }
-        }
-        else {
-            this.state = {
-                currentLabel: 3,
-                data: Data.getInstance().get(this.props.title),
-                currentRange: 0.5,
-                indicationColour: '#000'
-            }
+        this.state = {
+            data: Data.getInstance().get(this.props.title),
+            currentRange: 0.5,
+            indicationColour: '#000'
         }
     }
 
-    componentWillMount() {
-        this.interval = setInterval(() => this.tick(), 100);
-    }
-
-    componentWillUnmount() {
-        clearInterval(this.interval);
-    }
-
-    tick = () => {
-        this.pullData();
-    }
+    //Remove tick
+    componentWillMount() { this.interval = setInterval(() => this.tick(), 100); }
+    componentWillUnmount() { clearInterval(this.interval); }
+    tick = () => { this.pullData(); }
 
     pullData = () => {
         let newDatasets = Data.getInstance().get(this.props.title);
         if (newDatasets === undefined) { return; }
         if (this.props.title === 'Track Map') { this.setState({ data: newDatasets }); }
         else {
-            let newColour = this.updateColours(newDatasets[0]);
+            var newColour;
+            if (newDatasets.length === undefined) { newColour = this.updateColours(newDatasets); }
+            else { newColour = this.updateColours(newDatasets[0]); }
             this.setState({ data: newDatasets, indicationColour: newColour });
         }
     }
@@ -119,12 +103,8 @@ export default class GraphBox extends React.Component {
                             min={0.5}
                             max={10}
                             valueLabelFormat={(x) => {
-                                if (x === 0.5) {
-                                    return '30 seconds';
-                                }
-                                if (x !== 1) {
-                                    return x + ' minutes';
-                                }
+                                if (x === 0.5) { return '30 seconds'; }
+                                if (x !== 1) { return x + ' minutes'; }
                                 return x + ' minute';
                             }}
                         />

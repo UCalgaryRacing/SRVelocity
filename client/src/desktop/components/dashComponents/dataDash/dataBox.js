@@ -27,7 +27,7 @@ export default class DataBox extends React.Component {
 
     tick = () => { //MAKE THIS WAAAY MORE EFFICIENT
         let newValue = 0;
-        if (this.state.name === 'Suspension' || this.state.name === 'Acceleration') {
+        if (this.state.name === 'Suspension' || this.state.name === 'Acceleration' || this.state.name === 'Axes') {
             let index = constDataTitles[this.props.name][3];
             newValue = Data.getInstance().getDataPoint(this.state.name)[index];
         } 
@@ -37,6 +37,7 @@ export default class DataBox extends React.Component {
 
     getColour = () => {
         let value = this.state.value;
+        //Try to refactor
         if(this.state.name === 'Air To Fuel') {
             if(value <= 10.5 || value >= 16) { return '#C22D2D'; }
             else if((value > 10.5 && value < 11.5) || (value > 14.7 && value < 16)) { return '#BDA800'; }

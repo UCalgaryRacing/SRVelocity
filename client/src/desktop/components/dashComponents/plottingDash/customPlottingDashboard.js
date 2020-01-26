@@ -13,18 +13,15 @@ export default class CustomPlottingDash extends React.Component {
     }
 
     enter = (graphChoices) => {
-        this.setState({
-            showChoice: false,
-            selectedGraphs: graphChoices
-        });
+        this.setState({ showChoice: false, selectedGraphs: graphChoices });
     }
 
     render = () => {
         return (
             <div id='customDash'>
-                {this.state.showChoice ? 
-                    <CustomGraphChoice enter={this.enter}/>:
-                    <GraphingDashboard graphInfo={this.state.selectedGraphs}/>}
+                {this.state.showChoice ?
+                    <CustomGraphChoice enter={this.enter} /> :
+                    <GraphingDashboard graphInfo={this.state.selectedGraphs} />}
             </div>
         );
     }

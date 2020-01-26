@@ -18,17 +18,9 @@ export default class StreamingDash extends React.Component {
         }
     }
 
-    changeDash = () => {
-        this.setState({ dashOption: (this.state.dashOption === 'default') ? 'custom' : 'default' });
-    }
-
-    changeType = () => {
-        this.setState({ typeOption: (this.state.typeOption === 'plotting') ? 'currentData' : 'plotting' });
-    }
-
-    toggleTrackMap = () => {
-        this.setState({ showTrackMap: (this.state.showTrackMap) ? false : true });
-    }
+    changeDash = () => { this.setState({ dashOption: (this.state.dashOption === 'default') ? 'custom' : 'default' }); }
+    changeType = () => { this.setState({ typeOption: (this.state.typeOption === 'plotting') ? 'currentData' : 'plotting' }); }
+    toggleTrackMap = () => { this.setState({ showTrackMap: (this.state.showTrackMap) ? false : true }); }
 
     render = () => {
         let dashSelector = (
@@ -44,7 +36,7 @@ export default class StreamingDash extends React.Component {
             </ButtonGroup >
         );
         let trackMap = (
-            <div id='trackMap' style={{display: (this.state.showTrackMap)?'':'none'}}>
+            <div id='trackMap' style={{ display: (this.state.showTrackMap) ? '' : 'none' }}>
                 <GraphBox title={"Track Map"} id={10000} key={10000} />
             </div>
         )
@@ -73,7 +65,7 @@ export default class StreamingDash extends React.Component {
             return (
                 <div id='dashboard'>
                     {dashSelector}&nbsp;&nbsp;
-                    {typeSelector}
+                    {typeSelector}&nbsp;&nbsp;
                     <Button id='trackMapButton' onClick={this.toggleTrackMap} style={{ marginTop: '60px' }}><b>{(this.state.showTrackMap) ? 'Hide Track Map' : 'Show Track Map'}</b></Button>
                     <DefaultDataDash />
                 </div>
@@ -83,7 +75,7 @@ export default class StreamingDash extends React.Component {
             return (
                 <div id='dashboard'>
                     {dashSelector}&nbsp;&nbsp;
-                    {typeSelector}
+                    {typeSelector}&nbsp;&nbsp;
                     <Button id='trackMapButton' onClick={this.toggleTrackMap} style={{ marginTop: '60px' }}><b>{(this.state.showTrackMap) ? 'Hide Track Map' : 'Show Track Map'}</b></Button>
                     <CustomDataDash />
                 </div>

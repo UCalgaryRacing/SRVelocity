@@ -20,9 +20,7 @@ export default class CustomDataDashM extends React.Component {
     createDataBoxes = () => {
         var i = 0;
         for (const data of this.state.dataTitles) {
-            this.dataBoxes.push(
-                <DataBoxM name={data} />
-            );
+            this.dataBoxes.push(<DataBoxM name={data}/>);
             i++;
         }
     }
@@ -30,13 +28,7 @@ export default class CustomDataDashM extends React.Component {
     createToRender = () => {
         var i = 0;
         for (let i = 0; this.dataBoxes[i]; i++) {
-            this.container.push(
-                <Row>
-                    <Col>
-                        {this.dataBoxes[i]}
-                    </Col>
-                </Row>
-            );
+            this.container.push(<Row><Col>{this.dataBoxes[i]}</Col></Row>);
         }
     }
 

@@ -1,6 +1,6 @@
 import React from 'react';
 import { Row, Col } from 'react-bootstrap';
-import {constDataTitles} from '../../../../constants';
+import { constDataTitles } from '../../../../constants';
 import DataBox from "./dataBox";
 import '../../../styling/defaultDash.css';
 
@@ -22,28 +22,20 @@ export default class DefaultDataDash extends React.Component {
 
     createLayout = () => {
         for (let i = 0; this.boxes[i]; i += 2) {
-            if (this.boxes[i+1]) {
+            if (this.boxes[i + 1]) {
                 this.layout.push(
                     <Row>
                         <Col>{this.boxes[i]}</Col>
                         <Col>{this.boxes[i + 1]}</Col>
                     </Row>
                 );
-            } 
-            else {
-                this.layout.push(
-                    <Row>
-                        <Col>{this.boxes[i]}</Col>
-                    </Row>
-                );
             }
+            else { this.layout.push(<Row><Col>{this.boxes[i]}</Col></Row>); }
         }
     }
 
     createBoxes = () => {
-        for (var sensor of this.totalData) {
-            this.boxes.push(<DataBox name={sensor}></DataBox>);
-        }
+        for (var sensor of this.totalData) { this.boxes.push(<DataBox name={sensor}></DataBox>); }
     }
 
     render = () => {

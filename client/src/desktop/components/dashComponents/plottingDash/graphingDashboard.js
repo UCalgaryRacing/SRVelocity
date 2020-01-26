@@ -29,11 +29,7 @@ export default class GraphingDashboard extends React.Component {
 
     createToRender = () => {
         for (const graph of this.graphs) {
-            this.container.push(
-                <Row style={{ marginTop: '30px' }}>
-                    <Col>{graph}</Col>
-                </Row>
-            );
+            this.container.push(<Row style={{ marginTop: '30px' }}><Col>{graph}</Col></Row>);
         }
     }
 

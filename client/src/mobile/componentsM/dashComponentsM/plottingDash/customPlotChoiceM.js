@@ -35,15 +35,11 @@ export default class CustomPlotChoiceM extends React.Component {
             for (const i of this.indexes) { selectedGraphs.push(this.state.graphTitles[i - 1]); }
             this.props.enter(selectedGraphs);
         }
-        else {
-            this.togglePopupError();
-        }
+        else { this.togglePopupError(); }
     }
 
     togglePopupError = () => {
-        this.setState({
-            showPopupError: !this.state.showPopupError
-        });
+        this.setState({ showPopupError: !this.state.showPopupError });
     }
 
     render = () => {

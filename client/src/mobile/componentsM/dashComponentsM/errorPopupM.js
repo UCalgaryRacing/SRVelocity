@@ -1,8 +1,7 @@
 import React from 'react';
 import { Button } from 'react-bootstrap'
 import '../../styling/errorPopupM.css'
-class ErrorPopup extends React.Component {
-    state = {}
+export default class ErrorPopup extends React.Component {
     render() {
         return (
             <div class='error-popup'>
@@ -14,5 +13,3 @@ class ErrorPopup extends React.Component {
         );
     }
 }
-
-export default ErrorPopup;

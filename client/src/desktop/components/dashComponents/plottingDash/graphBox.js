@@ -44,7 +44,10 @@ export default class GraphBox extends React.Component {
         else {
             var newColour;
             if (newDatasets.length === undefined) { newColour = this.updateColours(newDatasets); }
-            else { newColour = this.updateColours(newDatasets[0]); }
+            else { 
+                if(newDatasets[0] == undefined) { return; }
+                newColour = this.updateColours(newDatasets[0]); 
+            }
             this.setState({ data: newDatasets, indicationColour: newColour });
         }
     }

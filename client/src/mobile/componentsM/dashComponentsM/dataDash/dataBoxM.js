@@ -23,18 +23,16 @@ export default class DataBoxM extends React.Component {
         }
     }
 
-    componentWillUnmount() {
-        clearInterval(this.interval);
-    }
+    componentWillUnmount() { clearInterval(this.interval); }
 
     tick = () => { //MAKE THIS WAAAY MORE EFFICIENT
-        let newValue = 0
-        if (this.state.name === 'Suspension' || this.state.name === 'Acceleration') {
-            let index = constDataTitles[this.props.name][3]
-            newValue = Data.getInstance().getDataPoint(this.state.name)[index]
+        let newValue = 0;
+        if (this.state.name === 'Suspension' || this.state.name === 'Acceleration' || this.state.name === 'Axes') {
+            let index = constDataTitles[this.props.name][3];
+            newValue = Data.getInstance().getDataPoint(this.state.name)[index];
         }
-        else { newValue = Data.getInstance().getDataPoint(this.state.name)}
-        this.setState({ value: newValue })
+        else { newValue = Data.getInstance().getDataPoint(this.state.name); }
+        this.setState({ value: newValue });
     }
 
     getColour = () => {
@@ -68,7 +66,7 @@ export default class DataBoxM extends React.Component {
 
     render = () => {
         return (
-            <div style={{ backgroundColor: this.getColour(), textAlign: 'center', fontWeight: '700', color: '#FFF'}}>
+            <div style={{ backgroundColor: this.getColour(), textAlign: 'center', fontWeight: '700', color: '#FFF' }}>
                 <p>{this.state.displayName} {this.state.unit}</p>
                 <p>{(this.state.value !== undefined) ? this.state.value : '0'}</p>
             </div>

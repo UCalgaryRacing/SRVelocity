@@ -41,31 +41,9 @@ export default class Data {
             { title: 'Barometer', value: 0 },
             { title: 'Injector Pulse Width', value: 0 },
             { title: 'Battery Voltage', value: 0 },
-            {
-                title: 'Suspension',
-                value: [
-                    { data: 0 },
-                    { data: 0 },
-                    { data: 0 },
-                    { data: 0 }
-                ]
-            },
-            {
-                title: 'Acceleration',
-                value: [
-                    { data: 0 },
-                    { data: 0 },
-                    { data: 0 }
-                ]
-            },
-            {
-                title: 'Axes',
-                value: [
-                    { data: 0 },
-                    { data: 0 },
-                    { data: 0 }
-                ]
-            },
+            { title: 'Suspension', value: [0, 0, 0, 0] },
+            { title: 'Acceleration', value: [0, 0, 0] },
+            { title: 'Axes', value: [0, 0, 0] },
             { title: 'Speed', value: 0 },
             { title: 'Distance', value: 0 },
             { title: 'Track Map', value: [{}] }]
@@ -91,20 +69,16 @@ export default class Data {
                 else if (parameter.title === 'Distance') { parameter.value = distance[this.index]; }
             }
             else if (parameter.title === 'Suspension') {
-                parameter.value[0].data = frontRight[this.index];
-                parameter.value[1].data = frontLeft[this.index];
-                parameter.value[2].data = rearRight[this.index];
-                parameter.value[3].data = rearLeft[this.index];
+                parameter.value[0] = frontRight[this.index];parameter.value[1] = frontLeft[this.index];
+                parameter.value[2] = rearRight[this.index];parameter.value[3] = rearLeft[this.index];
             }
             else if (parameter.title === 'Acceleration') {
-                parameter.value[0].data = xAccel[this.index];
-                parameter.value[1].data = yAccel[this.index];
-                parameter.value[2].data = zAccel[this.index];
+                parameter.value[0] = xAccel[this.index];parameter.value[1] = yAccel[this.index];
+                parameter.value[2] = zAccel[this.index];
             }
             else if (parameter.title === 'Axes') {
-                parameter.value[0].data = roll[this.index];
-                parameter.value[1].data = pitch[this.index];
-                parameter.value[2].data = yaw[this.index];
+                parameter.value[0] = roll[this.index];parameter.value[1] = pitch[this.index];
+                parameter.value[2] = yaw[this.index];
             }
             else { parameter.value.push({ x: longitude[this.index], y: latitude[this.index] }); }
         }
@@ -125,35 +99,17 @@ export default class Data {
                 if (index !== 'Acceleration' && index !== 'Suspension' && index !== 'Track Map' && index != 'Axes') {
                     return parameter.value;
                 }
-                else if (index === 'Acceleration') {
-                    let accelArray = [];
-                    accelArray.push(parameter.value[0].data);
-                    accelArray.push(parameter.value[1].data);
-                    accelArray.push(parameter.value[2].data);
-                    return accelArray;
-                }
-                else if (index === 'Axes') {
-                    let axesArray = [];
-                    axesArray.push(parameter.value[0].data);
-                    axesArray.push(parameter.value[1].data);
-                    axesArray.push(parameter.value[2].data);
-                    return axesArray;
+                else if (index === 'Acceleration' || index === 'Axes') {
+                    return [parameter.value[0], parameter.value[1], parameter.value[2]];
                 }
                 else if (index === 'Suspension') {
-                    let suspArray = [];
-                    suspArray.push(parameter.value[0].data);
-                    suspArray.push(parameter.value[1].data);
-                    suspArray.push(parameter.value[2].data);
-                    suspArray.push(parameter.value[3].data);
-                    return suspArray;
+                    return [parameter.value[0], parameter.value[1], parameter.value[2], parameter.value[3]];
                 }
             }
         }
     }
 
-    tick = () => {
-        this.pullData();
-    }
+    tick = () => { this.pullData(); }
 
     static getInstance() {
         if (Data.instance == null) {

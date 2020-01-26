@@ -19,9 +19,7 @@ export default class StreamingDashM extends React.Component {
                         { title: 'Oil Pressure', units: 'kPa' },
                         { title: 'Oil Temperature', units: '˚C' },
                         { title: 'Fuel Temperature', units: '˚C' },
-                        { title: 'Battery Voltage', units: 'V' }
-                    ]
-                    }/>
+                        { title: 'Battery Voltage', units: 'V' }]}/>
                 </div>
             );
         }

@@ -74,7 +74,7 @@ export default class LineChartM extends Component {
             .setStrokeStyle(new SolidLine({
                 thickness: 3,
                 fillStyle: new SolidFill({ color: ColorHEX('#C8C8C8') })
-            }));
+            }))
 
         var axis = this.chart.getDefaultAxisY()
         var font = new FontSettings({ size: 10 })

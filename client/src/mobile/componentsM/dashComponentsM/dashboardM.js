@@ -6,10 +6,6 @@ import PlottingDashboardM from './plottingDash/plottingDashboardM';
 import '../../styling/dashM.css';
 
 export default class StreamingDashM extends React.Component {
-    constructor(props) {
-        super(props);
-    }
-
     render = () => {
         if (this.props.dashOption === 'default' && this.props.typeOption === 'plotting') {
             return (

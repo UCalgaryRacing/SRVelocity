@@ -17,9 +17,7 @@ export default class DataBoxM extends React.Component {
     componentWillMount() {
         this.interval = setInterval(() => this.tick(), 100);
         if (this.state.name === 'Suspension' || this.state.name === 'Acceleration' || this.state.name === 'Axes') {
-            this.setState({
-                displayName: constDataTitles[this.props.name][2]
-            })
+            this.setState({ displayName: constDataTitles[this.props.name][2] });
         }
     }
 

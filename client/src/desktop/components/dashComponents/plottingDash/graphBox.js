@@ -32,10 +32,8 @@ export default class GraphBox extends React.Component {
         }
     }
 
-    //Remove tick
-    componentWillMount() { this.interval = setInterval(() => this.tick(), 100); }
-    componentWillUnmount() { clearInterval(this.interval); }
-    tick = () => { this.pullData(); }
+    componentWillMount() { document.addEventListener('gotData', () => { this.pullData(); }); }
+    componentWillUnmount() { document.removeEventListener('gotData'); }
 
     pullData = () => {
         let newDatasets = Data.getInstance().get(this.props.title);
@@ -44,9 +42,9 @@ export default class GraphBox extends React.Component {
         else {
             var newColour;
             if (newDatasets.length === undefined) { newColour = this.updateColours(newDatasets); }
-            else { 
-                if(newDatasets[0] == undefined) { return; }
-                newColour = this.updateColours(newDatasets[0]); 
+            else {
+                if (newDatasets[0] == undefined) { return; }
+                newColour = this.updateColours(newDatasets[0]);
             }
             this.setState({ data: newDatasets, indicationColour: newColour });
         }
@@ -74,7 +72,7 @@ export default class GraphBox extends React.Component {
 
     handleRangeChange = (event, value) => {
         if (value !== this.state.currentRange) {
-            this.chart.current.changeInterval(value * 60);
+            this.chart.current.changeInterval(value * 60 * 10);
             this.setState({ currentRange: value });
         }
     }

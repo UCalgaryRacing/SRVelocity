@@ -1,7 +1,7 @@
 import React from 'react';
 import LineChartM from '../../graphComponentsM/lineChartM';
 import ScatterPlotM from '../../graphComponentsM/scatterPlotM';
-import { Typography, Slider } from '@material-ui/core';
+import { Slider } from '@material-ui/core';
 import { withStyles } from '@material-ui/core/styles';
 import Data from '../../../../data';
 import '../../../styling/graphBoxM.css';
@@ -32,9 +32,8 @@ export default class GraphBoxM extends React.Component {
         }
     }
 
-    componentWillMount = () => { this.interval = setInterval(() => this.tick(), 100); }
-    componentWillUnmount = () => { clearInterval(this.interval); }
-    tick = () => { this.pullData(); }
+    componentWillMount() { document.addEventListener('gotData', () => { this.pullData(); }); }
+    componentWillUnmount() { document.removeEventListener('gotData'); }
 
     pullData = () => {
         let newDatasets = Data.getInstance().get(this.props.title);
@@ -52,6 +51,7 @@ export default class GraphBoxM extends React.Component {
     }
 
     updateColours = (value) => {
+        //Try to refactor
         if (this.props.title === 'Air To Fuel') {
             if (value <= 10.5 || value >= 16) { return '#C22D2D'; }
             else if ((value > 10.5 && value < 11.5) || (value > 14.7 && value < 16)) { return '#BDA800'; }

@@ -12,18 +12,19 @@ export default class DataBoxM extends React.Component {
             value: 0,
             displayName: constDataTitles[this.props.name][0]
         }
+        this.pullData = this.pullData.bind(this);
     }
 
     componentWillMount() {
-        this.interval = setInterval(() => this.tick(), 100);
+        document.addEventListener('gotData', () => { this.pullData(); });
         if (this.state.name === 'Suspension' || this.state.name === 'Acceleration' || this.state.name === 'Axes') {
             this.setState({ displayName: constDataTitles[this.props.name][2] });
         }
     }
 
-    componentWillUnmount() { clearInterval(this.interval); }
+    componentWillUnmount() { document.removeEventListener('gotData', this.pullData()); }
 
-    tick = () => { //MAKE THIS WAAAY MORE EFFICIENT
+    pullData = () => { //MAKE THIS WAAAY MORE EFFICIENT
         let newValue = 0;
         if (this.state.name === 'Suspension' || this.state.name === 'Acceleration' || this.state.name === 'Axes') {
             let index = constDataTitles[this.props.name][3];

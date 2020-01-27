@@ -82,6 +82,8 @@ export default class LineChart extends Component {
         var ticks = new VisibleTicks({ labelFillStyle: new SolidFill({ color: ColorHEX('#000'), tickLength: 8 }), labelFont: font })
         ticks.setLabelPadding(100)
         axis.setTickStyle(ticks)
+
+        if(this.props.data === undefined) { return; }
         if (this.props.data.length === undefined) {
             this.lineSeries.push(this.chart.addLineSeries({ dataPattern: DataPatterns.horizontalProgressive }));
             this.lineSeries[0]

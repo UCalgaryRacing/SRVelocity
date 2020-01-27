@@ -84,6 +84,7 @@ export default class LineChartM extends Component {
         ticks.setLabelPadding(100)
         axis.setTickStyle(ticks)
         
+        if(this.props.data === undefined) { return; }
         if (this.props.data.length === undefined) {
             this.lineSeries.push(this.chart.addLineSeries({ dataPattern: DataPatterns.horizontalProgressive }));
             this.lineSeries[0]

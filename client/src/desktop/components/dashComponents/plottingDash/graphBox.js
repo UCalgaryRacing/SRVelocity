@@ -30,10 +30,11 @@ export default class GraphBox extends React.Component {
             currentRange: 0.5,
             indicationColour: '#000'
         }
+        this.pullData = this.pullData.bind(this);
     }
 
-    componentWillMount() { document.addEventListener('gotData', () => { this.pullData(); }); }
-    componentWillUnmount() { document.removeEventListener('gotData'); }
+    componentWillMount() { document.addEventListener('gotData', () => { this.pullData() }); }
+    componentWillUnmount() { document.removeEventListener('gotData', this.pullData()); }
 
     pullData = () => {
         let newDatasets = Data.getInstance().get(this.props.title);

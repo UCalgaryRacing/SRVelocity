@@ -15,6 +15,5 @@ app.get('/*', (req, res) => { //Change so it does not serve api requests
     res.sendFile(path.join(__dirname,'client', 'build', 'index.html'));
 });
 
-
 //Begin
 app.listen(PORT, () => console.log(`Listening on port ${PORT}`));

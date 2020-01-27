@@ -17,3 +17,8 @@
     background: rgb(194, 45, 45);
     opacity: 1;
 }
+
+#dashboardM {
+    padding-bottom: 80px;
+    width: 100%;
+}

@@ -1,27 +1,42 @@
 import React from 'react';
-import ButtonGroup from 'react-bootstrap/ButtonGroup';
-import Button from 'react-bootstrap/Button';
-import DefaultDashM from './defaultDashM';
-import CustomDashM from './customDashM';
+import DataDashM from './dataDash/dataDashboard';
+import CustomDataSelectorM from './dataDash/customDataSelectorM';
+import CustomPlotSelectorM from './plottingDash/customPlotSelectorM';
+import PlottingDashboardM from './plottingDash/plottingDashboardM';
 import '../../styling/dashM.css';
 
 export default class StreamingDashM extends React.Component {
-    constructor(props) {
-        super(props);
-    }
-
     render = () => {
-        if (this.props.option === 'default') {
+        if (this.props.dashOption === 'default' && this.props.typeOption === 'plotting') {
             return (
-                <div id='dashboard'>
-                    <DefaultDashM />
+                <div id='dashboardM'>
+                    <PlottingDashboardM graphInfo={[
+                        { title: 'Engine Temperature', units: '˚C' },
+                        { title: 'Oil Pressure', units: 'kPa' },
+                        { title: 'Oil Temperature', units: '˚C' },
+                        { title: 'Fuel Temperature', units: '˚C' },
+                        { title: 'Battery Voltage', units: 'V' }]}/>
+                </div>
+            );
+        }
+        else if (this.props.dashOption === 'default' && this.props.typeOption === 'currentData') {
+            return (
+                <div id='dashboardM'>
+                    <DataDashM />
+                </div>
+            );
+        }
+        else if (this.props.dashOption === 'custom' && this.props.typeOption === 'plotting') {
+            return (
+                <div id='dashboardM'>
+                    <CustomPlotSelectorM />
                 </div>
             );
         }
         else {
             return (
-                <div id='dashboard'>
-                    <CustomDashM />
+                <div id='dashboardM'>
+                    <CustomDataSelectorM />
                 </div>
             );
         }

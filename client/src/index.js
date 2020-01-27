@@ -14,12 +14,12 @@ import LicensesPage from './desktop/pages/licenses';
 import ErrorPage from './desktop/pages/error';
 
 //Import mobile pages
-import HomePageM from './mobile/pages/home';
-import StreamingPageM from './mobile/pages/streaming';
-import AboutPageM from './mobile/pages/about';
-import SignInPageM from './mobile/pages/signIn';
-import LicensesPageM from './mobile/pages/licenses';
-import ErrorPageM from './mobile/pages/error';
+import HomePageM from './mobile/pages/homeM';
+import StreamingPageM from './mobile/pages/streamingM';
+import AboutPageM from './mobile/pages/aboutM';
+import SignInPageM from './mobile/pages/signInM';
+import LicensesPageM from './mobile/pages/licensesM';
+import ErrorPageM from './mobile/pages/errorM';
 
 export default class App extends React.Component {
     render = () => {

@@ -1,3 +1,6 @@
+#dashoard {
+    padding-bottom: 80px;
+}
 
 #dashboard #dashSelector #defaultButton {
     background: rgb(194, 45, 45, 0.5);
@@ -17,4 +20,38 @@
 #dashboard #dashSelector #customButton:disabled {
     background: rgb(194, 45, 45);
     opacity: 1;
+}
+
+#trackMapButton {
+    background: rgb(194, 45, 45);
+    opacity: 1;
+    border: 0px solid;
+    width: 150px;
+}
+
+#trackMap {
+    position: fixed;
+    bottom: 0px;
+    right: 0px;
+    width: 370px;
+    height: 300px;
+    background-color: #FFF;
+    z-index: 10000;
+}
+
+#trackMap #scatterPlot {
+    margin: 0 !important;
+}
+
+#trackMap #graphBox {
+    width: 370px !important;
+    height: 300px !important;
+    min-width: 100px !important;
+    border-color: #C22E2D;
+    border-width: 5px;
+    border-radius: 0;
+}
+
+#trackMap canvas {
+    height: 230px !important;
 }

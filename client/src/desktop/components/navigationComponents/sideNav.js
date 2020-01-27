@@ -100,36 +100,20 @@ export default class SideNavbar extends React.Component {
                                 <b>&nbsp;&nbsp;&nbsp;Acceleration</b>
                             </NavText>
                         </NavItem>
-                        <NavItem eventKey="Roll">
+                        <NavItem eventKey="Axes">
                             <NavIcon>
-                                <img src={require('../../../assets/roll.svg')} style={{ marginLeft: '5px', marginRight: '4px', marginTop: '3px' }} alt='Roll'/>
+                                <img src={require('../../../assets/yaw.svg')} style={{ marginLeft: '5px', marginRight: '4px', marginTop: '0px' }} alt='Axes'/>
                             </NavIcon>
                             <NavText>
-                                <b>&nbsp;&nbsp;&nbsp;Roll</b>
+                                <b>&nbsp;&nbsp;&nbsp;Axes</b>
                             </NavText>
                         </NavItem>
-                        <NavItem eventKey="Pitch">
+                        <NavItem eventKey="Battery Voltage">
                             <NavIcon>
-                                <img src={require('../../../assets/pitch.svg')} style={{ marginLeft: '4px', marginRight: '4px', marginTop: '-10px' }} alt='Pitch'/>
+                                <img src={require('../../../assets/battery.svg')} style={{ marginLeft: '15px', marginTop: '10px' }} alt='Battery'/>
                             </NavIcon>
                             <NavText>
-                                <b>&nbsp;&nbsp;&nbsp;Pitch</b>
-                            </NavText>
-                        </NavItem>
-                        <NavItem eventKey="Yaw">
-                            <NavIcon>
-                                <img src={require('../../../assets/yaw.svg')} style={{ marginLeft: '4px', marginRight: '4px', marginTop: '-1px'}} alt='Yaw'/>
-                            </NavIcon>
-                            <NavText>
-                                <b>&nbsp;&nbsp;&nbsp;Yaw</b>
-                            </NavText>
-                        </NavItem>
-                        <NavItem eventKey="Track Map">
-                            <NavIcon>
-                                <img src={require('../../../assets/trackmap.svg')} style={{ marginLeft: '18px', marginTop: '12px' }} alt='TM'/>
-                            </NavIcon>
-                            <NavText>
-                                <b>&nbsp;&nbsp;&nbsp;Track Map</b>
+                                <b>&nbsp;&nbsp;&nbsp;Battery Voltage</b>
                             </NavText>
                         </NavItem>
                         <NavItem eventKey="Speed">
@@ -146,6 +130,14 @@ export default class SideNavbar extends React.Component {
                             </NavIcon>
                             <NavText>
                                 <b>&nbsp;&nbsp;&nbsp;Distance</b>
+                            </NavText>
+                        </NavItem>
+                        <NavItem eventKey="Track Map">
+                            <NavIcon>
+                                <img src={require('../../../assets/trackmap.svg')} style={{ marginLeft: '18px', marginTop: '12px' }} alt='TM'/>
+                            </NavIcon>
+                            <NavText>
+                                <b>&nbsp;&nbsp;&nbsp;Track Map</b>
                             </NavText>
                         </NavItem>
                     </SideNav.Nav>

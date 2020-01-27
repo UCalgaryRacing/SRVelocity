@@ -2,11 +2,54 @@
     border-style: solid;
     border-width: 1px;
     border-radius: 1rem;
-    border-color: #494949;
+    min-width: 900px;
 }
 
 #graphTitle {
     margin-top: 10px;
     text-align: center;
     font-size: 1.5rem;
+}
+
+span[class^="PrivateValueLabel-offset-"] {
+    top: -25px !important;
+    font-weight: 600 !important;
+    transform-origin: top !important;
+    right: -5px;
+    transition: none !important;
+}
+
+span[class^="PrivateValueLabel-circle-"] {
+    transform: none !important;
+    border-radius: 5px !important;
+    width: 150% !important;
+    height: 25px !important;
+    text-align: center;
+}
+
+span[class^="PrivateValueLabel-label-"] {
+    transform: none !important;
+    margin-left: 3px;
+    margin-right: 3px;
+}
+
+span[class^="jss"] {
+    top: -25px !important;
+    font-weight: 600 !important;
+    transform-origin: top !important;
+    right: -5px;
+    transition: none !important;
+}
+
+span[class^="jss"] span[class^="jss"] {
+    transform: none !important;
+    border-radius: 5px !important;
+    width: 150% !important;
+    text-align: center;
+}
+
+span[class^="jss"] span[class^="jss"] span[class^="jss"] {
+    transform: none !important;
+    margin-left: 3px;
+    margin-right: 3px;
 }

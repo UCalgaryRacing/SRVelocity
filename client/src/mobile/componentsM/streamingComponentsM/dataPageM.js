@@ -1,11 +1,11 @@
 import React from 'react';
-import GraphBox from '../graphComponentsM/graphBox';
+import GraphBoxM from '../dashComponentsM/plottingDash/graphBoxM';
 
 export default class DataPageM extends React.Component {
     render = () => {
         return (
-            <div id='streamingData'>
-                <GraphBox title={this.props.content}/>
+            <div id='streamingData' style={{marginTop: '15px'}}>
+                <GraphBoxM title={this.props.content}/>
             </div>
         );
     }

@@ -10,14 +10,12 @@ const constGraphTitles =  [
     { title: 'Oil Pressure', units: 'kPa' },
     { title: 'Barometer', units: 'kPa' },
     { title: 'Injector Pulse Width', units: 'seconds' },
-    
+    { title: 'Battery Voltage', units: 'V' },
     { title: 'Suspension', units: 'mm' },
     { title: 'Acceleration', units: 'g' },
-    { title: 'Roll', units: '˚' },
-    { title: 'Pitch', units: '˚' },
-    { title: 'Yaw', units: '˚' },
+    { title: 'Axes', units: '˚' },
     { title: 'Speed', units: 'km/h' },
-    { title: 'Distance', units: 'm' },
+    { title: 'Distance', units: 'km' },
     { title: 'Track Map', units: '' }]
 
 const constDataTitles = 
@@ -33,16 +31,16 @@ const constDataTitles =
     baro: ['Barometer', '(kPa)'],
     ipw: ['Injector Pulse Width', '(s)'],
     voltage: ['Battery Voltage', '(V)'],
-    fl: ['Suspension','(mm)', 'Front Left', [2]],
-    fr: ['Suspension','(mm)', 'Front Right', [3]],
-    rl: ['Suspension','(mm)', 'Rear Left', [0]],
-    rr: ['Suspension','(mm)', 'Rear Right', [1]],
+    fl: ['Suspension','(mm)', 'Front Left', [0]],
+    fr: ['Suspension','(mm)', 'Front Right', [1]],
+    rl: ['Suspension','(mm)', 'Rear Left', [2]],
+    rr: ['Suspension','(mm)', 'Rear Right', [3]],
     x: ['Acceleration', '(g)', 'X Accel', [0]],
     y: ['Acceleration','(g)', 'Y Accel', [1]],
     z: ['Acceleration','(g)', 'Z Accel', [2]],
-    roll: ['Roll', '(˚)'],
-    pitch: ['Pitch', '(˚)'],
-    yaw: ['Yaw', '(˚)'],
+    roll: ['Axes', '(˚)', 'Roll', [0]],
+    pitch: ['Axes', '(˚)', 'Pitch', [1]],
+    yaw: ['Axes', '(˚)', 'Yaw', [2]],
     speed: ['Speed', '(km/h)'],
     distance: ['Distance', '(km)']}
 

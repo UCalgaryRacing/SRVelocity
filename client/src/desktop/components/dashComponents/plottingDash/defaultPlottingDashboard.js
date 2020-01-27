@@ -12,7 +12,6 @@ export default class DefaultPlottingDash extends React.Component {
                 { title: 'Oil Temperature', units: '˚C' },
                 { title: 'Air To Fuel', units: '' },
                 { title: 'Fuel Temperature', units: '˚C' },
-                { title: 'Intake Air Temperature', units: '˚C' },
                 { title: 'RPM', units: 'RPM' },
                 { title: 'Suspension', units: 'mm' },
                 { title: 'Acceleration', units: 'g' },

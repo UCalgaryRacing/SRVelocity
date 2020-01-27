@@ -88,6 +88,9 @@ export default class Data {
             document.dispatchEvent(new Event('gotData'));
             this.index++; 
         }
+        else {
+            document.dispatchEvent(new Event('OFF'));
+        }
     }
 
     get = (index) => {

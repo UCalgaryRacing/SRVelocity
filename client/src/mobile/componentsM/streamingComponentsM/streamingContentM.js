@@ -10,21 +10,19 @@ export default class StreamingContentM extends React.Component {
         this.state = {
             content: 'Dash',
             dashOption: 'default',
-            typeOption: 'plotting'
+            typeOption: 'plotting',
+            toggleDash: false
         }
+        this.disableDash = this.disableDash.bind(this);
     }
 
-    changeContent = (newContent) => {
-        this.setState({ content: newContent });
-    }
+    componentWillMount() { document.addEventListener('OFF', () => { this.disableDash() }); }
+    componentWillUnmount() { document.removeEventListener('OFF', this.disableDash()); }
 
-    changeDash = () => {
-        this.setState({ dashOption: (this.state.dashOption === 'default') ? 'custom' : 'default' });
-    }
-
-    changeType = () => {
-        this.setState({ typeOption: (this.state.typeOption === 'plotting') ? 'currentData' : 'plotting' });
-    }
+    disableDash = () => { this.setState({ toggleDash: true }); }
+    changeContent = (newContent) => { this.setState({ content: newContent }); }
+    changeDash = () => { this.setState({ dashOption: (this.state.dashOption === 'default') ? 'custom' : 'default' }); }
+    changeType = () => { this.setState({ typeOption: (this.state.typeOption === 'plotting') ? 'currentData' : 'plotting' }); }
 
     render = () => {
         let dashSelector = (
@@ -40,7 +38,7 @@ export default class StreamingContentM extends React.Component {
             </ButtonGroup >
         );
         let buttons = (
-            <div class='row' style={{margin: '0'}}>
+            <div class='row' style={{ margin: '0' }}>
                 <div class='col' style={{ paddingRight: '2.5px', paddingLeft: '5px', marginLeft: '0px' }}>
                     {dashSelector}
                 </div>
@@ -49,9 +47,18 @@ export default class StreamingContentM extends React.Component {
                 </div>
             </div>
         );
+        if(this.state.toggleDash) {
+            return(
+                <div id='streamingContent' style={{ marginTop: '100px', transition: 'all 0.15s', marginLeft: this.state.marginLeft, textAlign: 'center'}}>
+                    <p style={{fontWeight: 'bold'}}>
+                        The SR21 is currently off. Please check back later.
+                    </p>
+                </div>
+            )
+        }
         if (this.state.content === 'Dash') {
             return (
-                <div id='streamingContent' style={{transition: 'all 0.15s', marginTop: '30px'}}>
+                <div id='streamingContent' style={{ transition: 'all 0.15s', marginTop: '30px' }}>
                     {buttons}
                     <StreamingDashM dashOption={this.state.dashOption} typeOption={this.state.typeOption} />
                 </div>
@@ -59,7 +66,7 @@ export default class StreamingContentM extends React.Component {
         }
         else {
             return (
-                <div id='streamingContent' style={{transition: 'all 0.15s' }}>
+                <div id='streamingContent' style={{ transition: 'all 0.15s' }}>
                     <DataPageM content={this.state.content} key={Math.random()} />
                 </div>
             );

@@ -70,7 +70,7 @@ export default class LineChartM extends Component {
             .setScrollStrategy(AxisScrollStrategies.progressive)
             .setTickStyle(emptyTick)
             .setMouseInteractions(false)
-            .setInterval(0, 30)
+            .setInterval(0, 300)
             .setStrokeStyle(new SolidLine({
                 thickness: 3,
                 fillStyle: new SolidFill({ color: ColorHEX('#C8C8C8') })

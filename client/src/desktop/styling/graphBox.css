@@ -32,3 +32,24 @@ span[class^="PrivateValueLabel-label-"] {
     margin-left: 3px;
     margin-right: 3px;
 }
+
+span[class^="jss"] {
+    top: -25px !important;
+    font-weight: 600 !important;
+    transform-origin: top !important;
+    right: -5px;
+    transition: none !important;
+}
+
+span[class^="jss"] span[class^="jss"] {
+    transform: none !important;
+    border-radius: 5px !important;
+    width: 150% !important;
+    text-align: center;
+}
+
+span[class^="jss"] span[class^="jss"] span[class^="jss"] {
+    transform: none !important;
+    margin-left: 3px;
+    margin-right: 3px;
+}

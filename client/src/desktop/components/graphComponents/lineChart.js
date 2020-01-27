@@ -69,7 +69,7 @@ export default class LineChart extends Component {
             .setScrollStrategy(AxisScrollStrategies.progressive)
             .setTickStyle(emptyTick)
             .setMouseInteractions(false)
-            .setInterval(0, 30)
+            .setInterval(0, 300)
             .setStrokeStyle(new SolidLine({
                 thickness: 3,
                 fillStyle: new SolidFill({ color: ColorHEX('#C8C8C8') })
@@ -83,7 +83,7 @@ export default class LineChart extends Component {
         ticks.setLabelPadding(100)
         axis.setTickStyle(ticks)
 
-        if(this.props.data === undefined) { return; }
+        if (this.props.data === undefined) { return; }
         if (this.props.data.length === undefined) {
             this.lineSeries.push(this.chart.addLineSeries({ dataPattern: DataPatterns.horizontalProgressive }));
             this.lineSeries[0]
@@ -116,11 +116,11 @@ export default class LineChart extends Component {
     pullData = () => {
         let data = this.props.data
         if (this.setupComplete) {
-            if (data.length === undefined) { this.lineSeries[0].add({ x: this.i, y: data })}
+            if (data.length === undefined) { this.lineSeries[0].add({ x: this.i, y: data }) }
             else {
                 var i = 0;
-                while(i < this.props.data.length) {
-                    this.lineSeries[i].add({x: this.i, y: data[i]});
+                while (i < this.props.data.length) {
+                    this.lineSeries[i].add({ x: this.i, y: data[i] });
                     i++;
                 }
             }

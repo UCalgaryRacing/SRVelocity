@@ -3,6 +3,8 @@ import {constDataTitles} from '../../constants.js'
 import colormap from 'colormap' 
 import Data from '../../data'
 import ScatterPlot from './scatterPlot'
+import {ColorHEX} from '@arction/lcjs';
+
 
 const colors =  colormap({
     colormap: 'jet',
@@ -29,9 +31,13 @@ export default class HeatMap extends React.Component {
             currentRange: 0.5,
             indicationColor: '#000',
             points: [],
+            currentPoint: {},
             selection: 'speed'
         }
     }
+
+    componentDidUpdate = () => { this.pullData(); }
+
 
     getColor = (value, boundaries) => {
         let range = boundaries[1] - boundaries[0];
@@ -39,18 +45,12 @@ export default class HeatMap extends React.Component {
         index *= 100;
         index = Math.round(index);
 
-        return colors[index];
+        return ColorHEX(colors[index]);
     }
 
-    componentWillMount() {
-        this.interval = setInterval(() => this.tick(), 100);
-    }
+ 
 
-    componentWillUnmount() {
-        clearInterval(this.interval);
-    }
-
-    tick = () => {
+    pullData = () => {
         this.state.points.push(Data.getInstance().getDataPoint('Track Map'));
         for (var sensor in this.state.data) {
             let newValue = 0;
@@ -75,15 +75,23 @@ export default class HeatMap extends React.Component {
                 newValue = this.getColor(newValue, [0, 100]);
             }
 
-            console.log(newValue);
-            this.state.data[sensor] = (newValue);
+            this.state.data[sensor].push(newValue);
         }
+
+        let temp = this.state.points[this.state.points.length - 1]
+        let colArray = this.state.data[this.state.selection]
+        temp.color = colArray[colArray.length - 1]
+
+        this.state.currentPoint = temp
     }
+
+
+
 
     render = () => {
         return (
-            <div id='graphBox' style={{ width: '100%' }}>
-                <ScatterPlot id='scatter' color={this.state.data[this.state.selection]} data={this.state.points} title={this.props.title} units={this.props.units} />
+            <div style={{ width: '100%' }}>
+                <ScatterPlot id='scatter' color={this.state.data[this.state.selection]} data={this.state.currentPoint} title={this.props.title} units={this.props.units} />
             </div>
         );
     }

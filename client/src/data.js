@@ -145,6 +145,9 @@ export default class Data {
                 else if (index === 'Suspension') {
                     return [parameter.value[0], parameter.value[1], parameter.value[2], parameter.value[3]];
                 }
+                else if(index === 'Track Map') {
+                    return parameter.value[parameter.value.length - 1];
+                }
             }
         }
     }

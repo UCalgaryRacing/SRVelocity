@@ -1,92 +1,101 @@
-import React from 'react';
-import { Scatter } from 'react-chartjs-2';
-import '../../styling/scatterPlot.css';
+import React, { Component } from 'react';
+import { PointShape, lightningChart, emptyTick, DataPatterns, AxisScrollStrategies, SolidLine, SolidFill, ColorHEX, AutoCursorModes, VisibleTicks, FontSettings } from '@arction/lcjs';
+//import '../../styling/lineChart.css';
 
-export default class ScatterPlot extends React.Component {
+const theme = {
+    whiteFill: new SolidFill({ color: ColorHEX('#FFFFFF') }),
+    lightGrayFill: new SolidFill({ color: ColorHEX('#A0A0A0A0') }),
+    darkFill: new SolidFill({ color: ColorHEX('#505050') })
+}
+
+export default class ScatterPlot extends Component {
     constructor(props) {
-        super(props);
-        this.state = {
-            data: {
-                datasets: [{
-                    fill: false,
-                    backgroundColor: 'rgba(0,0,0,0)',
-                    pointBorderColor: 'rgba(255,0,0,1)',
-                    pointBorderWidth: 4,
-                    pointRadius: 0.5,
-                    data: this.props.data
-                }]
-            },
-            options: {
-                responsive: true,
-                maintainAspectRatio: false,
-                scaleShowGridlines: false,
-                scaleShowHorizontalLines: false,
-                scaleShowVerticalLines: false,
-                responsiveAnimationDuration: 0,
-                animation: {
-                    duration: 0
-                },
-                hover: {
-                    animationDuration: 0
-                },
-                legend: {
-                    display: false
-                },
-                scales: {
-                    xAxes: [{
-                        realtime: {
-                            onRefresh: function (chart) { },
-                        },
-                        gridLines: {
-                            display: false,
-                            lineWidth: 1,
-                            zeroLineWidth: 2,
-                            drawTicks: false,
-                            color: '#494949'
-                        },
-                        ticks: {
-                            display: false,
-                            maxRotation: 0,
-                            minRotation: 0,
-                            padding: 15,
-                            maxTicksLimit: 10,
-                        }
-                    }],
-                    yAxes: [{
-                        gridLines: {
-                            display: false,
-                            lineWidth: 1,
-                            zeroLineWidth: 0,
-                            drawTicks: false,
-                            color: '#494949'
-                        },
-                        scaleLabel: {
-                            display: false
-                        },
-                        ticks: {
-                            display: false,
-                            padding: 15,
-                            fontSize: 15,
-                            fontStyle: 'bold',
-                            fontColor: '#494949'
-                        }
-                    }]
-                },
-                hover: {
-                    mode: null
-                },
-                tooltips: {
-                    enabled: false
+        super(props)
+        this.chartId = Math.trunc(Math.random() * 100000);
+        this.i = 0;
+        this.setupComplete = false;
+        this.padding = 10
+    }
+
+    componentDidMount = () => { this.createChart(); }
+    componentWillUnmount = () => { this.chart.dispose(); }
+    componentDidUpdate = () => { this.addData(); }
+
+    createChart = () => {
+        this.chart = lightningChart().ChartXY({ containerId: this.chartId });
+        this.pointSeries = this.chart.addPointSeries({ pointShape: PointShape.Circle });
+        this.pointSeries.setPointSize(5.0)
+
+        this.chart
+            .setBackgroundFillStyle(theme.whiteFill)
+            .setChartBackgroundFillStyle(theme.whiteFill)
+            .setAutoCursorMode(AutoCursorModes.disabled)
+            .setMouseInteractions(false)
+            .setMouseInteractionWheelZoom(false)
+            .setMouseInteractionPan(false)
+            .setMouseInteractionRectangleFit(false)
+            .setMouseInteractionRectangleZoom(false)
+            .setMouseInteractionsWhileScrolling(false)
+            .setMouseInteractionsWhileZooming(false)
+
+        this.chart.getDefaultAxisX()
+            .setScrollStrategy(AxisScrollStrategies.expansion)
+            .setTickStyle(emptyTick)
+            .setMouseInteractions(false)
+            .setInterval(-110, 30)
+        
+        this.chart.getDefaultAxisY()
+        .setScrollStrategy(AxisScrollStrategies.expansion)
+        .setMouseInteractions(false)
+        .setTickStyle(emptyTick)
+
+        
+
+        this.setupComplete = true
+    }
+
+    changeIntervalX = (min, max) => {
+        this.chart.getDefaultAxisX().setInterval(min, max)
+    }
+
+    changeIntervalY = (min, max) => {
+        this.chart.getDefaultAxisY().setInterval(min, max)
+    }
+
+    addData = () => {
+        console.log(this.props.data)
+        if (this.setupComplete) {
+            if(this.props.data) {
+
+                if (this.props.data.x > this.pointSeries.getXMax() || this.props.data.x < this.pointSeries.getXMin()) {
+                    this.changeIntervalX(
+                        this.props.data.x < this.pointSeries.getXMin() ? this.props.data.x : this.pointSeries.getXMin(),
+                        this.props.data.x > this.pointSeries.getXMax() ? this.props.data.x : this.pointSeries.getXMax()
+                    )
                 }
+                if (this.props.data.y > this.pointSeries.getYMax() || this.props.data.y < this.pointSeries.getYMin()) {
+                    this.changeIntervalY(
+                        this.props.data.y < this.pointSeries.getYMin() ? this.props.data.y : this.pointSeries.getYMin(),
+                        this.props.data.y > this.pointSeries.getYMax() ? this.props.data.y : this.pointSeries.getYMax()
+                    )
+                }
+
+                this.pointSeries.add(this.props.data)
+                
             }
         }
     }
 
-    render = () => {
-        return (
-            <div id='scatterPlot'>
-                <Scatter data={this.state.data} options={this.state.options} key={Math.random()}/>
-            </div>
-        );
+    render() {
+        let data = this.props.data
+
+        //Refactor this
+            return (
+                
+                <div style={{ marginBottom: '20px' }}>
+                    <div id={this.chartId} className='fill' style={{ height: '500px' }} onWheel={(event) => { return true; }}></div>
+                </div>
+            );
+        
     }
 }

@@ -15,8 +15,7 @@ export default class DefaultPlottingDash extends React.Component {
                 { title: 'RPM', units: 'RPM' },
                 { title: 'Suspension', units: 'mm' },
                 { title: 'Acceleration', units: 'g' },
-                { title: 'Axes', units: '˚' },
-                { title: 'Track Map', units: '' }
+                { title: 'Axes', units: '˚' }
             ]
         }
     }

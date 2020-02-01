@@ -85,7 +85,7 @@ export default class GraphBox extends React.Component {
             return (
                 <div id='graphBox' style={{ width: '100%' }}>
                     <p id='graphTitle'><b>{this.props.title}</b></p>
-                    <HeatMap />
+                    <HeatMap choice={this.props.choice} />
                 </div>
             );
         }

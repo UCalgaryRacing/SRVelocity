@@ -4,10 +4,11 @@ import colormap from 'colormap'
 import Data from '../../../../data'
 import ScatterPlot from '../../graphComponents/scatterPlot'
 import {ColorHEX} from '@arction/lcjs';
+import { Dropdown, DropdownButton} from 'react-bootstrap'
 
 
 const colors =  colormap({
-    colormap: 'jet',
+    colormap: 'magma',
     nshades: 100,
     format: 'hex',
     alpha: 1
@@ -30,10 +31,12 @@ export default class HeatMap extends React.Component {
             cuurentLabel: 3,
             currentRange: 0.5,
             indicationColor: '#000',
-            points: [],
             currentPoint: {},
             selection: 'speed'
         }
+        this.pointSelections = []
+        this.choice = this.props.choice
+        this.forceMapUpdate = false
     }
 
     componentWillMount = () => {
@@ -48,53 +51,85 @@ export default class HeatMap extends React.Component {
         let index = (value - boundaries[0]) / range;
         index *= 100;
         index = Math.round(index);
-        return ColorHEX(colors[index]);
+        return ColorHEX(colors[99 - index]);
     }
 
- 
+    findParamColor(sensor) {
+        let newValue = 0
+        if (sensor === 'suspension') {
+            let index = constDataTitles.x[3];
+            let xValue = Data.getInstance().getDataPoint(constDataTitles.x[0])[index];
+            
+            index = constDataTitles.y[3];
+            let yValue = Data.getInstance().getDataPoint(constDataTitles.y[0])[index];
 
-    pullData = () => {
-        this.state.points.push(Data.getInstance().getDataPoint('Track Map'));
-        for (var sensor in this.state.data) {
-            let newValue = 0;
-            if (sensor === 'suspension') {
-                let index = constDataTitles.x[3];
-                let xValue = Data.getInstance().getDataPoint(constDataTitles.x[0])[index];
-                
-                index = constDataTitles.y[3];
-                let yValue = Data.getInstance().getDataPoint(constDataTitles.y[0])[index];
-
-                newValue = Math.abs(xValue) + Math.abs(yValue);
-                newValue = this.getColor(newValue, [0, 2]);
-            }
-
-            else if(sensor === 'tp'){
-                newValue = Data.getInstance().getDataPoint(constDataTitles.tp[0]);
-                newValue = this.getColor(newValue, [0, 100]);
-            }
-
-            else if(sensor === 'speed'){
-                newValue = Data.getInstance().getDataPoint(constDataTitles.speed[0]);
-                newValue = this.getColor(newValue, [0, 100]);
-            }
-
-            this.state.data[sensor].push(newValue);
+            newValue = Math.abs(xValue) + Math.abs(yValue);
+            newValue = this.getColor(newValue, [0, 2]);
         }
 
-        let temp = this.state.points[this.state.points.length - 1]
-        let colArray = this.state.data[this.state.selection]
-        temp.color = colArray[colArray.length - 1]
+        else if(sensor === 'tp'){
+            newValue = Data.getInstance().getDataPoint(constDataTitles.tp[0]);
+            newValue = this.getColor(newValue, [0, 100]);
+        }
 
-        this.state.currentPoint = temp
+        else if(sensor === 'speed'){
+            newValue = Data.getInstance().getDataPoint(constDataTitles.speed[0]);
+            newValue = this.getColor(newValue, [0, 100]);
+        }
+
+        return newValue
+    }
+
+    pullData = () => {
+        if(this.forceMapUpdate) {
+            this.forceMapUpdate = false
+        }
+        this.state.currentPoint = Data.getInstance().getDataPoint('Track Map');
+        for (var sensor in this.state.data) {
+            this.state.data[sensor].push(this.findParamColor(sensor));
+        }
+
+        let colArray = this.state.data[this.state.selection]
+        this.state.currentPoint.color = colArray[colArray.length - 1]
+
+    }
+
+    select = (event) => {
+        if (event.key === "1") {
+            this.refreshMap('speed')
+        } else if (event.key === "2") {
+            this.refreshMap('suspension')
+        } else if (event.key === "3") {
+            this.refreshMap('tp')
+        }
+    }
+
+    refreshMap = (sensor) => {
+        let temp = Data.getInstance().get('Track Map')
+        for (let i =0; i < temp.length; i++) {
+            temp[i].color = this.state.data[sensor][i]
+        }
+
+        this.forceMapUpdate = true
+        
     }
 
 
 
 
     render = () => {
+        console.log(this.choice)
         return (
             <div style={{ width: '100%' }}>
-                <ScatterPlot id='scatter'  data={this.state.currentPoint} title={this.props.title} units={this.props.units} />
+                <ScatterPlot id='scatter' mapUpdate={this.forceMapUpdate} data={this.state.data[this.state.selection]} point={this.state.currentPoint} title={this.props.title} units={this.props.units} />
+                {this.choice ? 
+                    <DropdownButton onChange={this.select} id="dropdown-basic-button" title="Parameter">
+                    <Dropdown.Item eventKey="1">Speed</Dropdown.Item>
+                    <Dropdown.Item eventKey="2">Suspension</Dropdown.Item>
+                    <Dropdown.Item eventKey="3">Throttle Position</Dropdown.Item>
+                    </DropdownButton> :
+                    null
+                }
             </div>
         );
     }

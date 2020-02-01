@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { PointShape, lightningChart, emptyTick, DataPatterns, AxisScrollStrategies, SolidLine, SolidFill, ColorHEX, AutoCursorModes, VisibleTicks, FontSettings } from '@arction/lcjs';
+import { ColorRGBA, IndividualPointFill, PointShape, lightningChart, emptyTick, DataPatterns, AxisScrollStrategies, SolidLine, SolidFill, ColorHEX, AutoCursorModes, VisibleTicks, FontSettings } from '@arction/lcjs';
 //import '../../styling/lineChart.css';
 
 const theme = {
@@ -25,8 +25,15 @@ export default class ScatterPlot extends Component {
     createChart = () => {
         this.chart = lightningChart().ChartXY({ containerId: this.chartId });
         this.pointSeries = this.chart.addPointSeries({ pointShape: PointShape.Circle });
-        this.pointSeries.setPointSize(10.0)
+        this.individualStyle = new IndividualPointFill()
+        this.individualStyle.setFallbackColor( ColorRGBA( 0, 0, 0 ) )
 
+
+        
+        this.pointSeries
+            .setPointSize(10.0)
+            .setPointFillStyle(this.individualStyle)   
+        
         this.chart
             .setBackgroundFillStyle(theme.whiteFill)
             .setChartBackgroundFillStyle(theme.whiteFill)
@@ -64,28 +71,33 @@ export default class ScatterPlot extends Component {
 
     addData = () => {
         if (this.setupComplete) {
+
+            if(this.props.mapUpdate) {
+                this.pointSeries.clear()
+                this.pointSeries.add(this.props.data)
+            }
             
-            if(this.props.data.x && this.props.data.y) {
+            if(this.props.point.x && this.props.point.y) {
                 if (!this.zero) {
-                    this.zeroX = this.props.data.x * 1000
-                    this.zeroY = this.props.data.y * 1000
+                    this.zeroX = this.props.point.x * 1000
+                    this.zeroY = this.props.point.y * 1000
                     this.zero = true
                     return
                 }
-                this.props.data.x *= 1000
-                this.props.data.x -= this.zeroX
-                this.props.data.y *= 1000
-                this.props.data.y -= this.zeroY
+                this.props.point.x *= 1000
+                this.props.point.x -= this.zeroX
+                this.props.point.y *= 1000
+                this.props.point.y -= this.zeroY
 
 
-                this.pointSeries.add(this.props.data)
+                this.pointSeries.add(this.props.point)
                 
             }
         }
     }
 
     render() {
-        let data = this.props.data
+        let data = this.props.point
 
         //Refactor this
             return (

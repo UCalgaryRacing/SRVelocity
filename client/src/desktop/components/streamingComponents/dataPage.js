@@ -16,7 +16,7 @@ export default class DataPage extends React.Component {
     render = () => {
         return (
             <div id='streamingData'>
-                <GraphBox title={this.props.content} id={0} units={this.state.graphTitles[this.findUnitIndex(this.props.content)].units} />
+                <GraphBox title={this.props.content} choice={true} id={0} units={this.state.graphTitles[this.findUnitIndex(this.props.content)].units} />
             </div>
         );
     }

@@ -14,7 +14,8 @@ export default class ScatterPlot extends Component {
         this.chartId = Math.trunc(Math.random() * 100000);
         this.i = 0;
         this.setupComplete = false;
-        this.padding = 10
+        this.padding = 0
+        this.zero = false
     }
 
     componentDidMount = () => { this.createChart(); }
@@ -24,7 +25,7 @@ export default class ScatterPlot extends Component {
     createChart = () => {
         this.chart = lightningChart().ChartXY({ containerId: this.chartId });
         this.pointSeries = this.chart.addPointSeries({ pointShape: PointShape.Circle });
-        this.pointSeries.setPointSize(5.0)
+        this.pointSeries.setPointSize(10.0)
 
         this.chart
             .setBackgroundFillStyle(theme.whiteFill)
@@ -39,13 +40,12 @@ export default class ScatterPlot extends Component {
             .setMouseInteractionsWhileZooming(false)
 
         this.chart.getDefaultAxisX()
-            .setScrollStrategy(AxisScrollStrategies.expansion)
+            .setScrollStrategy(AxisScrollStrategies.fitting)
             .setTickStyle(emptyTick)
             .setMouseInteractions(false)
-            .setInterval(-110, 30)
         
         this.chart.getDefaultAxisY()
-        .setScrollStrategy(AxisScrollStrategies.expansion)
+        .setScrollStrategy(AxisScrollStrategies.fitting)
         .setMouseInteractions(false)
         .setTickStyle(emptyTick)
 
@@ -63,22 +63,20 @@ export default class ScatterPlot extends Component {
     }
 
     addData = () => {
-        console.log(this.props.data)
         if (this.setupComplete) {
-            if(this.props.data) {
+            
+            if(this.props.data.x && this.props.data.y) {
+                if (!this.zero) {
+                    this.zeroX = this.props.data.x * 1000
+                    this.zeroY = this.props.data.y * 1000
+                    this.zero = true
+                    return
+                }
+                this.props.data.x *= 1000
+                this.props.data.x -= this.zeroX
+                this.props.data.y *= 1000
+                this.props.data.y -= this.zeroY
 
-                if (this.props.data.x > this.pointSeries.getXMax() || this.props.data.x < this.pointSeries.getXMin()) {
-                    this.changeIntervalX(
-                        this.props.data.x < this.pointSeries.getXMin() ? this.props.data.x : this.pointSeries.getXMin(),
-                        this.props.data.x > this.pointSeries.getXMax() ? this.props.data.x : this.pointSeries.getXMax()
-                    )
-                }
-                if (this.props.data.y > this.pointSeries.getYMax() || this.props.data.y < this.pointSeries.getYMin()) {
-                    this.changeIntervalY(
-                        this.props.data.y < this.pointSeries.getYMin() ? this.props.data.y : this.pointSeries.getYMin(),
-                        this.props.data.y > this.pointSeries.getYMax() ? this.props.data.y : this.pointSeries.getYMax()
-                    )
-                }
 
                 this.pointSeries.add(this.props.data)
                 

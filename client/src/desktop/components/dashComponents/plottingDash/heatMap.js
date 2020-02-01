@@ -1,8 +1,8 @@
 import React from 'react'
-import {constDataTitles} from '../../constants.js'
+import {constDataTitles} from '../../../../constants'
 import colormap from 'colormap' 
-import Data from '../../data'
-import ScatterPlot from './scatterPlot'
+import Data from '../../../../data'
+import ScatterPlot from '../../graphComponents/scatterPlot'
 import {ColorHEX} from '@arction/lcjs';
 
 
@@ -36,7 +36,11 @@ export default class HeatMap extends React.Component {
         }
     }
 
-    componentDidUpdate = () => { this.pullData(); }
+    componentWillMount = () => {
+        document.addEventListener('gotData', () => { this.pullData(); });
+    }
+
+    componentWillUnmount = () => { document.removeEventListener('gotData', this.pullData()); }
 
 
     getColor = (value, boundaries) => {
@@ -44,7 +48,6 @@ export default class HeatMap extends React.Component {
         let index = (value - boundaries[0]) / range;
         index *= 100;
         index = Math.round(index);
-
         return ColorHEX(colors[index]);
     }
 
@@ -91,7 +94,7 @@ export default class HeatMap extends React.Component {
     render = () => {
         return (
             <div style={{ width: '100%' }}>
-                <ScatterPlot id='scatter' color={this.state.data[this.state.selection]} data={this.state.currentPoint} title={this.props.title} units={this.props.units} />
+                <ScatterPlot id='scatter'  data={this.state.currentPoint} title={this.props.title} units={this.props.units} />
             </div>
         );
     }

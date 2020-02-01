@@ -1,7 +1,7 @@
 import React from 'react';
 
-import LineChart from '../components/lineChart';
-import HeatMap from '../components/heatMap';
+import LineChart from '../../graphComponents/lineChart';
+import HeatMap from './heatMap';
 
 import { Slider } from '@material-ui/core';
 import { withStyles } from '@material-ui/core/styles';

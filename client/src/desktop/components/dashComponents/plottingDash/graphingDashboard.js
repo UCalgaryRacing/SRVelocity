@@ -1,7 +1,7 @@
 import React from 'react';
 import GraphBox from './graphBox';
 import { Row, Col } from 'react-bootstrap';
-import HeatMap from '../heatMap'
+import HeatMap from './heatMap'
 
 export default class GraphingDashboard extends React.Component {
     constructor(props) {

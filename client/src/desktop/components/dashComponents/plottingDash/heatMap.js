@@ -37,6 +37,7 @@ export default class HeatMap extends React.Component {
         this.pointSelections = []
         this.choice = this.props.choice
         this.forceMapUpdate = false
+        this.newData = []
     }
 
     componentWillMount = () => {
@@ -94,39 +95,34 @@ export default class HeatMap extends React.Component {
 
     }
 
-    select = (event) => {
-        if (event.key === "1") {
-            this.refreshMap('speed')
-        } else if (event.key === "2") {
-            this.refreshMap('suspension')
-        } else if (event.key === "3") {
-            this.refreshMap('tp')
-        }
-    }
-
     refreshMap = (sensor) => {
+        this.setState({
+            selection: sensor
+        })
         let temp = Data.getInstance().get('Track Map')
+        console.log(temp)
+        temp.shift()
         for (let i =0; i < temp.length; i++) {
             temp[i].color = this.state.data[sensor][i]
         }
+        temp.shift()
+        this.newData = temp
 
         this.forceMapUpdate = true
-        
     }
 
 
 
 
     render = () => {
-        console.log(this.choice)
         return (
             <div style={{ width: '100%' }}>
-                <ScatterPlot id='scatter' mapUpdate={this.forceMapUpdate} data={this.state.data[this.state.selection]} point={this.state.currentPoint} title={this.props.title} units={this.props.units} />
+                <ScatterPlot id='scatter' mapUpdate={this.forceMapUpdate} data={this.newData} point={this.state.currentPoint} title={this.props.title} units={this.props.units} />
                 {this.choice ? 
-                    <DropdownButton onChange={this.select} id="dropdown-basic-button" title="Parameter">
-                    <Dropdown.Item eventKey="1">Speed</Dropdown.Item>
-                    <Dropdown.Item eventKey="2">Suspension</Dropdown.Item>
-                    <Dropdown.Item eventKey="3">Throttle Position</Dropdown.Item>
+                    <DropdownButton drop='right' id="dropdown-basic-button" title={this.state.selection}>
+                        <Dropdown.Item onClick={() => this.refreshMap('speed')}>Speed</Dropdown.Item>
+                        <Dropdown.Item onClick={() => this.refreshMap('suspension')}>Suspension</Dropdown.Item>
+                        <Dropdown.Item onClick={() => this.refreshMap('tp')}>Throttle Position</Dropdown.Item>
                     </DropdownButton> :
                     null
                 }

@@ -1,6 +1,6 @@
 import React from 'react'
 import {constDataTitles} from '../../../../constants'
-import colormap from 'colormap' 
+import colormap from 'colormap'
 import Data from '../../../../data'
 import ScatterPlot from '../../graphComponents/scatterPlot'
 import {ColorHEX} from '@arction/lcjs';
@@ -23,7 +23,7 @@ export default class HeatMap extends React.Component {
                 // fr: [],
                 // rl: [],
                 // rr: [],
-                suspension: [], // sum x + y |0, 2| 
+                suspension: [], // sum x + y |0, 2|
                 speed: [] //0, 100
             },
             cuurentLabel: 3,
@@ -35,6 +35,7 @@ export default class HeatMap extends React.Component {
         this.pointSelections = []
         this.choice = this.props.choice
         this.forceMapUpdate = false
+        this.newData = []
     }
 
     componentWillMount = () => {
@@ -57,7 +58,7 @@ export default class HeatMap extends React.Component {
         if (sensor === 'suspension') {
             let index = constDataTitles.x[3];
             let xValue = Data.getInstance().getDataPoint(constDataTitles.x[0])[index];
-            
+
             index = constDataTitles.y[3];
             let yValue = Data.getInstance().getDataPoint(constDataTitles.y[0])[index];
 
@@ -92,34 +93,30 @@ export default class HeatMap extends React.Component {
 
     }
 
-    select = (event) => {
-        if (event.key === "1") {
-            this.refreshMap('speed')
-        } else if (event.key === "2") {
-            this.refreshMap('suspension')
-        } else if (event.key === "3") {
-            this.refreshMap('tp')
-        }
-    }
-
     refreshMap = (sensor) => {
+        this.setState({
+            selection: sensor
+        })
         let temp = Data.getInstance().get('Track Map')
+        console.log(temp)
+        temp.shift()
         for (let i =0; i < temp.length; i++) {
             temp[i].color = this.state.data[sensor][i]
         }
+        temp.shift()
+        this.newData = temp
         this.forceMapUpdate = true
     }
 
     render = () => {
-        console.log(this.choice)
         return (
             <div style={{ width: '100%' }}>
-                <ScatterPlot id='scatter' mapUpdate={this.forceMapUpdate} data={this.state.data[this.state.selection]} point={this.state.currentPoint} title={this.props.title} units={this.props.units} />
-                {this.choice ? 
-                    <DropdownButton onChange={this.select} id="dropdown-basic-button" title="Parameter">
-                    <Dropdown.Item eventKey="1">Speed</Dropdown.Item>
-                    <Dropdown.Item eventKey="2">Suspension</Dropdown.Item>
-                    <Dropdown.Item eventKey="3">Throttle Position</Dropdown.Item>
+                <ScatterPlot id='scatter' mapUpdate={this.forceMapUpdate} data={this.newData} point={this.state.currentPoint} title={this.props.title} units={this.props.units} />
+                {this.choice ?
+                    <DropdownButton drop='right' id="dropdown-basic-button" title={this.state.selection}>
+                        <Dropdown.Item onClick={() => this.refreshMap('speed')}>Speed</Dropdown.Item>
+                        <Dropdown.Item onClick={() => this.refreshMap('suspension')}>Suspension</Dropdown.Item>
+                        <Dropdown.Item onClick={() => this.refreshMap('tp')}>Throttle Position</Dropdown.Item>
                     </DropdownButton> :
                     null
                 }

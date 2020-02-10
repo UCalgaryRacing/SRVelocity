@@ -22,16 +22,15 @@ export default class ScatterPlot extends Component {
     componentDidUpdate = () => { this.addData(); }
 
     createChart = () => {
-        this.chart = lightningChart().ChartXY({ containerId: this.chartId });
+        this.chart = lightningChart().ChartXY({ containerId: this.chartId }); 
         this.pointSeries = this.chart.addPointSeries({ pointShape: PointShape.Circle });
         this.individualStyle = new IndividualPointFill()
         this.individualStyle.setFallbackColor( ColorRGBA( 0, 0, 0 ) )
 
-
         
         this.pointSeries
             .setPointSize(10.0)
-            .setPointFillStyle(this.individualStyle)   
+            .setPointFillStyle(this.individualStyle) 
         
         this.chart
             .setBackgroundFillStyle(theme.whiteFill)
@@ -55,44 +54,43 @@ export default class ScatterPlot extends Component {
         .setMouseInteractions(false)
         .setTickStyle(emptyTick)
 
-        
-
         this.setupComplete = true
-    }
-
-    changeIntervalX = (min, max) => {
-        this.chart.getDefaultAxisX().setInterval(min, max)
-    }
-
-    changeIntervalY = (min, max) => {
-        this.chart.getDefaultAxisY().setInterval(min, max)
     }
 
     addData = () => {
         if (this.setupComplete) {
-
             if(this.props.mapUpdate) {
                 this.pointSeries.clear()
-                this.pointSeries.add(this.props.data)
-            }
-            
-            if(this.props.point.x && this.props.point.y) {
-                if (!this.zero) {
-                    this.zeroX = this.props.point.x * 1000
-                    this.zeroY = this.props.point.y * 1000
-                    this.zero = true
-                    return
+                for (var point of this.props.data) {
+                    this.addPoint(point)
                 }
-                this.props.point.x *= 1000
-                this.props.point.x -= this.zeroX
-                this.props.point.y *= 1000
-                this.props.point.y -= this.zeroY
-
-
-                this.pointSeries.add(this.props.point)
-                
+            } else {
+                this.addPoint(this.props.point)
             }
         }
+    }
+
+    addPoint = (arg) => {
+        let point = {}
+        point.x = arg.x
+        point.y = arg.y
+        point.color = arg.color
+        if (!point.x || !point.y) {
+            return
+        }
+        if (!this.zero) {
+            this.zeroX = point.x * 1000
+            this.zeroY = point.y * 1000
+            this.zero = true
+            return
+        }
+        point.x *= 1000
+        point.x -= this.zeroX
+        point.y *= 1000
+        point.y -= this.zeroY
+
+        this.pointSeries.add(point)
+        
     }
 
     render() {

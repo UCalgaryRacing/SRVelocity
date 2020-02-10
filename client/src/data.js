@@ -81,9 +81,7 @@ export default class Data {
         this.datasets[15].value = data.speed
         this.datasets[16].value = data.distance
         this.datasets[17].value.push({x: data.longitude, y: data.latitude});
-        if(data != undefined) {
-            document.dispatchEvent(new Event('gotData'));
-        }
+        document.dispatchEvent(new Event('gotData'));
     }
 
     pullData = () => {
@@ -118,9 +116,9 @@ export default class Data {
             }
             else { parameter.value.push({ x: longitude[this.index], y: latitude[this.index] }); }
         }
-        if (this.index < this.length) { 
+        if (this.index < this.length) {
             document.dispatchEvent(new Event('gotData'));
-            this.index++; 
+            this.index++;
         }
         else {
             document.dispatchEvent(new Event('OFF'));
@@ -130,6 +128,7 @@ export default class Data {
     get = (index) => {
         for (var parameter of this.datasets) {
             if (index === parameter.title) {
+                console.log(parameter.value)
                 return parameter.value;
             }
         }

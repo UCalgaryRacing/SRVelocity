@@ -81,8 +81,9 @@ export default class Data {
         this.datasets[15].value = data.speed
         this.datasets[16].value = data.distance
         this.datasets[17].value.push({x: data.longitude, y: data.latitude});
-
-        document.dispatchEvent(new Event('gotData'));
+        if(data != undefined) {
+            document.dispatchEvent(new Event('gotData'));
+        }
     }
 
     pullData = () => {

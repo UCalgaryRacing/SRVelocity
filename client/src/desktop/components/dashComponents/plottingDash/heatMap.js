@@ -6,7 +6,6 @@ import ScatterPlot from '../../graphComponents/scatterPlot'
 import {ColorHEX} from '@arction/lcjs';
 import { Dropdown, DropdownButton} from 'react-bootstrap'
 
-
 const colors =  colormap({
     colormap: 'magma',
     nshades: 100,
@@ -27,7 +26,6 @@ export default class HeatMap extends React.Component {
                 suspension: [], // sum x + y |0, 2| 
                 speed: [] //0, 100
             },
-
             cuurentLabel: 3,
             currentRange: 0.5,
             indicationColor: '#000',
@@ -64,7 +62,7 @@ export default class HeatMap extends React.Component {
             let yValue = Data.getInstance().getDataPoint(constDataTitles.y[0])[index];
 
             newValue = Math.abs(xValue) + Math.abs(yValue);
-            newValue = this.getColor(newValue, [0, 2]);
+            newValue = this.getColor(newValue, [-2, 2]);
         }
 
         else if(sensor === 'tp'){
@@ -109,13 +107,8 @@ export default class HeatMap extends React.Component {
         for (let i =0; i < temp.length; i++) {
             temp[i].color = this.state.data[sensor][i]
         }
-
         this.forceMapUpdate = true
-        
     }
-
-
-
 
     render = () => {
         console.log(this.choice)

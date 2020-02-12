@@ -2,7 +2,6 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import { Switch, BrowserRouter as Router, Route } from 'react-router-dom';
 import {isMobile} from 'react-device-detect';
-
 import './desktop/styling/index.css';
 
 //Import desktop pages 

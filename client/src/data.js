@@ -1,4 +1,4 @@
-import ReactDOM from 'react-dom';
+import socketIOClient from "socket.io-client";
 
 let rearLeft = [0.94, 0.95, 0.96, 0.96, 0.97, 0.98, 0.98, 0.99, 0.99, 1, 1, 1, 1.02, 1.02, 1.03, 1.02, 1.03, 1.04, 1.04, 1.05, 1.05, 1.06, 1.06, 1.07, 1.07, 1.08, 1.09, 1.09, 1.09, 1.09, 1.1, 1.1, 1.11, 1.11, 1.11, 1.11, 1.12, 1.12, 1.13, 1.13, 1.13, 1.14, 1.14, 1.13, 1.15, 1.15, 1.15, 1.15, 1.16, 1.16, 1.16, 1.17, 1.17, 1.16, 1.17, 1.17, 1.17, 1.18, 1.18, 1.18, 1.19, 1.19, 1.19, 1.19, 1.19, 1.2, 1.2, 1.2, 1.2, 1.2, 1.2, 1.21, 1.21, 1.21, 1.21, 1.22, 1.21, 1.21, 1.22, 1.22, 1.22, 1.23, 1.21, 1.23, 1.23, 1.23, 1.23, 1.23, 1.23, 1.23, 1.23, 1.23, 1.24, 1.24, 1.24, 1.24, 1.24, 1.24, 1.25, 1.24, 1.25, 1.25, 1.25, 1.25, 1.25, 1.25, 1.26, 1.26, 1.26, 1.26, 1.26, 1.27, 1.26, 1.26, 1.26, 1.26, 1.27, 1.27, 1.27, 1.27, 1.27, 1.26, 1.27, 1.27, 1.28, 1.28, 1.28, 1.28, 1.29, 1.28, 1.28, 1.28, 1.28, 1.29, 1.29, 1.29, 1.29, 1.29, 1.29, 1.29, 1.29, 1.29, 1.29, 1.29, 1.29, 1.29, 1.29, 1.29, 1.29, 1.29, 1.29, 1.29, 1.29, 1.29, 1.3, 1.3, 1.29, 1.3, 1.3, 1.29, 1.3, 1.3, 1.3, 1.3, 1.3, 1.3, 1.3, 1.3, 1.3, 1.31, 1.3, 1.3, 1.3, 1.31, 1.31, 1.3, 1.31, 1.3, 1.3, 1.31, 1.31, 1.31, 1.31, 1.31, 1.31, 1.31, 1.31, 1.31, 1.31, 1.31, 1.31, 1.31, 1.31, 1.31, 1.31, 1.31, 1.31, 1.31, 1.31, 1.31, 1.32, 1.31, 1.31, 1.31, 1.32, 1.32, 1.31, 1.31, 1.31, 1.31, 1.31, 1.32, 1.32, 1.32, 1.32, 1.32, 1.32, 1.32, 1.32, 1.32, 1.32, 1.32, 1.32, 1.32, 1.32, 1.32, 1.31, 1.32, 1.31, 1.32, 1.32, 1.32, 1.32, 1.32, 1.33, 1.33, 1.33, 1.33, 1.33, 1.33, 1.33, 1.33, 1.33, 1.33, 1.33, 1.33, 1.33, 1.33, 1.33, 1.33, 1.33, 1.33, 1.33, 1.33, 1.33];
 let rearRight = [0.54, 0.55, 0.55, 0.56, 0.56, 0.56, 0.56, 0.57, 0.57, 0.57, 0.57, 0.58, 0.58, 0.58, 0.59, 0.59, 0.59, 0.6, 0.6, 0.6, 0.61, 0.61, 0.6, 0.61, 0.61, 0.62, 0.62, 0.62, 0.63, 0.63, 0.63, 0.63, 0.63, 0.64, 0.64, 0.64, 0.65, 0.65, 0.65, 0.65, 0.65, 0.66, 0.66, 0.66, 0.66, 0.66, 0.66, 0.67, 0.67, 0.67, 0.67, 0.68, 0.68, 0.68, 0.68, 0.68, 0.69, 0.69, 0.69, 0.69, 0.69, 0.7, 0.69, 0.7, 0.7, 0.71, 0.71, 0.71, 0.71, 0.71, 0.71, 0.71, 0.71, 0.72, 0.71, 0.72, 0.72, 0.72, 0.72, 0.72, 0.73, 0.73, 0.73, 0.73, 0.74, 0.73, 0.73, 0.73, 0.74, 0.74, 0.73, 0.74, 0.74, 0.75, 0.74, 0.74, 0.75, 0.75, 0.75, 0.75, 0.75, 0.75, 0.75, 0.76, 0.75, 0.75, 0.76, 0.76, 0.76, 0.76, 0.76, 0.76, 0.77, 0.77, 0.76, 0.77, 0.77, 0.77, 0.77, 0.77, 0.77, 0.78, 0.78, 0.77, 0.78, 0.78, 0.78, 0.78, 0.78, 0.78, 0.79, 0.78, 0.79, 0.79, 0.79, 0.79, 0.79, 0.79, 0.79, 0.79, 0.79, 0.79, 0.8, 0.79, 0.8, 0.79, 0.79, 0.79, 0.8, 0.79, 0.8, 0.8, 0.8, 0.8, 0.8, 0.8, 0.8, 0.8, 0.8, 0.8, 0.8, 0.8, 0.8, 0.81, 0.81, 0.81, 0.81, 0.81, 0.81, 0.81, 0.81, 0.81, 0.81, 0.81, 0.81, 0.81, 0.81, 0.81, 0.82, 0.81, 0.81, 0.81, 0.81, 0.82, 0.82, 0.82, 0.82, 0.82, 0.81, 0.82, 0.81, 0.81, 0.82, 0.81, 0.81, 0.82, 0.82, 0.82, 0.82, 0.82, 0.82, 0.82, 0.82, 0.81, 0.82, 0.82, 0.82, 0.82, 0.82, 0.82, 0.83, 0.82, 0.82, 0.82, 0.82, 0.83, 0.83, 0.83, 0.82, 0.83, 0.82, 0.82, 0.82, 0.83, 0.82, 0.83, 0.81, 0.82, 0.83, 0.83, 0.83, 0.83, 0.83, 0.83, 0.83, 0.83, 0.83, 0.84, 0.83, 0.83, 0.84, 0.83, 0.84, 0.84, 0.84, 0.84, 0.84, 0.84, 0.84, 0.84, 0.84, 0.84, 0.84, 0.85, 0.85];
@@ -49,7 +49,39 @@ export default class Data {
             { title: 'Speed', value: 0 },
             { title: 'Distance', value: 0 },
             { title: 'Track Map', value: [{}] }]
-        this.interval = setInterval(() => this.tick(), 100);
+        const socket = socketIOClient('http://127.0.0.1:4000');
+        socket.on('new data', (data) => {
+            this.updateData(data)
+        });
+    }
+
+    updateData = (data) => {
+        this.datasets[0].value = Math.random() * 10000;
+        this.datasets[1].value = data.AFR
+        this.datasets[2].value = data.MAP
+        this.datasets[3].value = data.TPS
+        this.datasets[4].value = data.engineTemp
+        this.datasets[5].value = data.oilTemp
+        this.datasets[6].value = data.fuelTemp
+        this.datasets[7].value = data.IAT
+        this.datasets[8].value = data.oilPressure
+        this.datasets[9].value = data.baro
+        this.datasets[10].value = data.IPW
+        this.datasets[11].value = Math.random() * 15;
+        this.datasets[12].value[0] = data.frontRight
+        this.datasets[12].value[1] = data.frontLeft
+        this.datasets[12].value[2] = data.rearRight
+        this.datasets[12].value[3] = data.rearLeft
+        this.datasets[13].value[0] = data.xAccel
+        this.datasets[13].value[1] = data.yAccel
+        this.datasets[13].value[2] = data.zAccel
+        this.datasets[14].value[0] = data.roll
+        this.datasets[14].value[1] = data.pitch
+        this.datasets[14].value[2] = data.yaw
+        this.datasets[15].value = data.speed
+        this.datasets[16].value = data.distance
+        this.datasets[17].value.push({x: data.longitude, y: data.latitude});
+        document.dispatchEvent(new Event('gotData'));
     }
 
     pullData = () => {
@@ -84,9 +116,9 @@ export default class Data {
             }
             else { parameter.value.push({ x: longitude[this.index], y: latitude[this.index] }); }
         }
-        if (this.index < this.length) { 
+        if (this.index < this.length) {
             document.dispatchEvent(new Event('gotData'));
-            this.index++; 
+            this.index++;
         }
         else {
             document.dispatchEvent(new Event('OFF'));
@@ -96,6 +128,7 @@ export default class Data {
     get = (index) => {
         for (var parameter of this.datasets) {
             if (index === parameter.title) {
+                console.log(parameter.value)
                 return parameter.value;
             }
         }
@@ -112,6 +145,9 @@ export default class Data {
                 }
                 else if (index === 'Suspension') {
                     return [parameter.value[0], parameter.value[1], parameter.value[2], parameter.value[3]];
+                }
+                else if(index === 'Track Map') {
+                    return parameter.value[parameter.value.length - 1];
                 }
             }
         }

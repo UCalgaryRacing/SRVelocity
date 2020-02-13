@@ -120,15 +120,12 @@ export default class Data {
             document.dispatchEvent(new Event('gotData'));
             this.index++;
         }
-        else {
-            document.dispatchEvent(new Event('OFF'));
-        }
+        else { document.dispatchEvent(new Event('OFF')); }
     }
 
     get = (index) => {
         for (var parameter of this.datasets) {
             if (index === parameter.title) {
-                console.log(parameter.value)
                 return parameter.value;
             }
         }

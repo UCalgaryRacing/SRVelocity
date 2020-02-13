@@ -44,7 +44,6 @@ export default class HeatMap extends React.Component {
 
     componentWillUnmount = () => { document.removeEventListener('gotData', this.pullData()); }
 
-
     getColor = (value, boundaries) => {
         let range = boundaries[1] - boundaries[0];
         let index = (value - boundaries[0]) / range;
@@ -87,18 +86,13 @@ export default class HeatMap extends React.Component {
         for (var sensor in this.state.data) {
             this.state.data[sensor].push(this.findParamColor(sensor));
         }
-
         let colArray = this.state.data[this.state.selection]
         this.state.currentPoint.color = colArray[colArray.length - 1]
-
     }
 
     refreshMap = (sensor) => {
-        this.setState({
-            selection: sensor
-        })
+        this.setState({ selection: sensor })
         let temp = Data.getInstance().get('Track Map')
-        console.log(temp)
         temp.shift()
         for (let i =0; i < temp.length; i++) {
             temp[i].color = this.state.data[sensor][i]

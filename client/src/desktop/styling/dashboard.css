@@ -29,6 +29,13 @@
     width: 150px;
 }
 
+#accelMapButton {
+    background: rgb(194, 45, 45);
+    opacity: 1;
+    border: 0px solid;
+    width: 160px;
+}
+
 #trackMap {
     position: fixed;
     bottom: 0px;

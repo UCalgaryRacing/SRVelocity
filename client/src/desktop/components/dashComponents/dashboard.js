@@ -56,7 +56,7 @@ export default class StreamingDash extends React.Component {
                     {dashSelector}&nbsp;&nbsp;
                     {typeSelector}&nbsp;&nbsp;
                     <Button id='trackMapButton' onClick={this.toggleTrackMap} style={{ marginTop: '60px' }}><b>{(this.state.showTrackMap) ? 'Hide Track Map' : 'Show Track Map'}</b></Button>
-                    <Button id='trackMapButton' onClick={this.toggleAccelMap} style={{ marginTop: '60px', marginLeft: '8px' }}><b>{(this.state.showAccelMap) ? 'Hide Accel Map' : 'Show Accel Map'}</b></Button>
+                    <Button id='accelMapButton' onClick={this.toggleAccelMap} style={{ marginTop: '60px', marginLeft: '8px' }}><b>{(this.state.showAccelMap) ? 'Hide Accel Map' : 'Show Accel Map'}</b></Button>
                     <DefaultPlottingDash />
                     {this.state.showTrackMap?trackMap:''}
                     {this.state.showAccelMap?accelMap:''}
@@ -69,7 +69,7 @@ export default class StreamingDash extends React.Component {
                     {dashSelector}&nbsp;&nbsp;
                     {typeSelector}&nbsp;&nbsp;
                     <Button id='trackMapButton' onClick={this.toggleTrackMap} style={{ marginTop: '60px' }}><b>{(this.state.showTrackMap) ? 'Hide Track Map' : 'Show Track Map'}</b></Button>
-                    <Button id='trackMapButton' onClick={this.toggleAccelMap} style={{ marginTop: '60px', marginLeft: '8px' }}><b>{(this.state.showAccelMap) ? 'Hide Accel Map' : 'Show Accel Map'}</b></Button>
+                    <Button id='accelMapButton' onClick={this.toggleAccelMap} style={{ marginTop: '60px', marginLeft: '8px' }}><b>{(this.state.showAccelMap) ? 'Hide Accel Map' : 'Show Accel Map'}</b></Button>
                     <CustomPlottingDash />
                     {this.state.showTrackMap?trackMap:''}
                     {this.state.showAccelMap?accelMap:''}
@@ -82,7 +82,7 @@ export default class StreamingDash extends React.Component {
                     {dashSelector}&nbsp;&nbsp;
                     {typeSelector}&nbsp;&nbsp;
                     <Button id='trackMapButton' onClick={this.toggleTrackMap} style={{ marginTop: '60px' }}><b>{(this.state.showTrackMap) ? 'Hide Track Map' : 'Show Track Map'}</b></Button>
-                    <Button id='trackMapButton' onClick={this.toggleAccelMap} style={{ marginTop: '60px', marginLeft: '8px' }}><b>{(this.state.showAccelMap) ? 'Hide Accel Map' : 'Show Accel Map'}</b></Button>
+                    <Button id='accelMapButton' onClick={this.toggleAccelMap} style={{ marginTop: '60px', marginLeft: '8px' }}><b>{(this.state.showAccelMap) ? 'Hide Accel Map' : 'Show Accel Map'}</b></Button>
                     <DefaultDataDash />
                     {this.state.showTrackMap?trackMap:''}
                     {this.state.showAccelMap?accelMap:''}
@@ -95,7 +95,7 @@ export default class StreamingDash extends React.Component {
                     {dashSelector}&nbsp;&nbsp;
                     {typeSelector}&nbsp;&nbsp;
                     <Button id='trackMapButton' onClick={this.toggleTrackMap} style={{ marginTop: '60px' }}><b>{(this.state.showTrackMap) ? 'Hide Track Map' : 'Show Track Map'}</b></Button>
-                    <Button id='trackMapButton' onClick={this.toggleAccelMap} style={{ marginTop: '60px', marginLeft: '8px' }}><b>{(this.state.showAccelMap) ? 'Hide Accel Map' : 'Show Accel Map'}</b></Button>
+                    <Button id='accelMapButton' onClick={this.toggleAccelMap} style={{ marginTop: '60px', marginLeft: '8px' }}><b>{(this.state.showAccelMap) ? 'Hide Accel Map' : 'Show Accel Map'}</b></Button>
                     <CustomDataDash />
                     {this.state.showTrackMap?trackMap:''}
                     {this.state.showAccelMap?accelMap:''}

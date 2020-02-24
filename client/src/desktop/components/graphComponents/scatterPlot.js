@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import { ColorRGBA, IndividualPointFill, PointShape, lightningChart, emptyTick, DataPatterns, AxisScrollStrategies, SolidLine, SolidFill, ColorHEX, AutoCursorModes, VisibleTicks, FontSettings } from '@arction/lcjs';
-//import '../../styling/lineChart.css';
 
 const theme = {
     whiteFill: new SolidFill({ color: ColorHEX('#FFFFFF') }),
@@ -23,16 +22,16 @@ export default class ScatterPlot extends Component {
     componentDidUpdate = () => { this.addData(); }
 
     createChart = () => {
-        this.chart = lightningChart().ChartXY({ containerId: this.chartId }); 
+        this.chart = lightningChart().ChartXY({ containerId: this.chartId });
         this.pointSeries = this.chart.addPointSeries({ pointShape: PointShape.Circle });
         this.individualStyle = new IndividualPointFill()
-        this.individualStyle.setFallbackColor( ColorRGBA( 0, 0, 0 ) )
+        this.individualStyle.setFallbackColor(ColorRGBA(0, 0, 0))
 
-        
+
         this.pointSeries
             .setPointSize(10.0)
-            .setPointFillStyle(this.individualStyle) 
-        
+            .setPointFillStyle(this.individualStyle)
+
         this.chart
             .setBackgroundFillStyle(theme.whiteFill)
             .setChartBackgroundFillStyle(theme.whiteFill)
@@ -49,18 +48,18 @@ export default class ScatterPlot extends Component {
             .setScrollStrategy(AxisScrollStrategies.fitting)
             .setTickStyle(emptyTick)
             .setMouseInteractions(false)
-        
+
         this.chart.getDefaultAxisY()
-        .setScrollStrategy(AxisScrollStrategies.fitting)
-        .setMouseInteractions(false)
-        .setTickStyle(emptyTick)
+            .setScrollStrategy(AxisScrollStrategies.fitting)
+            .setMouseInteractions(false)
+            .setTickStyle(emptyTick)
 
         this.setupComplete = true
     }
 
     addData = () => {
         if (this.setupComplete) {
-            if(this.props.mapUpdate) {
+            if (this.props.mapUpdate) {
                 this.pointSeries.clear()
                 for (var point of this.props.data) {
                     this.addPoint(point)
@@ -91,19 +90,17 @@ export default class ScatterPlot extends Component {
         point.y -= this.zeroY
 
         this.pointSeries.add(point)
-        
+
     }
 
     render() {
         let data = this.props.point
-
         //Refactor this
-            return (
-                
-                <div style={{ }}>
-                    <div id={this.chartId} className='fill' style={{ height: '500px' }} onWheel={(event) => { return true; }}></div>
-                </div>
-            );
-        
+        return (
+            <div style={{ marginBottom: '20px' }}>
+                <div id={this.chartId} className='fill' style={{ height: '500px' }} onWheel={(event) => { return true; }}></div>
+            </div>
+        );
+
     }
 }

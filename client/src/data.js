@@ -49,7 +49,7 @@ export default class Data {
             { title: 'Speed', value: 0 },
             { title: 'Distance', value: 0 },
             { title: 'Track Map', value: [{}] }]
-        const socket = socketIOClient('http://127.0.0.1:4000');
+        const socket = socketIOClient('http://18.217.215.72:4000'); //CHANGE WHEN DEPLOYING!
         socket.on('new data', (data) => {
             this.updateData(data)
         });
@@ -116,13 +116,11 @@ export default class Data {
             }
             else { parameter.value.push({ x: longitude[this.index], y: latitude[this.index] }); }
         }
-        if (this.index < this.length) { 
+        if (this.index < this.length) {
             document.dispatchEvent(new Event('gotData'));
-            this.index++; 
+            this.index++;
         }
-        else {
-            document.dispatchEvent(new Event('OFF'));
-        }
+        else { document.dispatchEvent(new Event('OFF')); }
     }
 
     get = (index) => {

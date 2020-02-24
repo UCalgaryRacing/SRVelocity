@@ -4,7 +4,7 @@ import colormap from 'colormap'
 import Data from '../../../../data'
 import ScatterPlot from '../../graphComponents/scatterPlot'
 import {ColorHEX} from '@arction/lcjs';
-import { Dropdown, DropdownButton} from 'react-bootstrap'
+import { Button, ButtonGroup} from 'react-bootstrap'
 
 
 const colors =  colormap({
@@ -99,13 +99,11 @@ export default class HeatMap extends React.Component {
         this.setState({
             selection: sensor
         })
-        let temp = Data.getInstance().get('Track Map')
-        console.log(temp)
-        temp.shift()
+        let temp = Data.getInstance().get('Track Map').slice(-1* this.state.data[sensor].length) // get the last x amount of points
+                                                                                                 // where x is the length of the stored color arrays
         for (let i =0; i < temp.length; i++) {
             temp[i].color = this.state.data[sensor][i]
         }
-        temp.shift()
         this.newData = temp
 
         this.forceMapUpdate = true
@@ -119,12 +117,12 @@ export default class HeatMap extends React.Component {
             <div style={{ width: '100%' }}>
                 <ScatterPlot id='scatter' mapUpdate={this.forceMapUpdate} data={this.newData} point={this.state.currentPoint} title={this.props.title} units={this.props.units} />
                 {this.choice ? 
-                    <DropdownButton drop='right' id="dropdown-basic-button" title={this.state.selection}>
-                        <Dropdown.Item onClick={() => this.refreshMap('speed')}>Speed</Dropdown.Item>
-                        <Dropdown.Item onClick={() => this.refreshMap('suspension')}>Suspension</Dropdown.Item>
-                        <Dropdown.Item onClick={() => this.refreshMap('tp')}>Throttle Position</Dropdown.Item>
-                    </DropdownButton> :
-                    null
+                    <ButtonGroup id='dashSelector' style={{margin: '20px'}}>
+                        <Button id='defaultButton' onClick={() => this.refreshMap('speed')} disabled={(this.state.selection === 'speed')}><b>Speed</b></Button>
+                        <Button id='customButton' onClick={() => this.refreshMap('suspension')} disabled={(this.state.selection === 'suspension')}><b>Suspension</b></Button>
+                        <Button id='customButton' onClick={() => this.refreshMap('tp')} disabled={(this.state.selection === 'tp')}><b>Throttle Position</b></Button>
+                    </ButtonGroup > 
+                    : null
                 }
             </div>
         );

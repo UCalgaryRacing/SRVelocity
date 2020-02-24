@@ -128,7 +128,6 @@ export default class Data {
     get = (index) => {
         for (var parameter of this.datasets) {
             if (index === parameter.title) {
-                console.log(parameter.value)
                 return parameter.value;
             }
         }

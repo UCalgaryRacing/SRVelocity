@@ -15,11 +15,20 @@ export default class LineChartM extends Component {
         this.setupComplete = false;
         this.lineSeries = [];
         this.colours = ['#0071B2', '#E69D00', '#009E73', '#CC79A7']; //Add more colours
+        this.state = {
+            windowSize: window.innerHeight < 440 ? (window.innerHeight - 56) * 0.7 : 300,
+        };
     }
 
-    componentDidMount = () => {this.createChart()}
-    componentWillUnmount = () => {this.chart.dispose()}
-    componentDidUpdate = () => {this.pullData()}
+    componentDidMount = () => {
+        this.createChart();
+        window.addEventListener("resize", this.handleResize);
+    }
+    componentWillUnmount = () => {
+        this.chart.dispose();
+        window.removeEventListener("resize", this.handleResize);
+    }
+    componentDidUpdate = () => { this.pullData() }
 
     createChart = () => {
         this.chart = lightningChart().ChartXY({ containerId: this.chartId });
@@ -83,8 +92,8 @@ export default class LineChartM extends Component {
         var ticks = new VisibleTicks({ labelFillStyle: new SolidFill({ color: ColorHEX('#000'), tickLength: 8 }), labelFont: font })
         ticks.setLabelPadding(100)
         axis.setTickStyle(ticks)
-        
-        if(this.props.data === undefined) { return; }
+
+        if (this.props.data === undefined) { return; }
         if (this.props.data.length === undefined) {
             this.lineSeries.push(this.chart.addLineSeries({ dataPattern: DataPatterns.horizontalProgressive }));
             this.lineSeries[0]
@@ -118,17 +127,30 @@ export default class LineChartM extends Component {
     pullData = () => {
         let data = this.props.data
         if (this.setupComplete) {
-            if (data.length === undefined) { this.lineSeries[0].add({ x: this.i, y: data })}
+            if (data.length === undefined) { this.lineSeries[0].add({ x: this.i, y: data }) }
             else {
                 var i = 0;
-                while(i < this.props.data.length) {
-                    this.lineSeries[i].add({x: this.i, y: data[i]});
+                while (i < this.props.data.length) {
+                    this.lineSeries[i].add({ x: this.i, y: data[i] });
                     i++;
                 }
             }
             this.i++
         }
     }
+
+    handleResize = e => {
+        console.log(window.innerHeight);
+        this.setState({
+            windowSize: window.innerHeight < 440 ? (window.innerHeight - 56) * 0.7 : 300
+        })
+    };
+
+    getScreenSize = e => {
+        return {
+            height: this.state.windowSize
+        }
+    };
 
     render() {
         let data = this.props.data
@@ -139,7 +161,7 @@ export default class LineChartM extends Component {
                     <p style={{ textAlign: 'center', fontSize: '1.2rem', paddingTop: '0', paddingBottom: '0', marginTop: '10px', marginBottom: '0px' }}>
                         <b>{data}&nbsp;{this.props.units}</b>
                     </p>
-                    <div id={this.chartId} className='fill' style={{ height: '300px' }} onWheel={(event) => { return true; }}></div>
+                    <div id={this.chartId} className='fill' style={this.getScreenSize()} onWheel={(event) => { return true; }}></div>
                 </div>
             );
         }
@@ -169,7 +191,7 @@ export default class LineChartM extends Component {
                             </div>
                         </div>
                     </div>
-                    <div id={this.chartId} className='fill' style={{ height: '300px' }}></div>
+                    <div id={this.chartId} className='fill' style={this.getScreenSize()}></div>
                 </div>
             );
         }
@@ -199,7 +221,7 @@ export default class LineChartM extends Component {
                             </div>
                         </div>
                     </div>
-                    <div id={this.chartId} className='fill' style={{ height: '300px' }}></div>
+                    <div id={this.chartId} className='fill' style={this.getScreenSize()}></div>
                 </div>
             );
         }
@@ -236,7 +258,7 @@ export default class LineChartM extends Component {
                             </div>
                         </div>
                     </div>
-                    <div id={this.chartId} className='fill' style={{ height: '300px' }}></div>
+                    <div id={this.chartId} className='fill' style={this.getScreenSize()}></div>
                 </div>
             );
         }

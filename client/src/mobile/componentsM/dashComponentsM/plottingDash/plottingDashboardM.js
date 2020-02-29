@@ -1,6 +1,7 @@
 import React from 'react';
 import GraphBoxM from './graphBoxM';
 import { Row, Col } from 'react-bootstrap';
+import '../../../styling/graphBoxM.css';
 
 export default class PlottingDashboardM extends React.Component {
     constructor(props) {
@@ -30,8 +31,8 @@ export default class PlottingDashboardM extends React.Component {
     createToRender = () => {
         for (const graph of this.graphs) {
             this.container.push(
-                <Row style={{ marginTop: '30px', marginLeft: '5px', marginRight: '5px'}}>
-                    <Col style={{padding: '0', margin: '0'}}>{graph}</Col>
+                <Row style={{ marginTop: '30px', marginLeft: '5px', marginRight: '5px' }}>
+                    <Col style={{ padding: '0', margin: '0' }}>{graph}</Col>
                 </Row>
             );
         }

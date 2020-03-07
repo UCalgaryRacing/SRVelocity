@@ -48,7 +48,16 @@ export default class Data {
             { title: 'Axes', value: [0, 0, 0] },
             { title: 'Speed', value: 0 },
             { title: 'Distance', value: 0 },
-            { title: 'Track Map', value: [{}] }]
+            { title: 'Track Map', value: [{}] },
+            { title: 'TPS', value: 0 },
+            { title: 'EGT', value: [0, 0, 0, 0] },
+            { title: 'O2', value: 0 },
+            { title: 'Cam Position', value: 0 },
+            { title: 'Crank Position', value: 0 },
+            { title: 'Neutral Switch', value: 0 },
+            { title: 'Wheel Speeds', value: [0, 0, 0, 0] },
+            { title: 'Brake Pressures', value: [0, 0] },
+            { title: 'Rotary Pot', value: 0 }]
         const socket = socketIOClient('http://18.217.215.72:4000'); //CHANGE WHEN DEPLOYING!
         socket.on('new data', (data) => {
             this.updateData(data)
@@ -68,10 +77,10 @@ export default class Data {
         this.datasets[9].value = data.baro
         this.datasets[10].value = data.IPW
         this.datasets[11].value = Math.random() * 15;
-        this.datasets[12].value[0] = data.frontRight
-        this.datasets[12].value[1] = data.frontLeft
-        this.datasets[12].value[2] = data.rearRight
-        this.datasets[12].value[3] = data.rearLeft
+        this.datasets[12].value[0] = data.frontRightSuspension
+        this.datasets[12].value[1] = data.frontLeftSuspension
+        this.datasets[12].value[2] = data.rearRightSuspension
+        this.datasets[12].value[3] = data.rearLeftSuspension
         this.datasets[13].value[0] = data.xAccel
         this.datasets[13].value[1] = data.yAccel
         this.datasets[13].value[2] = data.zAccel
@@ -80,7 +89,20 @@ export default class Data {
         this.datasets[14].value[2] = data.yaw
         this.datasets[15].value = data.speed
         this.datasets[16].value = data.distance
-        this.datasets[17].value.push({x: data.longitude, y: data.latitude});
+        this.datasets[17].value.push({ x: data.longitude, y: data.latitude });
+        this.datasets[18].value = data.tps
+        this.datasets[19].value[0] = data.frontRightSpeed
+        this.datasets[19].value[1] = data.frontLeftSpeed
+        this.datasets[19].value[2] = data.rearRightSpeed
+        this.datasets[19].value[3] = data.rearLeftSpeed
+        this.datasets[20].value = data.o2
+        this.datasets[21].value = data.cam
+        this.datasets[22].value = data.distance
+
+
+
+
+
         document.dispatchEvent(new Event('gotData'));
     }
 
@@ -103,15 +125,15 @@ export default class Data {
                 else if (parameter.title === 'Distance') { parameter.value = distance[this.index]; }
             }
             else if (parameter.title === 'Suspension') {
-                parameter.value[0] = frontRight[this.index];parameter.value[1] = frontLeft[this.index];
-                parameter.value[2] = rearRight[this.index];parameter.value[3] = rearLeft[this.index];
+                parameter.value[0] = frontRight[this.index]; parameter.value[1] = frontLeft[this.index];
+                parameter.value[2] = rearRight[this.index]; parameter.value[3] = rearLeft[this.index];
             }
             else if (parameter.title === 'Acceleration') {
-                parameter.value[0] = xAccel[this.index];parameter.value[1] = yAccel[this.index];
+                parameter.value[0] = xAccel[this.index]; parameter.value[1] = yAccel[this.index];
                 parameter.value[2] = zAccel[this.index];
             }
             else if (parameter.title === 'Axes') {
-                parameter.value[0] = roll[this.index];parameter.value[1] = pitch[this.index];
+                parameter.value[0] = roll[this.index]; parameter.value[1] = pitch[this.index];
                 parameter.value[2] = yaw[this.index];
             }
             else { parameter.value.push({ x: longitude[this.index], y: latitude[this.index] }); }
@@ -143,14 +165,12 @@ export default class Data {
                 else if (index === 'Suspension') {
                     return [parameter.value[0], parameter.value[1], parameter.value[2], parameter.value[3]];
                 }
-                else if(index === 'Track Map') {
+                else if (index === 'Track Map') {
                     return parameter.value[parameter.value.length - 1];
                 }
             }
         }
     }
-
-    tick = () => { this.pullData(); }
 
     static getInstance() {
         if (Data.instance == null) {

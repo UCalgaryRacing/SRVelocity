@@ -17,7 +17,8 @@ export default class DataBox extends React.Component {
 
     componentWillMount = () => {
         document.addEventListener('gotData', () => { this.pullData(); });
-        if (this.state.name === 'Suspension' || this.state.name === 'Acceleration' || this.state.name === 'Axes') {
+        if (this.state.name === 'Suspension' || this.state.name === 'Acceleration' || this.state.name === 'Axes'
+            || this.state.name === 'Wheel Speeds' || this.state.name === 'Brake Pressures' || this.state.name === 'EGT') {
             this.setState({ displayName: constDataTitles[this.props.name][2] });
         }
     }
@@ -26,7 +27,8 @@ export default class DataBox extends React.Component {
 
     pullData = () => { //MAKE THIS WAAAY MORE EFFICIENT
         let newValue = 0;
-        if (this.state.name === 'Suspension' || this.state.name === 'Acceleration' || this.state.name === 'Axes') {
+        if (this.state.name === 'Suspension' || this.state.name === 'Acceleration' || this.state.name === 'Axes'
+            || this.state.name === 'Wheel Speeds' || this.state.name === 'Brake Pressures' || this.state.name === 'EGT') {
             let index = constDataTitles[this.props.name][3];
             newValue = Data.getInstance().getDataPoint(this.state.name)[index];
         }

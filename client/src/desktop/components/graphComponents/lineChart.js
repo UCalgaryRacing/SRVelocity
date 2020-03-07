@@ -64,6 +64,15 @@ export default class LineChart extends Component {
         else if (this.props.title === 'Axes') { this.chart.getDefaultAxisY().setInterval(-150, 150, false, true); }
         else if (this.props.title === 'Speed') { this.chart.getDefaultAxisY().setInterval(0, 150, false, true); }
         else if (this.props.title === 'Distance') { this.chart.getDefaultAxisY().setInterval(0, 1, false, true); }
+        else if (this.props.title === 'TPS') { this.chart.getDefaultAxisY().setInterval(0, 100, false, true); }
+        else if (this.props.title === 'EGT') { this.chart.getDefaultAxisY().setInterval(0, 150, false, true); }
+        else if (this.props.title === 'O2') { this.chart.getDefaultAxisY().setInterval(0, 100, false, true); }
+        else if (this.props.title === 'Cam Position') { this.chart.getDefaultAxisY().setInterval(0, 100, false, true); }
+        else if (this.props.title === 'Crank Position') { this.chart.getDefaultAxisY().setInterval(-150, 150, false, true); }
+        else if (this.props.title === 'Neutral Switch') { this.chart.getDefaultAxisY().setInterval(0, 100, false, true); }
+        else if (this.props.title === 'Wheel Speeds') { this.chart.getDefaultAxisY().setInterval(0, 150, false, true); }
+        else if (this.props.title === 'Brake Pressures') { this.chart.getDefaultAxisY().setInterval(0, 100, false, true); }
+        else if (this.props.title === 'Rotary Pot') { this.chart.getDefaultAxisY().setInterval(-100, 100, false, true); }
 
         this.chart.getDefaultAxisX()
             .setScrollStrategy(AxisScrollStrategies.progressive)
@@ -230,6 +239,103 @@ export default class LineChart extends Component {
                             <div class='row' style={{ textAlign: 'center' }}>
                                 <div class='col' style={{ color: '#CC79A7', fontStyle: 'bold', textAlign: 'right' }}><b>RL:</b></div>
                                 <div class='col-xs' style={{ fontStyle: 'bold', width: '80px', textAlign: 'center' }}><b>{data[3]}</b></div>
+                                <div class='col' style={{ fontStyle: 'bold', textAlign: 'left' }}><b>{this.props.units}</b></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div id={this.chartId} className='fill' style={{ height: '500px' }}></div>
+                </div>
+            );
+        }
+        else if (this.props.title === 'EGT') {
+            return (
+                <div style={{ marginBottom: '20px' }}>
+                    <div class='row' style={{ textAlign: 'center', fontSize: '1.2rem', fontStyle: 'bold', paddingTop: '0', paddingBottom: '0', marginBottom: '0px', marginTop: '10px', width: '100%' }}>
+                        <div class='col' style={{ textAlign: 'center' }}>
+                            <div class='row' style={{ textAlign: 'center' }}>
+                                <div class='col' style={{ color: '#0072B2', fontStyle: 'bold', textAlign: 'right' }}><b>1:</b></div>
+                                <div class='col-xs' style={{ fontStyle: 'bold', width: '80px', textAlign: 'center' }}><b>{data[0]}</b></div>
+                                <div class='col' style={{ fontStyle: 'bold', textAlign: 'left' }}><b>{this.props.units}</b></div>
+                            </div>
+                        </div>
+                        <div class='col' style={{ textAlign: 'center' }}>
+                            <div class='row' style={{ textAlign: 'center' }}>
+                                <div class='col' style={{ color: '#E69F00', fontStyle: 'bold', textAlign: 'right' }}><b>2:</b></div>
+                                <div class='col-xs' style={{ fontStyle: 'bold', width: '80px', textAlign: 'center' }}><b>{data[1]}</b></div>
+                                <div class='col' style={{ fontStyle: 'bold', textAlign: 'left' }}><b>{this.props.units}</b></div>
+                            </div>
+                        </div>
+                        <div class='col' style={{ textAlign: 'center' }}>
+                            <div class='row' style={{ textAlign: 'center' }}>
+                                <div class='col' style={{ color: '#009E73', fontStyle: 'bold', textAlign: 'right' }}><b>3:</b></div>
+                                <div class='col-xs' style={{ fontStyle: 'bold', width: '80px', textAlign: 'center' }}><b>{data[2]}</b></div>
+                                <div class='col' style={{ fontStyle: 'bold', textAlign: 'left' }}><b>{this.props.units}</b></div>
+                            </div>
+                        </div>
+                        <div class='col' style={{ textAlign: 'center' }}>
+                            <div class='row' style={{ textAlign: 'center' }}>
+                                <div class='col' style={{ color: '#CC79A7', fontStyle: 'bold', textAlign: 'right' }}><b>4:</b></div>
+                                <div class='col-xs' style={{ fontStyle: 'bold', width: '80px', textAlign: 'center' }}><b>{data[3]}</b></div>
+                                <div class='col' style={{ fontStyle: 'bold', textAlign: 'left' }}><b>{this.props.units}</b></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div id={this.chartId} className='fill' style={{ height: '500px' }}></div>
+                </div>
+            );
+        }
+        else if (this.props.title === 'Wheel Speeds') {
+            return (
+                <div style={{ marginBottom: '20px' }}>
+                    <div class='row' style={{ textAlign: 'center', fontSize: '1.2rem', fontStyle: 'bold', paddingTop: '0', paddingBottom: '0', marginBottom: '0px', marginTop: '10px', width: '100%' }}>
+                        <div class='col' style={{ textAlign: 'center' }}>
+                            <div class='row' style={{ textAlign: 'center' }}>
+                                <div class='col' style={{ color: '#0072B2', fontStyle: 'bold', textAlign: 'right' }}><b>FR:</b></div>
+                                <div class='col-xs' style={{ fontStyle: 'bold', width: '80px', textAlign: 'center' }}><b>{data[0]}</b></div>
+                                <div class='col' style={{ fontStyle: 'bold', textAlign: 'left' }}><b>{this.props.units}</b></div>
+                            </div>
+                        </div>
+                        <div class='col' style={{ textAlign: 'center' }}>
+                            <div class='row' style={{ textAlign: 'center' }}>
+                                <div class='col' style={{ color: '#E69F00', fontStyle: 'bold', textAlign: 'right' }}><b>FL:</b></div>
+                                <div class='col-xs' style={{ fontStyle: 'bold', width: '80px', textAlign: 'center' }}><b>{data[1]}</b></div>
+                                <div class='col' style={{ fontStyle: 'bold', textAlign: 'left' }}><b>{this.props.units}</b></div>
+                            </div>
+                        </div>
+                        <div class='col' style={{ textAlign: 'center' }}>
+                            <div class='row' style={{ textAlign: 'center' }}>
+                                <div class='col' style={{ color: '#009E73', fontStyle: 'bold', textAlign: 'right' }}><b>RR:</b></div>
+                                <div class='col-xs' style={{ fontStyle: 'bold', width: '80px', textAlign: 'center' }}><b>{data[2]}</b></div>
+                                <div class='col' style={{ fontStyle: 'bold', textAlign: 'left' }}><b>{this.props.units}</b></div>
+                            </div>
+                        </div>
+                        <div class='col' style={{ textAlign: 'center' }}>
+                            <div class='row' style={{ textAlign: 'center' }}>
+                                <div class='col' style={{ color: '#CC79A7', fontStyle: 'bold', textAlign: 'right' }}><b>RL:</b></div>
+                                <div class='col-xs' style={{ fontStyle: 'bold', width: '80px', textAlign: 'center' }}><b>{data[3]}</b></div>
+                                <div class='col' style={{ fontStyle: 'bold', textAlign: 'left' }}><b>{this.props.units}</b></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div id={this.chartId} className='fill' style={{ height: '500px' }}></div>
+                </div>
+            );
+        }
+        else if (this.props.title === 'Brake Pressures') {
+            return (
+                <div style={{ marginBottom: '20px' }}>
+                    <div class='row' style={{ textAlign: 'center', fontSize: '1.2rem', fontStyle: 'bold', paddingTop: '0', paddingBottom: '0', marginBottom: '0px', marginTop: '10px', width: '100%' }}>
+                        <div class='col' style={{ textAlign: 'center' }}>
+                            <div class='row' style={{ textAlign: 'center' }}>
+                                <div class='col' style={{ color: '#0072B2', fontStyle: 'bold', textAlign: 'right' }}><b>Front:</b></div>
+                                <div class='col-xs' style={{ fontStyle: 'bold', width: '80px', textAlign: 'center' }}><b>{data[0]}</b></div>
+                                <div class='col' style={{ fontStyle: 'bold', textAlign: 'left' }}><b>{this.props.units}</b></div>
+                            </div>
+                        </div>
+                        <div class='col' style={{ textAlign: 'center' }}>
+                            <div class='row' style={{ textAlign: 'center' }}>
+                                <div class='col' style={{ color: '#E69F00', fontStyle: 'bold', textAlign: 'right' }}><b>Rear:</b></div>
+                                <div class='col-xs' style={{ fontStyle: 'bold', width: '80px', textAlign: 'center' }}><b>{data[1]}</b></div>
                                 <div class='col' style={{ fontStyle: 'bold', textAlign: 'left' }}><b>{this.props.units}</b></div>
                             </div>
                         </div>

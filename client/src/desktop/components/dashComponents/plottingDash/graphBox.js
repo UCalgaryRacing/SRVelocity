@@ -80,7 +80,6 @@ export default class GraphBox extends React.Component {
     }
 
     render = () => {
-        console.log(this)
 
         if (this.props.title === 'Track Map') {
             return (

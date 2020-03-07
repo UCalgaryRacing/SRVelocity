@@ -39,15 +39,15 @@ export default class Data {
         }
 
         this.datasets['Track Map'] = [{}]
-        console.log(this.datasets)
 
-        const socket = socketIOClient('http://18.217.215.72:4000'); //CHANGE WHEN DEPLOYING!
+        const socket = socketIOClient('http://10.13.96.136:4000'); //CHANGE WHEN DEPLOYING!
         socket.on('new data', (data) => {
             this.updateData(data)
         });
     }
 
     updateData = (data) => {
+
         for (var sensor in constDataTitles) {
             if (sensor === 'latitude' || sensor === 'longitude') {
                 continue;

@@ -23,7 +23,7 @@ export default class PlottingDashboardM extends React.Component {
     createGraphs = () => {
         var i = 0
         for (const graph of this.state.graphTitles) {
-            this.graphs.push(<GraphBoxM title={graph.title} id={i + 1} units={graph.units} key={i + 1} />);
+            this.graphs.push(<GraphBoxM title={graph.title} id={i + 1} name={graph.name} units={graph.units} key={i + 1} />);
             i++;
         }
     }

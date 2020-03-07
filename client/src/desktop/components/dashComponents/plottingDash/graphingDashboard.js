@@ -27,7 +27,7 @@ export default class GraphingDashboard extends React.Component {
             //     //this.graphs.push(<HeatMap key= {i+1} />)
             // }
             //else{
-                this.graphs.push(<GraphBox title={graph.title} id={i + 1} units={graph.units} key={i + 1} />);
+            this.graphs.push(<GraphBox title={graph.title} name={graph.name} id={i + 1} units={graph.units} key={i + 1} />);
             //}
             i++;
         }

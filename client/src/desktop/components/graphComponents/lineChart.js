@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { lightningChart, emptyTick, DataPatterns, AxisScrollStrategies, SolidLine, SolidFill, ColorHEX, AutoCursorModes, VisibleTicks, FontSettings } from '@arction/lcjs';
+import { lightningChart, emptyTick, DataPatterns, AxisScrollStrategies, SolidLine, SolidFill, ColorHEX, VisibleTicks, FontSettings } from '@arction/lcjs';
 import '../../styling/lineChart.css';
 
 const theme = {
@@ -27,7 +27,6 @@ export default class LineChart extends Component {
         this.chart
             .setBackgroundFillStyle(theme.whiteFill)
             .setChartBackgroundFillStyle(theme.whiteFill)
-            .setAutoCursorMode(AutoCursorModes.disabled)
             .setMouseInteractions(false)
             .setMouseInteractionWheelZoom(false)
             .setMouseInteractionPan(false)
@@ -35,6 +34,24 @@ export default class LineChart extends Component {
             .setMouseInteractionRectangleZoom(false)
             .setMouseInteractionsWhileScrolling(false)
             .setMouseInteractionsWhileZooming(false)
+        let autoCursor = this.chart.getAutoCursor();
+        autoCursor.setGridStrokeXStyle(new SolidLine({
+            thickness: 1,
+            fillStyle: new SolidFill({ color: ColorHEX('#C22D2D') })
+        }))
+        autoCursor.setGridStrokeYStyle(new SolidLine({
+            thickness: 1,
+            fillStyle: new SolidFill({ color: ColorHEX('#C22D2D') })
+        }))
+        autoCursor.getPointMarker().setSize(0)
+        autoCursor.disposeTickMarkerX()
+        autoCursor.disposeTickMarkerY()
+        var font = new FontSettings({})
+        font = font.setFamily("helvetica")
+        font = font.setWeight("bold")
+        autoCursor.getResultTable().setFont(font)
+        autoCursor.getResultTable().setTextFillStyle(new SolidFill({ color: ColorHEX('#FFF')}))
+        autoCursor.getResultTable().getBackground().setFillStyle(new SolidFill({ color: ColorHEX('#C22D2D')}))
 
         this.chart.engine.container.onwheel = null;
 
@@ -85,33 +102,39 @@ export default class LineChart extends Component {
 
         if (this.props.data === undefined) { return; }
         if (this.props.data.length === undefined) {
-            this.lineSeries.push(this.chart.addLineSeries({ dataPattern: DataPatterns.horizontalProgressive }));
+            this.lineSeries.push(this.chart.addLineSeries({ dataPattern: DataPatterns.horizontalProgressive }).setName(''));
             this.lineSeries[0]
                 .setStrokeStyle(new SolidLine({
                     thickness: 2,
                     fillStyle: new SolidFill({ color: ColorHEX('#C22D2D') })
                 }))
                 .setMouseInteractions(false)
+                .setResultTableFormatter((builder, series, Xvalue, Yvalue) => {
+                    return builder
+                        .addRow('Value: ' + Yvalue.toFixed(0))
+                })
         }
         else {
             var i = 0;
             while (i < this.props.data.length) {
-                this.lineSeries.push(this.chart.addLineSeries({ dataPattern: DataPatterns.horizontalProgressive }));
+                this.lineSeries.push(this.chart.addLineSeries({ dataPattern: DataPatterns.horizontalProgressive }).setName(''));
                 this.lineSeries[i]
                     .setStrokeStyle(new SolidLine({
                         thickness: 2,
                         fillStyle: new SolidFill({ color: ColorHEX(this.colours[i]) })
                     }))
                     .setMouseInteractions(false)
+                    .setResultTableFormatter((builder, series, Xvalue, Yvalue) => {
+                        return builder
+                            .addRow('Value: ' + Yvalue.toFixed(3) + ' ' + this.props.units)
+                    })
                 i++;
             }
         }
         this.setupComplete = true
     }
 
-    changeInterval = (interval) => {
-        this.chart.getDefaultAxisX().setInterval(0, interval)
-    }
+    changeInterval = (interval) => { this.chart.getDefaultAxisX().setInterval(0, interval) }
 
     pullData = () => {
         let data = this.props.data

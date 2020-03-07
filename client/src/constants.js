@@ -1,5 +1,6 @@
 import { transparentFill } from "@arction/lcjs"
 
+//name is either the grouping or the sensor itself, title is what is displayed as the title of the graph
 const constGraphTitles = [
     { title: 'RPM', name: 'rpm', units: 'RPM' },
     { title: 'Air To Fuel', name: 'atf', units: '' },
@@ -28,11 +29,11 @@ const constGraphTitles = [
     { title: 'Brake Pressures', name: 'Brake Pressures', units: 'kPa' },
     { title: 'Rotary Pot', name: 'rotPot', units: '%' }]
 
-
+//List of all the sensors with their units
 const constDataTitles =
 {
-    rpm: ['RPM'],
-    atf: ['Air To Fuel'],
+    rpm: ['RPM', ''],
+    atf: ['Air To Fuel', ''],
     map: ['Manifold Air Pressure', '(kPa)'],
     tp: ['Throttle Position', '(%)'],
     engineTemp: ['Engine Temperature', '(˚C)'],

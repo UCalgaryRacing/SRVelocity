@@ -8,7 +8,6 @@ export default class DefaultDataDash extends React.Component {
     constructor(props) {
         super(props);
         this.totalData = [];
-        console.log(constDataTitles)
         for (var sensor in constDataTitles) {
             this.totalData.push(sensor)
         }

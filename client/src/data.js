@@ -61,42 +61,6 @@ export default class Data {
         document.dispatchEvent(new Event('gotData'));
     }
 
-    // pullData = () => {
-    //     for (var parameter of this.datasets) {
-    //         if (parameter.title !== 'Suspension' && parameter.title !== 'Acceleration' && parameter.title !== 'Axes' && parameter.title !== 'Track Map') {
-    //             if (parameter.title === 'RPM') { parameter.value = Math.random() * 10; }
-    //             else if (parameter.title === 'Air To Fuel') { parameter.value = AFR[this.index]; }
-    //             else if (parameter.title === 'Manifold Air Pressure') { parameter.value = MAP[this.index]; }
-    //             else if (parameter.title === 'Throttle Position') { parameter.value = TPS[this.index]; }
-    //             else if (parameter.title === 'Engine Temperature') { parameter.value = engineTemp[this.index]; }
-    //             else if (parameter.title === 'Oil Temperature') { parameter.value = oilTemp[this.index]; }
-    //             else if (parameter.title === 'Fuel Temperature') { parameter.value = fuelTemp[this.index]; }
-    //             else if (parameter.title === 'Intake Air Temperature') { parameter.value = IAT[this.index]; }
-    //             else if (parameter.title === 'Oil Pressure') { parameter.value = oilPressure[this.index]; }
-    //             else if (parameter.title === 'Barometer') { parameter.value = baro[this.index]; }
-    //             else if (parameter.title === 'Injector Pulse Width') { parameter.value = IPW[this.index]; }
-    //             else if (parameter.title === 'Battery Voltage') { parameter.value = IPW[this.index]; }
-    //             else if (parameter.title === 'Speed') { parameter.value = speed[this.index]; }
-    //             else if (parameter.title === 'Distance') { parameter.value = distance[this.index]; }
-    //         }
-    //         else if (parameter.title === 'Suspension') {
-    //             parameter.value[0] = frontRight[this.index]; parameter.value[1] = frontLeft[this.index];
-    //             parameter.value[2] = rearRight[this.index]; parameter.value[3] = rearLeft[this.index];
-    //         }
-    //         else if (parameter.title === 'Acceleration') {
-    //             parameter.value[0] = xAccel[this.index]; parameter.value[1] = yAccel[this.index];
-    //             parameter.value[2] = zAccel[this.index];
-    //         }
-    //         else if (parameter.title === 'Axes') {
-    //             parameter.value[0] = roll[this.index]; parameter.value[1] = pitch[this.index];
-    //             parameter.value[2] = yaw[this.index];
-    //         }
-    //         else { parameter.value.push({ x: longitude[this.index], y: latitude[this.index] }); }
-    //     }
-    //     if (this.index < this.length) {
-    //         document.dispatchEvent(new Event('gotData'));
-    //         this.index++;
-    //     }
     //     else { document.dispatchEvent(new Event('OFF')); }
     // }
 

@@ -38,10 +38,7 @@ export default class HeatMap extends React.Component {
         this.newData = []
     }
 
-    componentWillMount = () => {
-        document.addEventListener('gotData', () => { this.pullData(); });
-    }
-
+    componentWillMount = () => { document.addEventListener('gotData', () => { this.pullData(); }); }
     componentWillUnmount = () => { document.removeEventListener('gotData', this.pullData()); }
 
     getColor = (value, boundaries) => {
@@ -61,17 +58,14 @@ export default class HeatMap extends React.Component {
             newValue = Math.abs(xValue) + Math.abs(yValue);
             newValue = this.getColor(newValue, [-2, 2]);
         }
-
         else if (sensor === 'tp') {
             newValue = Data.getInstance().getDataPoint('tp');
             newValue = this.getColor(newValue, [0, 100]);
         }
-
         else if (sensor === 'speed') {
             newValue = Data.getInstance().getDataPoint('speed');
             newValue = this.getColor(newValue, [0, 100]);
         }
-
         return newValue
     }
 
@@ -83,16 +77,13 @@ export default class HeatMap extends React.Component {
         for (var sensor in this.state.data) {
             this.state.data[sensor].push(this.findParamColor(sensor));
         }
-
         let colArray = this.state.data[this.state.selection]
         temp.color = colArray[colArray.length - 1]
         this.setState({ currentPoint: temp })
     }
 
     refreshMap = (sensor) => {
-        this.setState({
-            selection: sensor
-        })
+        this.setState({ selection: sensor })
         let temp = Data.getInstance().get('Track Map').slice(-1 * this.state.data[sensor].length) // get the last x amount of points
         // where x is the length of the stored color arrays
         for (let i = 0; i < temp.length; i++) {
@@ -117,5 +108,4 @@ export default class HeatMap extends React.Component {
             </div>
         );
     }
-
 }

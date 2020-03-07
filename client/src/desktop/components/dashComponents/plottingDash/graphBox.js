@@ -1,8 +1,6 @@
 import React from 'react';
-
 import LineChart from '../../graphComponents/lineChart';
 import HeatMap from './heatMap';
-
 import { Slider } from '@material-ui/core';
 import { withStyles } from '@material-ui/core/styles';
 import Data from '../../../../data';
@@ -80,7 +78,6 @@ export default class GraphBox extends React.Component {
     }
 
     render = () => {
-
         if (this.props.title === 'Track Map') {
             return (
                 <div id='graphBox' style={{ width: '100%' }}>

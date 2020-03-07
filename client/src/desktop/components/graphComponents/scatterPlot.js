@@ -27,7 +27,6 @@ export default class ScatterPlot extends Component {
         this.individualStyle = new IndividualPointFill()
         this.individualStyle.setFallbackColor(ColorRGBA(0, 0, 0, 255))
 
-
         this.pointSeries
             .setPointSize(10.0)
             .setPointFillStyle(this.individualStyle)
@@ -102,6 +101,5 @@ export default class ScatterPlot extends Component {
                 <div id={this.chartId} className='fill' style={{ height: '500px' }} onWheel={(event) => { return true; }}></div>
             </div>
         );
-
     }
 }

@@ -22,18 +22,7 @@ export default class LineChart extends Component {
     componentWillUnmount = () => { this.chart.dispose(); }
     componentDidUpdate = () => { this.pullData(); }
 
-    createChart = () => {
-        this.chart = lightningChart().ChartXY({ containerId: this.chartId });
-        this.chart
-            .setBackgroundFillStyle(theme.whiteFill)
-            .setChartBackgroundFillStyle(theme.whiteFill)
-            .setMouseInteractions(false)
-            .setMouseInteractionWheelZoom(false)
-            .setMouseInteractionPan(false)
-            .setMouseInteractionRectangleFit(false)
-            .setMouseInteractionRectangleZoom(false)
-            .setMouseInteractionsWhileScrolling(false)
-            .setMouseInteractionsWhileZooming(false)
+    configureAutoCursor() {
         let autoCursor = this.chart.getAutoCursor();
         autoCursor.setGridStrokeXStyle(new SolidLine({
             thickness: 1,
@@ -52,17 +41,9 @@ export default class LineChart extends Component {
         autoCursor.getResultTable().setFont(font)
         autoCursor.getResultTable().setTextFillStyle(new SolidFill({ color: ColorHEX('#FFF')}))
         autoCursor.getResultTable().getBackground().setFillStyle(new SolidFill({ color: ColorHEX('#C22D2D')}))
+    }
 
-        this.chart.engine.container.onwheel = null;
-
-        this.chart.getDefaultAxisY()
-            .setScrollStrategy(AxisScrollStrategies.expansion)
-            .setMouseInteractions(false)
-            .setStrokeStyle(new SolidLine({
-                thickness: 3,
-                fillStyle: new SolidFill({ color: ColorHEX('#C8C8C8') })
-            }))
-
+    configureInterval = () => {
         //Refactor this
         if (this.props.title === 'RPM') { this.chart.getDefaultAxisY().setInterval(0, 15000, false, true); }
         else if (this.props.title === 'Air To Fuel') { this.chart.getDefaultAxisY().setInterval(0, 25, false, true); }
@@ -90,25 +71,9 @@ export default class LineChart extends Component {
         else if (this.props.title === 'Wheel Speeds') { this.chart.getDefaultAxisY().setInterval(0, 150, false, true); }
         else if (this.props.title === 'Brake Pressures') { this.chart.getDefaultAxisY().setInterval(0, 100, false, true); }
         else if (this.props.title === 'Rotary Pot') { this.chart.getDefaultAxisY().setInterval(-100, 100, false, true); }
+    }
 
-        this.chart.getDefaultAxisX()
-            .setScrollStrategy(AxisScrollStrategies.progressive)
-            .setTickStyle(emptyTick)
-            .setMouseInteractions(false)
-            .setInterval(0, 300)
-            .setStrokeStyle(new SolidLine({
-                thickness: 3,
-                fillStyle: new SolidFill({ color: ColorHEX('#C8C8C8') })
-            }))
-
-        var axis = this.chart.getDefaultAxisY()
-        var font = new FontSettings({})
-        font = font.setFamily("helvetica")
-        font = font.setWeight("bold")
-        var ticks = new VisibleTicks({ labelFillStyle: new SolidFill({ color: ColorHEX('#000'), tickLength: 8 }), labelFont: font })
-        ticks.setLabelPadding(100)
-        axis.setTickStyle(ticks)
-
+    configureLineSeries = () => {
         if (this.props.data === undefined) { return; }
         if (this.props.data.length === undefined) {
             this.lineSeries.push(this.chart.addLineSeries({ dataPattern: DataPatterns.horizontalProgressive }).setName(''));
@@ -118,9 +83,9 @@ export default class LineChart extends Component {
                     fillStyle: new SolidFill({ color: ColorHEX('#C22D2D') })
                 }))
                 .setMouseInteractions(false)
-                .setResultTableFormatter((builder, series, Xvalue, Yvalue) => {
+                .setResultTableFormatter((builder,series, Xvalue, Yvalue) => {
                     return builder
-                        .addRow('Value: ' + Yvalue.toFixed(0))
+                        .addRow(Yvalue.toFixed(3) + " " + this.props.units)
                 })
         }
         else {
@@ -135,12 +100,54 @@ export default class LineChart extends Component {
                     .setMouseInteractions(false)
                     .setResultTableFormatter((builder, series, Xvalue, Yvalue) => {
                         return builder
-                            .addRow('Value: ' + Yvalue.toFixed(3) + ' ' + this.props.units)
+                            .addRow(Yvalue.toFixed(3) + ' ' + this.props.units)
                     })
                 i++;
             }
         }
         this.setupComplete = true
+    }
+
+    createChart = () => {
+        this.chart = lightningChart().ChartXY({ containerId: this.chartId });
+        this.chart
+            .setBackgroundFillStyle(theme.whiteFill)
+            .setChartBackgroundFillStyle(theme.whiteFill)
+            .setMouseInteractions(false)
+            .setMouseInteractionWheelZoom(false)
+            .setMouseInteractionPan(false)
+            .setMouseInteractionRectangleFit(false)
+            .setMouseInteractionRectangleZoom(false)
+            .setMouseInteractionsWhileScrolling(false)
+            .setMouseInteractionsWhileZooming(false)
+        this.configureAutoCursor()
+
+        this.chart.engine.container.onwheel = null;
+        this.chart.getDefaultAxisY()
+            .setScrollStrategy(AxisScrollStrategies.expansion)
+            .setMouseInteractions(false)
+            .setStrokeStyle(new SolidLine({
+                thickness: 3,
+                fillStyle: new SolidFill({ color: ColorHEX('#C8C8C8') })
+            }))
+        this.chart.getDefaultAxisX()
+            .setScrollStrategy(AxisScrollStrategies.progressive)
+            .setTickStyle(emptyTick)
+            .setMouseInteractions(false)
+            .setInterval(0, 300)
+            .setStrokeStyle(new SolidLine({
+                thickness: 3,
+                fillStyle: new SolidFill({ color: ColorHEX('#C8C8C8') })
+            }))
+        var axis = this.chart.getDefaultAxisY()
+        var font = new FontSettings({})
+        font = font.setFamily("helvetica")
+        font = font.setWeight("bold")
+        var ticks = new VisibleTicks({ labelFillStyle: new SolidFill({ color: ColorHEX('#000'), tickLength: 8 }), labelFont: font })
+        ticks.setLabelPadding(100)
+        axis.setTickStyle(ticks)
+        this.configureInterval()
+        this.configureLineSeries()
     }
 
     changeInterval = (interval) => { this.chart.getDefaultAxisX().setInterval(0, interval) }

@@ -29,9 +29,9 @@ export default class HeatMap extends React.Component {
             cuurentLabel: 3,
             currentRange: 0.5,
             indicationColor: '#000',
-            currentPoint: {},
             selection: 'speed'
         }
+        this.currentPoint = {}
         this.pointSelections = []
         this.choice = this.props.choice
         this.forceMapUpdate = false
@@ -55,23 +55,20 @@ export default class HeatMap extends React.Component {
     findParamColor(sensor) {
         let newValue = 0
         if (sensor === 'suspension') {
-            let index = constDataTitles.x[3];
-            let xValue = Data.getInstance().getDataPoint(constDataTitles.x[0])[index];
-
-            index = constDataTitles.y[3];
-            let yValue = Data.getInstance().getDataPoint(constDataTitles.y[0])[index];
+            let xValue = Data.getInstance().getDataPoint('x');
+            let yValue = Data.getInstance().getDataPoint('y');
 
             newValue = Math.abs(xValue) + Math.abs(yValue);
             newValue = this.getColor(newValue, [-2, 2]);
         }
 
         else if (sensor === 'tp') {
-            newValue = Data.getInstance().getDataPoint(constDataTitles.tp[0]);
+            newValue = Data.getInstance().getDataPoint('tp');
             newValue = this.getColor(newValue, [0, 100]);
         }
 
         else if (sensor === 'speed') {
-            newValue = Data.getInstance().getDataPoint(constDataTitles.speed[0]);
+            newValue = Data.getInstance().getDataPoint('speed');
             newValue = this.getColor(newValue, [0, 100]);
         }
 
@@ -82,12 +79,14 @@ export default class HeatMap extends React.Component {
         if (this.forceMapUpdate) {
             this.forceMapUpdate = false
         }
-        this.state.currentPoint = Data.getInstance().getDataPoint('Track Map');
+        let temp = Data.getInstance().getDataPoint('Track Map');
         for (var sensor in this.state.data) {
             this.state.data[sensor].push(this.findParamColor(sensor));
         }
+
         let colArray = this.state.data[this.state.selection]
-        this.state.currentPoint.color = colArray[colArray.length - 1]
+        temp.color = colArray[colArray.length - 1]
+        this.setState({ currentPoint: temp })
     }
 
     refreshMap = (sensor) => {

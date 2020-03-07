@@ -28,18 +28,17 @@ export default class GraphBox extends React.Component {
         super(props);
         this.chart = React.createRef()
         this.state = {
-            data: Data.getInstance().get(this.props.title),
+            data: Data.getInstance().get(this.props.name),
             currentRange: 0.5,
             indicationColour: '#000'
         }
-        this.pullData = this.pullData.bind(this);
     }
 
     componentWillMount() { document.addEventListener('gotData', () => { this.pullData() }); }
     componentWillUnmount() { document.removeEventListener('gotData', this.pullData()); }
 
     pullData = () => {
-        let newDatasets = Data.getInstance().get(this.props.title);
+        let newDatasets = Data.getInstance().get(this.props.name);
         if (newDatasets === undefined) { return; }
         if (this.props.title === 'Track Map') { this.setState({ data: newDatasets }); }
         else {
@@ -81,6 +80,7 @@ export default class GraphBox extends React.Component {
     }
 
     render = () => {
+
         if (this.props.title === 'Track Map') {
             return (
                 <div id='graphBox' style={{ width: '100%' }}>

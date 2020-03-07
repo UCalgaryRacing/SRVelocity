@@ -11,11 +11,11 @@ export default class StreamingDashM extends React.Component {
             return (
                 <div id='dashboardM'>
                     <PlottingDashboardM graphInfo={[
-                        { title: 'Engine Temperature', units: '˚C' },
-                        { title: 'Oil Pressure', units: 'kPa' },
-                        { title: 'Oil Temperature', units: '˚C' },
-                        { title: 'Fuel Temperature', units: '˚C' },
-                        { title: 'Battery Voltage', units: 'V' }]}/>
+                        { title: 'Engine Temperature', name: 'engineTemp', units: '˚C' },
+                        { title: 'Oil Pressure', name: 'oilPres', units: 'kPa' },
+                        { title: 'Oil Temperature', name: 'oilTemp', units: '˚C' },
+                        { title: 'Fuel Temperature', name: 'fuelTemp', units: '˚C' },
+                        { title: 'Battery Voltage', name: 'voltage', units: 'V' }]} />
                 </div>
             );
         }

@@ -25,7 +25,7 @@ export default class ScatterPlot extends Component {
         this.chart = lightningChart().ChartXY({ containerId: this.chartId });
         this.pointSeries = this.chart.addPointSeries({ pointShape: PointShape.Circle });
         this.individualStyle = new IndividualPointFill()
-        this.individualStyle.setFallbackColor(ColorRGBA(0, 0, 0))
+        this.individualStyle.setFallbackColor(ColorRGBA(0, 0, 0, 255))
 
 
         this.pointSeries
@@ -75,6 +75,7 @@ export default class ScatterPlot extends Component {
         point.x = arg.x
         point.y = arg.y
         point.color = arg.color
+
         if (!point.x || !point.y) {
             return
         }
@@ -84,13 +85,13 @@ export default class ScatterPlot extends Component {
             this.zero = true
             return
         }
+
         point.x *= 1000
         point.x -= this.zeroX
         point.y *= 1000
         point.y -= this.zeroY
 
         this.pointSeries.add(point)
-
     }
 
     render() {

@@ -1,43 +1,32 @@
 import { transparentFill } from "@arction/lcjs"
 
 const constGraphTitles = [
-    { title: 'RPM', units: 'RPM' },
-    { title: 'Air To Fuel', units: '' },
-    { title: 'Manifold Air Pressure', units: 'kPa' },
-    { title: 'Throttle Position', units: '%' },
-    { title: 'Engine Temperature', units: '˚C' },
-    { title: 'Oil Temperature', units: '˚C' },
-    { title: 'Fuel Temperature', units: '˚C' },
-    { title: 'Intake Air Temperature', units: '˚C' },
-    { title: 'Oil Pressure', units: 'kPa' },
-    { title: 'Barometer', units: 'kPa' },
-    { title: 'Injector Pulse Width', units: 'seconds' },
-    { title: 'Battery Voltage', units: 'V' },
-    { title: 'Suspension', units: 'mm' },
-    { title: 'Acceleration', units: 'g' },
-    { title: 'Axes', units: '˚' },
-    { title: 'Speed', units: 'km/h' },
-    { title: 'Distance', units: 'km' },
-    { title: 'Track Map', units: '' },
-    { title: 'TPS', units: '%' },
-    { title: 'EGT', units: '˚C' },
-    { title: 'O2', units: '' },
-    { title: 'Cam Position', units: '' },
-    { title: 'Crank Position', units: '' },
-    { title: 'Neutral Switch', units: '' },
-    { title: 'Wheel Speeds', units: 'Kph' },
-    { title: 'Brake Pressures', units: 'kPa' },
-    { title: 'Rotary Pot', units: '%' }]
-
-// tps %
-// exhaust temp 4 values (EGT) degree C
-// o2 NA
-// cam position NA
-// crank position NA
-// neutral switch NA
-// 4 wheels speeds Kph
-// presure transducer 2 sensors (Front and Rear Brake Pressure) kPa
-// rotary pot %
+    { title: 'RPM', name: 'rpm', units: 'RPM' },
+    { title: 'Air To Fuel', name: 'atf', units: '' },
+    { title: 'Manifold Air Pressure', name: 'map', units: 'kPa' },
+    { title: 'Throttle Position', name: 'tp', units: '%' },
+    { title: 'Engine Temperature', name: 'engineTemp', units: '˚C' },
+    { title: 'Oil Temperature', name: 'oilTemp', units: '˚C' },
+    { title: 'Fuel Temperature', name: 'fuelTemp', units: '˚C' },
+    { title: 'Intake Air Temperature', name: 'iat', units: '˚C' },
+    { title: 'Oil Pressure', name: 'oilPres', units: 'kPa' },
+    { title: 'Barometer', name: 'baro', units: 'kPa' },
+    { title: 'Injector Pulse Width', name: 'ipw', units: 'seconds' },
+    { title: 'Battery Voltage', name: 'voltage', units: 'V' },
+    { title: 'Suspension', name: 'Suspension', units: 'mm' },
+    { title: 'Acceleration', name: 'Acceleration', units: 'g' },
+    { title: 'Axes', name: 'Axes', units: '˚' },
+    { title: 'Speed', name: 'speed', units: 'km/h' },
+    { title: 'Distance', name: 'distance', units: 'km' },
+    { title: 'Track Map', name: 'Track Map', units: '' },
+    { title: 'EGT', name: 'EGT', units: '˚C' },
+    { title: 'O2', name: 'o2', units: '' },
+    { title: 'Cam Position', name: 'cam', units: '' },
+    { title: 'Crank Position', name: 'crank', units: '' },
+    { title: 'Neutral Switch', name: 'neutral', units: '' },
+    { title: 'Wheel Speeds', name: 'Wheel Speeds', units: 'Kph' },
+    { title: 'Brake Pressures', name: 'Brake Pressures', units: 'kPa' },
+    { title: 'Rotary Pot', name: 'rotPot', units: '%' }]
 
 
 const constDataTitles =
@@ -66,7 +55,6 @@ const constDataTitles =
     yaw: ['Axes', '(˚)', 'Yaw', [2]],
     speed: ['Speed', '(km/h)'],
     distance: ['Distance', '(km)'],
-    tps: ['TPS', '(%)'],
     egt1: ['EGT', '(˚C)', 'Exhaust Temp 1', [0]],
     egt2: ['EGT', '(˚C)', 'Exhaust Temp 2', [1]],
     egt3: ['EGT', '(˚C)', 'Exhaust Temp 3', [2]],
@@ -81,9 +69,19 @@ const constDataTitles =
     rrSpeed: ['Wheel Speeds', '(Kph)', 'Rear Right Speed', [3]],
     fbrakes: ['Brake Pressures', '(kPa)', 'Front Brake Pressure', [0]],
     rbrakes: ['Brake Pressures', '(kPa)', 'Rear Brake Pressure', [1]],
-    rotpot: ['Rotary Pot', '(%)']
+    rotPot: ['Rotary Pot', '(%)']
 }
 
-export { constGraphTitles, constDataTitles }
+//Groups sensors to use in graphs
+const sensorGroupings = {
+    'Suspension': ['flSuspension', 'frSuspension', 'rlSuspension', 'rrSuspension'],
+    'Acceleration': ['x', 'y', 'z'],
+    'Axes': ['roll', 'pitch', 'yaw'],
+    'EGT': ['egt1', 'egt2', 'egt3', 'egt4'],
+    'Wheels Speeds': ['flSpeed', 'frSpeed', 'rlSpeed', 'rrSpeed'],
+    'Brake Pressures': ['fbrakes', 'rbrakes']
+}
+
+export { constGraphTitles, constDataTitles, sensorGroupings }
 
 

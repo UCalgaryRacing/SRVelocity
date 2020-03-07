@@ -7,15 +7,15 @@ export default class DefaultPlottingDash extends React.Component {
         super(props);
         this.state = {
             graphTitles: [
-                { title: 'Engine Temperature', units: '˚C' },
-                { title: 'Oil Pressure', units: 'kPa' },
-                { title: 'Oil Temperature', units: '˚C' },
-                { title: 'Air To Fuel', units: '' },
-                { title: 'Fuel Temperature', units: '˚C' },
-                { title: 'RPM', units: 'RPM' },
-                { title: 'Suspension', units: 'mm' },
-                { title: 'Acceleration', units: 'g' },
-                { title: 'Axes', units: '˚' }
+                { title: 'Engine Temperature', name: 'engineTemp', units: '˚C' },
+                { title: 'Oil Pressure', name: 'oilPres', units: 'kPa' },
+                { title: 'Oil Temperature', name: 'oilTemp', units: '˚C' },
+                { title: 'Air To Fuel', name: 'atf', units: '' },
+                { title: 'Fuel Temperature', name: 'fuelTemp', units: '˚C' },
+                { title: 'RPM', name: 'rpm', units: 'RPM' },
+                { title: 'Suspension', name: 'Suspension', units: 'mm' },
+                { title: 'Acceleration', name: 'Acceleration', units: 'g' },
+                { title: 'Axes', name: 'Axes', units: '˚' }
             ]
         }
     }
@@ -23,7 +23,7 @@ export default class DefaultPlottingDash extends React.Component {
     render = () => {
         return (
             <div id='defaultDash'>
-                <GraphingDashboard graphInfo={this.state.graphTitles}/>
+                <GraphingDashboard graphInfo={this.state.graphTitles} />
             </div>
         );
     }

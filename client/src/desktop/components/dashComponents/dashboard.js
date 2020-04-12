@@ -8,6 +8,7 @@ import CustomDataDash from './dataDash/customDataDashboard';
 import GraphBox from './plottingDash/graphBox';
 import RadialChart from '../graphComponents/radialChart';
 import '../../styling/dashboard.css';
+import Data from '../../../data';
 
 export default class StreamingDash extends React.Component {
     constructor(props) {
@@ -31,6 +32,11 @@ export default class StreamingDash extends React.Component {
         this.setState({ showAccelMap: (this.state.showAccelMap) ? false : true }); 
     }
 
+    doTestRun = () => {
+        const data = Data.getInstance();
+        data.doTestRun();
+    }
+
     render = () => {
         let dashSelector = (
             <ButtonGroup id='dashSelector' style={{ marginTop: '60px' }}>
@@ -43,6 +49,9 @@ export default class StreamingDash extends React.Component {
                 <Button id='defaultButton' onClick={this.changeType} disabled={(this.state.typeOption === 'plotting') ? true : false}><b>Plotting</b></Button>
                 <Button id='customButton' onClick={this.changeType} disabled={(this.state.typeOption === 'currentData') ? true : false}><b>Current Data</b></Button>
             </ButtonGroup >
+        );
+        let testRun = (
+            <Button id='accelMapButton' onClick={this.doTestRun} style={{marginTop: '60px', position: 'absolute', right: '20px'}}><b>Do a Test Run</b></Button>
         );
         let trackMap = (
             <div id='trackMap'><GraphBox title={"Track Map"} id={10000} key={10000} /></div>
@@ -57,6 +66,7 @@ export default class StreamingDash extends React.Component {
                     {typeSelector}&nbsp;&nbsp;
                     <Button id='trackMapButton' onClick={this.toggleTrackMap} style={{ marginTop: '60px' }}><b>{(this.state.showTrackMap) ? 'Hide Track Map' : 'Show Track Map'}</b></Button>
                     <Button id='accelMapButton' onClick={this.toggleAccelMap} style={{ marginTop: '60px', marginLeft: '8px' }}><b>{(this.state.showAccelMap) ? 'Hide Accel Map' : 'Show Accel Map'}</b></Button>
+                    {testRun}
                     <DefaultPlottingDash />
                     {this.state.showTrackMap?trackMap:''}
                     {this.state.showAccelMap?accelMap:''}
@@ -70,6 +80,7 @@ export default class StreamingDash extends React.Component {
                     {typeSelector}&nbsp;&nbsp;
                     <Button id='trackMapButton' onClick={this.toggleTrackMap} style={{ marginTop: '60px' }}><b>{(this.state.showTrackMap) ? 'Hide Track Map' : 'Show Track Map'}</b></Button>
                     <Button id='accelMapButton' onClick={this.toggleAccelMap} style={{ marginTop: '60px', marginLeft: '8px' }}><b>{(this.state.showAccelMap) ? 'Hide Accel Map' : 'Show Accel Map'}</b></Button>
+                    {testRun}
                     <CustomPlottingDash />
                     {this.state.showTrackMap?trackMap:''}
                     {this.state.showAccelMap?accelMap:''}

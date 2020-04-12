@@ -168,7 +168,7 @@ export default class LineChart extends Component {
     }
 
     render() {
-        let data = this.props.data
+        let data = this.props.data;
         //Refactor this
         if (this.props.title !== 'Acceleration' && this.props.title !== 'Suspension' && this.props.title !== 'Axes') {
             return (

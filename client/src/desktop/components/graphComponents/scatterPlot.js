@@ -70,6 +70,7 @@ export default class ScatterPlot extends Component {
     }
 
     addPoint = (arg) => {
+        if(arg === undefined) return;
         let point = {}
         point.x = arg.x
         point.y = arg.y
@@ -94,8 +95,7 @@ export default class ScatterPlot extends Component {
     }
 
     render() {
-        let data = this.props.point
-        //Refactor this
+        let data = this.props.point;
         return (
             <div style={{ marginBottom: '20px' }}>
                 <div id={this.chartId} className='fill' style={{ height: '500px' }} onWheel={(event) => { return true; }}></div>

@@ -1,8 +1,6 @@
 import React from 'react';
-
 import LineChart from '../../graphComponents/lineChart';
 import HeatMap from './heatMap';
-
 import { Slider } from '@material-ui/core';
 import { withStyles } from '@material-ui/core/styles';
 import Data from '../../../../data';
@@ -28,18 +26,17 @@ export default class GraphBox extends React.Component {
         super(props);
         this.chart = React.createRef()
         this.state = {
-            data: Data.getInstance().get(this.props.title),
+            data: Data.getInstance().get(this.props.name),
             currentRange: 0.5,
             indicationColour: '#000'
         }
-        this.pullData = this.pullData.bind(this);
     }
 
     componentWillMount() { document.addEventListener('gotData', () => { this.pullData() }); }
     componentWillUnmount() { document.removeEventListener('gotData', this.pullData()); }
 
     pullData = () => {
-        let newDatasets = Data.getInstance().get(this.props.title);
+        let newDatasets = Data.getInstance().get(this.props.name);
         if (newDatasets === undefined) { return; }
         if (this.props.title === 'Track Map') { this.setState({ data: newDatasets }); }
         else {

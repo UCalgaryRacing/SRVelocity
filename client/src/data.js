@@ -1,4 +1,5 @@
-import socketIOClient from "socket.io-client";
+import socketIOClient from 'socket.io-client';
+import { constDataTitles, sensorGroupings } from './constants';
 
 let rearLeft = [0.94, 0.95, 0.96, 0.96, 0.97, 0.98, 0.98, 0.99, 0.99, 1, 1, 1, 1.02, 1.02, 1.03, 1.02, 1.03, 1.04, 1.04, 1.05, 1.05, 1.06, 1.06, 1.07, 1.07, 1.08, 1.09, 1.09, 1.09, 1.09, 1.1, 1.1, 1.11, 1.11, 1.11, 1.11, 1.12, 1.12, 1.13, 1.13, 1.13, 1.14, 1.14, 1.13, 1.15, 1.15, 1.15, 1.15, 1.16, 1.16, 1.16, 1.17, 1.17, 1.16, 1.17, 1.17, 1.17, 1.18, 1.18, 1.18, 1.19, 1.19, 1.19, 1.19, 1.19, 1.2, 1.2, 1.2, 1.2, 1.2, 1.2, 1.21, 1.21, 1.21, 1.21, 1.22, 1.21, 1.21, 1.22, 1.22, 1.22, 1.23, 1.21, 1.23, 1.23, 1.23, 1.23, 1.23, 1.23, 1.23, 1.23, 1.23, 1.24, 1.24, 1.24, 1.24, 1.24, 1.24, 1.25, 1.24, 1.25, 1.25, 1.25, 1.25, 1.25, 1.25, 1.26, 1.26, 1.26, 1.26, 1.26, 1.27, 1.26, 1.26, 1.26, 1.26, 1.27, 1.27, 1.27, 1.27, 1.27, 1.26, 1.27, 1.27, 1.28, 1.28, 1.28, 1.28, 1.29, 1.28, 1.28, 1.28, 1.28, 1.29, 1.29, 1.29, 1.29, 1.29, 1.29, 1.29, 1.29, 1.29, 1.29, 1.29, 1.29, 1.29, 1.29, 1.29, 1.29, 1.29, 1.29, 1.29, 1.29, 1.29, 1.3, 1.3, 1.29, 1.3, 1.3, 1.29, 1.3, 1.3, 1.3, 1.3, 1.3, 1.3, 1.3, 1.3, 1.3, 1.31, 1.3, 1.3, 1.3, 1.31, 1.31, 1.3, 1.31, 1.3, 1.3, 1.31, 1.31, 1.31, 1.31, 1.31, 1.31, 1.31, 1.31, 1.31, 1.31, 1.31, 1.31, 1.31, 1.31, 1.31, 1.31, 1.31, 1.31, 1.31, 1.31, 1.31, 1.32, 1.31, 1.31, 1.31, 1.32, 1.32, 1.31, 1.31, 1.31, 1.31, 1.31, 1.32, 1.32, 1.32, 1.32, 1.32, 1.32, 1.32, 1.32, 1.32, 1.32, 1.32, 1.32, 1.32, 1.32, 1.32, 1.31, 1.32, 1.31, 1.32, 1.32, 1.32, 1.32, 1.32, 1.33, 1.33, 1.33, 1.33, 1.33, 1.33, 1.33, 1.33, 1.33, 1.33, 1.33, 1.33, 1.33, 1.33, 1.33, 1.33, 1.33, 1.33, 1.33, 1.33, 1.33];
 let rearRight = [0.54, 0.55, 0.55, 0.56, 0.56, 0.56, 0.56, 0.57, 0.57, 0.57, 0.57, 0.58, 0.58, 0.58, 0.59, 0.59, 0.59, 0.6, 0.6, 0.6, 0.61, 0.61, 0.6, 0.61, 0.61, 0.62, 0.62, 0.62, 0.63, 0.63, 0.63, 0.63, 0.63, 0.64, 0.64, 0.64, 0.65, 0.65, 0.65, 0.65, 0.65, 0.66, 0.66, 0.66, 0.66, 0.66, 0.66, 0.67, 0.67, 0.67, 0.67, 0.68, 0.68, 0.68, 0.68, 0.68, 0.69, 0.69, 0.69, 0.69, 0.69, 0.7, 0.69, 0.7, 0.7, 0.71, 0.71, 0.71, 0.71, 0.71, 0.71, 0.71, 0.71, 0.72, 0.71, 0.72, 0.72, 0.72, 0.72, 0.72, 0.73, 0.73, 0.73, 0.73, 0.74, 0.73, 0.73, 0.73, 0.74, 0.74, 0.73, 0.74, 0.74, 0.75, 0.74, 0.74, 0.75, 0.75, 0.75, 0.75, 0.75, 0.75, 0.75, 0.76, 0.75, 0.75, 0.76, 0.76, 0.76, 0.76, 0.76, 0.76, 0.77, 0.77, 0.76, 0.77, 0.77, 0.77, 0.77, 0.77, 0.77, 0.78, 0.78, 0.77, 0.78, 0.78, 0.78, 0.78, 0.78, 0.78, 0.79, 0.78, 0.79, 0.79, 0.79, 0.79, 0.79, 0.79, 0.79, 0.79, 0.79, 0.79, 0.8, 0.79, 0.8, 0.79, 0.79, 0.79, 0.8, 0.79, 0.8, 0.8, 0.8, 0.8, 0.8, 0.8, 0.8, 0.8, 0.8, 0.8, 0.8, 0.8, 0.8, 0.81, 0.81, 0.81, 0.81, 0.81, 0.81, 0.81, 0.81, 0.81, 0.81, 0.81, 0.81, 0.81, 0.81, 0.81, 0.82, 0.81, 0.81, 0.81, 0.81, 0.82, 0.82, 0.82, 0.82, 0.82, 0.81, 0.82, 0.81, 0.81, 0.82, 0.81, 0.81, 0.82, 0.82, 0.82, 0.82, 0.82, 0.82, 0.82, 0.82, 0.81, 0.82, 0.82, 0.82, 0.82, 0.82, 0.82, 0.83, 0.82, 0.82, 0.82, 0.82, 0.83, 0.83, 0.83, 0.82, 0.83, 0.82, 0.82, 0.82, 0.83, 0.82, 0.83, 0.81, 0.82, 0.83, 0.83, 0.83, 0.83, 0.83, 0.83, 0.83, 0.83, 0.83, 0.84, 0.83, 0.83, 0.84, 0.83, 0.84, 0.84, 0.84, 0.84, 0.84, 0.84, 0.84, 0.84, 0.84, 0.84, 0.84, 0.85, 0.85];
@@ -30,135 +31,161 @@ export default class Data {
     constructor() {
         this.length = rearLeft.length;
         this.index = 0;
-        this.datasets = [
-            { title: 'RPM', value: 0 },
-            { title: 'Air To Fuel', value: 0 },
-            { title: 'Manifold Air Pressure', value: 0 },
-            { title: 'Throttle Position', value: 0 },
-            { title: 'Engine Temperature', value: 0 },
-            { title: 'Oil Temperature', value: 0 },
-            { title: 'Fuel Temperature', value: 0 },
-            { title: 'Intake Air Temperature', value: 0 },
-            { title: 'Oil Pressure', value: 0 },
-            { title: 'Barometer', value: 0 },
-            { title: 'Injector Pulse Width', value: 0 },
-            { title: 'Battery Voltage', value: 0 },
-            { title: 'Suspension', value: [0, 0, 0, 0] },
-            { title: 'Acceleration', value: [0, 0, 0] },
-            { title: 'Axes', value: [0, 0, 0] },
-            { title: 'Speed', value: 0 },
-            { title: 'Distance', value: 0 },
-            { title: 'Track Map', value: [{}] }]
-        const socket = socketIOClient('http://127.0.0.1:4000');
+        this.datasets = {}
+        for (var sensor in constDataTitles) {
+            this.datasets[sensor] = 0
+        }
+        this.datasets['Track Map'] = [{}]
+        const socket = socketIOClient('http://127.0.0.1:4000'); //CHANGE WHEN DEPLOYING!
         socket.on('new data', (data) => {
             this.updateData(data)
         });
+        this.count = 0;
     }
 
     updateData = (data) => {
-        this.datasets[0].value = Math.random() * 10000;
-        this.datasets[1].value = data.AFR
-        this.datasets[2].value = data.MAP
-        this.datasets[3].value = data.TPS
-        this.datasets[4].value = data.engineTemp
-        this.datasets[5].value = data.oilTemp
-        this.datasets[6].value = data.fuelTemp
-        this.datasets[7].value = data.IAT
-        this.datasets[8].value = data.oilPressure
-        this.datasets[9].value = data.baro
-        this.datasets[10].value = data.IPW
-        this.datasets[11].value = Math.random() * 15;
-        this.datasets[12].value[0] = data.frontRight
-        this.datasets[12].value[1] = data.frontLeft
-        this.datasets[12].value[2] = data.rearRight
-        this.datasets[12].value[3] = data.rearLeft
-        this.datasets[13].value[0] = data.xAccel
-        this.datasets[13].value[1] = data.yAccel
-        this.datasets[13].value[2] = data.zAccel
-        this.datasets[14].value[0] = data.roll
-        this.datasets[14].value[1] = data.pitch
-        this.datasets[14].value[2] = data.yaw
-        this.datasets[15].value = data.speed
-        this.datasets[16].value = data.distance
-        this.datasets[17].value.push({x: data.longitude, y: data.latitude});
+        for (var sensor in constDataTitles) {
+            if (sensor === 'latitude' || sensor === 'longitude') {
+                continue;
+            }
+            this.datasets[sensor] = data[sensor]
+        }
+        this.datasets['Track Map'].push({ x: data.longitude, y: data.latitude });
         document.dispatchEvent(new Event('gotData'));
     }
 
-    pullData = () => {
-        for (var parameter of this.datasets) {
-            if (parameter.title !== 'Suspension' && parameter.title !== 'Acceleration' && parameter.title !== 'Axes' && parameter.title !== 'Track Map') {
-                if (parameter.title === 'RPM') { parameter.value = Math.random() * 10; }
-                else if (parameter.title === 'Air To Fuel') { parameter.value = AFR[this.index]; }
-                else if (parameter.title === 'Manifold Air Pressure') { parameter.value = MAP[this.index]; }
-                else if (parameter.title === 'Throttle Position') { parameter.value = TPS[this.index]; }
-                else if (parameter.title === 'Engine Temperature') { parameter.value = engineTemp[this.index]; }
-                else if (parameter.title === 'Oil Temperature') { parameter.value = oilTemp[this.index]; }
-                else if (parameter.title === 'Fuel Temperature') { parameter.value = fuelTemp[this.index]; }
-                else if (parameter.title === 'Intake Air Temperature') { parameter.value = IAT[this.index]; }
-                else if (parameter.title === 'Oil Pressure') { parameter.value = oilPressure[this.index]; }
-                else if (parameter.title === 'Barometer') { parameter.value = baro[this.index]; }
-                else if (parameter.title === 'Injector Pulse Width') { parameter.value = IPW[this.index]; }
-                else if (parameter.title === 'Battery Voltage') { parameter.value = IPW[this.index]; }
-                else if (parameter.title === 'Speed') { parameter.value = speed[this.index]; }
-                else if (parameter.title === 'Distance') { parameter.value = distance[this.index]; }
-            }
-            else if (parameter.title === 'Suspension') {
-                parameter.value[0] = frontRight[this.index];parameter.value[1] = frontLeft[this.index];
-                parameter.value[2] = rearRight[this.index];parameter.value[3] = rearLeft[this.index];
-            }
-            else if (parameter.title === 'Acceleration') {
-                parameter.value[0] = xAccel[this.index];parameter.value[1] = yAccel[this.index];
-                parameter.value[2] = zAccel[this.index];
-            }
-            else if (parameter.title === 'Axes') {
-                parameter.value[0] = roll[this.index];parameter.value[1] = pitch[this.index];
-                parameter.value[2] = yaw[this.index];
-            }
-            else { parameter.value.push({ x: longitude[this.index], y: latitude[this.index] }); }
-        }
-        if (this.index < this.length) {
-            document.dispatchEvent(new Event('gotData'));
-            this.index++;
-        }
-        else {
-            document.dispatchEvent(new Event('OFF'));
-        }
-    }
-
     get = (index) => {
-        for (var parameter of this.datasets) {
-            if (index === parameter.title) {
-                console.log(parameter.value)
-                return parameter.value;
+        if (sensorGroupings[index]) {
+            let temp = []
+            for (var sensor of sensorGroupings[index]) {
+                temp.push(this.datasets[sensor])
             }
+            return temp
         }
+        return this.datasets[index]
     }
 
     getDataPoint = (index) => {
-        for (var parameter of this.datasets) {
-            if (index === parameter.title) {
-                if (index !== 'Acceleration' && index !== 'Suspension' && index !== 'Track Map' && index != 'Axes') {
-                    return parameter.value;
-                }
-                else if (index === 'Acceleration' || index === 'Axes') {
-                    return [parameter.value[0], parameter.value[1], parameter.value[2]];
-                }
-                else if (index === 'Suspension') {
-                    return [parameter.value[0], parameter.value[1], parameter.value[2], parameter.value[3]];
-                }
-                else if(index === 'Track Map') {
-                    return parameter.value[parameter.value.length - 1];
-                }
+        if (sensorGroupings[index]) {
+            let temp = []
+            for (var sensor of sensorGroupings[index]) {
+                temp.push(this.datasets[sensor])
             }
+            return temp
+        } 
+        else if (index === 'Track Map') {
+            return this.datasets[index][this.datasets[index].length - 1]
         }
+        return this.datasets[index]
     }
 
-    tick = () => { this.pullData(); }
-
     static getInstance() {
-        if (Data.instance == null) {
-            Data.instance = new Data();
-        }
+        if (Data.instance == null) { Data.instance = new Data(); }
         return this.instance;
+    }
+
+    pushTestData = () => {
+        if(this.count > 254) {
+            clearInterval(this.timer);
+            this.count = 0;
+        }
+        var data = {
+            count: 0,
+            rlSuspension: 0,
+            rrSuspension: 0,
+            flSuspension: 0,
+            frSuspension: 0,
+            tp: 0,
+            ipw: 0,
+            baro: 0,
+            map: 0,
+            atf: 0,  
+            iat: 0,
+            engineTemp: 0,
+            oilPres: 0,
+            oilTemp: 0,
+            fuelTemp: 0,
+            x: 0,
+            y: 0,
+            z: 0,
+            roll: 0,
+            pitch: 0,
+            yaw: 0,
+            longitude: 0,
+            latitude: 0,
+            speed: 0,
+            distance: 0,
+            egt1: 0,
+            egt2: 0,
+            egt3: 0,
+            egt4: 0,
+            o2: 0,
+            cam: 0,
+            crank: 0,
+            neutral: 0,
+            flSpeed: 0,
+            frSpeed: 0,
+            rlSpeed: 0,
+            rrSpeed: 0,
+            fbrakes: 0,
+            rbrakes: 0,
+            rotPot: 0,
+            voltage: 0,
+            rpm: 0
+        }
+        data.count = this.count;
+        data.rlSuspension = rearLeft[this.count];
+        data.rrSuspension = rearRight[this.count];
+        data.flSuspension = frontLeft[this.count];
+        data.frSuspension = frontRight[this.count];
+        data.tp = TPS[this.count];
+        data.ipw = IPW[this.count];
+        data.baro = baro[this.count];
+        data.map = MAP[this.count];
+        data.iat = IAT[this.count];
+        data.engineTemp = engineTemp[this.count];
+        data.oilPres = oilPressure[this.count];
+        data.oilTemp = oilTemp[this.count];
+        data.fuelTemp = fuelTemp[this.count];
+        data.x = xAccel[this.count];
+        data.y = yAccel[this.count];
+        data.z = zAccel[this.count];
+        data.roll = roll[this.count];
+        data.pitch = pitch[this.count];
+        data.yaw = yaw[this.count];
+        data.longitude = longitude[this.count];
+        data.latitude = latitude[this.count];
+        data.speed = speed[this.count];
+        data.distance = distance[this.count];
+        data.egt1 = distance[this.count];
+        data.egt2 = distance[this.count];
+        data.egt3 = distance[this.count];
+        data.egt4 = distance[this.count];
+        data.o2 = distance[this.count];
+        data.cam = distance[this.count];
+        data.crank = distance[this.count];
+        data.neutral = distance[this.count];
+        data.flSpeed = distance[this.count];
+        data.frSpeed = distance[this.count];
+        data.rlSpeed = distance[this.count];
+        data.rrSpeed = distance[this.count];
+        data.fbrakes = distance[this.count];
+        data.rbrakes = distance[this.count];
+        data.rotPot = distance[this.count];
+        data.voltage = distance[this.count];
+        data.rpm = distance[this.count];
+        this.count = this.count + 1;
+        for (var sensor in constDataTitles) {
+            if (sensor === 'latitude' || sensor === 'longitude') {
+                continue;
+            }
+            this.datasets[sensor] = data[sensor]
+        }
+        this.datasets['Track Map'].push({ x: data.longitude, y: data.latitude });
+        document.dispatchEvent(new Event('gotData'));
+    }
+
+    doTestRun = () => {
+        this.timer = setInterval(this.pushTestData.bind(this), 100);
     }
 }

@@ -75,10 +75,10 @@ export default class SideNavbar extends React.Component {
                         }
                         open={this.state.sidebarOpen}
                         onSetOpen={this.onSetSidebarOpen}
-                        styles={{ sidebar: { width: "175px", height: "100%", background: "rgb(194, 45, 45)", position: "fixed", top: '56px', zIndex: '10000' } }}>
+                        styles={{ sidebar: { width: "175px", height: "100%", background: "rgb(194, 45, 45)", position: "fixed", paddingTop: "56px", zIndex: '10000' } }}>
                     </Sidebar>
                 </div>
-                <div class="container" onClick={() => this.onSetSidebarOpen(true)} style={{marginTop: '-15px'}}>
+                <div class="container" onClick={() => this.onSetSidebarOpen(true)} style={{ marginTop: '-15px' }}>
                     <div class="bar1"></div>
                     <div class="bar2"></div>
                     <div class="bar3"></div>

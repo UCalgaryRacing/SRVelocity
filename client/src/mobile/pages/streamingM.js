@@ -12,10 +12,11 @@ export default class StreamingPageM extends React.Component {
         }
     }
 
+
     render = () => {
         return (
             <div id='streamingM'>
-                <TopNavM/>
+                <TopNavM />
                 <SideNavM streamingContent={this.streamingContent} />
                 <StreamingContentM ref={this.streamingContent} option={this.state.dashOption} />
             </div>

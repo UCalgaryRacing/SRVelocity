@@ -22,16 +22,15 @@ export default class ScatterPlot extends Component {
     componentDidUpdate = () => { this.addData(); }
 
     createChart = () => {
-        this.chart = lightningChart().ChartXY({ containerId: this.chartId }); 
+        this.chart = lightningChart().ChartXY({ containerId: this.chartId });
         this.pointSeries = this.chart.addPointSeries({ pointShape: PointShape.Circle });
         this.individualStyle = new IndividualPointFill()
-        this.individualStyle.setFallbackColor( ColorRGBA( 0, 0, 0 ) )
+        this.individualStyle.setFallbackColor(ColorRGBA(0, 0, 0, 255))
 
-        
         this.pointSeries
             .setPointSize(10.0)
-            .setPointFillStyle(this.individualStyle) 
-        
+            .setPointFillStyle(this.individualStyle)
+
         this.chart
             .setBackgroundFillStyle(theme.whiteFill)
             .setChartBackgroundFillStyle(theme.whiteFill)
@@ -48,18 +47,18 @@ export default class ScatterPlot extends Component {
             .setScrollStrategy(AxisScrollStrategies.fitting)
             .setTickStyle(emptyTick)
             .setMouseInteractions(false)
-        
+
         this.chart.getDefaultAxisY()
-        .setScrollStrategy(AxisScrollStrategies.fitting)
-        .setMouseInteractions(false)
-        .setTickStyle(emptyTick)
+            .setScrollStrategy(AxisScrollStrategies.fitting)
+            .setMouseInteractions(false)
+            .setTickStyle(emptyTick)
 
         this.setupComplete = true
     }
 
     addData = () => {
         if (this.setupComplete) {
-            if(this.props.mapUpdate) {
+            if (this.props.mapUpdate) {
                 this.pointSeries.clear()
                 for (var point of this.props.data) {
                     this.addPoint(point)
@@ -71,10 +70,12 @@ export default class ScatterPlot extends Component {
     }
 
     addPoint = (arg) => {
+        if(arg === undefined) return;
         let point = {}
         point.x = arg.x
         point.y = arg.y
         point.color = arg.color
+
         if (!point.x || !point.y) {
             return
         }
@@ -84,25 +85,21 @@ export default class ScatterPlot extends Component {
             this.zero = true
             return
         }
+
         point.x *= 1000
         point.x -= this.zeroX
         point.y *= 1000
         point.y -= this.zeroY
 
         this.pointSeries.add(point)
-        
     }
 
     render() {
-        let data = this.props.point
-
-        //Refactor this
-            return (
-                
-                <div style={{ marginBottom: '20px' }}>
-                    <div id={this.chartId} className='fill' style={{ height: '500px' }} onWheel={(event) => { return true; }}></div>
-                </div>
-            );
-        
+        let data = this.props.point;
+        return (
+            <div style={{ marginBottom: '20px' }}>
+                <div id={this.chartId} className='fill' style={{ height: '500px' }} onWheel={(event) => { return true; }}></div>
+            </div>
+        );
     }
 }

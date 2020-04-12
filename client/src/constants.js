@@ -1,49 +1,88 @@
-const constGraphTitles =  [
-    { title: 'RPM', units: 'RPM' },
-    { title: 'Air To Fuel', units: '' },
-    { title: 'Manifold Air Pressure', units: 'kPa' },
-    { title: 'Throttle Position', units: '%' },
-    { title: 'Engine Temperature', units: '˚C' },
-    { title: 'Oil Temperature', units: '˚C' },
-    { title: 'Fuel Temperature', units: '˚C' },
-    { title: 'Intake Air Temperature', units: '˚C' },
-    { title: 'Oil Pressure', units: 'kPa' },
-    { title: 'Barometer', units: 'kPa' },
-    { title: 'Injector Pulse Width', units: 'seconds' },
-    { title: 'Battery Voltage', units: 'V' },
-    { title: 'Suspension', units: 'mm' },
-    { title: 'Acceleration', units: 'g' },
-    { title: 'Axes', units: '˚' },
-    { title: 'Speed', units: 'km/h' },
-    { title: 'Distance', units: 'km' },
-    { title: 'Track Map', units: '' }]
+import { transparentFill } from "@arction/lcjs"
 
-const constDataTitles = 
-    {rpm: ['RPM'],
-    atf: ['Air To Fuel'],
+//name is either the grouping or the sensor itself, title is what is displayed as the title of the graph
+const constGraphTitles = [
+    { title: 'RPM', name: 'rpm', units: 'RPM' },
+    { title: 'Air To Fuel', name: 'atf', units: '' },
+    { title: 'Manifold Air Pressure', name: 'map', units: 'kPa' },
+    { title: 'Throttle Position', name: 'tp', units: '%' },
+    { title: 'Engine Temperature', name: 'engineTemp', units: '˚C' },
+    { title: 'Oil Temperature', name: 'oilTemp', units: '˚C' },
+    { title: 'Fuel Temperature', name: 'fuelTemp', units: '˚C' },
+    { title: 'Intake Air Temperature', name: 'iat', units: '˚C' },
+    { title: 'Oil Pressure', name: 'oilPres', units: 'kPa' },
+    { title: 'Barometer', name: 'baro', units: 'kPa' },
+    { title: 'Injector Pulse Width', name: 'ipw', units: 'seconds' },
+    { title: 'Battery Voltage', name: 'voltage', units: 'V' },
+    { title: 'Suspension', name: 'Suspension', units: 'mm' },
+    { title: 'Acceleration', name: 'Acceleration', units: 'g' },
+    { title: 'Axes', name: 'Axes', units: '˚' },
+    { title: 'Speed', name: 'speed', units: 'km/h' },
+    { title: 'Distance', name: 'distance', units: 'km' },
+    { title: 'Track Map', name: 'Track Map', units: '' },
+    { title: 'EGT', name: 'EGT', units: '˚C' },
+    { title: 'O2', name: 'o2', units: '' },
+    { title: 'Cam Position', name: 'cam', units: '' },
+    { title: 'Crank Position', name: 'crank', units: '' },
+    { title: 'Neutral Switch', name: 'neutral', units: '' },
+    { title: 'Wheel Speeds', name: 'Wheel Speeds', units: 'Kph' },
+    { title: 'Brake Pressures', name: 'Brake Pressures', units: 'kPa' },
+    { title: 'Rotary Pot', name: 'rotPot', units: '%' }]
+
+//List of all the sensors with their units
+const constDataTitles =
+{
+    rpm: ['RPM', ''],
+    atf: ['Air To Fuel', ''],
     map: ['Manifold Air Pressure', '(kPa)'],
     tp: ['Throttle Position', '(%)'],
-    engineTemp: ['Engine Temperature','(˚C)'],
-    oilTemp: ['Oil Temperature','(˚C)' ],
+    engineTemp: ['Engine Temperature', '(˚C)'],
+    oilTemp: ['Oil Temperature', '(˚C)'],
     fuelTemp: ['Fuel Temperature', '(˚C)'],
     iat: ['Intake Air Temperature', '(˚C)'],
     oilPres: ['Oil Pressure', '(kPa)'],
     baro: ['Barometer', '(kPa)'],
     ipw: ['Injector Pulse Width', '(s)'],
     voltage: ['Battery Voltage', '(V)'],
-    fl: ['Suspension','(mm)', 'Front Left', [0]],
-    fr: ['Suspension','(mm)', 'Front Right', [1]],
-    rl: ['Suspension','(mm)', 'Rear Left', [2]],
-    rr: ['Suspension','(mm)', 'Rear Right', [3]],
-    x: ['Acceleration', '(g)', 'X Accel', [0]],
-    y: ['Acceleration','(g)', 'Y Accel', [1]],
-    z: ['Acceleration','(g)', 'Z Accel', [2]],
-    roll: ['Axes', '(˚)', 'Roll', [0]],
-    pitch: ['Axes', '(˚)', 'Pitch', [1]],
-    yaw: ['Axes', '(˚)', 'Yaw', [2]],
+    flSuspension: ['Front Left Suspension', '(mm)'],
+    frSuspension: ['Front Right Suspension', '(mm)'],
+    rlSuspension: ['Rear Left Suspension', '(mm)'],
+    rrSuspension: ['Rear Right Suspension', '(mm)'],
+    x: ['X Accel', '(g)'],
+    y: ['Y Accel', '(g)'],
+    z: ['Z Accel', '(g)'],
+    roll: ['Roll', '(˚)'],
+    pitch: ['Pitch', '(˚)'],
+    yaw: ['Yaw', '(˚)'],
     speed: ['Speed', '(km/h)'],
-    distance: ['Distance', '(km)']}
+    distance: ['Distance', '(km)'],
+    egt1: ['Exhaust Temp 1', '(˚C)'],
+    egt2: ['Exhaust Temp 2', '(˚C)'],
+    egt3: ['Exhaust Temp 3', '(˚C)'],
+    egt4: ['Exhaust Temp 4', '(˚C)'],
+    o2: ['O2', ''],
+    cam: ['Cam Position', ''],
+    crank: ['Crank Position', ''],
+    neutral: ['Neutral Switch', ''],
+    flSpeed: ['Front Left Speed', '(kph)'],
+    frSpeed: ['Front Right Speed', '(kph)'],
+    rlSpeed: ['Rear Left Speed', '(kph)'],
+    rrSpeed: ['Rear Right Speed', '(kph)'],
+    fbrakes: ['Front Brake Pressure', '(kPa)'],
+    rbrakes: ['Rear Brake Pressure', '(kPa)'],
+    rotPot: ['Rotary Pot', '(%)']
+}
 
-export {constGraphTitles, constDataTitles}
+//Groups sensors to use in graphs
+const sensorGroupings = {
+    'Suspension': ['flSuspension', 'frSuspension', 'rlSuspension', 'rrSuspension'],
+    'Acceleration': ['x', 'y', 'z'],
+    'Axes': ['roll', 'pitch', 'yaw'],
+    'EGT': ['egt1', 'egt2', 'egt3', 'egt4'],
+    'Wheels Speeds': ['flSpeed', 'frSpeed', 'rlSpeed', 'rrSpeed'],
+    'Brake Pressures': ['fbrakes', 'rbrakes']
+}
+
+export { constGraphTitles, constDataTitles, sensorGroupings }
 
 

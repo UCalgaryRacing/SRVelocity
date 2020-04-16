@@ -68,7 +68,7 @@ export default class CustomDataChoice extends React.Component {
 
     submit = (event) => {
         let selectedData = [];
-        for(const i of this.indexes) { selectedData.push(i); }
+        for(const i of this.indexes) selectedData.push(i); 
         this.props.enter(selectedData);
     }
 

@@ -120,8 +120,7 @@ export default class LineChart extends Component {
             .setMouseInteractionRectangleZoom(false)
             .setMouseInteractionsWhileScrolling(false)
             .setMouseInteractionsWhileZooming(false)
-        this.configureAutoCursor()
-
+        this.configureAutoCursor();
         this.chart.engine.container.onwheel = null;
         this.chart.getDefaultAxisY()
             .setScrollStrategy(AxisScrollStrategies.expansion)

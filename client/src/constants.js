@@ -1,4 +1,3 @@
-import { transparentFill } from "@arction/lcjs"
 
 //name is either the grouping or the sensor itself, title is what is displayed as the title of the graph
 const constGraphTitles = [

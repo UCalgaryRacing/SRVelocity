@@ -32,9 +32,7 @@ export default class Data {
         this.length = rearLeft.length;
         this.index = 0;
         this.datasets = {}
-        for (var sensor in constDataTitles) {
-            this.datasets[sensor] = 0
-        }
+        for (var sensor in constDataTitles) this.datasets[sensor] = 0;
         this.datasets['Track Map'] = [{}]
         const socket = socketIOClient('http://127.0.0.1:4000'); //CHANGE WHEN DEPLOYING!
         socket.on('new data', (data) => {
@@ -45,9 +43,7 @@ export default class Data {
 
     updateData = (data) => {
         for (var sensor in constDataTitles) {
-            if (sensor === 'latitude' || sensor === 'longitude') {
-                continue;
-            }
+            if (sensor === 'latitude' || sensor === 'longitude') continue;
             this.datasets[sensor] = data[sensor]
         }
         this.datasets['Track Map'].push({ x: data.longitude, y: data.latitude });
@@ -56,26 +52,20 @@ export default class Data {
 
     get = (index) => {
         if (sensorGroupings[index]) {
-            let temp = []
-            for (var sensor of sensorGroupings[index]) {
-                temp.push(this.datasets[sensor])
-            }
-            return temp
+            let temp = [];
+            for (var sensor of sensorGroupings[index]) temp.push(this.datasets[sensor]);
+            return temp;
         }
-        return this.datasets[index]
+        return this.datasets[index];
     }
 
     getDataPoint = (index) => {
         if (sensorGroupings[index]) {
-            let temp = []
-            for (var sensor of sensorGroupings[index]) {
-                temp.push(this.datasets[sensor])
-            }
-            return temp
+            let temp = [];
+            for (var sensor of sensorGroupings[index]) temp.push(this.datasets[sensor]);
+            return temp;
         } 
-        else if (index === 'Track Map') {
-            return this.datasets[index][this.datasets[index].length - 1]
-        }
+        else if (index === 'Track Map') return this.datasets[index][this.datasets[index].length - 1];
         return this.datasets[index]
     }
 
@@ -142,6 +132,7 @@ export default class Data {
         data.ipw = IPW[this.count];
         data.baro = baro[this.count];
         data.map = MAP[this.count];
+        data.atf = AFR[this.count];
         data.iat = IAT[this.count];
         data.engineTemp = engineTemp[this.count];
         data.oilPres = oilPressure[this.count];
@@ -176,9 +167,7 @@ export default class Data {
         data.rpm = distance[this.count];
         this.count = this.count + 1;
         for (var sensor in constDataTitles) {
-            if (sensor === 'latitude' || sensor === 'longitude') {
-                continue;
-            }
+            if (sensor === 'latitude' || sensor === 'longitude') continue;
             this.datasets[sensor] = data[sensor]
         }
         this.datasets['Track Map'].push({ x: data.longitude, y: data.latitude });

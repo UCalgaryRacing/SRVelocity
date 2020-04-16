@@ -12,7 +12,7 @@ export default class HomePage extends React.Component {
                 <Jumbotron>
                     <Row id="row1">
                         <Col>
-                            <img id='logoImg' src={require('../../assets/logo.svg')}/>
+                            <img id='logoImg' src={require('../../assets/logo.svg')} alt="Schulich Racing"/>
                         </Col>
                     </Row>
                     <Row id="row2">

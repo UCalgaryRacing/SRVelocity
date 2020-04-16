@@ -1,17 +1,16 @@
-import React from 'react'
-import { constDataTitles } from '../../../../constants'
-import colormap from 'colormap'
-import Data from '../../../../data'
-import ScatterPlot from '../../graphComponents/scatterPlot'
+import React from 'react';
+import colormap from 'colormap';
+import Data from '../../../../data';
+import ScatterPlot from '../../graphComponents/scatterPlot';
 import { ColorHEX } from '@arction/lcjs';
-import { Button, ButtonGroup } from 'react-bootstrap'
+import { Button, ButtonGroup } from 'react-bootstrap';
 
 const colors = colormap({
     colormap: 'magma',
     nshades: 100,
     format: 'hex',
     alpha: 1
-})
+});
 
 export default class HeatMap extends React.Component {
     constructor(props) {
@@ -19,10 +18,6 @@ export default class HeatMap extends React.Component {
         this.state = {
             data: {
                 tp: [], //0, 100
-                // fl: [],
-                // fr: [],
-                // rl: [],
-                // rr: [],
                 suspension: [], // sum x + y |0, 2|
                 speed: [] //0, 100
             },
@@ -31,11 +26,11 @@ export default class HeatMap extends React.Component {
             indicationColor: '#000',
             selection: 'speed'
         }
-        this.currentPoint = {}
-        this.pointSelections = []
-        this.choice = this.props.choice
-        this.forceMapUpdate = false
-        this.newData = []
+        this.currentPoint = {};
+        this.pointSelections = [];
+        this.choice = this.props.choice;
+        this.forceMapUpdate = false;
+        this.newData = [];
     }
 
     componentWillMount = () => { document.addEventListener('gotData', () => { this.pullData(); }); }
@@ -54,7 +49,6 @@ export default class HeatMap extends React.Component {
         if (sensor === 'suspension') {
             let xValue = Data.getInstance().getDataPoint('x');
             let yValue = Data.getInstance().getDataPoint('y');
-
             newValue = Math.abs(xValue) + Math.abs(yValue);
             newValue = this.getColor(newValue, [-2, 2]);
         }
@@ -66,17 +60,13 @@ export default class HeatMap extends React.Component {
             newValue = Data.getInstance().getDataPoint('speed');
             newValue = this.getColor(newValue, [0, 100]);
         }
-        return newValue
+        return newValue;
     }
 
     pullData = () => {
-        if (this.forceMapUpdate) {
-            this.forceMapUpdate = false
-        }
+        if (this.forceMapUpdate) this.forceMapUpdate = false;
         let temp = Data.getInstance().getDataPoint('Track Map');
-        for (var sensor in this.state.data) {
-            this.state.data[sensor].push(this.findParamColor(sensor));
-        }
+        for (var sensor in this.state.data) this.state.data[sensor].push(this.findParamColor(sensor));
         let colArray = this.state.data[this.state.selection]
         temp.color = colArray[colArray.length - 1]
         this.setState({ currentPoint: temp })
@@ -86,9 +76,7 @@ export default class HeatMap extends React.Component {
         this.setState({ selection: sensor })
         let temp = Data.getInstance().get('Track Map').slice(-1 * this.state.data[sensor].length) // get the last x amount of points
         // where x is the length of the stored color arrays
-        for (let i = 0; i < temp.length; i++) {
-            temp[i].color = this.state.data[sensor][i]
-        }
+        for (let i = 0; i < temp.length; i++) temp[i].color = this.state.data[sensor][i];
         this.newData = temp
         this.forceMapUpdate = true
     }

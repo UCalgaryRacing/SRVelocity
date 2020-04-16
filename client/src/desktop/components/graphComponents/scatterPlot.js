@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { ColorRGBA, IndividualPointFill, PointShape, lightningChart, emptyTick, DataPatterns, AxisScrollStrategies, SolidLine, SolidFill, ColorHEX, AutoCursorModes, VisibleTicks, FontSettings } from '@arction/lcjs';
+import { ColorRGBA, IndividualPointFill, PointShape, lightningChart, emptyTick, AxisScrollStrategies, SolidFill, ColorHEX, AutoCursorModes } from '@arction/lcjs';
 
 const theme = {
     whiteFill: new SolidFill({ color: ColorHEX('#FFFFFF') }),
@@ -13,8 +13,8 @@ export default class ScatterPlot extends Component {
         this.chartId = Math.trunc(Math.random() * 100000);
         this.i = 0;
         this.setupComplete = false;
-        this.padding = 0
-        this.zero = false
+        this.padding = 0;
+        this.zero = false;
     }
 
     componentDidMount = () => { this.createChart(); }
@@ -26,11 +26,9 @@ export default class ScatterPlot extends Component {
         this.pointSeries = this.chart.addPointSeries({ pointShape: PointShape.Circle });
         this.individualStyle = new IndividualPointFill()
         this.individualStyle.setFallbackColor(ColorRGBA(0, 0, 0, 255))
-
         this.pointSeries
             .setPointSize(10.0)
             .setPointFillStyle(this.individualStyle)
-
         this.chart
             .setBackgroundFillStyle(theme.whiteFill)
             .setChartBackgroundFillStyle(theme.whiteFill)
@@ -42,18 +40,15 @@ export default class ScatterPlot extends Component {
             .setMouseInteractionRectangleZoom(false)
             .setMouseInteractionsWhileScrolling(false)
             .setMouseInteractionsWhileZooming(false)
-
         this.chart.getDefaultAxisX()
             .setScrollStrategy(AxisScrollStrategies.fitting)
             .setTickStyle(emptyTick)
             .setMouseInteractions(false)
-
         this.chart.getDefaultAxisY()
             .setScrollStrategy(AxisScrollStrategies.fitting)
             .setMouseInteractions(false)
             .setTickStyle(emptyTick)
-
-        this.setupComplete = true
+        this.setupComplete = true;
     }
 
     addData = () => {
@@ -71,31 +66,25 @@ export default class ScatterPlot extends Component {
 
     addPoint = (arg) => {
         if(arg === undefined) return;
-        let point = {}
-        point.x = arg.x
-        point.y = arg.y
-        point.color = arg.color
-
-        if (!point.x || !point.y) {
-            return
-        }
+        let point = {};
+        point.x = arg.x;
+        point.y = arg.y;
+        point.color = arg.color;
+        if (!point.x || !point.y) return;
         if (!this.zero) {
-            this.zeroX = point.x * 1000
-            this.zeroY = point.y * 1000
-            this.zero = true
-            return
+            this.zeroX = point.x * 1000;
+            this.zeroY = point.y * 1000;
+            this.zero = true;
+            return;
         }
-
-        point.x *= 1000
-        point.x -= this.zeroX
-        point.y *= 1000
-        point.y -= this.zeroY
-
-        this.pointSeries.add(point)
+        point.x *= 1000;
+        point.x -= this.zeroX;
+        point.y *= 1000;
+        point.y -= this.zeroY;
+        this.pointSeries.add(point);
     }
 
     render() {
-        let data = this.props.point;
         return (
             <div style={{ marginBottom: '20px' }}>
                 <div id={this.chartId} className='fill' style={{ height: '500px' }} onWheel={(event) => { return true; }}></div>

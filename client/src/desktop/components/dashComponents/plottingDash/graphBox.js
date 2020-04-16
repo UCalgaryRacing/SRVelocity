@@ -32,18 +32,23 @@ export default class GraphBox extends React.Component {
         }
     }
 
-    componentWillMount() { document.addEventListener('gotData', () => { this.pullData() }); }
-    componentWillUnmount() { document.removeEventListener('gotData', this.pullData()); }
+    componentWillMount() { 
+        document.addEventListener('gotData', () => { this.pullData() }); 
+    }
+
+    componentWillUnmount() { 
+        document.removeEventListener('gotData', this.pullData()); 
+    }
 
     pullData = () => {
         let newDatasets = Data.getInstance().get(this.props.name);
-        if (newDatasets === undefined) { return; }
+        if (newDatasets === undefined) return;
         if (this.props.title === 'Track Map') { this.setState({ data: newDatasets }); }
         else {
             var newColour;
             if (newDatasets.length === undefined) { newColour = this.updateColours(newDatasets); }
             else {
-                if (newDatasets[0] == undefined) { return; }
+                if (newDatasets[0] === undefined) { return; }
                 newColour = this.updateColours(newDatasets[0]);
             }
             this.setState({ data: newDatasets, indicationColour: newColour });
@@ -57,15 +62,15 @@ export default class GraphBox extends React.Component {
             else if ((value > 10.5 && value < 11.5) || (value > 14.7 && value < 16)) { return '#BDA800'; }
         }
         else if (this.props.title === 'Engine Temperature') {
-            if (value >= 120) { return '#C22D2D'; }
+            if (value >= 120) return '#C22D2D'; 
             else if (value > 105 && value < 120) { return '#BDA800'; }
         }
         else if (this.props.title === 'Oil Temperature') {
-            if (value > 125) { return '#C22D2D'; }
+            if (value > 125) return '#C22D2D'; 
             else if (value > 110 && value <= 125) { return '#BDA800'; }
         }
         else if (this.props.title === 'Oil Pressure') {
-            if (value <= 10) { return '#C22D2D'; }
+            if (value <= 10) return '#C22D2D'; 
         }
         return '#000';
     }

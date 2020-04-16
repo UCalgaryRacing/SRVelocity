@@ -30,7 +30,7 @@ export default class DefaultDataDash extends React.Component {
                     </Row>
                 );
             }
-            else { this.layout.push(<Row><Col>{this.boxes[i]}</Col></Row>); }
+            else this.layout.push(<Row><Col>{this.boxes[i]}</Col></Row>); 
         }
     }
 

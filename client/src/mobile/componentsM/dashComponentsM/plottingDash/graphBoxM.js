@@ -44,7 +44,7 @@ export default class GraphBoxM extends React.Component {
             var newColour;
             if (newDatasets.length === undefined) { newColour = this.updateColours(newDatasets); }
             else {
-                if (newDatasets[0] == undefined) { return; }
+                if (newDatasets[0] === undefined) { return; }
                 newColour = this.updateColours(newDatasets[0]);
             }
             this.setState({ data: newDatasets, indicationColour: newColour });

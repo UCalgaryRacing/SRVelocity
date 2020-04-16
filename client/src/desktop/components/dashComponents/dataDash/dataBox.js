@@ -18,9 +18,11 @@ export default class DataBox extends React.Component {
         document.addEventListener('gotData', () => { this.pullData(); });
     }
 
-    componentWillUnmount = () => { document.removeEventListener('gotData', this.pullData()); }
+    componentWillUnmount = () => { 
+        document.removeEventListener('gotData', this.pullData()); 
+    }
 
-    pullData = () => { //MAKE THIS WAAAY MORE EFFICIENT
+    pullData = () => {
         this.setState({ value: Data.getInstance().getDataPoint(this.state.name) });
     }
 

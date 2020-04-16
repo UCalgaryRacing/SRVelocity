@@ -9,7 +9,7 @@ export default class HomePageM extends React.Component {
         return (
             <>
                 <TopNavM />
-                <img src={require('../../assets/logo.svg')} style={{ width: '80%', marginLeft: '40px', marginBottom: '10px', marginTop: '100px' }} />
+                <img src={require('../../assets/logo.svg')} style={{ width: '80%', marginLeft: '40px', marginBottom: '10px', marginTop: '100px' }} alt="Schulich Racing"/>
                 <p style={{ fontSize: '2rem', marginTop: '20px', textAlign: 'center' }}>
                     <b>Welcome to Schulich Velocity!</b>
                 </p>

@@ -39,16 +39,14 @@ export default class RadialChart extends Component {
                 fillStyle: new SolidFill({ color: ColorHEX('#C8C8C8') }),
                 thickness: 2
             }))
-            .setMouseInteractions(false)
+            .setMouseInteractions(false);
         this.chart.engine.container.onwheel = null;
-
         this.series = this.chart.addSeries();
         this.series.addPoints(
             {axis: this.categories[0], value: 0}, 
             {axis: this.categories[1], value: 0},
             {axis: this.categories[2], value: 0},
             {axis: this.categories[3], value: 0});
-
         this.series
         .setStrokeStyle(new SolidLine({
             thickness: 0,
@@ -62,13 +60,11 @@ export default class RadialChart extends Component {
         .setFillStyle(new SolidFill({ color: ColorRGBA(194, 45, 45, 0.3) }))
         .setHighlighted(true);
         this.series.setMouseInteractions(false);
-
         var font = new FontSettings({});
         font = font.setFamily("helvetica");
         font = font.setWeight("bold");
         this.chart.setAxisLabelFont(font);
         this.chart.setScaleLabelFont(font);
-
         this.setupComplete = true;
     }
 

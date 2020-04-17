@@ -2,13 +2,14 @@ import React from 'react';
 import ButtonGroup from 'react-bootstrap/ButtonGroup';
 import Button from 'react-bootstrap/Button';
 import GraphingDashboard from './plottingDash/graphingDashboard';
-import DefaultDataDash from './dataDash/defaultDataDashboard';
+import DataDashboard from './dataDash/dataDashboard';
 import CustomPlottingDash from './plottingDash/customPlottingDashboard';
 import CustomDataDash from './dataDash/customDataDashboard';
 import GraphBox from './plottingDash/graphBox';
 import RadialChart from './graphComponents/radialChart';
 import '../../styling/dashboard.css';
 import Data from '../../../data';
+import SensorData from '../../../constants';
 
 export default class StreamingDash extends React.Component {
     constructor(props) {
@@ -68,7 +69,7 @@ export default class StreamingDash extends React.Component {
                 <Button id='trackMapButton' onClick={this.toggleTrackMap} style={{ marginTop: '60px' }}><b>{(this.state.showTrackMap) ? 'Hide Track Map' : 'Show Track Map'}</b></Button>
                 <Button id='accelMapButton' onClick={this.toggleAccelMap} style={{ marginTop: '60px', marginLeft: '8px' }}><b>{(this.state.showAccelMap) ? 'Hide Accel Map' : 'Show Accel Map'}</b></Button>
                 {testRun}
-                {(this.state.dashOption === 'default') ? ((this.state.typeOption === 'plotting') ? <GraphingDashboard plots={defaultDash} /> : <DefaultDataDash />) : ((this.state.typeOption === 'plotting') ? <CustomPlottingDash /> : <CustomDataDash />)}
+                {(this.state.dashOption === 'default') ? ((this.state.typeOption === 'plotting') ? <GraphingDashboard plots={defaultDash} /> : <DataDashboard categories={SensorData.getInstance().getCategories()}/>) : ((this.state.typeOption === 'plotting') ? <CustomPlottingDash /> : <CustomDataDash />)}
                 {this.state.showTrackMap ? trackMap : ''}
                 {this.state.showAccelMap ? accelMap : ''}
             </div>

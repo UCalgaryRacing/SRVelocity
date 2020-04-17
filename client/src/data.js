@@ -62,10 +62,10 @@ export default class Data {
 
     get = (index) => {
         return sensorData.then(sensorData => {
-            var sensors = sensorData.filter(item => { return item.category === index});
-            if(sensors.length > 1) {
+            var sensors = sensorData.filter(item => { return item.category === index });
+            if (sensors.length > 1) {
                 let temp = [];
-                for(var sensor of sensors) temp.push(this.datasets[sensor.code_name]);
+                for (var sensor of sensors) temp.push(this.datasets[sensor.code_name]);
                 return temp;
             }
             return [this.datasets[sensors[0].code_name]];
@@ -74,13 +74,14 @@ export default class Data {
 
     getDataPoint = (index) => {
         return sensorData.then(sensorData => {
-        // if (sensorGroupings[index]) {
-        //     let temp = [];
-        //     for (var sensor of sensorGroupings[index]) temp.push(this.datasets[sensor]);
-        //     return temp;
-        // } 
-        // else if (index === 'Track Map') return this.datasets[index][this.datasets[index].length - 1];
-        // return this.datasets[index]
+            if (index === 'Track Map') return this.datasets[index][this.datasets[index].length - 1];
+            var sensors = sensorData.filter(item => { return item.name === index });
+            if (sensors.length > 1) {
+                let temp = [];
+                for (var sensor of sensors) temp.push(this.datasets[sensor.code_name]);
+                return temp;
+            }
+            return [this.datasets[sensors[0].code_name]];
         });
     }
 
@@ -91,7 +92,7 @@ export default class Data {
 
     pushTestData = () => {
         sensorData.then(sensorData => {
-            if(this.count > 254) {
+            if (this.count > 254) {
                 clearInterval(this.timer);
                 this.count = 0;
             }
@@ -105,7 +106,7 @@ export default class Data {
                 ipw: 0,
                 baro: 0,
                 map: 0,
-                atf: 0,  
+                atf: 0,
                 iat: 0,
                 engineTemp: 0,
                 oilPres: 0,

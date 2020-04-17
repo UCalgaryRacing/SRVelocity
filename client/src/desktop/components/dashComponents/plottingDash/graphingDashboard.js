@@ -8,7 +8,6 @@ export default class GraphingDashboard extends React.Component {
         super(props);
         this.state = {
             plots: this.props.plots,
-            displayModal: false,
             currentGraph: null
         }
         this.graphs = [];
@@ -35,7 +34,7 @@ export default class GraphingDashboard extends React.Component {
             }
             for (const graph of this.graphs) this.container.push(<Row style={{ marginTop: '30px' }}><Col>{graph}</Col></Row>);
             this.forceUpdate();
-        })
+        });
     }
 
     render = () => {

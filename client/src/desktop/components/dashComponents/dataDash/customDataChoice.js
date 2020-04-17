@@ -10,65 +10,30 @@ export default class CustomDataChoice extends React.Component {
             sensors: SensorData.getInstance().getSensors()
         }
         this.switches = [];
-        this.indexes = [];
+        this.indices = [];
     }
 
     componentWillMount = () => {
-        //var i = 0;
-        // var suspension, accel, axes = false;
-        // for (const data in this.state.dataTitles) {
-        //     //Refactor this
-        //     if(this.state.dataTitles[data][0] === 'Suspension' && !suspension) { 
-        //         this.switches.push(<Form.Check name={this.state.dataTitles[data][0]} label={this.state.dataTitles[data][0]} id={data} key={i} onChange={this.selectData}/>);
-        //         suspension = true; 
-        //         continue;
-        //     }
-        //     if(this.state.dataTitles[data][0] === 'Acceleration' && !accel) { 
-        //         this.switches.push(<Form.Check name={this.state.dataTitles[data][0]} label={this.state.dataTitles[data][0]} id={data} key={i} onChange={this.selectData}/>);
-        //         accel = true; 
-        //         continue;
-        //     }
-        //     if(this.state.dataTitles[data][0] === 'Axes' && !axes) { 
-        //         this.switches.push(<Form.Check name={this.state.dataTitles[data][0]} label={this.state.dataTitles[data][0]} id={data} key={i} onChange={this.selectData}/>);
-        //         axes = true; 
-        //         continue;
-        //     }
-        //     if(this.state.dataTitles[data][0] !== 'Acceleration' && this.state.dataTitles[data][0] !== 'Suspension' && this.state.dataTitles[data][0] !== 'Axes') { 
-        //         this.switches.push(<Form.Check name={this.state.dataTitles[data][0]} label={this.state.dataTitles[data][0]} id={data} key={i} onChange={this.selectData}/>);
-        //     }
-        //     i++;
-        // }
+        SensorData.getInstance().getCategories().then(categories => {
+            var i = 1;
+            for (const category of categories) {
+                this.switches.push(<Form.Check name={category[i]} label={category} id={i} key={i} onChange={this.selectData} />);
+                i++;
+            }
+            this.setState({categories: categories});
+        })
     }
 
     selectData = (event) => {
-        if (!event.target.id) { event.target.id = 0; }
-        let i = this.indexes.indexOf(event.target.id);
-        //Refactor if possible
-        if(event.target.id === "fl") {
-            this.indexes.push("fl");
-            this.indexes.push("fr");
-            this.indexes.push("rl");
-            this.indexes.push("rr");
-        }
-        else if(event.target.id === "x") {
-            this.indexes.push("x");
-            this.indexes.push("y");
-            this.indexes.push("z");
-        }
-        else if(event.target.id === "roll") {
-            this.indexes.push("roll");
-            this.indexes.push("pitch");
-            this.indexes.push("yaw");
-        }
-        else {
-            if(i < 0) { this.indexes.push(event.target.id); } 
-            else { this.indexes.splice(i, 1); }
-        }
+        if (!event.target.id) event.target.id = 0; 
+        let i = this.indices.indexOf(event.target.id);
+        if (i < 0) this.indices.push(event.target.id); 
+        else this.indices.splice(i, 1); 
     }
 
     submit = (event) => {
         let selectedData = [];
-        for(const i of this.indexes) selectedData.push(i); 
+        for (const i of this.indices) selectedData.push(this.state.categories[i - 1]); 
         this.props.enter(selectedData);
     }
 

@@ -8,14 +8,14 @@ export default class CustomDataDash extends React.Component {
         super(props);
         this.state = {
             showChoice: true,
-            selectedData: []
+            selectedCategories: []
         }
     }
 
-    enter = (graphChoices) => {
+    enter = (dataChoices) => {
         this.setState({
             showChoice: false,
-            selectedData: graphChoices
+            selectedCategories: dataChoices
         });
     }
 
@@ -24,7 +24,7 @@ export default class CustomDataDash extends React.Component {
             <div id='customDash' >
                 {this.state.showChoice ? 
                     <CustomDataChoice enter={this.enter}/>:
-                    <DataDashboard dataInfo={this.state.selectedData}/>}
+                    <DataDashboard categories={this.state.selectedCategories}/>}
             </div>
         );
     }

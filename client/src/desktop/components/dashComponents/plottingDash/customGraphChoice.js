@@ -14,22 +14,22 @@ export default class CustomGraphChoice extends React.Component {
     }
 
     componentWillMount = () => {
-        var sensors = SensorData.getInstance().getSensors();
-        sensors.then(sensors => {
+        var categories = SensorData.getInstance().getCategories();
+        categories.then(categories => {
             var i = 1;
-            for (const sensor of sensors) {
-                this.switches.push(<Form.Check name={sensor.name} label={sensor.category} id={i} key={i} onChange={this.selectGraph} />);
+            for (const category of categories) {
+                this.switches.push(<Form.Check name={category[i]} label={category} id={i} key={i} onChange={this.selectGraph} />);
                 i++;
             }
-            this.setState({sensors: sensors});
+            this.setState({categories: categories});
         })
     }
 
     selectGraph = (event) => {
-        if (!event.target.id) { event.target.id = 0; }
+        if (!event.target.id) event.target.id = 0; 
         let i = this.indices.indexOf(event.target.id);
-        if (i < 0) { this.indices.push(event.target.id); }
-        else { this.indices.splice(i, 1); }
+        if (i < 0) this.indices.push(event.target.id); 
+        else this.indices.splice(i, 1); 
     }
 
     submit = (event) => {
@@ -38,7 +38,7 @@ export default class CustomGraphChoice extends React.Component {
             return;
         }
         let selectedGraphs = [];
-        for (const i of this.indices) selectedGraphs.push(this.state.sensors[i - 1]); 
+        for (const i of this.indices) selectedGraphs.push(this.state.categories[i - 1]); 
         this.props.enter(selectedGraphs);
     }
 

@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { lightningChart, SpiderWebMode, SolidFill, ColorHEX, SolidLine, FontSettings, ColorRGBA } from '@arction/lcjs';
-import Data from '../../../data';
+import Data from '../../../../data';
 
 const theme = {
     whiteFill: new SolidFill({ color: ColorHEX('#FFFFFF') }),

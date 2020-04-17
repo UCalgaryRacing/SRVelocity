@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { lightningChart, emptyTick, DataPatterns, AxisScrollStrategies, SolidLine, SolidFill, ColorHEX, VisibleTicks, FontSettings } from '@arction/lcjs';
-import '../../styling/lineChart.css';
+import '../../../styling/lineChart.css';
 
 const theme = {
     whiteFill: new SolidFill({ color: ColorHEX('#FFFFFF') }),

@@ -6,7 +6,7 @@ import DefaultDataDash from './dataDash/defaultDataDashboard';
 import CustomPlottingDash from './plottingDash/customPlottingDashboard';
 import CustomDataDash from './dataDash/customDataDashboard';
 import GraphBox from './plottingDash/graphBox';
-import RadialChart from '../graphComponents/radialChart';
+import RadialChart from './graphComponents/radialChart';
 import '../../styling/dashboard.css';
 import Data from '../../../data';
 

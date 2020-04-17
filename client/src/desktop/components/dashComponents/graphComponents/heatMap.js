@@ -1,7 +1,7 @@
 import React from 'react';
 import colormap from 'colormap';
 import Data from '../../../../data';
-import ScatterPlot from '../../graphComponents/scatterPlot';
+import ScatterPlot from './scatterPlot';
 import { ColorHEX } from '@arction/lcjs';
 import { Button, ButtonGroup } from 'react-bootstrap';
 

@@ -1,43 +1,43 @@
 import React from 'react';
 import {Form, Button} from 'react-bootstrap';
-import {constDataTitles} from '../../../../constants';
+import SensorData from '../../../../constants';
 import '../../../styling/customDataChoice.css';
 
 export default class CustomDataChoice extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            dataTitles: constDataTitles
+            sensors: SensorData.getInstance().getSensors()
         }
         this.switches = [];
         this.indexes = [];
     }
 
     componentWillMount = () => {
-        var i = 0;
-        var suspension, accel, axes = false;
-        for (const data in this.state.dataTitles) {
-            //Refactor this
-            if(this.state.dataTitles[data][0] === 'Suspension' && !suspension) { 
-                this.switches.push(<Form.Check name={this.state.dataTitles[data][0]} label={this.state.dataTitles[data][0]} id={data} key={i} onChange={this.selectData}/>);
-                suspension = true; 
-                continue;
-            }
-            if(this.state.dataTitles[data][0] === 'Acceleration' && !accel) { 
-                this.switches.push(<Form.Check name={this.state.dataTitles[data][0]} label={this.state.dataTitles[data][0]} id={data} key={i} onChange={this.selectData}/>);
-                accel = true; 
-                continue;
-            }
-            if(this.state.dataTitles[data][0] === 'Axes' && !axes) { 
-                this.switches.push(<Form.Check name={this.state.dataTitles[data][0]} label={this.state.dataTitles[data][0]} id={data} key={i} onChange={this.selectData}/>);
-                axes = true; 
-                continue;
-            }
-            if(this.state.dataTitles[data][0] !== 'Acceleration' && this.state.dataTitles[data][0] !== 'Suspension' && this.state.dataTitles[data][0] !== 'Axes') { 
-                this.switches.push(<Form.Check name={this.state.dataTitles[data][0]} label={this.state.dataTitles[data][0]} id={data} key={i} onChange={this.selectData}/>);
-            }
-            i++;
-        }
+        //var i = 0;
+        // var suspension, accel, axes = false;
+        // for (const data in this.state.dataTitles) {
+        //     //Refactor this
+        //     if(this.state.dataTitles[data][0] === 'Suspension' && !suspension) { 
+        //         this.switches.push(<Form.Check name={this.state.dataTitles[data][0]} label={this.state.dataTitles[data][0]} id={data} key={i} onChange={this.selectData}/>);
+        //         suspension = true; 
+        //         continue;
+        //     }
+        //     if(this.state.dataTitles[data][0] === 'Acceleration' && !accel) { 
+        //         this.switches.push(<Form.Check name={this.state.dataTitles[data][0]} label={this.state.dataTitles[data][0]} id={data} key={i} onChange={this.selectData}/>);
+        //         accel = true; 
+        //         continue;
+        //     }
+        //     if(this.state.dataTitles[data][0] === 'Axes' && !axes) { 
+        //         this.switches.push(<Form.Check name={this.state.dataTitles[data][0]} label={this.state.dataTitles[data][0]} id={data} key={i} onChange={this.selectData}/>);
+        //         axes = true; 
+        //         continue;
+        //     }
+        //     if(this.state.dataTitles[data][0] !== 'Acceleration' && this.state.dataTitles[data][0] !== 'Suspension' && this.state.dataTitles[data][0] !== 'Axes') { 
+        //         this.switches.push(<Form.Check name={this.state.dataTitles[data][0]} label={this.state.dataTitles[data][0]} id={data} key={i} onChange={this.selectData}/>);
+        //     }
+        //     i++;
+        // }
     }
 
     selectData = (event) => {

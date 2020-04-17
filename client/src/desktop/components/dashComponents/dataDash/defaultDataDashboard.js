@@ -1,6 +1,6 @@
 import React from 'react';
 import { Row, Col } from 'react-bootstrap';
-import { constDataTitles } from '../../../../constants';
+import { sensorData } from '../../../../constants';
 import DataBox from "./dataBox";
 import '../../../styling/defaultDash.css';
 
@@ -8,9 +8,9 @@ export default class DefaultDataDash extends React.Component {
     constructor(props) {
         super(props);
         this.totalData = [];
-        for (var sensor in constDataTitles) {
-            this.totalData.push(sensor)
-        }
+        // for (var sensor in constDataTitles) {
+        //     this.totalData.push(sensor)
+        // }
         this.boxes = [];
         this.layout = [];
     }
@@ -35,7 +35,7 @@ export default class DefaultDataDash extends React.Component {
     }
 
     createBoxes = () => {
-        for (var sensor of this.totalData) { this.boxes.push(<DataBox name={sensor}></DataBox>); }
+        for (var sensor of this.totalData) { this.boxes.push(<DataBox name={sensor.name}></DataBox>); }
     }
 
     render = () => {

@@ -1,6 +1,5 @@
 import React from 'react';
 import StreamingDash from '../dashComponents/dashboard';
-import DataPage from '../streamingComponents/dataPage';
 
 export default class StreamingContent extends React.Component {
     constructor(props) {
@@ -24,7 +23,7 @@ export default class StreamingContent extends React.Component {
     render = () => {
         return (
             <div id='streamingContent' style={{ marginTop: '15px', transition: 'all 0.15s', marginLeft: this.state.marginLeft }}>
-                {(this.state.content === 'Dash') ? <StreamingDash /> : <DataPage content={this.state.content} key={Math.random()} />}
+                <StreamingDash />
             </div>
         );
     }

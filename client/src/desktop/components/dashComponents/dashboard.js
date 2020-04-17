@@ -1,7 +1,7 @@
 import React from 'react';
 import ButtonGroup from 'react-bootstrap/ButtonGroup';
 import Button from 'react-bootstrap/Button';
-import DefaultPlottingDash from './plottingDash/defaultPlottingDashboard';
+import GraphingDashboard from './plottingDash/graphingDashboard';
 import DefaultDataDash from './dataDash/defaultDataDashboard';
 import CustomPlottingDash from './plottingDash/customPlottingDashboard';
 import CustomDataDash from './dataDash/customDataDashboard';
@@ -45,6 +45,7 @@ export default class StreamingDash extends React.Component {
     }
 
     render = () => {
+        let defaultDash = ['Engine Temperature', 'Oil Pressure', 'Oil Temperature', 'Air To Fuel', 'Fuel Temperature','RPM','Suspension','Acceleration','Axes']
         let dashSelector = (
             <ButtonGroup id='dashSelector' style={{ marginTop: '60px' }}>
                 <Button id='defaultButton' onClick={this.changeDash} disabled={(this.state.dashOption === 'default') ? true : false}><b>Default</b></Button>
@@ -67,7 +68,7 @@ export default class StreamingDash extends React.Component {
                 <Button id='trackMapButton' onClick={this.toggleTrackMap} style={{ marginTop: '60px' }}><b>{(this.state.showTrackMap) ? 'Hide Track Map' : 'Show Track Map'}</b></Button>
                 <Button id='accelMapButton' onClick={this.toggleAccelMap} style={{ marginTop: '60px', marginLeft: '8px' }}><b>{(this.state.showAccelMap) ? 'Hide Accel Map' : 'Show Accel Map'}</b></Button>
                 {testRun}
-                {(this.state.dashOption === 'default') ? ((this.state.typeOption === 'plotting') ? <DefaultPlottingDash /> : <DefaultDataDash />) : ((this.state.typeOption === 'plotting') ? <CustomPlottingDash /> : <CustomDataDash />)}
+                {(this.state.dashOption === 'default') ? ((this.state.typeOption === 'plotting') ? <GraphingDashboard plots={defaultDash} /> : <DefaultDataDash />) : ((this.state.typeOption === 'plotting') ? <CustomPlottingDash /> : <CustomDataDash />)}
                 {this.state.showTrackMap ? trackMap : ''}
                 {this.state.showAccelMap ? accelMap : ''}
             </div>

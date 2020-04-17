@@ -12,17 +12,19 @@ import SignInPage from './desktop/pages/signin';
 import LicensesPage from './desktop/pages/licenses';
 import ErrorPage from './desktop/pages/error';
 
+import SensorData from './constants';
+
 //Import mobile pages
-import HomePageM from './mobile/pages/homeM';
-import StreamingPageM from './mobile/pages/streamingM';
-import AboutPageM from './mobile/pages/aboutM';
-import SignInPageM from './mobile/pages/signInM';
-import LicensesPageM from './mobile/pages/licensesM';
-import ErrorPageM from './mobile/pages/errorM';
+// import HomePageM from './mobile/pages/homeM';
+// import StreamingPageM from './mobile/pages/streamingM';
+// import AboutPageM from './mobile/pages/aboutM';
+// import SignInPageM from './mobile/pages/signInM';
+// import LicensesPageM from './mobile/pages/licensesM';
+// import ErrorPageM from './mobile/pages/errorM';
 
 export default class App extends React.Component {
     render = () => {
-        if (!isMobile) {
+        //if (!isMobile) {
             return (
                 <Router>
                     <Switch>
@@ -36,22 +38,22 @@ export default class App extends React.Component {
                     </Switch>
                 </Router>
             );
-        }
-        else {
-            return (
-                <Router>
-                    <Switch>
-                        <Route exact path="/" component={() => <HomePageM />} />
-                        <Route exact path="/home" component={() => <HomePageM />} />
-                        <Route exact path="/streaming" component={() => <StreamingPageM />} />
-                        <Route exact path="/about" component={() => <AboutPageM />} />
-                        <Route exact path="/signIn" component={() => <SignInPageM />} />
-                        <Route exact path="/licenses" component={() => <LicensesPageM />} />
-                        <Route component={() => <ErrorPageM handleModeChange={this.handleModfeChange} />} />
-                    </Switch>
-                </Router>
-            )
-        }
+        //}
+        // else {
+        //     return (
+        //         <Router>
+        //             <Switch>
+        //                 <Route exact path="/" component={() => <HomePageM />} />
+        //                 <Route exact path="/home" component={() => <HomePageM />} />
+        //                 <Route exact path="/streaming" component={() => <StreamingPageM />} />
+        //                 <Route exact path="/about" component={() => <AboutPageM />} />
+        //                 <Route exact path="/signIn" component={() => <SignInPageM />} />
+        //                 <Route exact path="/licenses" component={() => <LicensesPageM />} />
+        //                 <Route component={() => <ErrorPageM handleModeChange={this.handleModfeChange} />} />
+        //             </Switch>
+        //         </Router>
+        //     )
+        // }
     }
 }
 

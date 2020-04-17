@@ -1,4 +1,37 @@
 
+export default class SensorData {
+    static instance = null;
+    static sensors =
+        fetch('http://localhost:4000/sensor/getSensors/14', {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+                'apikey': 'VQ2SBXW-1N14EQ7-PWX5JBZ-C5S45FA'
+            }
+        }).then(res => res.json()).then(res => { return res; }).catch(err => { console.log(err) });
+
+    constructor() { }
+
+    getGrouping = async (category) => {
+        var sensors = await SensorData.sensors;
+
+    }
+
+    getSensors = async () => {
+        var sensors = await SensorData.sensors;
+        return sensors;
+    }
+
+    static getInstance() {
+        if (SensorData.instance == null) {
+            SensorData.instance = new SensorData();
+        }
+        return this.instance;
+    }
+}
+
+SensorData.getInstance();
+
 //name is either the grouping or the sensor itself, title is what is displayed as the title of the graph
 const constGraphTitles = [
     { title: 'RPM', name: 'rpm', units: 'RPM' },
@@ -81,7 +114,3 @@ const sensorGroupings = {
     'Wheels Speeds': ['flSpeed', 'frSpeed', 'rlSpeed', 'rrSpeed'],
     'Brake Pressures': ['fbrakes', 'rbrakes']
 }
-
-export { constGraphTitles, constDataTitles, sensorGroupings }
-
-

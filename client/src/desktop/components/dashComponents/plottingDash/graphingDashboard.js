@@ -1,13 +1,13 @@
 import React from 'react';
 import GraphBox from './graphBox';
 import { Row, Col } from 'react-bootstrap';
-import HeatMap from './heatMap'
+import SensorData from '../../../../constants';
 
 export default class GraphingDashboard extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            graphTitles: this.props.graphInfo,
+            plots: this.props.plots,
             displayModal: false,
             currentGraph: null
         }
@@ -17,22 +17,32 @@ export default class GraphingDashboard extends React.Component {
 
     componentWillMount = () => {
         this.createGraphs();
-        this.createToRender();
     }
 
     createGraphs = () => {
-        var i = 0
-        for (const graph of this.state.graphTitles) {
-            this.graphs.push(<GraphBox title={graph.title} name={graph.name} id={i + 1} units={graph.units} key={i + 1} />);
-            i++;
-        }
-    }
-
-    createToRender = () => {
-        for (const graph of this.graphs) this.container.push(<Row style={{ marginTop: '30px' }}><Col>{graph}</Col></Row>);
+        SensorData.getInstance().getSensors().then(sensorData => {
+            var i = 0;
+            for (const plot of this.state.plots) {
+                const sensors = sensorData.filter(item => { return item.category === plot; });
+                this.graphs.push(
+                    <GraphBox
+                        sensors={sensors}
+                        id={i + 1}
+                        key={i + 1}
+                    />
+                );
+                i++;
+            }
+            for (const graph of this.graphs) this.container.push(<Row style={{ marginTop: '30px' }}><Col>{graph}</Col></Row>);
+            this.forceUpdate();
+        })
     }
 
     render = () => {
-        return (<>{this.container}</>);
+        return (
+            <div style={{ marginBottom: '20px' }}>
+                {this.container}
+            </div>
+        ); //Add copyright at the bottom
     }
 }

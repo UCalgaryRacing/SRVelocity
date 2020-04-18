@@ -45,8 +45,7 @@ export default class StreamingDash extends React.Component {
     }
 
     doTestRun = () => {
-        const data = Data.getInstance();
-        data.doTestRun();
+        Data.getInstance().doTestRun()
     }
 
     updateSelectionComplete = () => {

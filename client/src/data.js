@@ -38,7 +38,7 @@ export default class Data {
         //For datasets objects
         sensorData.then(sensorData => {
             this.datasets = {};
-            for (var sensor of sensorData) this.datasets[sensor.code_name] = 0;
+            for (var sensor of sensorData) this.datasets[sensor.code_name] = [];
             this.datasets['Track Map'] = [{}];
         })
         //Connection to server for data receiving
@@ -51,9 +51,16 @@ export default class Data {
     updateData = (data) => {
         //Push data out to graphs
         sensorData.then(sensorData => {
-            for (var sensor of sensorData) this.datasets[sensor.code_name] = data[sensor.code_name];
+            for (var sensor of sensorData) (this.datasets[sensor.code_name]).push(data[sensor.code_name]); //Remove this once Redis DB is up
             this.datasets['Track Map'].push({ x: data.longitude, y: data.latitude });
             document.dispatchEvent(new Event('gotData'));
+        });
+    }
+
+    getAllData = (sensorName) => {
+        return sensorData.then(sensorData => {
+            var lookup = sensorData.filter(item => { return item.name === sensorName });
+            return this.datasets[lookup[0].code_name];
         });
     }
 
@@ -62,10 +69,10 @@ export default class Data {
             var sensors = sensorData.filter(item => { return item.category === index });
             if (sensors.length > 1) {
                 let temp = [];
-                for (var sensor of sensors) temp.push(this.datasets[sensor.code_name]);
+                for (var sensor of sensors) temp.push(this.datasets[sensor.code_name][this.datasets[sensor.code_name].length - 1]);
                 return temp;
             }
-            return [this.datasets[sensors[0].code_name]];
+            return [this.datasets[sensors[0].code_name][this.datasets[sensors[0].code_name].length - 1]];
         });
     }
 
@@ -75,10 +82,10 @@ export default class Data {
             var sensors = sensorData.filter(item => { return item.name === index });
             if (sensors.length > 1) {
                 let temp = [];
-                for (var sensor of sensors) temp.push(this.datasets[sensor.code_name]);
+                for (var sensor of sensors) temp.push(this.datasets[sensor.code_name][this.datasets[sensor.code_name].length - 1]);
                 return temp;
             }
-            return [this.datasets[sensors[0].code_name]];
+            return [this.datasets[sensors[0].code_name][this.datasets[sensors[0].code_name].length - 1]];
         });
     }
 

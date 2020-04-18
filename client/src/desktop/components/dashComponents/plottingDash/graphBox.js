@@ -28,7 +28,8 @@ export default class GraphBox extends React.Component {
         this.state = {
             currentRange: 0.5,
             indicationColour: '#000',
-            updatingRange: false
+            updatingRange: false,
+            derivativeIndices: []
         }
     }
 
@@ -54,8 +55,35 @@ export default class GraphBox extends React.Component {
                     if (newDatasets[0] === undefined) return;
                     newColour = this.updateColours(newDatasets[0]);
                 }
+                if(this.state.derivativeIndices.length > 0) {
+                    let dx = newDatasets[0] - this.state.data[0];
+                    let dt = 1; //10 Hz
+                    newDatasets.push(dx / dt);
+                }
                 this.setState({ data: newDatasets, indicationColour: newColour, updatingRange: false });
             }
+        });
+    }
+
+    plotDerivative = (sensor) => {
+        return Data.getInstance().getAllData(sensor).then(data => {
+            var derivative = [];
+            for (let i = 0; i < data.length; i++) {
+                if (i === 0) continue;
+                let dx = data[i] - data[i - 1];
+                let dt = 1; //10 Hz
+                derivative.push(dx / dt);
+            }
+            this.props.sensors.push({
+                derivative: true, 
+                name: sensor + "'", 
+                parent: sensor,
+                output_unit: this.props.sensors[0].output_unit + "/sec"
+            });
+            const parentIndex = this.props.sensors.findIndex(item => item.name === sensor);
+            this.state.derivativeIndices.push(parentIndex);
+            this.chart.current.addLineSeries(derivative, sensor);
+            return derivative;
         });
     }
 
@@ -128,6 +156,7 @@ export default class GraphBox extends React.Component {
                             }}
                         />
                     </div>
+                    <button onClick={() => { this.plotDerivative(this.props.sensors[0].name) }}></button>
                 </div>
             );
         }

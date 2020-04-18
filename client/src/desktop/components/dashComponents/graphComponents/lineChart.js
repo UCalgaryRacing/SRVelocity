@@ -15,13 +15,33 @@ export default class LineChart extends Component {
         this.i = 0;
         this.setupComplete = false;
         this.lineSeries = [];
-        this.colours = ['#0071B2', '#E69D00', '#009E73', '#CC79A7']; //Add more colours
+        this.maxValues = [];
+        for (var i = 0; i < this.props.sensors.length; i++) this.maxValues.push(0);
+        this.minValues = [];
+        for (var i = 0; i < this.props.sensors.length; i++) this.minValues.push(0);
+        this.colours = ['#C22D2D', '#0071B2', '#E69D00', '#009E73', '#CC79A7']; //Add more colours
     }
 
     componentDidMount = () => { this.createChart(); }
     componentWillUnmount = () => { this.chart.dispose(); }
-    componentDidUpdate = () => { 
-        if(!this.props.updatingRange) this.pullData(); 
+    componentDidUpdate = () => {
+        if (!this.props.updatingRange) this.pullData();
+    }
+
+    shadeColor = (color, percent) => {
+        var R = parseInt(color.substring(1,3),16);
+        var G = parseInt(color.substring(3,5),16);
+        var B = parseInt(color.substring(5,7),16);
+        R = parseInt(R * (100 + percent) / 100);
+        G = parseInt(G * (100 + percent) / 100);
+        B = parseInt(B * (100 + percent) / 100);
+        R = (R<255)?R:255;  
+        G = (G<255)?G:255;  
+        B = (B<255)?B:255;  
+        var RR = ((R.toString(16).length==1)?"0"+R.toString(16):R.toString(16));
+        var GG = ((G.toString(16).length==1)?"0"+G.toString(16):G.toString(16));
+        var BB = ((B.toString(16).length==1)?"0"+B.toString(16):B.toString(16));
+        return "#"+RR+GG+BB;
     }
 
     configureAutoCursor() {
@@ -43,6 +63,32 @@ export default class LineChart extends Component {
         autoCursor.getResultTable().setFont(font);
         autoCursor.getResultTable().setTextFillStyle(new SolidFill({ color: ColorHEX('#FFF') }));
         autoCursor.getResultTable().getBackground().setFillStyle(new SolidFill({ color: ColorHEX('#C22D2D') }));
+    }
+
+    addLineSeries = (data, parent) => {
+        let map = [];
+        for (let i = 0; i < data.length; i++) {
+            map.push({ x: i, y: data[i] });
+        }
+        var parentIndex;
+        var colour = this.colours[this.lineSeries.length];
+        if (parent !== undefined) {
+            parentIndex = this.props.sensors.findIndex(item => item.name === parent);
+            colour = this.colours[parentIndex];
+        }
+        this.lineSeries.push(this.chart.addLineSeries({ dataPattern: DataPatterns.horizontalProgressive }).setName(''));
+        this.lineSeries[this.lineSeries.length - 1]
+            .setStrokeStyle(new SolidLine({
+                thickness: 2,
+                fillStyle: new SolidFill({ color: ColorHEX(colour) })
+            }).setFillStyle(solidfill => solidfill.setA((parent !== undefined) ? '80': 'FF')))
+            .setMouseInteractions(false)
+            .setResultTableFormatter((builder, series, Xvalue, Yvalue) => {
+                return builder
+                    .addRow(Yvalue.toFixed(3) + " " + this.props.sensors[this.lineSeries.length - 1].output_unit)
+            })
+            .add(map.map((point) => ({ x: point.x, y: point.y })));
+        this.maxValues.push(0);
     }
 
     configureLineSeries = () => {
@@ -116,7 +162,6 @@ export default class LineChart extends Component {
         var ticks = new VisibleTicks({ labelFillStyle: new SolidFill({ color: ColorHEX('#000'), tickLength: 8 }), labelFont: font });
         ticks.setLabelPadding(100);
         axis.setTickStyle(ticks);
-        this.chart.getDefaultAxisY().setInterval(this.props.sensors[0].lower_bound, this.props.sensors[0].upper_bound, false, true);
         this.configureLineSeries();
     }
 
@@ -125,7 +170,14 @@ export default class LineChart extends Component {
     pullData = () => {
         let data = this.props.data;
         if (this.setupComplete) {
-            if (data.length === 1) this.lineSeries[0].add({ x: this.i, y: data[0] }); 
+            //Set the interval
+            // for (i in this.maxValues) if (data[i] > this.maxValues[i]) this.maxValues[i] = data[i];
+            // for (i in this.minValues) if (data[i] < this.minValues[i]) this.minValues[i] = data[i];
+            // var max = this.maxValues.reduce((a, b) => { return Math.max(a, b); });
+            // var min = this.minValues.reduce((a, b) => { return Math.min(a, b); });
+            // this.chart.getDefaultAxisY().setInterval(Math.round(min * 1.3), Math.round(max * 1.3));
+            //Add the data
+            if (data.length === 1) this.lineSeries[0].add({ x: this.i, y: data[0] });
             else {
                 var i = 0;
                 while (i < this.props.data.length) {
@@ -140,19 +192,33 @@ export default class LineChart extends Component {
     render() {//TODO: Clean up CSS
         //Just to shorten the code a bit
         let data = this.props.data;
-        let sensors = this.props.sensors
+        let sensors = this.props.sensors;
         let content = [];
         //Make all of the columns for displaying current values
         for (const sensor in sensors) {
-            content.push(
-                <div class='col' style={{ textAlign: 'center', padding: '0'}}>
-                    <div class='row' style={{ textAlign: 'center' , width: '100%', padding: '0', margin: '0'}}>
-                        <div class='col' style={{ color: this.colours[sensor], fontStyle: 'bold', textAlign: 'right', padding: '0' }}><b>{sensors[sensor].name}:</b></div>
-                        <div class='col' style={{ fontStyle: 'bold', textAlign: 'center' , padding: '0'}}><b>{(data === undefined) ? '0' : data[sensor]}</b></div>
-                        <div class='col' style={{ fontStyle: 'bold', textAlign: 'left', padding: '0' }}><b>{sensors[0].output_unit}</b></div>
+            if (sensors[sensor].derivative) {
+                //To get the colour
+                const parentIndex = sensors.findIndex(item => item.name === sensors[sensor].parent);
+                content.push(
+                    <div class='col' style={{ textAlign: 'center', padding: '0' }}>
+                        <div class='row' style={{ textAlign: 'center', width: '100%', padding: '0', margin: '0' }}>
+                            <div class='col' style={{ color: this.colours[parentIndex] + '80', fontStyle: 'bold', textAlign: 'right', padding: '0' }}><b>{sensors[sensor].name}:</b></div>
+                            <div class='col' style={{ fontStyle: 'bold', textAlign: 'center', padding: '0' }}><b>{(data === undefined) ? '0' : data[sensor].toFixed(2)}</b></div>
+                            <div class='col' style={{ fontStyle: 'bold', textAlign: 'left', padding: '0' }}><b>{sensors[sensor].output_unit}</b></div>
+                        </div>
                     </div>
-                </div>
-            );
+                );
+            } else {
+                content.push(
+                    <div class='col' style={{ textAlign: 'center', padding: '0' }}>
+                        <div class='row' style={{ textAlign: 'center', width: '100%', padding: '0', margin: '0' }}>
+                            <div class='col' style={{ color: this.colours[sensor], fontStyle: 'bold', textAlign: 'right', padding: '0' }}><b>{sensors[sensor].name}:</b></div>
+                            <div class='col' style={{ fontStyle: 'bold', textAlign: 'center', padding: '0' }}><b>{(data === undefined) ? '0' : data[sensor]}</b></div>
+                            <div class='col' style={{ fontStyle: 'bold', textAlign: 'left', padding: '0' }}><b>{sensors[0].output_unit}</b></div>
+                        </div>
+                    </div>
+                );
+            }
         }
         //Show a multiseries plot
         if (sensors.length > 1) {
@@ -164,7 +230,7 @@ export default class LineChart extends Component {
                     <div id={this.chartId} className='fill' style={{ height: '500px' }}></div>
                 </div>
             );
-        } 
+        }
         //Show a single series plot
         else {
             return (

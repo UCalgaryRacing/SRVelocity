@@ -51,10 +51,7 @@ export default class Data {
     updateData = (data) => {
         //Push data out to graphs
         sensorData.then(sensorData => {
-            for (var sensor in sensorData) {
-                if (sensor.code_name === 'latitude' || sensor.code_name === 'longitude') continue;
-                this.datasets[sensor.code_name] = data[sensor.code_name];
-            }
+            for (var sensor of sensorData) this.datasets[sensor.code_name] = data[sensor.code_name];
             this.datasets['Track Map'].push({ x: data.longitude, y: data.latitude });
             document.dispatchEvent(new Event('gotData'));
         });
@@ -183,12 +180,7 @@ export default class Data {
             data.voltage = distance[this.count];
             data.rpm = distance[this.count];
             this.count = this.count + 1;
-            for (var sensor of sensorData) {
-                if (sensor.code_name === 'latitude' || sensor.code_name === 'longitude') continue;
-                this.datasets[sensor.code_name] = data[sensor.code_name];
-            }
-            this.datasets['Track Map'].push({ x: data.longitude, y: data.latitude });
-            document.dispatchEvent(new Event('gotData'));
+            this.updateData(data);
         });
     }
 

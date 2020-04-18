@@ -1,6 +1,6 @@
 import React from 'react';
 import DataDashboard from './dataDashboard';
-import CustomDataChoice from "./customDataChoice";
+import CustomChoice from '../customChoice';
 import '../../../styling/customDash.css';
 
 export default class CustomDataDash extends React.Component {
@@ -23,7 +23,7 @@ export default class CustomDataDash extends React.Component {
         return (
             <div id='customDash' >
                 {this.state.showChoice ? 
-                    <CustomDataChoice enter={this.enter}/>:
+                    <CustomChoice enter={this.enter} type={'data'}/>:
                     <DataDashboard categories={this.state.selectedCategories}/>}
             </div>
         );

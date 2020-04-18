@@ -26,21 +26,6 @@ export default class SensorData {
         return result;
     }
 
-    getNames = async (category) => {
-        var sensors = await SensorData.sensors;
-        var lookup = {};
-        var result = [];
-        for (var sensor, i = 0; sensor = sensors[i++];) {
-            var name = sensor.name;
-            if (!(name in lookup)) {
-                lookup[name] = name;
-                result.push(name);
-            }
-        }
-        console.log(result)
-        return result;
-    }
-
     getSensors = async () => {
         var sensors = await SensorData.sensors;
         return sensors;

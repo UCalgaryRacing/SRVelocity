@@ -7,9 +7,9 @@ import CustomPlottingDash from './plottingDash/customPlottingDashboard';
 import CustomDataDash from './dataDash/customDataDashboard';
 import GraphBox from './plottingDash/graphBox';
 import RadialChart from './graphComponents/radialChart';
-import '../../styling/dashboard.css';
 import Data from '../../../data';
 import SensorData from '../../../constants';
+import '../../styling/dashboard.css';
 
 export default class StreamingDash extends React.Component {
     constructor(props) {
@@ -60,7 +60,7 @@ export default class StreamingDash extends React.Component {
             </ButtonGroup >
         );
         let testRun = (<Button id='accelMapButton' onClick={this.doTestRun} style={{ marginTop: '60px', position: 'absolute', right: '20px' }}><b>Do a Test Run</b></Button>);
-        let trackMap = (<div id='trackMap'><GraphBox title={"Track Map"} id={10000} key={10000} /></div>);
+        let trackMap = (<div id='trackMap'><GraphBox sensors={[{category: 'Track Map'}]} id={10000} key={10000} /></div>);
         let accelMap = (<div id='accelMap'><RadialChart showLabels={false} /></div>);
         return (
             <div id='dashboard'>

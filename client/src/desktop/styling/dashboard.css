@@ -46,6 +46,10 @@
     z-index: 10000;
 }
 
+#trackMap #graphBox {
+    margin: 0px;
+}
+
 #trackMap #scatterPlot {
     margin: 0 !important;
 }

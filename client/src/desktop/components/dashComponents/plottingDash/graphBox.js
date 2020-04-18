@@ -41,10 +41,12 @@ export default class GraphBox extends React.Component {
     }
 
     pullData = () => {
-        let newDatasets = Data.getInstance().get(this.props.sensors[0].category);
+        var newDatasets;
+        if(this.props.sensors[0].category !== 'Track Map') newDatasets = Data.getInstance().get(this.props.sensors[0].category);
+        else newDatasets = Data.getInstance().getDataPoint('Track Map');
         newDatasets.then(newDatasets => {
             if (newDatasets === undefined) return;
-            if (this.props.title === 'Track Map') { this.setState({ data: newDatasets }); }
+            if (this.props.title === 'Track Map') this.setState({ data: newDatasets }); 
             else {
                 var newColour;
                 if (newDatasets.length === undefined) newColour = this.updateColours(newDatasets); 
@@ -89,11 +91,11 @@ export default class GraphBox extends React.Component {
     }
 
     render = () => {
-        if (this.props.title === 'Track Map') {
+        if (this.props.sensors[0].category === 'Track Map') {
             return (
                 <div id='graphBox' style={{ width: '100%' }}>
-                    <p id='graphTitle'><b>{this.props.title}</b></p>
-                    <HeatMap choice={this.props.choice} />
+                    <p id='graphTitle'><b>{'Track Map'}</b></p>
+                    <HeatMap currentPoint={this.state.data}/>
                 </div>
             );
         }

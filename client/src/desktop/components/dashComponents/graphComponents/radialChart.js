@@ -43,10 +43,10 @@ export default class RadialChart extends Component {
         this.chart.engine.container.onwheel = null;
         this.series = this.chart.addSeries();
         this.series.addPoints(
-            {axis: this.categories[0], value: 0}, 
-            {axis: this.categories[1], value: 0},
-            {axis: this.categories[2], value: 0},
-            {axis: this.categories[3], value: 0});
+            {axis: 'Y', value: 0}, 
+            {axis: 'X', value: 0},
+            {axis: '-Y', value: 0},
+            {axis: '-X', value: 0});
         this.series
         .setStrokeStyle(new SolidLine({
             thickness: 0,
@@ -69,39 +69,40 @@ export default class RadialChart extends Component {
     }
 
     pullData() {
-        let data = Data.getInstance().get('Acceleration');
-        if (this.setupComplete) {
-            let x = data[0]
-            let y = data[1]
-            if(x > 0 && y > 0) {
-                this.series.addPoints(
-                    {axis: this.categories[0], value: y}, 
-                    {axis: this.categories[1], value: x},
-                    {axis: this.categories[2], value: 0},
-                    {axis: this.categories[3], value: 0});
+        Data.getInstance().get('Acceleration').then(data => {
+            if (this.setupComplete) {
+                let x = data[0];
+                let y = data[1];
+                if(x > 0 && y > 0) {
+                    this.series.addPoints(
+                        {axis: 'Y', value: y}, 
+                        {axis: 'X', value: x},
+                        {axis: '-Y', value: 0},
+                        {axis: '-X', value: 0});
+                }
+                else if(x > 0 && y < 0) {
+                    this.series.addPoints(
+                        {axis: 'Y', value: 0}, 
+                        {axis: 'X', value: x},
+                        {axis: '-Y', value: Math.abs(y)},
+                        {axis: '-X', value: 0});
+                }
+                else if(x < 0 && y > 0) {
+                    this.series.addPoints(
+                        {axis: 'Y', value: y}, 
+                        {axis: 'X', value: 0},
+                        {axis: '-Y', value: 0},
+                        {axis: '-X', value: Math.abs(x)});
+                }
+                else {
+                    this.series.addPoints(
+                        {axis: 'Y', value: 0}, 
+                        {axis: 'X', value: 0},
+                        {axis: '-Y', value: Math.abs(y)},
+                        {axis: '-X', value: Math.abs(x)});
+                }
             }
-            else if(x > 0 && y < 0) {
-                this.series.addPoints(
-                    {axis: this.categories[0], value: 0}, 
-                    {axis: this.categories[1], value: x},
-                    {axis: this.categories[2], value: Math.abs(y)},
-                    {axis: this.categories[3], value: 0});
-            }
-            else if(x < 0 && y > 0) {
-                this.series.addPoints(
-                    {axis: this.categories[0], value: y}, 
-                    {axis: this.categories[1], value: 0},
-                    {axis: this.categories[2], value: 0},
-                    {axis: this.categories[3], value: Math.abs(x)});
-            }
-            else {
-                this.series.addPoints(
-                    {axis: this.categories[0], value: 0}, 
-                    {axis: this.categories[1], value: 0},
-                    {axis: this.categories[2], value: Math.abs(y)},
-                    {axis: this.categories[3], value: Math.abs(x)});
-            }
-        }
+        });
     }
 
     render() {

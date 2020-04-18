@@ -1,7 +1,7 @@
 import React from 'react';
 import '../../../styling/customDash.css';
 import GraphingDashboard from "./graphingDashboard";
-import CustomGraphChoice from "./customGraphChoice";
+import CustomChoice from '../customChoice';
 
 export default class CustomPlottingDash extends React.Component {
     constructor(props) {
@@ -20,7 +20,7 @@ export default class CustomPlottingDash extends React.Component {
         return (
             <div id='customDash'>
                 {this.state.showChoice ?
-                    <CustomGraphChoice enter={this.enter} /> :
+                    <CustomChoice enter={this.enter} type={'plot'}/>:
                     <GraphingDashboard plots={this.state.selectedGraphs} />}
             </div>
         );

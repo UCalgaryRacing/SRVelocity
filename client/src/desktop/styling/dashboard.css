@@ -22,6 +22,22 @@
     opacity: 1;
 }
 
+#toggleButton {
+    background: rgb(194, 45, 45);
+    opacity: 1;
+    border: 0px solid;
+    width: 200px;
+}
+
+#derivativeButton {
+    background: rgb(194, 45, 45);
+    opacity: 1;
+    border: 0px solid;
+    padding: 2px;
+    margin-right: 5px;
+    margin-bottom: 3px;
+}
+
 #trackMapButton {
     background: rgb(194, 45, 45);
     opacity: 1;

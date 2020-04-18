@@ -1,6 +1,7 @@
 import React from 'react';
 import LineChart from '../graphComponents/lineChart';
 import HeatMap from '../graphComponents/heatMap';
+import { Button } from 'react-bootstrap';
 import { Slider } from '@material-ui/core';
 import { withStyles } from '@material-ui/core/styles';
 import Data from '../../../../data';
@@ -29,6 +30,8 @@ export default class GraphBox extends React.Component {
             currentRange: 0.5,
             indicationColour: '#000',
             updatingRange: false,
+            updatingTitles: false,
+            updatingGrid: false,
             sensors: this.props.sensors
         }
         this.derivativeIndices = [];
@@ -57,17 +60,17 @@ export default class GraphBox extends React.Component {
                     newColour = this.updateColours(newDatasets[0]);
                 }
                 for (var i in this.derivativeIndices) {
+                    if (this.state.data === undefined) break;
                     let dx = newDatasets[i] - this.state.data[i];
                     let dt = 1; //10 Hz
                     newDatasets.push(dx / dt);
                 }
-                this.setState({ data: newDatasets, indicationColour: newColour, updatingRange: false });
+                this.setState({ data: newDatasets, indicationColour: newColour, updatingRange: false, updatingTitles: false });
             }
         });
     }
 
     controlDerivative = (sensor) => {
-        if (this.state.data === undefined) return;
         const parentIndex = this.props.sensors.findIndex(item => item.name === sensor);
         if (this.derivativeIndices.includes(parentIndex)) {
             //This derivative is in trouble
@@ -78,9 +81,11 @@ export default class GraphBox extends React.Component {
             this.state.sensors.find((item, i) => {
                 if (item.parent === sensor) seriesIndex = i;
             });
-            this.chart.current.removeSeries(seriesIndex);
+            this.chart.current.removeSeries(seriesIndex, parentIndex);
             //Remove the sensor
-            this.state.sensors = this.state.sensors.filter(element => !element.derivative && element.parent !== sensor);
+            this.state.sensors = this.state.sensors.filter(element => element.name !== sensor + "'");
+            //Update titles
+            this.setState({ updatingTitles: true });
         } else {
             this.derivativeIndices.push(parentIndex);
             Data.getInstance().getAllData(sensor).then(data => {
@@ -98,6 +103,7 @@ export default class GraphBox extends React.Component {
                     parent: sensor,
                     output_unit: this.props.sensors[0].output_unit + "/sec"
                 });
+                this.setState({ updatingTitles: true });
             });
         }
     }
@@ -133,6 +139,14 @@ export default class GraphBox extends React.Component {
         }
     }
 
+    toggleGrid = () => {
+        this.chart.current.toggleGrid();
+    }
+
+    toggleRightAxis = () => {
+        this.chart.current.toggleRightAxis();
+    }
+
     render = () => {
         if (this.state.sensors[0].category === 'Track Map') {
             return (
@@ -152,11 +166,15 @@ export default class GraphBox extends React.Component {
                             data={this.state.data}
                             sensors={this.state.sensors}
                             updatingRange={this.state.updatingRange}
+                            updatingTitles={this.state.updatingTitles}
+                            updatingGrid={this.state.updatingGrid}
                             controlDerivative={this.controlDerivative}
                             ref={this.chart}
                         />
                     </div>
                     <div style={{ width: '50%', margin: 'auto' }}>
+                        <Button id='toggleButton' onClick={this.toggleRightAxis} style={{ position: 'absolute', right: '45px', bottom: '60px' }}><b>Toggle Right Axis</b></Button>
+                        <Button id='toggleButton' onClick={this.toggleGrid} style={{ position: 'absolute', right: '45px', bottom: '20px' }}><b>Toggle Grid</b></Button>
                         <p style={{ textAlign: 'center', marginBottom: '30px' }}><b>Data Range (minutes)</b></p>
                         <RangeSlider
                             defaultValue={[0, 0.5]}

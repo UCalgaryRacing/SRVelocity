@@ -29,8 +29,9 @@ export default class GraphBox extends React.Component {
             currentRange: 0.5,
             indicationColour: '#000',
             updatingRange: false,
-            derivativeIndices: []
+            sensors: this.props.sensors
         }
+        this.derivativeIndices = [];
     }
 
     componentWillMount() {
@@ -55,8 +56,8 @@ export default class GraphBox extends React.Component {
                     if (newDatasets[0] === undefined) return;
                     newColour = this.updateColours(newDatasets[0]);
                 }
-                if(this.state.derivativeIndices.length > 0) {
-                    let dx = newDatasets[0] - this.state.data[0];
+                for (var i in this.derivativeIndices) {
+                    let dx = newDatasets[i] - this.state.data[i];
                     let dt = 1; //10 Hz
                     newDatasets.push(dx / dt);
                 }
@@ -65,26 +66,40 @@ export default class GraphBox extends React.Component {
         });
     }
 
-    plotDerivative = (sensor) => {
-        return Data.getInstance().getAllData(sensor).then(data => {
-            var derivative = [];
-            for (let i = 0; i < data.length; i++) {
-                if (i === 0) continue;
-                let dx = data[i] - data[i - 1];
-                let dt = 1; //10 Hz
-                derivative.push(dx / dt);
-            }
-            this.props.sensors.push({
-                derivative: true, 
-                name: sensor + "'", 
-                parent: sensor,
-                output_unit: this.props.sensors[0].output_unit + "/sec"
+    controlDerivative = (sensor) => {
+        if (this.state.data === undefined) return;
+        const parentIndex = this.props.sensors.findIndex(item => item.name === sensor);
+        if (this.derivativeIndices.includes(parentIndex)) {
+            //This derivative is in trouble
+            const index = this.derivativeIndices.indexOf(parentIndex);
+            this.derivativeIndices.splice(index, 1);
+            //Remove from graph
+            var seriesIndex = -1;
+            this.state.sensors.find((item, i) => {
+                if (item.parent === sensor) seriesIndex = i;
             });
-            const parentIndex = this.props.sensors.findIndex(item => item.name === sensor);
-            this.state.derivativeIndices.push(parentIndex);
-            this.chart.current.addLineSeries(derivative, sensor);
-            return derivative;
-        });
+            this.chart.current.removeSeries(seriesIndex);
+            //Remove the sensor
+            this.state.sensors = this.state.sensors.filter(element => !element.derivative && element.parent !== sensor);
+        } else {
+            this.derivativeIndices.push(parentIndex);
+            Data.getInstance().getAllData(sensor).then(data => {
+                var derivative = [];
+                for (let i = 0; i < data.length; i++) {
+                    if (i === 0) continue;
+                    let dx = data[i] - data[i - 1];
+                    let dt = 1; //10 Hz
+                    derivative.push(dx / dt);
+                }
+                this.chart.current.addLineSeries(derivative, sensor);
+                this.state.sensors.push({
+                    derivative: true,
+                    name: sensor + "'",
+                    parent: sensor,
+                    output_unit: this.props.sensors[0].output_unit + "/sec"
+                });
+            });
+        }
     }
 
     updateColours = (value) => {
@@ -119,7 +134,7 @@ export default class GraphBox extends React.Component {
     }
 
     render = () => {
-        if (this.props.sensors[0].category === 'Track Map') {
+        if (this.state.sensors[0].category === 'Track Map') {
             return (
                 <div id='graphBox' style={{ marginRight: '19px', marginLeft: '0px' }}>
                     <p id='graphTitle'><b>{'Track Map'}</b></p>
@@ -135,8 +150,9 @@ export default class GraphBox extends React.Component {
                         <LineChart
                             id={this.props.id}
                             data={this.state.data}
-                            sensors={this.props.sensors}
+                            sensors={this.state.sensors}
                             updatingRange={this.state.updatingRange}
+                            controlDerivative={this.controlDerivative}
                             ref={this.chart}
                         />
                     </div>
@@ -156,7 +172,6 @@ export default class GraphBox extends React.Component {
                             }}
                         />
                     </div>
-                    <button onClick={() => { this.plotDerivative(this.props.sensors[0].name) }}></button>
                 </div>
             );
         }

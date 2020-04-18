@@ -21,7 +21,6 @@ export default class DataDashboard extends React.Component {
         SensorData.getInstance().getSensors().then(async sensorData => {
             var i = 0;
             var categories = await this.state.categories;
-            console.log(categories)
             for (const category of categories) { 
                 const sensors = sensorData.filter(item => { return item.category === category; });
                 for(const sensor of sensors) {

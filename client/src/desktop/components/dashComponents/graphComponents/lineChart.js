@@ -15,33 +15,18 @@ export default class LineChart extends Component {
         this.i = 0;
         this.setupComplete = false;
         this.lineSeries = [];
-        this.maxValues = [];
-        for (var i = 0; i < this.props.sensors.length; i++) this.maxValues.push(0);
-        this.minValues = [];
-        for (var i = 0; i < this.props.sensors.length; i++) this.minValues.push(0);
-        this.colours = ['#C22D2D', '#0071B2', '#E69D00', '#009E73', '#CC79A7']; //Add more colours
+        this.maxValue = 0;
+        this.minValue = 0;
+        this.colours = ['#C22D2D', '#0071B2', '#009E73', '#E69D00', '#CC79A7']; //Add more colours
     }
 
-    componentDidMount = () => { this.createChart(); }
+    componentDidMount = () => { 
+        this.createChart(); 
+        this.getData();
+    }
     componentWillUnmount = () => { this.chart.dispose(); }
     componentDidUpdate = () => {
         if (!this.props.updatingRange) this.pullData();
-    }
-
-    shadeColor = (color, percent) => {
-        var R = parseInt(color.substring(1,3),16);
-        var G = parseInt(color.substring(3,5),16);
-        var B = parseInt(color.substring(5,7),16);
-        R = parseInt(R * (100 + percent) / 100);
-        G = parseInt(G * (100 + percent) / 100);
-        B = parseInt(B * (100 + percent) / 100);
-        R = (R<255)?R:255;  
-        G = (G<255)?G:255;  
-        B = (B<255)?B:255;  
-        var RR = ((R.toString(16).length==1)?"0"+R.toString(16):R.toString(16));
-        var GG = ((G.toString(16).length==1)?"0"+G.toString(16):G.toString(16));
-        var BB = ((B.toString(16).length==1)?"0"+B.toString(16):B.toString(16));
-        return "#"+RR+GG+BB;
     }
 
     configureAutoCursor() {
@@ -68,7 +53,7 @@ export default class LineChart extends Component {
     addLineSeries = (data, parent) => {
         let map = [];
         for (let i = 0; i < data.length; i++) {
-            map.push({ x: i, y: data[i] });
+            map.push({ x: i + 1, y: data[i] }); //Can't get derivative of first value
         }
         var parentIndex;
         var colour = this.colours[this.lineSeries.length];
@@ -81,14 +66,22 @@ export default class LineChart extends Component {
             .setStrokeStyle(new SolidLine({
                 thickness: 2,
                 fillStyle: new SolidFill({ color: ColorHEX(colour) })
-            }).setFillStyle(solidfill => solidfill.setA((parent !== undefined) ? '80': 'FF')))
+            }).setFillStyle(solidfill => solidfill.setA((parent !== undefined) ? '80' : 'FF')))
             .setMouseInteractions(false)
             .setResultTableFormatter((builder, series, Xvalue, Yvalue) => {
                 return builder
                     .addRow(Yvalue.toFixed(3) + " " + this.props.sensors[this.lineSeries.length - 1].output_unit)
             })
             .add(map.map((point) => ({ x: point.x, y: point.y })));
-        this.maxValues.push(0);
+    }
+
+    removeSeries = (index) => {
+        this.lineSeries[index].dispose();
+        var temp = [];
+        for(var i = 0; i < this.lineSeries.length; i++) {
+            if(i !== index) temp.push(this.lineSeries[i]);
+        }
+        this.lineSeries = temp;
     }
 
     configureLineSeries = () => {
@@ -167,25 +160,49 @@ export default class LineChart extends Component {
 
     changeInterval = (lower, upper) => { this.chart.getDefaultAxisX().setInterval(lower, upper) }
 
+    getData = () => {
+        //Get all available data here
+    }
+
     pullData = () => {
         let data = this.props.data;
+        if (data.length === 0) return;
         if (this.setupComplete) {
             //Set the interval
-            // for (i in this.maxValues) if (data[i] > this.maxValues[i]) this.maxValues[i] = data[i];
-            // for (i in this.minValues) if (data[i] < this.minValues[i]) this.minValues[i] = data[i];
-            // var max = this.maxValues.reduce((a, b) => { return Math.max(a, b); });
-            // var min = this.minValues.reduce((a, b) => { return Math.min(a, b); });
-            // this.chart.getDefaultAxisY().setInterval(Math.round(min * 1.3), Math.round(max * 1.3));
+            var setInterval = false;
+            for (i in data) {
+                if (data[i] > this.maxValue) {
+                    this.maxValue = data[i];
+                    setInterval = true;
+                }
+            }
+            for (i in data) {
+                if (data[i] < this.minValue) {
+                    this.minValue = data[i];
+                    setInterval = true;
+                }
+            }
+            if (setInterval) {
+                if(Math.round(this.minValue * 1.3) !== Math.round(this.minValue) || Math.round(this.maxValue * 1.3) !== Math.round(this.maxValue)) {
+                    let min = Math.round(this.minValue * 1.3);
+                    let max = Math.round(this.maxValue * 1.3);
+                    if(Math.abs(min) < 1.5) min = -2;
+                    if(Math.abs(max) < 1.5) max = 2;
+                    this.minValue = min;
+                    this.maxValue = max;
+                    this.chart.getDefaultAxisY().setInterval(min, max);
+                }
+            }
             //Add the data
             if (data.length === 1) this.lineSeries[0].add({ x: this.i, y: data[0] });
             else {
                 var i = 0;
-                while (i < this.props.data.length) {
+                while (i < this.lineSeries.length) {
                     this.lineSeries[i].add({ x: this.i, y: data[i] });
                     i++;
                 }
             }
-            this.i++
+            this.i++;
         }
     }
 
@@ -203,7 +220,7 @@ export default class LineChart extends Component {
                     <div class='col' style={{ textAlign: 'center', padding: '0' }}>
                         <div class='row' style={{ textAlign: 'center', width: '100%', padding: '0', margin: '0' }}>
                             <div class='col' style={{ color: this.colours[parentIndex] + '80', fontStyle: 'bold', textAlign: 'right', padding: '0' }}><b>{sensors[sensor].name}:</b></div>
-                            <div class='col' style={{ fontStyle: 'bold', textAlign: 'center', padding: '0' }}><b>{(data === undefined) ? '0' : data[sensor].toFixed(2)}</b></div>
+                            <div class='col' style={{ fontStyle: 'bold', textAlign: 'center', padding: '0' }}><b>{(data === undefined) ? '0' : (data[sensor]*10).toFixed(2)}</b></div>
                             <div class='col' style={{ fontStyle: 'bold', textAlign: 'left', padding: '0' }}><b>{sensors[sensor].output_unit}</b></div>
                         </div>
                     </div>
@@ -212,7 +229,10 @@ export default class LineChart extends Component {
                 content.push(
                     <div class='col' style={{ textAlign: 'center', padding: '0' }}>
                         <div class='row' style={{ textAlign: 'center', width: '100%', padding: '0', margin: '0' }}>
-                            <div class='col' style={{ color: this.colours[sensor], fontStyle: 'bold', textAlign: 'right', padding: '0' }}><b>{sensors[sensor].name}:</b></div>
+                            <div class='col' style={{ color: this.colours[sensor], fontStyle: 'bold', textAlign: 'right', padding: '0' }}>
+                                <button onClick={() => { this.props.controlDerivative(sensors[sensor].name) }}>f'(x)</button>
+                                <b>{sensors[sensor].name}:</b>
+                                </div>
                             <div class='col' style={{ fontStyle: 'bold', textAlign: 'center', padding: '0' }}><b>{(data === undefined) ? '0' : data[sensor]}</b></div>
                             <div class='col' style={{ fontStyle: 'bold', textAlign: 'left', padding: '0' }}><b>{sensors[0].output_unit}</b></div>
                         </div>
@@ -234,8 +254,9 @@ export default class LineChart extends Component {
         //Show a single series plot
         else {
             return (
-                <div style={{ margin: '20px' }}>
+                <div style={{ marginBottom: '20px' }}>
                     <p style={{ textAlign: 'center', fontSize: '1.2rem', paddingTop: '0', paddingBottom: '0', marginTop: '10px', marginBottom: '0px' }}>
+                    <button onClick={() => { this.props.controlDerivative(sensors[0].name) }}>f'(x)</button>
                         <b>{(data === undefined) ? '0' : data[0]}&nbsp;{sensors[0].output_unit}</b>
                     </p>
                     <div id={this.chartId} className='fill' style={{ height: '500px' }} onWheel={(event) => { return true; }}></div>

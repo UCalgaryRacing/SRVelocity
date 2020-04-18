@@ -42,19 +42,19 @@ export default class GraphBox extends React.Component {
 
     pullData = () => {
         var newDatasets;
-        if(this.props.sensors[0].category !== 'Track Map') newDatasets = Data.getInstance().get(this.props.sensors[0].category);
+        if (this.props.sensors[0].category !== 'Track Map') newDatasets = Data.getInstance().get(this.props.sensors[0].category);
         else newDatasets = Data.getInstance().getDataPoint('Track Map');
         newDatasets.then(newDatasets => {
             if (newDatasets === undefined) return;
-            if (this.props.title === 'Track Map') this.setState({ data: newDatasets }); 
+            if (this.props.title === 'Track Map') this.setState({ data: newDatasets });
             else {
                 var newColour;
-                if (newDatasets.length === undefined) newColour = this.updateColours(newDatasets); 
+                if (newDatasets.length === undefined) newColour = this.updateColours(newDatasets);
                 else {
-                    if (newDatasets[0] === undefined) return; 
+                    if (newDatasets[0] === undefined) return;
                     newColour = this.updateColours(newDatasets[0]);
                 }
-                this.setState({ data: newDatasets, indicationColour: newColour, updatingRange: false});
+                this.setState({ data: newDatasets, indicationColour: newColour, updatingRange: false });
             }
         });
     }
@@ -83,19 +83,19 @@ export default class GraphBox extends React.Component {
 
     handleRangeChange = (event, value) => {
         if (value !== this.state.currentRange) {
-            this.setState({ 
+            this.setState({
                 currentRange: value, updatingRange: true
-            }, 
-            this.chart.current.changeInterval(value[0] * 60 * 10, value[1] * 60 * 10));
+            },
+                this.chart.current.changeInterval(value[0] * 60 * 10, value[1] * 60 * 10));
         }
     }
 
     render = () => {
         if (this.props.sensors[0].category === 'Track Map') {
             return (
-                <div id='graphBox' style={{ width: '100%' }}>
+                <div id='graphBox' style={{ marginRight: '19px', marginLeft: '0px' }}>
                     <p id='graphTitle'><b>{'Track Map'}</b></p>
-                    <HeatMap currentPoint={this.state.data}/>
+                    <HeatMap currentPoint={this.state.data} />
                 </div>
             );
         }

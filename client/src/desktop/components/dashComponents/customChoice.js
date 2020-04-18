@@ -50,7 +50,7 @@ export default class CustomChoice extends React.Component {
 
     render = () => {
         return (
-            <div id='graphChoice'>
+            <div id='graphChoice' style={{marginLeft: '20px'}}>
                 {this.state.overMax ?
                     <p>Please select only {this.MAX_GRAPHS} graphs. ({this.indices.length} currently chosen)</p> : null}
                 <Form>{this.switches}</Form>

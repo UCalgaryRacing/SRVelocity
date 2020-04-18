@@ -46,7 +46,7 @@ export default class StreamingDash extends React.Component {
     }
 
     render = () => {
-        let defaultDash = ['Engine Temperature', 'Oil Pressure', 'Oil Temperature', 'Air To Fuel', 'Fuel Temperature','RPM','Suspension','Acceleration','Axes']
+        let defaultDash = ['Track Map','Engine Temperature', 'Oil Pressure', 'Oil Temperature', 'Air To Fuel', 'Fuel Temperature','Acceleration','Axes']
         let dashSelector = (
             <ButtonGroup id='dashSelector' style={{ marginTop: '60px' }}>
                 <Button id='defaultButton' onClick={this.changeDash} disabled={(this.state.dashOption === 'default') ? true : false}><b>Default</b></Button>

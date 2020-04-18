@@ -18,16 +18,20 @@ export default class StreamingDash extends React.Component {
             dashOption: 'default',
             typeOption: 'plotting',
             showTrackMap: false,
-            showAccelMap: false
+            showAccelMap: false,
+            selectionComplete: true
         }
     }
 
-    changeDash = () => { 
-        this.setState({ dashOption: (this.state.dashOption === 'default') ? 'custom' : 'default' }); 
+    changeDash = () => {
+        this.setState({ 
+            dashOption: (this.state.dashOption === 'default') ? 'custom' : 'default',
+            selectionComplete: (this.state.dashOption === 'default') ? false : true
+        });
     }
 
-    changeType = () => { 
-        this.setState({ typeOption: (this.state.typeOption === 'plotting') ? 'currentData' : 'plotting' }); 
+    changeType = () => {
+        this.setState({ typeOption: (this.state.typeOption === 'plotting') ? 'currentData' : 'plotting' });
     }
 
     toggleTrackMap = () => {
@@ -45,8 +49,12 @@ export default class StreamingDash extends React.Component {
         data.doTestRun();
     }
 
+    updateSelectionComplete = () => {
+        this.setState({selectionComplete: !this.state.selectionComplete})
+    }
+
     render = () => {
-        let defaultDash = ['Track Map','Engine Temperature', 'Oil Pressure', 'Oil Temperature', 'Air To Fuel', 'Fuel Temperature','Acceleration','Axes']
+        let defaultDash = ['Track Map', 'Engine Temperature', 'Oil Pressure', 'Oil Temperature', 'Air To Fuel', 'Fuel Temperature', 'Acceleration', 'Axes']
         let dashSelector = (
             <ButtonGroup id='dashSelector' style={{ marginTop: '60px' }}>
                 <Button id='defaultButton' onClick={this.changeDash} disabled={(this.state.dashOption === 'default') ? true : false}><b>Default</b></Button>
@@ -60,16 +68,18 @@ export default class StreamingDash extends React.Component {
             </ButtonGroup >
         );
         let testRun = (<Button id='accelMapButton' onClick={this.doTestRun} style={{ marginTop: '60px', position: 'absolute', right: '20px' }}><b>Do a Test Run</b></Button>);
-        let trackMap = (<div id='trackMap'><GraphBox sensors={[{category: 'Track Map'}]} id={10000} key={10000} /></div>);
+        let trackMap = (<div id='trackMap'><GraphBox sensors={[{ category: 'Track Map' }]} id={10000} key={10000} /></div>);
         let accelMap = (<div id='accelMap'><RadialChart showLabels={false} /></div>);
         return (
             <div id='dashboard'>
                 {dashSelector}&nbsp;&nbsp;
                 {typeSelector}&nbsp;&nbsp;
-                <Button id='trackMapButton' onClick={this.toggleTrackMap} style={{ marginTop: '60px' }}><b>{(this.state.showTrackMap) ? 'Hide Track Map' : 'Show Track Map'}</b></Button>
-                <Button id='accelMapButton' onClick={this.toggleAccelMap} style={{ marginTop: '60px', marginLeft: '8px' }}><b>{(this.state.showAccelMap) ? 'Hide Accel Map' : 'Show Accel Map'}</b></Button>
-                {testRun}
-                {(this.state.dashOption === 'default') ? ((this.state.typeOption === 'plotting') ? <GraphingDashboard plots={defaultDash} /> : <DataDashboard categories={SensorData.getInstance().getCategories()}/>) : ((this.state.typeOption === 'plotting') ? <CustomPlottingDash /> : <CustomDataDash />)}
+                {this.state.selectionComplete ? <Button id='trackMapButton' onClick={this.toggleTrackMap} style={{ marginTop: '60px' }}><b>{(this.state.showTrackMap) ? 'Hide Track Map' : 'Show Track Map'}</b></Button> : null}
+                {this.state.selectionComplete ? <Button id='accelMapButton' onClick={this.toggleAccelMap} style={{ marginTop: '60px', marginLeft: '8px' }}><b>{(this.state.showAccelMap) ? 'Hide Accel Map' : 'Show Accel Map'}</b></Button> : null}
+                {this.state.selectionComplete ? testRun : ''}
+                {(this.state.dashOption === 'default') ?
+                    ((this.state.typeOption === 'plotting') ? <GraphingDashboard plots={defaultDash} /> : <DataDashboard categories={SensorData.getInstance().getCategories()} />) :
+                    ((this.state.typeOption === 'plotting') ? <CustomPlottingDash updateSelectionComplete={this.updateSelectionComplete}/> : <CustomDataDash updateSelectionComplete={this.updateSelectionComplete}/>)}
                 {this.state.showTrackMap ? trackMap : ''}
                 {this.state.showAccelMap ? accelMap : ''}
             </div>

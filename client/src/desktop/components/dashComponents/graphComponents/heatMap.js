@@ -42,6 +42,7 @@ export default class HeatMap extends React.Component {
     }
 
     findParamColor = async (sensor) => {
+        //Refactor
         let newValue = 0;
         if (sensor === 'accel') {
             newValue = await Data.getInstance().getDataPoint('X Accel').then(async xValue => {
@@ -63,6 +64,7 @@ export default class HeatMap extends React.Component {
     }
 
     pullData = async () => {
+        //Refactor, only store current selection in memory
         if (this.props.currentPoint === undefined) return;
         if (this.forceMapUpdate) this.forceMapUpdate = false;
         let temp = this.props.currentPoint;

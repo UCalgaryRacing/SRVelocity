@@ -13,7 +13,10 @@ export default class CustomPlottingDash extends React.Component {
     }
 
     enter = (graphChoices) => { 
-        this.setState({ showChoice: false, selectedGraphs: graphChoices }); 
+        this.setState({ 
+            showChoice: false, 
+            selectedGraphs: graphChoices 
+        }, this.props.updateSelectionComplete()); 
     }
 
     render = () => {

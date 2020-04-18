@@ -16,7 +16,7 @@ export default class CustomDataDash extends React.Component {
         this.setState({
             showChoice: false,
             selectedCategories: dataChoices
-        });
+        }, this.props.updateSelectionComplete());
     }
 
     render = () => {

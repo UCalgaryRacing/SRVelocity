@@ -8,7 +8,6 @@ const theme = {
     darkFill: new SolidFill({ color: ColorHEX('#505050') })
 }
 
-//TODO: Clean this up more fam
 export default class LineChart extends Component {
     constructor(props) {
         super(props)

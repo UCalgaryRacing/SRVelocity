@@ -54,7 +54,7 @@ export default class SignInPage extends React.Component {
                     </Row>
                     <Row>
                         <Col>
-                            <Button className='forgotPasswordButton' onClick={this.handleForgotPassword}><b>I Forgot My Password</b></Button>
+                            <Button className='forgotPasswordButton' onClick={this.handleForgotPassword}><b>In Progress!</b></Button>
                         </Col>
                     </Row>
                 </Jumbotron>

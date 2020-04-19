@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { ColorRGBA, IndividualPointFill, PointShape, lightningChart, emptyTick, AxisScrollStrategies, SolidFill, ColorHEX, AutoCursorModes } from '@arction/lcjs';
+import { ColorRGBA, IndividualPointFill, PointShape, lightningChart, emptyTick, AxisScrollStrategies, SolidFill, ColorHEX, AutoCursorModes, SolidLine, FontSettings } from '@arction/lcjs';
 
 const theme = {
     whiteFill: new SolidFill({ color: ColorHEX('#FFFFFF') }),
@@ -22,17 +22,18 @@ export default class ScatterPlot extends Component {
     componentDidUpdate = () => { this.addData(); }
 
     createChart = () => {
-        this.chart = lightningChart().ChartXY({ containerId: this.chartId });
+        //Set up chart
+        this.chart = lightningChart().ChartXY({ containerId: this.chartId })
+            .setBackgroundFillStyle(theme.whiteFill)
+            .setChartBackgroundFillStyle(theme.whiteFill)
         this.pointSeries = this.chart.addPointSeries({ pointShape: PointShape.Circle });
         this.individualStyle = new IndividualPointFill()
         this.individualStyle.setFallbackColor(ColorRGBA(0, 0, 0, 255))
         this.pointSeries
             .setPointSize(10.0)
             .setPointFillStyle(this.individualStyle)
+            .setMouseInteractions(false)
         this.chart
-            .setBackgroundFillStyle(theme.whiteFill)
-            .setChartBackgroundFillStyle(theme.whiteFill)
-            .setAutoCursorMode(AutoCursorModes.disabled)
             .setMouseInteractions(false)
             .setMouseInteractionWheelZoom(false)
             .setMouseInteractionPan(false)
@@ -48,10 +49,32 @@ export default class ScatterPlot extends Component {
             .setScrollStrategy(AxisScrollStrategies.fitting)
             .setMouseInteractions(false)
             .setTickStyle(emptyTick)
+        //Set up cursor
+        let autoCursor = this.chart.getAutoCursor();
+        autoCursor.setGridStrokeXStyle(new SolidLine({
+            thickness: 1,
+            fillStyle: new SolidFill({ color: ColorHEX('#C22D2D') })
+        }));
+        autoCursor.setGridStrokeYStyle(new SolidLine({
+            thickness: 1,
+            fillStyle: new SolidFill({ color: ColorHEX('#C22D2D') })
+        }));
+        autoCursor.getPointMarker().setSize(0);
+        autoCursor.disposeTickMarkerX();
+        autoCursor.disposeTickMarkerY();
+        var font = new FontSettings({});
+        font = font.setFamily("helvetica");
+        font = font.setWeight("bold");
+        autoCursor.getResultTable().setFont(font);
+        autoCursor.getResultTable().setTextFillStyle(new SolidFill({ color: ColorHEX('#FFF') }));
+        autoCursor.getResultTable().getBackground().setFillStyle(new SolidFill({ color: ColorHEX('#C22D2D') }));
+        //Don't allow scrolling
+        this.chart.engine.container.onwheel = null;
         this.setupComplete = true;
     }
 
     addData = () => {
+        //Need to get value for autocursor somehow
         if (this.setupComplete) {
             if (this.props.mapUpdate) {
                 this.pointSeries.clear()
@@ -65,7 +88,7 @@ export default class ScatterPlot extends Component {
     }
 
     addPoint = (arg) => {
-        if(arg === undefined) return;
+        if (arg === undefined) return;
         let point = {};
         point.x = arg.x;
         point.y = arg.y;

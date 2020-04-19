@@ -15,7 +15,7 @@ export default class SideNavbar extends React.Component {
                     <SideNav.Nav defaultSelected="Dash">
                         <NavItem eventKey="Dash">
                             <NavIcon>
-                                <img src={require('../../../assets/dashboard.svg')} style={{ marginLeft: '20px', marginTop: '13px' }} alt='Dash' />
+                                <img src={require('../../../assets/streaming.svg')} style={{ marginLeft: '14px', marginTop: '8px' }} alt='Dash' />
                             </NavIcon>
                             <NavText>
                                 <b>&nbsp;&nbsp;&nbsp;Dashboard</b>
@@ -37,12 +37,12 @@ export default class SideNavbar extends React.Component {
                                 <b>&nbsp;&nbsp;&nbsp;Data Analysis</b>
                             </NavText>
                         </NavItem>
-                        <NavItem eventKey="Virtual Vehicle">
+                        <NavItem eventKey="Digital Twin">
                             <NavIcon>
                                 <img src={require('../../../assets/f1.svg')} style={{ marginLeft: '5px', marginTop: '-3px' }} alt='Suspension' />
                             </NavIcon>
                             <NavText>
-                                <b>&nbsp;&nbsp;&nbsp;Virtual Vehicle</b>
+                                <b>&nbsp;&nbsp;&nbsp;Digital Twin</b>
                             </NavText>
                         </NavItem>
                     </SideNav.Nav>

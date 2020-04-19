@@ -33,9 +33,11 @@
     background: rgb(194, 45, 45);
     opacity: 1;
     border: 0px solid;
-    padding: 2px;
+    padding-left: 2px;
+    padding-right: 2px;
+    padding-top: 0px;
+    padding-bottom: 0px;
     margin-right: 5px;
-    margin-bottom: 3px;
 }
 
 #trackMapButton {

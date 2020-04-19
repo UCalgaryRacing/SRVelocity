@@ -151,15 +151,15 @@ export default class GraphBox extends React.Component {
         if (this.state.sensors[0].category === 'Track Map') {
             return (
                 <div id='graphBox' style={{ marginRight: '19px', marginLeft: '0px' }}>
-                    <p id='graphTitle'><b>{'Track Map'}</b></p>
-                    <HeatMap currentPoint={this.state.data} />
+                    <p id='graphTitle'><b style={{fontSize: '1.8rem'}}>{'Track Map'}</b></p>
+                    <HeatMap currentPoint={this.state.data}/>
                 </div>
             );
         }
         else {
             return (
                 <div id='graphBox' style={{ borderColor: this.state.indicationColour, marginRight: '19px', marginLeft: '0px' }}>
-                    <p id='graphTitle'><b style={{ color: this.state.indicationColour }}>{this.props.sensors[0].category}</b></p>
+                    <p id='graphTitle'><b style={{ color: this.state.indicationColour, fontSize: '1.8rem' }}>{this.props.sensors[0].category}</b></p>
                     <div style={{ marginBottom: '10px' }}>
                         <LineChart
                             id={this.props.id}

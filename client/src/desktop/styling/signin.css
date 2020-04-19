@@ -1,7 +1,8 @@
 #signIn {
+    text-align: center;
     display: flex;
     flex-direction: column;
-    height: 100%;
+    height: 100vh;
 }
 #signIn .jumbotron {
     margin: 0% 25%;

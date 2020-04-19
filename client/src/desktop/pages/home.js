@@ -21,8 +21,8 @@ export default class HomePage extends React.Component {
                                 <b>Welcome to Schulich Velocity!</b>
                             </p>
                             <p id="infoPara">
-                                Schulich Velocity is telemetry software created for the SR21. It is capable of receiving data from the SR21 at 10 Hz, plotting it, and performing other analysis that
-                                helps us understand how the car is performing in real time. 
+                                Schulich Velocity is telemetry software created for the SR21. It is capable of receiving data from the SR21 at 60 Hz. This data is stored,
+                                plotted, and analyzed in various ways to help us make data driven decisions. 
                             </p>
                             <Button id='streamingButton' href='/streaming'>
                                 <b>Go to Streaming</b>

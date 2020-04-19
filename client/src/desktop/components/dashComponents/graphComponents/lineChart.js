@@ -30,32 +30,9 @@ export default class LineChart extends Component {
         if (prevProps.data !== this.props.data) this.pullData();
     }
 
-    configureAutoCursor() {
-        let autoCursor = this.chart.getAutoCursor();
-        autoCursor.setGridStrokeXStyle(new SolidLine({
-            thickness: 1,
-            fillStyle: new SolidFill({ color: ColorHEX('#C22D2D') })
-        }));
-        autoCursor.setGridStrokeYStyle(new SolidLine({
-            thickness: 1,
-            fillStyle: new SolidFill({ color: ColorHEX('#C22D2D') })
-        }));
-        autoCursor.getPointMarker().setSize(0);
-        autoCursor.disposeTickMarkerX();
-        autoCursor.disposeTickMarkerY();
-        var font = new FontSettings({});
-        font = font.setFamily("helvetica");
-        font = font.setWeight("bold");
-        autoCursor.getResultTable().setFont(font);
-        autoCursor.getResultTable().setTextFillStyle(new SolidFill({ color: ColorHEX('#FFF') }));
-        autoCursor.getResultTable().getBackground().setFillStyle(new SolidFill({ color: ColorHEX('#C22D2D') }));
-    }
-
     addLineSeries = (data, parent) => {
         let map = [];
-        for (let i = 0; i < data.length; i++) {
-            map.push({ x: i + 1, y: data[i] }); //Can't get derivative of first value
-        }
+        for (let i = 0; i < data.length; i++) map.push({ x: i + 1, y: data[i] }); //Can't get derivative of first value
         var parentIndex;
         var colour = this.colours[this.lineSeries.length];
         if (parent !== undefined) {
@@ -85,44 +62,10 @@ export default class LineChart extends Component {
         if (Math.abs(min) < 1.5) min = -2;
         if (Math.abs(max) < 1.5) max = 2;
         if (min > 0) min = 0;
+        this.minValue = min;
+        this.maxValue = max;
         this.chart.getDefaultAxisY().setInterval(min, max);
-        if (this.chart.getAxes()[2]) {
-            this.chart.getAxes()[2].setInterval(min, max);
-        }
-    }
-
-    configureLineSeries = () => {
-        if (this.props.sensors.length === 1) {
-            this.lineSeries.push(this.chart.addLineSeries({ dataPattern: DataPatterns.horizontalProgressive }).setName(''));
-            this.lineSeries[0]
-                .setStrokeStyle(new SolidLine({
-                    thickness: 2,
-                    fillStyle: new SolidFill({ color: ColorHEX('#C22D2D') })
-                }))
-                .setMouseInteractions(false)
-                .setResultTableFormatter((builder, series, Xvalue, Yvalue) => {
-                    return builder
-                        .addRow(Yvalue.toFixed(3) + " " + this.props.sensors[0].output_unit)
-                });
-        }
-        else {
-            var i = 0;
-            while (i < this.props.sensors.length) {
-                this.lineSeries.push(this.chart.addLineSeries({ dataPattern: DataPatterns.horizontalProgressive }).setName(''));
-                this.lineSeries[i]
-                    .setStrokeStyle(new SolidLine({
-                        thickness: 2,
-                        fillStyle: new SolidFill({ color: ColorHEX(this.colours[i]) })
-                    }))
-                    .setMouseInteractions(false)
-                    .setResultTableFormatter((builder, series, Xvalue, Yvalue) => {
-                        return builder
-                            .addRow(Yvalue.toFixed(3) + ' ' + this.props.sensors[0].output_unit)
-                    });
-                i++;
-            }
-        }
-        this.setupComplete = true;
+        if (this.chart.getAxes()[2]) this.chart.getAxes()[2].setInterval(min, max);
     }
 
     toggleRightAxis = () => {
@@ -178,8 +121,26 @@ export default class LineChart extends Component {
             .setMouseInteractionRectangleZoom(false)
             .setMouseInteractionsWhileScrolling(false)
             .setMouseInteractionsWhileZooming(false);
-        this.configureAutoCursor();
-        this.chart.engine.container.onwheel = null;
+        //Configure the cursor
+        let autoCursor = this.chart.getAutoCursor();
+        autoCursor.setGridStrokeXStyle(new SolidLine({
+            thickness: 1,
+            fillStyle: new SolidFill({ color: ColorHEX('#C22D2D') })
+        }));
+        autoCursor.setGridStrokeYStyle(new SolidLine({
+            thickness: 1,
+            fillStyle: new SolidFill({ color: ColorHEX('#C22D2D') })
+        }));
+        autoCursor.getPointMarker().setSize(0);
+        autoCursor.disposeTickMarkerX();
+        autoCursor.disposeTickMarkerY();
+        var font = new FontSettings({});
+        font = font.setFamily("helvetica");
+        font = font.setWeight("bold");
+        autoCursor.getResultTable().setFont(font);
+        autoCursor.getResultTable().setTextFillStyle(new SolidFill({ color: ColorHEX('#FFF') }));
+        autoCursor.getResultTable().getBackground().setFillStyle(new SolidFill({ color: ColorHEX('#C22D2D') }));
+        //Configure the axes
         this.chart.getDefaultAxisX()
             .setScrollStrategy(AxisScrollStrategies.progressive)
             .setTickStyle(emptyTick)
@@ -207,7 +168,23 @@ export default class LineChart extends Component {
                 .setLabelFillStyle(new SolidFill({ color: ColorHEX('#000') }))
                 .setGridStrokeStyle(new SolidLine({ thickness: 1.5, fillStyle: new SolidFill({ color: ColorHEX('#FFF') }) }))
         );
-        this.configureLineSeries();
+        //Configure the line series
+        for (var i = 0; i < this.props.sensors.length; i++) {
+            this.lineSeries.push(this.chart.addLineSeries({ dataPattern: DataPatterns.horizontalProgressive }).setName(''));
+            this.lineSeries[i]
+                .setStrokeStyle(new SolidLine({
+                    thickness: 2,
+                    fillStyle: new SolidFill({ color: ColorHEX(this.colours[i]) })
+                }))
+                .setMouseInteractions(false)
+                .setResultTableFormatter((builder, series, Xvalue, Yvalue) => {
+                    return builder
+                        .addRow(Yvalue.toFixed(3) + ' ' + this.props.sensors[0].output_unit)
+                });
+        }
+        //Don't allow scrolling
+        this.chart.engine.container.onwheel = null;
+        this.setupComplete = true;
     }
 
     changeInterval = (lower, upper) => { this.chart.getDefaultAxisX().setInterval(lower, upper) }
@@ -236,18 +213,13 @@ export default class LineChart extends Component {
                 }
             }
             if (setInterval) {
-                if (Math.round(this.minValue * 1.3) !== Math.round(this.minValue) || Math.round(this.maxValue * 1.3) !== Math.round(this.maxValue)) {
-                    let min = Math.round(this.minValue * 1.1);
-                    let max = Math.round(this.maxValue * 1.1);
-                    if (Math.abs(min) < 1.5 && min !== 0) min = -2;
-                    if (Math.abs(max) < 1.5) max = 2;
-                    this.minValue = min;
-                    this.maxValue = max;
-                    this.chart.getDefaultAxisY().setInterval(min, max);
-                    if (this.chart.getAxes()[2]) {
-                        this.chart.getAxes()[2].setInterval(min, max);
-                    }
-                }
+                let min = Math.floor(this.minValue * 1.2);
+                let max = Math.ceil(this.maxValue * 1.2);
+                if (this.props.sensors[0].category === 'Acceleration') max = 2;
+                this.minValue = min;
+                this.maxValue = max;
+                this.chart.getDefaultAxisY().setInterval(min, max);
+                if (this.chart.getAxes()[2]) this.chart.getAxes()[2].setInterval(min, max);
             }
             //Add the data
             if (data.length === 1) this.lineSeries[0].add({ x: this.i, y: data[0] });
@@ -269,55 +241,41 @@ export default class LineChart extends Component {
         let content = [];
         //Make all of the columns for displaying current values
         for (const sensor in sensors) {
-            if (sensors[sensor].derivative) {
-                //To get the colour
-                const parentIndex = sensors.findIndex(item => item.name === sensors[sensor].parent);
-                content.push(
-                    <div class='col' style={{ textAlign: 'center', padding: '0' }}>
-                        <div class='row' style={{ textAlign: 'center', width: '100%', padding: '0', margin: '0' }}>
-                            <div class='col' style={{ color: this.colours[parentIndex] + '80', fontStyle: 'bold', textAlign: 'right', padding: '0' }}><b>{sensors[sensor].name}:</b></div>
-                            <div class='col' style={{ fontStyle: 'bold', textAlign: 'center', padding: '0' }}><b>{(data === undefined) ? '0' : (data[sensor] * 10).toFixed(2)}</b></div>
-                            <div class='col' style={{ fontStyle: 'bold', textAlign: 'left', padding: '0' }}><b>{sensors[sensor].output_unit}</b></div>
+            if (sensors[sensor].derivative) continue;
+            const derivative = sensors.filter(item => item.name === sensors[sensor].name + "'" && item.derivative);
+            content.push(
+                <div class='col' style={{ textAlign: 'center', padding: '0', paddingBottom: '3px'}}>
+                    <div class='row' style={{ textAlign: 'center', width: '100%', padding: '0', margin: '0' }}>
+                        <div class='col' style={{ color: this.colours[sensor], fontStyle: 'bold', textAlign: 'right', padding: '0', fontSize: '1rem' }}>
+                            <Button id='derivativeButton' onClick={() => { this.props.controlDerivative(sensors[sensor].name) }}><b style={{ fontStyle: 'italic', fontSize: '1rem' }}>f'(x)</b></Button>
+                            <b style={{ fontSize: '1rem', verticalAlign: 'middle' }}>{sensors[sensor].name}:</b>
                         </div>
+                        <div class='col-xs' style={{ fontStyle: 'bold', textAlign: 'center', padding: '0', fontSize: '1rem', width: '100px' }}><b style={{ verticalAlign: 'middle' }}>{(data === undefined) ? '0' : data[sensor]}</b></div>
+                        <div class='col' style={{ fontStyle: 'bold', textAlign: 'left', padding: '0', fontSize: '1rem' }}><b style={{ verticalAlign: 'middle' }}>{sensors[0].output_unit}</b></div>
                     </div>
-                );
-            } else {
-                content.push(
-                    <div class='col' style={{ textAlign: 'center', padding: '0' }}>
-                        <div class='row' style={{ textAlign: 'center', width: '100%', padding: '0', margin: '0' }}>
-                            <div class='col' style={{ color: this.colours[sensor], fontStyle: 'bold', textAlign: 'right', padding: '0' }}>
-                            <Button id='derivativeButton' onClick={() => { this.props.controlDerivative(sensors[sensor].name) }}><b style={{fontStyle: 'italic'}}>f'(x)</b></Button>
-                                <b>{sensors[sensor].name}:</b>
+                    {derivative.length !== 0 ?
+                        <div class='row' style={{ textAlign: 'center', width: '100%', padding: '0', margin: '0', marginTop: '10px' }}>
+                            <div class='col' style={{ color: this.colours[sensor] + '80', fontStyle: 'bold', textAlign: 'right', padding: '0', fontSize: '1rem' }}><b>{derivative[0].name}:</b></div>
+                            <div class='col-xs' style={{ fontStyle: 'bold', textAlign: 'center', padding: '0', fontSize: '1rem', width: '100px' }}><b>{(data === undefined) ? '0' : (data[sensor] * 10).toFixed(2)}</b></div>
+                            <div class='col' style={{ fontStyle: 'bold', textAlign: 'left', padding: '0' }}>
+                                <b>
+                                    {!sensors[sensor].output_unit.includes('/sec') ? derivative[0].output_unit : <span>{sensors[sensor].output_unit}<sup>2</sup></span>}
+                                </b>
                             </div>
-                            <div class='col' style={{ fontStyle: 'bold', textAlign: 'center', padding: '0' }}><b>{(data === undefined) ? '0' : data[sensor]}</b></div>
-                            <div class='col' style={{ fontStyle: 'bold', textAlign: 'left', padding: '0' }}><b>{sensors[0].output_unit}</b></div>
                         </div>
-                    </div>
-                );
-            }
-        }
-        //Show a multiseries plot
-        if (sensors.length > 1) {
-            return (
-                <div style={{ marginBottom: '20px' }}>
-                    <div class='row' style={{ textAlign: 'center', fontSize: '1.2rem', fontStyle: 'bold', paddingTop: '0', paddingBottom: '0', marginBottom: '0px', marginTop: '10px', marginRight: '0', marginLeft: '0', width: '100%' }}>
-                        {content}
-                    </div>
-                    <div id={this.chartId} className='fill' style={{ height: '500px' }}></div>
+                        :
+                        null
+                    }
                 </div>
             );
         }
-        //Show a single series plot
-        else {
-            return (
-                <div style={{ marginBottom: '20px' }}>
-                    <p style={{ textAlign: 'center', fontSize: '1.2rem', paddingTop: '0', paddingBottom: '0', marginTop: '10px', marginBottom: '0px' }}>
-                        <Button id='derivativeButton' onClick={() => { this.props.controlDerivative(sensors[0].name) }}><b style={{fontStyle: 'italic'}}>f'(x)</b></Button>
-                        <b>{(data === undefined) ? '0' : data[0]}&nbsp;{sensors[0].output_unit}</b>
-                    </p>
-                    <div id={this.chartId} className='fill' style={{ height: '500px' }} onWheel={(event) => { return true; }}></div>
+        return (
+            <div style={{ marginBottom: '20px' }}>
+                <div class='row' style={{ textAlign: 'center', fontSize: '1rem', fontStyle: 'bold', paddingTop: '0', paddingBottom: '0', marginBottom: '0px', marginTop: '10px', marginRight: '0', marginLeft: '0', width: '100%' }}>
+                    {content}
                 </div>
-            );
-        }
+                <div id={this.chartId} className='fill' style={{ height: '500px' }}></div>
+            </div>
+        );
     }
 }

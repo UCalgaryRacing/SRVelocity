@@ -13,7 +13,7 @@ app.use(express.static(path.join(__dirname, 'client/build')));
 // app.use('/*', (req, res) => {
 //     res.sendFile(path.join(__dirname, 'client', 'build', 'index.html'));
 // });
-app.get('/.well-known/pki-validation', (req, res) => {
+app.get('/.well-known/pki-validation/20E4F6E45F8A87091A32EACD532408E5.txt', (req, res) => {
     const file = `${__dirname}/20E4F6E45F8A87091A32EACD532408E5.txt`;
     res.download(file);
 })

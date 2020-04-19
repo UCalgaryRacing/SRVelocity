@@ -30,7 +30,7 @@ export default class ScatterPlot extends Component {
         this.individualStyle = new IndividualPointFill()
         this.individualStyle.setFallbackColor(ColorRGBA(0, 0, 0, 255))
         this.pointSeries
-            .setPointSize(10.0)
+            .setPointSize(30.0)
             .setPointFillStyle(this.individualStyle)
             .setMouseInteractions(false)
         this.chart

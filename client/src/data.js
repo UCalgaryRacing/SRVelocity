@@ -100,6 +100,8 @@ export default class Data {
             if (this.count > 254) {
                 clearInterval(this.timer);
                 this.datasets = {};
+                for (var sensor of sensorData) this.datasets[sensor.code_name] = [];
+            this.datasets['Track Map'] = [{}];
                 this.testing = false;
                 this.count = 0;
                 return;

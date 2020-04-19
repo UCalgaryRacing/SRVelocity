@@ -3,7 +3,7 @@ import SideNav, { NavItem, NavIcon, NavText } from '@trendmicro/react-sidenav';
 import '@trendmicro/react-sidenav/dist/react-sidenav.css';
 import '../../styling/sideNav.css';
 
-export default class SideNavbar extends React.Component {
+export default class StreamingSideNav extends React.Component {
     render = () => {
         return (
             <React.Fragment>

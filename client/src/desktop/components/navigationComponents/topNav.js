@@ -13,6 +13,12 @@ export default class TopNav extends React.Component {
                     <Nav.Item>
                         <Nav.Link href="/streaming">Streaming</Nav.Link>
                     </Nav.Item>
+                    <Nav.Item>
+                        <Nav.Link href="/historical">Historical</Nav.Link>
+                    </Nav.Item>
+                    <Nav.Item>
+                        <Nav.Link href="/manage">Manage</Nav.Link>
+                    </Nav.Item>
                 </Nav>
                 <Nav className='ml-auto'>
                     <Nav.Item>

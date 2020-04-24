@@ -16,7 +16,6 @@ export default class SensorData {
         var sensors = await SensorData.sensors;
         var lookup = {};
         var result = [];
-        console.log(sensors)
         for (var sensor, i = 0; sensor = sensors[i++];) {
             var category = sensor.category;
             if (!(category in lookup)) {

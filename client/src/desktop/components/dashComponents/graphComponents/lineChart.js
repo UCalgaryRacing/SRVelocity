@@ -57,8 +57,8 @@ export default class LineChart extends Component {
         var temp = [];
         for (var i = 0; i < this.lineSeries.length; i++) if (i !== index) temp.push(this.lineSeries[i]);
         this.lineSeries = temp;
-        let min = Math.round(this.lineSeries[parent].getYMin() * 1.1);
-        let max = Math.round(this.lineSeries[parent].getYMax() * 1.1);
+        let min = Math.round(this.lineSeries[parent].getYMin() * 1.3);
+        let max = Math.round(this.lineSeries[parent].getYMax() * 1.3);
         if (Math.abs(min) < 1.5) min = -2;
         if (Math.abs(max) < 1.5) max = 2;
         if (min > 0) min = 0;
@@ -213,8 +213,8 @@ export default class LineChart extends Component {
                 }
             }
             if (setInterval) {
-                let min = Math.floor(this.minValue * 1.2);
-                let max = Math.ceil(this.maxValue * 1.2);
+                let min = Math.floor(this.minValue * 1.3);
+                let max = Math.ceil(this.maxValue * 1.3);
                 if (this.props.sensors[0].category === 'Acceleration') max = 2;
                 this.minValue = min;
                 this.maxValue = max;

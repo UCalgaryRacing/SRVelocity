@@ -49,7 +49,7 @@ export default class HeatMap extends React.Component {
         let index = (value[0] - boundaries[0]) / range;
         index = Math.round(index * 500);
         if(index >= 500) index = 499;
-        return ColorHEX(colors[index]);
+        return ColorHEX(colors[499 - index]);
     }
 
     findParamColor = async (sensor) => {

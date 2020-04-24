@@ -2,7 +2,7 @@
 export default class SensorData {
     static instance = null;
     static sensors =
-        fetch('http://localhost:6000/sensor/getSensors/14', {
+        fetch('http://localhost:7000/sensor/getSensors/14', {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json',
@@ -16,6 +16,7 @@ export default class SensorData {
         var sensors = await SensorData.sensors;
         var lookup = {};
         var result = [];
+        console.log(sensors)
         for (var sensor, i = 0; sensor = sensors[i++];) {
             var category = sensor.category;
             if (!(category in lookup)) {

@@ -2,7 +2,7 @@
 export default class SensorData {
     static instance = null;
     static sensors =
-        fetch('http://localhost:4000/sensor/getSensors/14', {
+        fetch('http://localhost:6000/sensor/getSensors/14', {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json',

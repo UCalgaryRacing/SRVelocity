@@ -2,13 +2,16 @@
 export default class SensorData {
     static instance = null;
     static sensors =
-        fetch('http://18.217.215.72:7000/sensor/getSensors/14', {
+        fetch('18.217.215.72:7000/sensor/getSensors/14', {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json',
                 'apikey': 'VQ2SBXW-1N14EQ7-PWX5JBZ-C5S45FA'
             }
-        }).then(res => res.json()).then(res => { return res; }).catch(err => { console.log(err) });
+        })
+        .then(res => res.json())
+        .then(res => { return res; })
+        .catch(err => { console.log(err) });
 
     constructor() { }
 

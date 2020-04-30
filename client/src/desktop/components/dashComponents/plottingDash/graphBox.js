@@ -173,8 +173,8 @@ export default class GraphBox extends React.Component {
                         />
                     </div>
                     <div style={{ width: '50%', margin: 'auto' }}>
-                        <Button id='toggleButton' onClick={this.toggleRightAxis} style={{ position: 'absolute', right: '45px', bottom: '60px' }}><b>Toggle Right Axis</b></Button>
-                        <Button id='toggleButton' onClick={this.toggleGrid} style={{ position: 'absolute', right: '45px', bottom: '20px' }}><b>Toggle Grid</b></Button>
+                        <Button id='toggleAxis' onClick={this.toggleRightAxis} style={{ position: 'absolute', right: '95px', bottom: '60px' }}><img id="logoImg" src={require('../../../../assets/rightAxis.svg')}/></Button>
+                        <Button id='toggleAxis' onClick={this.toggleGrid} style={{ position: 'absolute', right: '45px', bottom: '60px' }}><img id="logoImg" src={require('../../../../assets/grid.svg')}/></Button>
                         <p style={{ textAlign: 'center', marginBottom: '30px' }}><b>Data Range (minutes)</b></p>
                         <RangeSlider
                             defaultValue={[0, 0.5]}

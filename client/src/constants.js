@@ -2,13 +2,12 @@
 export default class SensorData {
     static instance = null;
     static sensors =
-        fetch('http://localhost:5000/api', {
+        fetch('http://localhost:5000/api/pgdb/getSensors', {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json'
             }
         })
-        .then(res => console.log(res))
         .then(res => res.json())
         .then(res => { return res; })
         .catch(err => { console.log(err) });
@@ -35,9 +34,7 @@ export default class SensorData {
     }
 
     static getInstance() {
-        if (SensorData.instance == null) {
-            SensorData.instance = new SensorData();
-        }
+        if (SensorData.instance == null) SensorData.instance = new SensorData();
         return this.instance;
     }
 }

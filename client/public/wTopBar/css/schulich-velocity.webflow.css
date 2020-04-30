@@ -158,6 +158,7 @@
   padding-bottom: 18px;
   font-family: Helvetica !important;
   color: #FFFFFF99 !important;
+  text-align: center !important;
 }
 
 .nav-menu {
@@ -171,6 +172,7 @@
   padding-bottom: 18px;
   font-family: Helvetica !important;
   color: #FFFFFF99 !important;
+  text-align: center !important;
 }
 
 .nav-link-8 {
@@ -178,7 +180,7 @@
   padding-bottom: 18px;
   font-family: Helvetica !important;
   color: #FFFFFF99 !important;
-  margin-right: 20px !important;
+  text-align: center !important;
 }
 
 .nav-link-9 {
@@ -187,6 +189,7 @@
   font-family: Helvetica !important;
   color: #FFFFFF99 !important;
   float: right;
+  text-align: center !important;
 }
 
 .nav-link-10 {
@@ -195,6 +198,7 @@
   font-family: Helvetica !important;
   color: #FFFFFF99 !important;
   float: right;
+  text-align: center !important;
 }
 
 @media screen and (max-width: 991px) {
@@ -235,10 +239,12 @@
     border-top: 1px dashed #343a40;
     border-right: 0px none #000;
     background-color: #cc2d2d;
+    float: none;
   }
   .nav-link-10 {
     border-top: 1px dashed #343a40;
     background-color: #cc2d2d;
+    float: none;
   }
 }
 

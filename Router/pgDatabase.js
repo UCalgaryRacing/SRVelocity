@@ -23,7 +23,6 @@ pgDatabase.get("/getSensors", (req, res) => {
             }
             newRes.on("data", data => {
                 try {
-                    console.log(JSON.parse(data))
                     res.status(200).json(JSON.parse(data)).end();
                 } catch (err) {
                     res.status(500).end();

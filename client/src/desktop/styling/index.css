@@ -8,6 +8,8 @@ body {
   -moz-osx-font-smoothing: grayscale;
   font-family: "Helvetica";
   height: 100%;
+  color: #212529 !important;
+  line-height: normal !important;
 }
 html {
   height: 100%;
@@ -164,7 +166,6 @@ input[type=checkbox]:checked + label {
   -ms-transform: rotate(-45deg) scale(1);
   transform: rotate(-45deg) scale(1);
 }
-
 #streamingM .form-check label {
   min-height: 10px;
   display: block;

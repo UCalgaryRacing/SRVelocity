@@ -25,7 +25,7 @@ export default class StreamingContent extends React.Component {
 
     render = () => {
         return (
-            <div id='streamingContent' style={{ marginTop: '0px', transition: 'all 0.15s', marginLeft: this.state.marginLeft }}>
+            <div id='streamingContent' style={{ marginTop: '70px', transition: 'all 0.15s', marginLeft: this.state.marginLeft }}>
                 {this.state.content === 'Dash' ? <StreamingDash /> : null}
                 {this.state.content === 'Custom Plots' ? <CustomVisDash /> : null}
                 {this.state.content === 'Data Analysis' ? <DataAnalysisDash /> : null}

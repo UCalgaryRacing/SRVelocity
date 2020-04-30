@@ -19,6 +19,18 @@ app.get("/about", (req, res) => { res.sendFile(path.join(__dirname, 'client', 'b
 app.get("/signin", (req, res) => { res.sendFile(path.join(__dirname, 'client', 'build', 'index.html')); });
 app.get("/licenses", (req, res) => { res.sendFile(path.join(__dirname, 'client', 'build', 'index.html')); });
 
+app.use(session({
+    secret: "xCufvwEyu14Tuu7l",
+    resave: true,
+    saveUninitialized: true,
+    secure: true
+}));
+app.use(cookieParser());
+
+app.get("/api", (req, res) => {
+    res.json({ message: "API Working" });
+});
+
 //Import routes
 const pgDatabase = require("./Router/pgDatabase");
 

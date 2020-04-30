@@ -15,16 +15,14 @@
   height: auto;
   margin: auto;
   padding: 14px 0px;
-  font-family: Poppins, sans-serif;
+  font-family: Helvetica !important;
   color: #fff;
   font-size: 2em;
   line-height: 1em;
 }
 
 .body {
-  height: 1938px;
-  color: hsla(0, 0%, 100%, 0.62);
-  font-weight: 700;
+
 }
 
 .nav-link-2 {
@@ -158,7 +156,7 @@
   margin-right: 0px;
   padding-top: 18px;
   padding-bottom: 18px;
-  font-family: Poppins, sans-serif;
+  font-family: Helvetica !important;
   color: #FFFFFF99 !important;
 }
 
@@ -171,14 +169,14 @@
 .nav-link-7 {
   padding-top: 18px;
   padding-bottom: 18px;
-  font-family: Poppins, sans-serif;
+  font-family: Helvetica !important;
   color: #FFFFFF99 !important;
 }
 
 .nav-link-8 {
   padding-top: 18px;
   padding-bottom: 18px;
-  font-family: Poppins, sans-serif;
+  font-family: Helvetica !important;
   color: #FFFFFF99 !important;
   margin-right: 20px !important;
 }
@@ -186,7 +184,7 @@
 .nav-link-9 {
   padding-top: 18px;
   padding-bottom: 18px;
-  font-family: Poppins, sans-serif;
+  font-family: Helvetica !important;
   color: #FFFFFF99 !important;
   float: right;
 }
@@ -194,7 +192,7 @@
 .nav-link-10 {
   padding-top: 18px;
   padding-bottom: 18px;
-  font-family: Poppins, sans-serif;
+  font-family: Helvetica !important;
   color: #FFFFFF99 !important;
   float: right;
 }

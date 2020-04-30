@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { Switch, BrowserRouter as Router, Route } from 'react-router-dom';
-import {isMobile} from 'react-device-detect';
+import { isMobile } from 'react-device-detect';
 import './desktop/styling/index.css';
 
 //Import desktop pages 
@@ -27,21 +27,21 @@ import SensorData from './constants';
 export default class App extends React.Component {
     render = () => {
         //if (!isMobile) {
-            return (
-                <Router>
-                    <Switch>
-                        <Route exact path="/" component={() => <HomePage />} />
-                        <Route exact path="/home" component={() => <HomePage />} />
-                        <Route exact path="/streaming" component={() => <StreamingPage />} />
-                        <Route exact path="/historical" component={() => <HistoricalPage />} />
-                        <Route exact path="/manage" component={() => <ManagePage />} />
-                        <Route exact path="/about" component={() => <AboutPage />} />
-                        <Route exact path="/signIn" component={() => <SignInPage />} />
-                        <Route exact path="/licenses" component={() => <LicensesPage />} />
-                        {/* <Route component={() => <ErrorPage handleModeChange={this.handleModeChange} />} /> */}
-                    </Switch>
-                </Router>
-            );
+        return (
+            <Router>
+                <Switch>
+                    <Route exact path="/" component={() => <HomePage />} />
+                    <Route exact path="/home" component={() => <HomePage />} />
+                    <Route exact path="/streaming" component={() => <StreamingPage />} />
+                    <Route exact path="/historical" component={() => <HistoricalPage />} />
+                    <Route exact path="/manage" component={() => <ManagePage />} />
+                    <Route exact path="/about" component={() => <AboutPage />} />
+                    <Route exact path="/signIn" component={() => <SignInPage />} />
+                    <Route exact path="/licenses" component={() => <LicensesPage />} />
+                    {/* <Route component={() => <ErrorPage handleModeChange={this.handleModeChange} />} /> */}
+                </Switch>
+            </Router>
+        );
         //}
         // else {
         //     return (

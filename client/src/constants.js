@@ -2,15 +2,14 @@
 export default class SensorData {
     static instance = null;
     static sensors =
-        fetch('http://18.217.215.72:7000/sensor/getSensors/14', {
+        fetch('api/pgdb/getSensors', {
             method: 'GET',
             headers: {
-                'Content-Type': 'application/json',
-                'apikey': 'VQ2SBXW-1N14EQ7-PWX5JBZ-C5S45FA'
+                'Content-Type': 'application/json'
             }
         })
         .then(res => res.json())
-        .then(res => { return res; })
+        .then(res => { console.log(res); return res; })
         .catch(err => { console.log(err) });
 
     constructor() { }

@@ -49,10 +49,7 @@ body {
   margin: 0;
   min-height: 100%;
   background-color: #fff;
-  font-family: Arial, sans-serif;
-  font-size: 14px;
-  line-height: 20px;
-  color: #333;
+  font-family: Helvetica !important;
 }
 img {
   max-width: 100%;
@@ -1557,7 +1554,10 @@ textarea.w-select {
   clear: none;
 }
 .w-nav {
-  position: relative;
+  position: fixed !important;
+  top: 0;
+  left: 0;
+  right: 0;
   background: #dddddd;
   z-index: 1000;
 }
@@ -1601,6 +1601,11 @@ textarea.w-select {
   position: absolute !important;
   float: none !important;
   left: 270px !important;
+}
+@media screen and (max-width: 991px) {
+  .w-nav-menu {
+    left: 0px !important;
+  }
 }
 [data-nav-menu-open] {
   display: block !important;

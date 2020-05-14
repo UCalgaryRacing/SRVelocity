@@ -39,13 +39,15 @@ const pgDatabase = require("./Router/pgDatabase");
 //Setup routes
 app.use("/api/pgdb", pgDatabase);
 
+
 //Python and React socket setup
 var io = require('socket.io')(4000);
-io.on('connection', function (socket) {
-    socket.on('message', function (msg) {
-        socket.broadcast.emit('new data', msg);
-    });
-});
+
+// //Socket to connect to run_data server
+// const socket = socketIOClient('http://127.0.0.1:5000'); //CHANGE WHEN DEPLOYING!
+//         socket.on('new data', (data) => {
+//             io.emit(data)
+//         });
 
 //Begin
 app.listen(PORT, () => console.log(`Listening on port ${PORT}`));

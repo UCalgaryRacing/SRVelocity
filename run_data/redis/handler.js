@@ -20,7 +20,7 @@ client.on('error', (err) => {
 writeCSVFromRedis()
 
 
-//Assumes that the only operations on the redis server are the SET operations without overriding
+//Takes the SET operations on the redis db and converts them into a csv
 function writeCSVFromRedis() {
     dump({
         // These are default values, you can omit them

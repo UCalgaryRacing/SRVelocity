@@ -2,13 +2,18 @@ import React from "react";
 import TopNav from "../components/navigationComponents/topNav";
 import BottomNav from "../components/navigationComponents/bottomNav";
 import { Jumbotron, Row, Col, FormGroup, Form, Button } from "react-bootstrap";
+import { withRouter } from "react-router-dom";
+import Cookies from "js-cookie";
 import "../styling/signin.css";
 
-export default class SignInPage extends React.Component {
+class SignInPage extends React.Component {
   constructor(props) {
     super(props);
     this.emailForm = React.createRef();
     this.passwordForm = React.createRef();
+    this.state = {
+      currentUser: "Not Logged In",
+    };
   }
 
   handleEnterKey = async () => {};
@@ -18,6 +23,7 @@ export default class SignInPage extends React.Component {
       "http://localhost:7000/teamMember/authenticate",
       {
         method: "POST",
+        credentials: "include",
         headers: {
           "Content-Type": "application/json",
         },
@@ -35,6 +41,11 @@ export default class SignInPage extends React.Component {
         console.log(err);
       });
     console.log(signInDetails);
+    if (!signInDetails.error) {
+      console.log(Cookies.get("token"));
+      this.props.history.push("/");
+      this.setState({ currentUser: signInDetails.firstName });
+    }
   };
 
   handleForgotPassword = () => {};
@@ -93,9 +104,16 @@ export default class SignInPage extends React.Component {
               </Button>
             </Col>
           </Row>
+          <Row>
+            <Col>
+              <b>{this.state.currentUser}</b>
+            </Col>
+          </Row>
         </Jumbotron>
         <BottomNav />
       </div>
     );
   };
 }
+
+export default withRouter(SignInPage);

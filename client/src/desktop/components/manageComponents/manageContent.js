@@ -22,7 +22,7 @@ export default class ManageContent extends React.Component {
     });
   };
 
-  render = () => {
+  render() {
     return (
       <div
         id="managementPage"
@@ -36,8 +36,8 @@ export default class ManageContent extends React.Component {
         {this.state.content === "Sensors" ? <p>Sensors</p> : null}
         {this.state.content === "Drivers" ? <p>Drivers</p> : null}
         {this.state.content === "Vehicles" ? <p>Vehicles</p> : null}
-        {this.state.content === "People" ? TeamList : null}
+        {this.state.content === "People" ? <TeamList /> : null}
       </div>
     );
-  };
+  }
 }

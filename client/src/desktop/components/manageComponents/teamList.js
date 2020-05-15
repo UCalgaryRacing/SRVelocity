@@ -6,38 +6,37 @@ class TeamList extends React.Component {
     this.state = {};
   }
 
-  componentDidMount() {
+  async componentDidMount() {
     console.log("called");
-    this.createTeamMemberList();
+    await this.createTeamMemberList();
   }
 
-  createTeamMemberList() {
-    const memberList = this.fetchTeamMembers();
-    console.log(memberList);
+  async createTeamMemberList() {
+    const members = await this.fetchTeamMembers();
+    console.log(members);
   }
 
   fetchTeamMembers = async () => {
-    const memberList = fetch(
-      "http://localhost:7000/teamMember/getAllTeamMembers",
-      {
-        method: "GET",
-        headers: {
-          "Content-Type": "application/json",
-        },
-      }
-    )
-      .then((res) => res.json())
-      .then((res) => {
-        return res;
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-    return memberList;
+    try {
+      let res = await fetch(
+        "http://localhost:7000/teamMember/getAllTeamMembers",
+        {
+          method: "GET",
+          credentials: "include",
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
+      res = await res.json();
+      return await res;
+    } catch (err) {
+      console.log(err);
+    }
   };
 
   render() {
-    return <p></p>;
+    return <React.Fragment />;
   }
 }
 

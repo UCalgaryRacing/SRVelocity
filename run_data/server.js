@@ -6,8 +6,7 @@ const helmet = require('helmet');
 const lusca = require('lusca');
 const cors = require('cors')
 const path = require('path');
-const PORT = 6000;
-const { add_data } = require('./redis/handler')
+const PORT = 4500;
 
 //Setup
 app.use(express.json());
@@ -20,11 +19,10 @@ app.get("/api", (req, res) => {
 });
 
 //Import routes
-const pgDatabase = require("./Router/pgDatabase");
+const redisDB = require('./routes/redis/redisRoutes')
 
 //Setup routes
-app.use("/api/pgdb", pgDatabase);
-
+app.use("/redis", redisDB);
 
 //Creating server for getting new data
 const socketServer = require('./socketServer')

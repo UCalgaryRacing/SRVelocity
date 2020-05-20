@@ -21,7 +21,7 @@ client.on('error', (err) => {
 
 
 //Takes the SET operations on the redis db and converts them into a csv
-function writeCSVFromRedis() {
+function writeCSVFromRedis(CSVname) {
     dump({
         // These are default values, you can omit them
         filter: '*',
@@ -42,10 +42,14 @@ function writeCSVFromRedis() {
     
             var objs = JSON.parse(result)
 
+
             //Writes the objects into a csv where the columns are in alphabetical order
-            new objectsToCSV(objs).toDisk('./test.csv', { allColumns: true })
+            new objectsToCSV(objs).toDisk('./' + CSVname + '.csv', { allColumns: true })
 
             client.flushdb(function (err) {
+                if (!err) {
+                    return
+                }
                 console.log('Could not clear db : ' + err); // will be true if successfull
             });
 
@@ -65,7 +69,7 @@ function addData(data) {
     }
 
 
-module.exports = [addData, writeCSVFromRedis]
+module.exports = {addData, writeCSVFromRedis}
 
 // key: counter
 // value: JSON of sensor data

@@ -44,10 +44,13 @@ app.use("/api/pgdb", pgDatabase);
 var io = require('socket.io')(4000);
 
 // //Socket to connect to run_data server
-// const socket = socketIOClient('http://127.0.0.1:5000'); //CHANGE WHEN DEPLOYING!
-//         socket.on('new data', (data) => {
-//             io.emit(data)
-//         });
+ const socket = socketIOClient('http://127.0.0.1:5000', { //CHANGE WHEN DEPLOYING!
+    'reconnection' : true
+    });
+     
+    socket.on('new data', (data) => {
+            io.emit(data)
+    });
 
 //Begin
 app.listen(PORT, () => console.log(`Listening on port ${PORT}`));

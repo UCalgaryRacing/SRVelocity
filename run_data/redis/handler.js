@@ -1,6 +1,7 @@
 const redis = require('redis')
 const dump = require('redis-dump');
-const objectsToCSV = require('objects-to-csv') 
+const objectsToCSV = require('objects-to-csv')
+var counter = 0 //using to get never repeating keys when adding data
 
 const { PORT, HOST } = require('./redisEnv')
 
@@ -17,7 +18,6 @@ client.on('error', (err) => {
     console.log('Redis client could NOT connect: \n' + err)
 })
 
-writeCSVFromRedis()
 
 
 //Takes the SET operations on the redis db and converts them into a csv
@@ -35,7 +35,6 @@ function writeCSVFromRedis() {
             if (!result) {
                 return
             }
-            console.log(result)
             //Takes the command dump string and transforms it into a list of json objects. Then the list is transformed to a list of javascript objects.
             result = result.replace(/[^}]+(\'|$)/g, '')
             result = result.replace(/}/g, '},')
@@ -45,22 +44,28 @@ function writeCSVFromRedis() {
 
             //Writes the objects into a csv where the columns are in alphabetical order
             new objectsToCSV(objs).toDisk('./test.csv', { allColumns: true })
+
+            client.flushdb(function (err) {
+                console.log('Could not clear db : ' + err); // will be true if successfull
+            });
+
+            counter = 0
         })
 }
 
 
 
 function addData(data) {
-    client.set('content-' + event.ID, event.content, (err, reply) => {
+    client.set(++counter, JSON.stringify(data), (err, reply) => {
             if (err) {
-                console.log("Could not set content when playing event: \n\n" + event)
+                console.log("Could not add data to redis with following error:\n\n" + err)
             }
         })
 
     }
 
 
-module.exports = addData
+module.exports = [addData, writeCSVFromRedis]
 
-// id: [children]
-// content-id: "content"
+// key: counter
+// value: JSON of sensor data

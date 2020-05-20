@@ -27,12 +27,7 @@ app.use("/api/pgdb", pgDatabase);
 
 
 //Creating server for getting new data
-var io = require('socket.io')(5000);
-io.on('connection', function (socket) {
-    socket.on('message', function (msg) {
-        socket.broadcast.emit('new data', msg);
-    });
-});
+const socketServer = require('./socketServer')
 
 //Begin
 app.listen(PORT, () => console.log(`Listening on port ${PORT}`));

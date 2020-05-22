@@ -1,6 +1,8 @@
 const redis = require('redis')
 const dump = require('redis-dump');
 const objectsToCSV = require('objects-to-csv')
+const { uploadCSV } = require('../file_server/fileServerHandler')
+
 var counter = 0 //using to get never repeating keys when adding data
 
 const { PORT, HOST } = require('./redisEnv')
@@ -19,7 +21,6 @@ client.on('error', (err) => {
 })
 
 
-
 //Takes the SET operations on the redis db and converts them into a csv
 function writeCSVFromRedis(CSVname) {
     dump({
@@ -35,22 +36,29 @@ function writeCSVFromRedis(CSVname) {
             if (!result) {
                 return
             }
+
             //Takes the command dump string and transforms it into a list of json objects. Then the list is transformed to a list of javascript objects.
             result = result.replace(/[^}]+(\'|$)/g, '')
             result = result.replace(/}/g, '},')
             result = '[' + result.slice(0, -1) + ']'
-    
             var objs = JSON.parse(result)
+
+            objs.sort((a, b) => (a.count > b.count) ? 1 : -1)
+
 
 
             //Writes the objects into a csv where the columns are in alphabetical order
-            new objectsToCSV(objs).toDisk('./' + CSVname + '.csv', { allColumns: true })
+            new objectsToCSV(objs).toString({ allColumns: true })
+            .then( fileString => {
+                uploadCSV(CSVname + '.csv', fileString)
+            })
 
+            //Clears the redis db
             client.flushdb(function (err) {
                 if (!err) {
                     return
                 }
-                console.log('Could not clear db : ' + err); // will be true if successfull
+                console.log('Could not clear db : ' + err);
             });
 
             counter = 0

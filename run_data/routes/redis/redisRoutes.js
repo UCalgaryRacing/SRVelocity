@@ -1,5 +1,3 @@
-"use strict";
-
 const express = require("express");
 const redisDB = express.Router();
 const { writeCSVFromRedis } = require('../../redis/handler')

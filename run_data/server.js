@@ -20,9 +20,11 @@ app.get("/api", (req, res) => {
 
 //Import routes
 const redisDB = require('./routes/redis/redisRoutes')
+const fileServer = require('./routes/file_server/fileserverRoutes')
 
 //Setup routes
 app.use("/redis", redisDB);
+app.use("/fileServer", fileServer)
 
 //Creating server for getting new data
 const socketServer = require('./socketServer')

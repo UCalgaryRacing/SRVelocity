@@ -7,6 +7,4 @@ redisDB.get("/EndRun/:CSVname", (req, res) => {
     res.sendStatus(200)
 });
 
-
-
 module.exports = redisDB;

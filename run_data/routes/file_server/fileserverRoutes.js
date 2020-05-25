@@ -1,6 +1,6 @@
 const express = require("express");
 const fileServer = express.Router();
-const { viewFiles, downloadFile } = require('../../file_server/fileServerHandler')
+const { viewFiles, downloadFile, renameFile, deleteFile } = require('../../file_server/fileServerHandler')
 
 fileServer.get("/getFilenames", (req, res) => {
     viewFiles(res)
@@ -8,6 +8,16 @@ fileServer.get("/getFilenames", (req, res) => {
 
 fileServer.get("/getFile/:filename", (req, res) => {
     downloadFile(res, req.params.filename)
+})
+
+// Renames file already in storage. MUST contain full filename (including the file extension. e.g. '.csv').
+fileServer.post("/renameFile", (req, res) => {
+    renameFile(res, req.body.oldFilename, req.body.newFilename)
+})
+
+// Deletes file in storage. MUST contain full filename (including the file extension. e.g. '.csv').
+fileServer.get("/deleteFile/:filename", (req, res) => {
+    deleteFile(res, req.params.filename)
 })
 
 module.exports = fileServer;

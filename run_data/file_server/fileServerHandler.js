@@ -64,6 +64,42 @@ function downloadFile(res, filename) {
 
 }
 
+function renameFile(res, oldFilename, newFilename) {
+    var copyParams = {
+        CopySource: `${BUCKET_NAME}/${oldFilename}`, 
+        Bucket: BUCKET_NAME,
+        Key: newFilename
+    }
+
+    // Copy the object to a new location
+    s3.copyObject(copyParams, (err) => {
+        if (err) {
+            console.log(err)
+            res.sendStatus(500)
+            return
+        }
+
+        deleteFile(res, oldFilename)
+    })
+}
+
+function deleteFile(res, filename) {
+    var deleteParams = {
+        Bucket: BUCKET_NAME,
+        Key: filename
+    }
+
+    s3.deleteObject(deleteParams, err => {
+        if(err) {
+            res.sendStatus(500)
+            console.log(err)
+            return
+        }
+
+        res.sendStatus(200)
+    })
+}
+
 function uploadCSV(filename, fileContents) {
     var uploadParams = {
         Bucket: BUCKET_NAME,
@@ -82,4 +118,4 @@ function uploadCSV(filename, fileContents) {
 }
 
 
-module.exports = { uploadCSV, viewFiles, downloadFile }
+module.exports = { uploadCSV, viewFiles, downloadFile, renameFile, deleteFile }

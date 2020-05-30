@@ -47,15 +47,26 @@ class SensorDash extends React.Component {
     }
   };
 
-  toggleVehicleMode(vehicle) {
-    console.log(vehicle);
-    let res = this.fetchSensors(vehicle);
+  async toggleVehicleMode(vehicle) {
+    let sensors = await this.fetchSensors(vehicle);
+    console.log(sensors);
+    this.renderSensorTable(sensors);
     this.setState({ sensorMode: true, vehicleMode: false });
   }
 
-  renderSensorTable = async (sensor) => {
+  renderSensorTable = async (sensors) => {
     let render = [];
-
+    sensors.forEach((ele) => {
+      render.push(
+        <tr>
+          <td>{ele.name}</td>
+          <td>{ele.output_unit}</td>
+          <td>{ele.category}</td>
+          <td>{ele.code_name}</td>
+          <td>{ele.can_id}</td>
+        </tr>
+      );
+    });
     // Object.keys(members).forEach((ele) => {
     //   let innerRender = [];
     //   members[ele].forEach((memEle) => {
@@ -75,7 +86,7 @@ class SensorDash extends React.Component {
     //   });
     //   render.push(innerRender);
     // });
-    this.setState({ memberRender: render });
+    this.setState({ sensorRender: render });
   };
 
   toggleMemberView = (member) => {
@@ -89,7 +100,7 @@ class SensorDash extends React.Component {
     if (this.state.vehicleMode) {
       return (
         <React.Fragment>
-          <VehicleList toggleVehicleMode={() => this.toggleVehicleMode} />
+          <VehicleList toggleVehicleMode={this.toggleVehicleMode.bind(this)} />
         </React.Fragment>
       );
     }

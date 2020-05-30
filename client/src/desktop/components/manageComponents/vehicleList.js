@@ -46,13 +46,7 @@ class VehicleList extends React.Component {
     let render = [];
     vehicles.forEach((ele) => {
       render.push(
-        <tr
-          key={ele.name}
-          onClick={() => {
-            console.log(ele);
-            this.props.toggleVehicleMode(ele);
-          }}
-        >
+        <tr key={ele.name} onClick={() => this.props.toggleVehicleMode(ele)}>
           <td>{ele.name}</td>
         </tr>
       );

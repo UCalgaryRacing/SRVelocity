@@ -1,11 +1,12 @@
 import React from "react";
 import { Row, Col, Table, Button } from "react-bootstrap";
 import MemberEdit from "./memberView";
+import { withRouter } from "react-router-dom";
 
 class TeamList extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { memberRender: [], memberMode: false };
+    this.state = { memberRender: [], memberMode: false, selectedMember: {} };
   }
 
   async componentDidMount() {
@@ -14,9 +15,16 @@ class TeamList extends React.Component {
   }
 
   async createTeamMemberList() {
-    const members = this.groupBy(await this.fetchTeamMembers(), "subteam_name");
-    console.log(members);
-    await this.renderTeamMembers(members);
+    try {
+      const members = this.groupBy(
+        await this.fetchTeamMembers(),
+        "subteam_name"
+      );
+      console.log(members);
+      await this.renderTeamMembers(members);
+    } catch (err) {
+      console.log(err);
+    }
   }
 
   fetchTeamMembers = async () => {
@@ -33,6 +41,7 @@ class TeamList extends React.Component {
       );
       if (res.status == 401) {
         console.log("LOG IN REQUIRED");
+        this.props.history.push("/signin");
       }
       res = await res.json();
       return await res;
@@ -76,14 +85,22 @@ class TeamList extends React.Component {
   };
 
   toggleMemberView = (member) => {
-    this.setState({ memberMode: !this.state.memberMode });
+    this.setState({
+      memberMode: !this.state.memberMode,
+      selectedMember: member,
+    });
   };
+
   render() {
     if (this.state.memberMode) {
       return (
         <MemberEdit
+          member={this.state.selectedMember}
           toggleMemberView={() => {
             this.toggleMemberView();
+          }}
+          refreshList={() => {
+            this.createTeamMemberList();
           }}
         />
       );
@@ -107,19 +124,9 @@ class TeamList extends React.Component {
             </Table>
           </Col>
         </Row>
-        {/* <Row>
-          <Col md={{ span: 1, offset: 2 }}>
-            <Button
-              style={{ backgroundColor: "rgb(194, 45, 45)", color: "white" }}
-            >
-              Edit
-            </Button>
-          </Col>
-        </Row> */}
-        {/* <Row>{this.state.memberRender}</Row> */}
       </React.Fragment>
     );
   }
 }
 
-export default TeamList;
+export default withRouter(TeamList);

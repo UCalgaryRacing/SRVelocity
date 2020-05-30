@@ -2,11 +2,12 @@ const express = require("express");
 const fileServer = express.Router();
 const { viewFiles, downloadFile, renameFile, deleteFile } = require('../../file_server/fileServerHandler')
 
-fileServer.get("/getFilenames", (req, res) => {
+fileServer.get("/getFiles", (req, res) => {
     viewFiles(res)
 });
 
 fileServer.get("/getFile/:filename", (req, res) => {
+    console.log(req.params.filename)
     downloadFile(res, req.params.filename)
 })
 

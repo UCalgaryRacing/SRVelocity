@@ -1,6 +1,6 @@
 const { addData } = require('./redis/handler')
 
-var io = require('socket.io')(4000);
+var io = require('socket.io')(5500);
 
 io.on('connection', function (socket) {
     console.log('Client connected')

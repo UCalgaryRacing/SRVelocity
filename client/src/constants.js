@@ -1,8 +1,9 @@
+import { GATEWAYSERVERIP } from './dataServerEnv'
 
 export default class SensorData {
     static instance = null;
     static sensors =
-        fetch('/api/pgdb/getSensors', {
+        fetch(GATEWAYSERVERIP + '/api/pgdb/getSensors', {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json'

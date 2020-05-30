@@ -6,6 +6,7 @@ const helmet = require('helmet');
 const lusca = require('lusca');
 const cors = require('cors')
 const path = require('path');
+const socketIOClient = require('socket.io-client')
 const PORT = 5000;
 
 //Setup
@@ -35,16 +36,20 @@ app.get("/api", (req, res) => {
 
 //Import routes
 const pgDatabase = require("./Router/pgDatabase");
+const dataServer = require("./Router/dataServer");
 
 //Setup routes
 app.use("/api/pgdb", pgDatabase);
+app.use("/historical", dataServer);
 
 
 //Python and React socket setup
 var io = require('socket.io')(4000);
 
-// //Socket to connect to run_data server
- const socket = socketIOClient('http://127.0.0.1:5000', { //CHANGE WHEN DEPLOYING!
+//Socket to connect to run_data server
+
+
+const socket = socketIOClient('http://127.0.0.1:5500', { //CHANGE WHEN DEPLOYING!
     'reconnection' : true
     });
      

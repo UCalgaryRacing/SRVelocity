@@ -46,7 +46,7 @@ function viewFiles(res) {
 function downloadFile(res, filename) {
     var downloadParams = {
         Bucket: BUCKET_NAME,
-        Key: filename + '.csv'
+        Key: filename
     }
 
     s3.getObject(downloadParams, (err, data) => {

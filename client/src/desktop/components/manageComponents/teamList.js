@@ -1,6 +1,6 @@
 import React from "react";
 import { Row, Col, Table, Button } from "react-bootstrap";
-import MemberEdit from "./memberView";
+import Member from "./memberView";
 import { withRouter } from "react-router-dom";
 
 class TeamList extends React.Component {
@@ -10,7 +10,6 @@ class TeamList extends React.Component {
   }
 
   async componentDidMount() {
-    console.log("called");
     await this.createTeamMemberList();
   }
 
@@ -54,7 +53,6 @@ class TeamList extends React.Component {
     let render = [];
     Object.keys(members).forEach((ele) => {
       let innerRender = [];
-      console.log(members[ele]);
       members[ele].forEach((memEle) => {
         innerRender.push(
           <tr
@@ -94,7 +92,7 @@ class TeamList extends React.Component {
   render() {
     if (this.state.memberMode) {
       return (
-        <MemberEdit
+        <Member
           member={this.state.selectedMember}
           toggleMemberView={() => {
             this.toggleMemberView();

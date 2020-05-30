@@ -8,6 +8,7 @@ class Member extends React.Component {
       editMode: false,
       leadIsChecked: this.props.member.is_lead,
       approvedIsChecked: this.props.member.is_approved,
+      optionRender: [],
     };
     this.firstName = React.createRef();
     this.lastName = React.createRef();
@@ -44,6 +45,40 @@ class Member extends React.Component {
     this.setState({ editMode: !this.state.editMode });
   }
 
+  async fetchSubteams() {
+    try {
+      let res = await fetch("http://localhost:7000/subteam/getSubteams", {
+        method: "GET",
+        credentials: "include",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+      if (res.status == 401) {
+        console.log("LOG IN REQUIRED");
+        this.props.history.push("/signin");
+      }
+      res = await res.json();
+      return await res;
+    } catch (err) {
+      console.log(err);
+    }
+  }
+
+  async createOptions() {
+    let subteamRender = [];
+    let subteamList = await this.fetchSubteams();
+    console.log(subteamList);
+    subteamList.forEach((ele) => {
+      subteamRender.push(<option>{ele.name}</option>);
+    });
+    this.setState({ optionRender: subteamRender });
+  }
+
+  async componentDidMount() {
+    this.createOptions();
+  }
+
   async submit() {
     try {
       const requestURL =
@@ -63,6 +98,7 @@ class Member extends React.Component {
           subteamName: this.subteam.current.value,
         }),
       });
+      res = await res.json();
       if (res.status == 401) {
         console.log("LOG IN REQUIRED");
         this.props.history.push("/signin");
@@ -78,6 +114,34 @@ class Member extends React.Component {
       console.log(err);
     }
   }
+
+  async deleteMember() {
+    try {
+      const requestURL =
+        "http://localhost:7000/teamMember/" + this.props.member.member_id;
+      let res = await fetch(requestURL, {
+        method: "DELETE",
+        credentials: "include",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+      if (res.status == 401) {
+        console.log("LOG IN REQUIRED");
+        this.props.history.push("/signin");
+      } else if (res.status == 500) {
+        console.log("ERROR");
+      } else if (res.status == 400) {
+        console.log(res);
+      } else if (res.status == 200) {
+        this.props.refreshList();
+        this.props.toggleMemberView();
+      }
+    } catch (err) {
+      console.log(err);
+    }
+  }
+
   render() {
     if (this.state.editMode == true) {
       return (
@@ -147,10 +211,12 @@ class Member extends React.Component {
                     </Col>
                     <Col md={{ span: 4 }}>
                       <Form.Control
-                        type="input"
+                        as="select"
                         defaultValue={this.props.member.subteam_name}
                         ref={this.subteam}
-                      />
+                      >
+                        {this.state.optionRender}
+                      </Form.Control>
                     </Col>
                   </Form.Group>
                   <Form.Group as={Row} controlId="leadAndApproved">
@@ -187,30 +253,41 @@ class Member extends React.Component {
                   </Form.Group>
                   <Row>
                     <Col>
-                      <Button
-                        style={{
-                          backgroundColor: "rgb(194, 45, 45)",
-                          color: "white",
-                          marginLeft: "93%",
-                        }}
-                        onClick={() => {
-                          this.toggleEditMode();
-                        }}
-                      >
-                        Cancel
-                      </Button>
-                      <Button
-                        style={{
-                          backgroundColor: "rgb(194, 45, 45)",
-                          color: "white",
-                          marginLeft: "93%",
-                        }}
-                        onClick={() => {
-                          this.submit();
-                        }}
-                      >
-                        Submit
-                      </Button>
+                      <div style={{ display: "inline-block", float: "right" }}>
+                        <Button
+                          style={{
+                            backgroundColor: "rgb(194, 45, 45)",
+                            color: "white",
+                          }}
+                          onClick={() => {
+                            this.toggleEditMode();
+                          }}
+                        >
+                          Cancel
+                        </Button>
+                        <Button
+                          style={{
+                            backgroundColor: "rgb(194, 45, 45)",
+                            color: "white",
+                          }}
+                          onClick={() => {
+                            this.submit();
+                          }}
+                        >
+                          Submit
+                        </Button>
+                        <Button
+                          style={{
+                            backgroundColor: "rgb(194, 45, 45)",
+                            color: "white",
+                          }}
+                          onClick={() => {
+                            this.deleteMember();
+                          }}
+                        >
+                          Delete User
+                        </Button>
+                      </div>
                     </Col>
                   </Row>
                 </Form>
@@ -285,7 +362,7 @@ class Member extends React.Component {
                       style={{
                         backgroundColor: "rgb(194, 45, 45)",
                         color: "white",
-                        marginLeft: "93%",
+                        float: "right",
                       }}
                       onClick={() => {
                         this.toggleEditMode();

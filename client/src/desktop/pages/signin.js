@@ -12,16 +12,15 @@ class SignInPage extends React.Component {
     this.emailForm = React.createRef();
     this.passwordForm = React.createRef();
     this.state = {
-      currentUser: "Not Logged In",
+      errorMessage: null,
     };
   }
 
   handleEnterKey = async () => {};
 
   handleSignIn = async () => {
-    const signInDetails = await fetch(
-      "http://localhost:7000/teamMember/authenticate",
-      {
+    try {
+      const res = await fetch("http://localhost:7000/teamMember/authenticate", {
         method: "POST",
         credentials: "include",
         headers: {
@@ -31,20 +30,19 @@ class SignInPage extends React.Component {
           email: this.emailForm.current.value,
           password: this.passwordForm.current.value,
         }),
-      }
-    )
-      .then((res) => res.json())
-      .then((res) => {
-        return res;
-      })
-      .catch((err) => {
-        console.log(err);
       });
-    console.log(signInDetails);
-    if (!signInDetails.error) {
-      console.log(Cookies.get("token"));
+      console.log(res.status);
+      const resJSON = await res.json();
+
+      if (!res.ok) {
+        console.log(resJSON.error);
+        this.setState({ errorMessage: resJSON.error });
+        throw new Error(res.status);
+      }
+
       this.props.history.push("/");
-      this.setState({ currentUser: signInDetails.firstName });
+    } catch (err) {
+      console.log(err);
     }
   };
 
@@ -121,7 +119,7 @@ class SignInPage extends React.Component {
           </Row>
           <Row>
             <Col>
-              <b>{this.state.currentUser}</b>
+              <b>{this.state.errorMessage}</b>
             </Col>
           </Row>
         </Jumbotron>

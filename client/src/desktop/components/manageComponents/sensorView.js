@@ -20,45 +20,70 @@ class SensorView extends React.Component {
     this.yellow_upper = React.createRef();
   }
 
-  async componentDidMount() {}
+  async componentDidMount() {
+    this.buttonRender();
+  }
 
   async submit() {
-    try {
-      const requestURL = "http://localhost:7000/postSensor";
-      let res = await fetch(requestURL, {
-        method: "PUT",
-        credentials: "include",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          vehicleId: this.props.vehicle.vehicle_id,
-          name: this.name.current.value,
-          outputUnit: this.output_unit.current.value,
-          category: this.category.current.value,
-          lowerBound: this.lower_bound.current.value,
-          upperBound: this.upper_bound.current.value,
-          codeName: this.code_name.current.value,
-          canId: this.can_id.current.value,
-          yellowUpper: this.yellow_upper.current.value,
-          yellowLower: this.yellow_lower.current.value,
-          redUpper: this.red_upper.current.value,
-          redLower: this.red_lower.current.value,
-        }),
-      });
-      if (res.status == 401) {
-        console.log("LOG IN REQUIRED");
-        this.props.history.push("/signin");
-      } else if (res.status == 500) {
-        console.log("ERROR");
-      } else if (res.status == 400) {
-        console.log(res);
-      } else if (res.status == 200) {
-        this.props.refreshList();
-        this.props.toggleMemberView();
+    if (this.props.add) {
+      try {
+        console.log("submitting");
+        const requestURL = "http://localhost:7000/sensor/postSensor";
+        let res = await fetch(requestURL, {
+          method: "POST",
+          credentials: "include",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            vehicleId: this.props.vehicle.vehicle_id,
+            name: this.name.current.value,
+            outputUnit:
+              this.output_unit.current.value === ""
+                ? null
+                : this.output_unit.current.value,
+            category: this.category.current.value,
+            lowerBound: this.lower_bound.current.value,
+            upperBound: this.upper_bound.current.value,
+            codeName:
+              this.code_name.current.value === ""
+                ? null
+                : this.code_name.current.value,
+            canId:
+              this.can_id.current.value === ""
+                ? null
+                : this.can_id.current.value,
+            yellowUpper:
+              this.yellow_upper.current.value === ""
+                ? null
+                : this.yellow_upper.current.value,
+            yellowLower:
+              this.yellow_lower.current.value === ""
+                ? null
+                : this.yellow_lower.current.value,
+            redUpper:
+              this.red_upper.current.value === ""
+                ? null
+                : this.red_upper.current.value,
+            redLower:
+              this.red_lower.current.value === ""
+                ? null
+                : this.red_lower.current.value,
+          }),
+        });
+        let resJSON = await res.json();
+        if (!res.status == 401) {
+          console.log("LOG IN REQUIRED");
+          this.props.history.push("/signin");
+        } else if (res.status == 500) {
+          console.log("ERROR");
+        } else if (res.status == 400) {
+          console.log(res);
+        } else if (res.status == 200) {
+        }
+      } catch (err) {
+        console.log(err);
       }
-    } catch (err) {
-      console.log(err);
     }
   }
 
@@ -91,6 +116,73 @@ class SensorView extends React.Component {
     } catch (err) {
       console.log(err);
     }
+  }
+
+  async buttonRender() {
+    let render = [];
+    if (this.props.add)
+      render.push(
+        <Row>
+          <Col>
+            <div style={{ display: "inline-block", float: "right" }}>
+              <Button
+                style={{
+                  backgroundColor: "rgb(194, 45, 45)",
+                  color: "white",
+                }}
+                onClick={() => {
+                  this.submit();
+                }}
+              >
+                Submit
+              </Button>
+            </div>
+          </Col>
+        </Row>
+      );
+    else
+      render.push(
+        <Row>
+          <Col>
+            <div style={{ display: "inline-block", float: "right" }}>
+              <Button
+                style={{
+                  backgroundColor: "rgb(194, 45, 45)",
+                  color: "white",
+                }}
+                onClick={() => {
+                  this.toggleEditMode();
+                }}
+              >
+                Cancel
+              </Button>
+              <Button
+                style={{
+                  backgroundColor: "rgb(194, 45, 45)",
+                  color: "white",
+                }}
+                onClick={() => {
+                  this.submit();
+                }}
+              >
+                Submit
+              </Button>
+              <Button
+                style={{
+                  backgroundColor: "rgb(194, 45, 45)",
+                  color: "white",
+                }}
+                onClick={() => {
+                  this.deleteMember();
+                }}
+              >
+                Delete
+              </Button>
+            </div>
+          </Col>
+        </Row>
+      );
+    this.setState({ buttonRender: render });
   }
 
   render() {
@@ -255,45 +347,7 @@ class SensorView extends React.Component {
                       />
                     </Col>
                   </Form.Group>
-                  <Row>
-                    <Col>
-                      <div style={{ display: "inline-block", float: "right" }}>
-                        <Button
-                          style={{
-                            backgroundColor: "rgb(194, 45, 45)",
-                            color: "white",
-                          }}
-                          onClick={() => {
-                            this.toggleEditMode();
-                          }}
-                        >
-                          Cancel
-                        </Button>
-                        <Button
-                          style={{
-                            backgroundColor: "rgb(194, 45, 45)",
-                            color: "white",
-                          }}
-                          onClick={() => {
-                            this.submit();
-                          }}
-                        >
-                          Submit
-                        </Button>
-                        <Button
-                          style={{
-                            backgroundColor: "rgb(194, 45, 45)",
-                            color: "white",
-                          }}
-                          onClick={() => {
-                            this.deleteMember();
-                          }}
-                        >
-                          Delete User
-                        </Button>
-                      </div>
-                    </Col>
-                  </Row>
+                  {this.state.buttonRender}
                 </Form>
               </Jumbotron>
             </Col>

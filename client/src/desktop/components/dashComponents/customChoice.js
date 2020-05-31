@@ -26,6 +26,7 @@ export default class CustomChoice extends React.Component {
     }
 
     selectData = (event) => {
+        console.log(event)
         if (!event.target.id) event.target.id = 0; 
         let i = this.indices.indexOf(event.target.id);
         if (i < 0) this.indices.push(event.target.id); 

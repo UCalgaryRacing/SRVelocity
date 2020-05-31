@@ -1,6 +1,7 @@
 import React from 'react';
 import ButtonGroup from 'react-bootstrap/ButtonGroup';
 import Button from 'react-bootstrap/Button';
+import {Form, Modal} from 'react-bootstrap';
 import GraphingDashboard from './plottingDash/graphingDashboard';
 import DataDashboard from './dataDash/dataDashboard';
 import CustomPlottingDash from './plottingDash/customPlottingDashboard';
@@ -19,14 +20,16 @@ export default class StreamingDash extends React.Component {
             typeOption: 'plotting',
             showTrackMap: false,
             showAccelMap: false,
-            selectionComplete: true
+            selectionComplete: true,
+            dashGraphs: ['Track Map', 'Engine Temp', 'Oil Pressure', 'Oil Temp', 'Air To Fuel', 'Fuel Temp', 'Acceleration', 'Axes']
         }
     }
 
     changeDash = () => {
         this.setState({ 
             dashOption: (this.state.dashOption === 'default') ? 'custom' : 'default',
-            selectionComplete: (this.state.dashOption === 'default') ? false : true
+            selectionComplete: (this.state.dashOption === 'default') ? false : true,
+            dashGraphs: ['Track Map', 'Engine Temp', 'Oil Pressure', 'Oil Temp', 'Air To Fuel', 'Fuel Temp', 'Acceleration', 'Axes']
         });
     }
 
@@ -52,8 +55,23 @@ export default class StreamingDash extends React.Component {
         this.setState({selectionComplete: !this.state.selectionComplete})
     }
 
+    deleteFromDash = (index) => {
+        const temp = this.state.dashGraphs.filter(function(num, i){
+            return ((i === index-1) ? false : true)
+        });
+        this.setState({
+            dashGraphs: temp
+        })
+        this.forceUpdate()
+    }
+
+    addToDash = (graphChoices) => {
+        this.setState({
+            dashGraphs: this.state.dashGraphs.concat(graphChoices)
+        })
+    }
+
     render = () => {
-        let defaultDash = ['Track Map', 'Engine Temp', 'Oil Pressure', 'Oil Temp', 'Air To Fuel', 'Fuel Temp', 'Acceleration', 'Axes']
         let dashSelector = (
             <ButtonGroup id='dashSelector'>
                 <Button id='defaultButton' onClick={this.changeDash} disabled={(this.state.dashOption === 'default') ? true : false}><b>Default</b></Button>
@@ -77,8 +95,8 @@ export default class StreamingDash extends React.Component {
                 {this.state.selectionComplete ? <Button id='accelMapButton' onClick={this.toggleAccelMap} style={{ marginLeft: '8px' }}><b>{(this.state.showAccelMap) ? 'Hide Accel Map' : 'Show Accel Map'}</b></Button> : null}
                 {this.state.selectionComplete ? testRun : ''}
                 {(this.state.dashOption === 'default') ?
-                    ((this.state.typeOption === 'plotting') ? <GraphingDashboard plots={defaultDash} /> : <DataDashboard categories={SensorData.getInstance().getCategories()} />) :
-                    ((this.state.typeOption === 'plotting') ? <CustomPlottingDash updateSelectionComplete={this.updateSelectionComplete}/> : <CustomDataDash updateSelectionComplete={this.updateSelectionComplete}/>)}
+                    ((this.state.typeOption === 'plotting') ? <GraphingDashboard delete={this.deleteFromDash} add={this.addToDash} plots={this.state.dashGraphs} plotsLength={this.state.dashGraphs.length}/> : <DataDashboard categories={SensorData.getInstance().getCategories()} />) :
+                    ((this.state.typeOption === 'plotting') ? <CustomPlottingDash delete={this.deleteFromDash} updateSelectionComplete={this.updateSelectionComplete}/> : <CustomDataDash updateSelectionComplete={this.updateSelectionComplete}/>)}
                 {this.state.showTrackMap ? trackMap : ''}
                 {this.state.showAccelMap ? accelMap : ''}
             </div>

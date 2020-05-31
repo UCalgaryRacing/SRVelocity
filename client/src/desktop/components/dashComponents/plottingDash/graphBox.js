@@ -5,6 +5,7 @@ import { Button } from 'react-bootstrap';
 import { Slider } from '@material-ui/core';
 import { withStyles } from '@material-ui/core/styles';
 import Data from '../../../../data';
+import Dash from '../dashboard';
 import '../../../styling/graphBox.css';
 
 const RangeSlider = withStyles({
@@ -152,11 +153,11 @@ export default class GraphBox extends React.Component {
             return (
                 <div id='graphBox' style={{ marginRight: '19px', marginLeft: '0px' }}>
                     <p id='graphTitle'><b style={{ fontSize: '1.8rem' }}>{'Track Map'}</b></p>
-                    <HeatMap currentPoint={this.state.data} />
+                    <HeatMap currentPoint={this.state.data} delete={this.props.delete} index={this.props.id}/>
                 </div>
             );
         }
-        else {
+        else{
             return (
                 <div id='graphBox' style={{ borderColor: this.state.indicationColour, marginRight: '19px', marginLeft: '0px' }}>
                     <p id='graphTitle'><b style={{ color: this.state.indicationColour, fontSize: '1.8rem' }}>{this.props.sensors[0].category}</b></p>
@@ -193,6 +194,7 @@ export default class GraphBox extends React.Component {
                                 return x.toFixed(1);
                             }}
                         />
+                        <Button id='deleteGraph' onClick={() => this.props.delete(this.props.id)} style={{ position: 'absolute', left: '70px', bottom: '60px' }}><b>Delete Graph</b></Button>
                     </div>
                 </div>
             );

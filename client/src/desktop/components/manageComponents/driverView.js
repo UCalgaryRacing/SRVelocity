@@ -1,9 +1,9 @@
 import React from "react";
 import { Table, Row, Col, Button } from "react-bootstrap";
-import VehicleForm from "./vehicleForm";
+import DriverForm from "./driverForm";
 import { withRouter } from "react-router-dom";
 
-class VehicleView extends React.Component {
+class DriverView extends React.Component {
   constructor(props) {
     super(props);
     this.state = { mode: this.props.mode || "view" };
@@ -15,7 +15,7 @@ class VehicleView extends React.Component {
   }
 
   async componentDidMount() {
-    this.renderVehicleContents(this.props.vehicle);
+    this.renderDriverContents(this.props.driver);
   }
 
   async setEditMode() {
@@ -30,37 +30,46 @@ class VehicleView extends React.Component {
     await this.setState({ mode: "add" });
   }
 
-  async renderVehicleContents(vehicle) {
+  async renderDriverContents(driver) {
     let render = [];
     render.push(
-      <tr key={vehicle.name}>
-        <th>Name</th>
-        <td>{vehicle.name}</td>
-      </tr>
+      <React.Fragment key={"driverViewKey"}>
+        <tr>
+          <th>First Name</th>
+          <td>{driver.first_name}</td>
+        </tr>
+        <tr>
+          <th>Last Name</th>
+          <td>{driver.last_name}</td>
+        </tr>
+      </React.Fragment>
     );
-    await this.setState({ vehicleTableRender: render });
+    await this.setState({ driverTableRender: render });
   }
 
   async errorDisplay(res, resJSON) {
-    if (!res.status == 401) {
+    if (res.status == 401) {
       this.props.history.push("/signin");
     } else if (res.status == 500) {
       this.setState({
-        errorRender: [<p>ERROR 500: Something went wrong</p>],
+        errorRender: [
+          <p key={"driverErrorMessage"}>ERROR 500: Something went wrong</p>,
+        ],
       });
     } else if (res.status == 400) {
-      this.setState({ errorRender: [<p>{resJSON.error}</p>] });
+      this.setState({
+        errorRender: [<p key={"driverErrorMessage"}>{resJSON.error}</p>],
+      });
       console.log(res);
     } else if (res.status == 200) {
-      this.props.toggleVehicleMode(this.props.vehicle);
+      this.props.toggleDriverMode(this.props.driver);
     }
   }
 
   async submitPut() {
     try {
       const requestURL =
-        "http://localhost:7000/vehicle/putVehicle/" +
-        this.props.vehicle.vehicle_id;
+        "http://localhost:7000/driver/putDriver/" + this.props.driver.driver_id;
       const res = await fetch(requestURL, {
         method: "PUT",
         credentials: "include",
@@ -68,7 +77,8 @@ class VehicleView extends React.Component {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          name: this.refs.name.current.value,
+          firstName: this.refs.first_name.current.value,
+          lastName: this.refs.last_name.current.value,
         }),
       });
       console.log(res);
@@ -82,8 +92,8 @@ class VehicleView extends React.Component {
   async submitDelete() {
     try {
       const requestURL =
-        "http://localhost:7000/vehicle/deleteVehicle/" +
-        this.props.vehicle.vehicle_id;
+        "http://localhost:7000/driver/deleteDriver/" +
+        this.props.driver.driver_id;
       const res = await fetch(requestURL, {
         method: "DELETE",
         credentials: "include",
@@ -111,15 +121,15 @@ class VehicleView extends React.Component {
                   color: "white",
                 }}
                 onClick={() => {
-                  this.props.toggleVehicleMode(this.props.vehicle);
+                  this.props.toggleDriverMode(this.props.driver);
                 }}
               >
                 Back
               </Button>
             </Col>
           </Row>
-          <VehicleForm
-            vehicle={this.props.vehicle}
+          <DriverForm
+            driver={this.props.driver}
             setReferences={(refs) => {
               this.setReferences(refs);
             }}
@@ -180,7 +190,7 @@ class VehicleView extends React.Component {
                   color: "white",
                 }}
                 onClick={() => {
-                  this.props.toggleVehicleMode(this.props.vehicle);
+                  this.props.toggleDriverMode(this.props.driver);
                 }}
               >
                 Back
@@ -211,7 +221,7 @@ class VehicleView extends React.Component {
                     ></th>
                   </tr>
                 </thead>
-                <tbody>{this.state.vehicleTableFormRender}</tbody>
+                <tbody>{this.state.driverTableFormRender}</tbody>
               </Table>
             </Col>
           </Row>
@@ -259,7 +269,7 @@ class VehicleView extends React.Component {
                   color: "white",
                 }}
                 onClick={() => {
-                  this.props.toggleVehicleMode(this.props.vehicle);
+                  this.props.toggleDriverMode(this.props.driver);
                 }}
               >
                 Back
@@ -292,7 +302,7 @@ class VehicleView extends React.Component {
                     </th>
                   </tr>
                 </thead>
-                <tbody>{this.state.vehicleTableRender}</tbody>
+                <tbody>{this.state.driverTableRender}</tbody>
               </Table>
             </Col>
           </Row>
@@ -318,4 +328,4 @@ class VehicleView extends React.Component {
   }
 }
 
-export default withRouter(VehicleView);
+export default withRouter(DriverView);

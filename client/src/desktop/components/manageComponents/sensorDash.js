@@ -208,6 +208,7 @@ class SensorDash extends React.Component {
             vehicle={this.state.selectedVehicle}
             sensor={this.state.selectedSensor}
             add={this.state.add}
+            toggleVehicleMode={this.toggleVehicleMode.bind(this)}
           />
         </React.Fragment>
       );

@@ -79,11 +79,27 @@ class Member extends React.Component {
     this.createOptions();
   }
 
+  async errorDisplay(res, resJSON) {
+    if (!res.status == 401) {
+      this.props.history.push("/signin");
+    } else if (res.status == 500) {
+      this.setState({
+        errorRender: [<p>ERROR 500: Something went wrong</p>],
+      });
+    } else if (res.status == 400) {
+      this.setState({ errorRender: [<p>{resJSON.error}</p>] });
+      console.log(res);
+    } else if (res.status == 200) {
+      this.props.refreshList();
+      this.props.toggleMemberView();
+    }
+  }
+
   async submit() {
     try {
       const requestURL =
         "http://localhost:7000/teamMember/" + this.props.member.member_id;
-      let res = await fetch(requestURL, {
+      const res = await fetch(requestURL, {
         method: "PUT",
         credentials: "include",
         headers: {
@@ -98,18 +114,19 @@ class Member extends React.Component {
           subteamName: this.subteam.current.value,
         }),
       });
-      res = await res.json();
-      if (res.status == 401) {
-        console.log("LOG IN REQUIRED");
-        this.props.history.push("/signin");
-      } else if (res.status == 500) {
-        console.log("ERROR");
-      } else if (res.status == 400) {
-        console.log(res);
-      } else if (res.status == 200) {
-        this.props.refreshList();
-        this.props.toggleMemberView();
-      }
+      const resJSON = await res.json();
+      this.errorDisplay(res, resJSON);
+      // if (res.status == 401) {
+      //   console.log("LOG IN REQUIRED");
+      //   this.props.history.push("/signin");
+      // } else if (res.status == 500) {
+      //   console.log("ERROR");
+      // } else if (res.status == 400) {
+      //   console.log(res);
+      // } else if (res.status == 200) {
+      //   this.props.refreshList();
+      //   this.props.toggleMemberView();
+      // }
     } catch (err) {
       console.log(err);
     }
@@ -119,24 +136,26 @@ class Member extends React.Component {
     try {
       const requestURL =
         "http://localhost:7000/teamMember/" + this.props.member.member_id;
-      let res = await fetch(requestURL, {
+      const res = await fetch(requestURL, {
         method: "DELETE",
         credentials: "include",
         headers: {
           "Content-Type": "application/json",
         },
       });
-      if (res.status == 401) {
-        console.log("LOG IN REQUIRED");
-        this.props.history.push("/signin");
-      } else if (res.status == 500) {
-        console.log("ERROR");
-      } else if (res.status == 400) {
-        console.log(res);
-      } else if (res.status == 200) {
-        this.props.refreshList();
-        this.props.toggleMemberView();
-      }
+      const resJSON = res.json();
+      this.errorDisplay(res, resJSON);
+      // if (res.status == 401) {
+      //   console.log("LOG IN REQUIRED");
+      //   this.props.history.push("/signin");
+      // } else if (res.status == 500) {
+      //   console.log("ERROR");
+      // } else if (res.status == 400) {
+      //   console.log(res);
+      // } else if (res.status == 200) {
+      //   this.props.refreshList();
+      //   this.props.toggleMemberView();
+      // }
     } catch (err) {
       console.log(err);
     }
@@ -290,6 +309,7 @@ class Member extends React.Component {
                       </div>
                     </Col>
                   </Row>
+                  <Row>{this.state.errorRender}</Row>
                 </Form>
               </Jumbotron>
             </Col>

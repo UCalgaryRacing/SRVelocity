@@ -24,6 +24,23 @@ class SensorView extends React.Component {
     this.buttonRender();
   }
 
+  async errorDisplay(res, resJSON) {
+    if (!res.status === 401) {
+      this.props.history.push("/signin");
+    } else if (res.status === 500) {
+      this.setState({
+        errorRender: [
+          <p>ERROR 500: Something went wrong. Make sure code name is unique</p>,
+        ],
+      });
+    } else if (res.status === 400) {
+      this.setState({ errorRender: [<p>{resJSON.error}</p>] });
+      console.log(res);
+    } else if (res.status === 200) {
+      this.props.toggleVehicleMode(this.props.vehicle);
+    }
+  }
+
   async submit() {
     if (this.props.add) {
       try {
@@ -38,10 +55,7 @@ class SensorView extends React.Component {
           body: JSON.stringify({
             vehicleId: this.props.vehicle.vehicle_id,
             name: this.name.current.value,
-            outputUnit:
-              this.output_unit.current.value === ""
-                ? null
-                : this.output_unit.current.value,
+            outputUnit: this.output_unit.current.value,
             category: this.category.current.value,
             lowerBound: this.lower_bound.current.value,
             upperBound: this.upper_bound.current.value,
@@ -72,15 +86,56 @@ class SensorView extends React.Component {
           }),
         });
         let resJSON = await res.json();
-        if (!res.status == 401) {
-          console.log("LOG IN REQUIRED");
-          this.props.history.push("/signin");
-        } else if (res.status == 500) {
-          console.log("ERROR");
-        } else if (res.status == 400) {
-          console.log(res);
-        } else if (res.status == 200) {
-        }
+        this.errorDisplay(res, resJSON);
+      } catch (err) {
+        console.log(err);
+      }
+    } else {
+      try {
+        console.log("submitting" + this.props.sensor.sensor_id);
+        const requestURL =
+          "http://localhost:7000/sensor/putSensor/" +
+          this.props.sensor.sensor_id;
+        let res = await fetch(requestURL, {
+          method: "PUT",
+          credentials: "include",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            name: this.name.current.value,
+            outputUnit: this.output_unit.current.value,
+            category: this.category.current.value,
+            lowerBound: this.lower_bound.current.value,
+            upperBound: this.upper_bound.current.value,
+            codeName:
+              this.code_name.current.value === ""
+                ? null
+                : this.code_name.current.value,
+            canId:
+              this.can_id.current.value === ""
+                ? null
+                : this.can_id.current.value,
+            yellowUpper:
+              this.yellow_upper.current.value === ""
+                ? null
+                : this.yellow_upper.current.value,
+            yellowLower:
+              this.yellow_lower.current.value === ""
+                ? null
+                : this.yellow_lower.current.value,
+            redUpper:
+              this.red_upper.current.value === ""
+                ? null
+                : this.red_upper.current.value,
+            redLower:
+              this.red_lower.current.value === ""
+                ? null
+                : this.red_lower.current.value,
+          }),
+        });
+        let resJSON = await res.json();
+        this.errorDisplay(res, resJSON);
       } catch (err) {
         console.log(err);
       }
@@ -94,7 +149,7 @@ class SensorView extends React.Component {
   async deleteSensor() {
     try {
       const requestURL =
-        "http://localhost:7000/teamMember/" + this.props.member.member_id;
+        "http://localhost:7000/sensor/" + this.props.sensor.sensor_id;
       let res = await fetch(requestURL, {
         method: "DELETE",
         credentials: "include",
@@ -102,16 +157,16 @@ class SensorView extends React.Component {
           "Content-Type": "application/json",
         },
       });
+
       if (res.status == 401) {
         console.log("LOG IN REQUIRED");
         this.props.history.push("/signin");
-      } else if (res.status == 500) {
+      } else if (res.status === 500) {
         console.log("ERROR");
-      } else if (res.status == 400) {
+      } else if (res.status === 400) {
         console.log(res);
-      } else if (res.status == 200) {
-        this.props.refreshList();
-        this.props.toggleMemberView();
+      } else if (res.status === 200) {
+        this.props.toggleVehicleMode(this.props.vehicle);
       }
     } catch (err) {
       console.log(err);
@@ -173,7 +228,7 @@ class SensorView extends React.Component {
                   color: "white",
                 }}
                 onClick={() => {
-                  this.deleteMember();
+                  this.deleteSensor();
                 }}
               >
                 Delete
@@ -349,6 +404,7 @@ class SensorView extends React.Component {
                   </Form.Group>
                   {this.state.buttonRender}
                 </Form>
+                <Row>{this.state.errorRender}</Row>
               </Jumbotron>
             </Col>
           </Row>

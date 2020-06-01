@@ -1,6 +1,7 @@
 import React from "react";
 import TeamList from "./teamList";
 import SensorDash from "./sensorDash";
+import VehicleDash from "./vehicleDash";
 
 export default class ManageContent extends React.Component {
   constructor(props) {
@@ -36,7 +37,7 @@ export default class ManageContent extends React.Component {
         {this.state.content === "Data" ? <p>Data</p> : null}
         {this.state.content === "Sensors" ? <SensorDash /> : null}
         {this.state.content === "Drivers" ? <p>Drivers</p> : null}
-        {this.state.content === "Vehicles" ? <p>Vehicles</p> : null}
+        {this.state.content === "Vehicles" ? <VehicleDash /> : null}
         {this.state.content === "People" ? <TeamList /> : null}
       </div>
     );

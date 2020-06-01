@@ -2,5 +2,5 @@
     background: rgb(194, 45, 45) !important;
     height: 110%;
     position: fixed;
-    z-index: 100;
+    z-index: 1000;
 }

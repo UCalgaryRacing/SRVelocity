@@ -39,20 +39,16 @@ export default class HistoricalContent extends React.Component {
             var files = []
             let i = 0
             for (var file of res) {
-                files.push(<CSVBox filename={file} deleteFile={this.deleteFile} key={i++}/>)
+                files.push(<CSVBox filename={file} deleteFile={this.deleteFile} key={i} index={i}/>)
+                i++
             }
             this.setState({ CSVFiles: files})
         })
         .catch(err => { console.log(err) });
     }
 
-    deleteFile = (file) => {
-        let arrCopy = this.state.CSVFiles
-        let index = this.state.CSVFiles.indexOf(file)
-        if(index >= 0) {
-            arrCopy.splice(index, 1)
-            this.setState({ CSVFiles: arrCopy})
-        }
+    deleteFile = (index) => {
+        this.setState({ CSVFiles: this.state.CSVFiles.filter(file => file.props.index !== index)})
     }
 
     render = () => {

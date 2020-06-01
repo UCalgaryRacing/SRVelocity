@@ -27,11 +27,21 @@ dataServer.get("/getFile/:filename", (req, res) => {
 })
 
 dataServer.post("/renameFile", (req, res) => {
-    fetch(DATASERVERIP + '/fileServer/getFile/', {
+    let postParams = {
+        oldFilename: req.body.oldFilename,
+        newFilename: req.body.newFilename
+    }
+
+    fetch(DATASERVERIP + '/fileServer/renameFile', {
         method: 'POST',
-        body: req.body
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(postParams)
     })
-    .then(response => res.sendStatus(200))
+    .then(response => {
+        if(response.ok) res.sendStatus(200)
+        else res.sendStatus(500)})
     .catch(err => {
         console.log(err)
         res.sendStatus(500)
@@ -40,7 +50,19 @@ dataServer.post("/renameFile", (req, res) => {
 
 // Deletes file in storage. MUST contain full filename (including the file extension. e.g. '.csv').
 dataServer.get("/deleteFile/:filename", (req, res) => {
-    deleteFile(res, req.params.filename)
+    fetch(DATASERVERIP + '/fileServer/deleteFile/' + req.params.filename, {
+        method: 'GET'
+    })
+    .then(response => {
+        if(response.ok) {
+            res.sendStatus(200)
+        } else {
+            res.sendStatus(500)
+        }})
+    .catch(err => {
+        console.log(err)
+        res.sendStatus(500)
+    })
 })
 
 module.exports = dataServer;

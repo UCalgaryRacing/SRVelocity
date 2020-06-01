@@ -73,6 +73,19 @@ export default class GraphingDashboard extends React.Component {
         });
     }
 
+    sendOptions = (x, y) => {
+        SensorData.getInstance().getSensors().then(sensorData => {
+            const xSensor = sensorData.filter(item => { return item.category === x });
+            const ySensor = sensorData.filter(item => { return item.category === y });
+             
+            this.graphs.push(
+                <GraphBox
+                    delete={this.deleteFromDash}  
+                />    
+            );
+        });
+    }
+
     render = () => {
         let modalSelector = (
             <ButtonGroup id='modalSelector' style={{ position: 'absolute', marginLeft: '140px' }}>
@@ -96,7 +109,7 @@ export default class GraphingDashboard extends React.Component {
                     <Modal.Body>
                         {(this.state.modalSelectionOption === 'sensor') ?
                         <ModalSensorChoice hide={this.showAddModal} numDisplayed={this.props.plotsLength} displayed={this.props.plots} add={this.addToDash} updateSelectionComplete={this.updateAddedGraphs}/> :
-                        <ModalCustomChoice hide={this.showAddModal}/>}
+                        <ModalCustomChoice hide={this.showAddModal} sendOptions={this.sendOptions}/>}
                     </Modal.Body>
                 </Modal>
             </div>

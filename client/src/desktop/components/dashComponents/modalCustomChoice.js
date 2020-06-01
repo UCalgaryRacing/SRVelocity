@@ -35,8 +35,7 @@ export default class ModalCustomChoice extends React.Component {
     }
 
     sendOptions = (x, y) => {
-        console.log(x)
-        console.log(y)
+        this.props.sendOptions(x, y)
     }
     
     render = () => {

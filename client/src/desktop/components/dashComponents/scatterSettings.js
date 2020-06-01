@@ -53,7 +53,7 @@ export default class ScatterSettings extends React.Component {
 
     selectDataY = (event) => {
         if (!event.target.id) event.target.id = 0; 
-        let i = this.indicesY.indexOf(event.target.id);
+        let i = this.indicesY.indexOf(event.target.id); 
         if (i < 0) this.indicesY.push(event.target.id); 
         else this.indicesY.splice(i, 1); 
     }
@@ -74,7 +74,7 @@ export default class ScatterSettings extends React.Component {
             return
         }
         var selectedX = this.indicesX[0];
-        var selectedY = this.indicesY[0];
+        var selectedY = this.indicesY[0] - 25;
 
         this.props.sendOptions(this.state.categories[selectedX - 1], this.state.categories[selectedY - 1])
     }

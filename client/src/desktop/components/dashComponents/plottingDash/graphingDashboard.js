@@ -21,9 +21,9 @@ export default class GraphingDashboard extends React.Component {
         this.container = [];
     }
 
-    componentWillMount = () => {
-        this.createGraphs();
-    }
+  componentWillMount = () => {
+    this.createGraphs();
+  };
 
     showAddModal = () => {
         this.setState({

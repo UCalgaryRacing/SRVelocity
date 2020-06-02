@@ -5,7 +5,6 @@ import { Button } from 'react-bootstrap';
 import { Slider } from '@material-ui/core';
 import { withStyles } from '@material-ui/core/styles';
 import Data from '../../../../data';
-import Dash from '../dashboard';
 import '../../../styling/graphBox.css';
 import savitzkyGolay from 'ml-savitzky-golay';
 
@@ -183,7 +182,7 @@ export default class GraphBox extends React.Component {
     render = () => {
         if (this.state.sensors[0].category === 'Track Map') {
             return (
-                <div id='graphBox' style={{ marginRight: '19px', marginLeft: '0px' }}>
+                <div id='graphBox' style={{ marginRight: '15px', marginLeft: '0px' }}>
                     <p id='graphTitle'><b style={{ fontSize: '1.8rem' }}>{'Track Map'}</b></p>
                     <HeatMap currentPoint={this.state.data} delete={this.props.delete} index={this.props.id} hideClose={this.props.hideClose}/>
                 </div>

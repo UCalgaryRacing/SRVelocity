@@ -61,11 +61,11 @@ export default class StreamingDash extends React.Component {
             </ButtonGroup >
         );
         let addGraph = (<Button id='addGraph' onClick={this.addGraph} style={{ position: 'fixed', textAlign: 'center' }}><b>Add Graph</b></Button>)
-        let testRun = (<Button id='accelMapButton' onClick={this.doTestRun} style={{ position: 'absolute', right: '20px' }}><b>Do a Test Run</b></Button>);
+        let testRun = (<Button id='accelMapButton' onClick={this.doTestRun} style={{ position: 'absolute', right: '15px' }}><b>Do a Test Run</b></Button>);
         let defaultDash = ['Track Map', 'Engine Temp', 'Oil Pressure', 'Oil Temp', 'Air To Fuel', 'Fuel Temp', 'Acceleration', 'Axes']
         return (
             <div id='dashboard'>
-                <div style={{ position: 'fixed', top: '56px', right: '0', left: '0', zIndex: '999', height: '60px', paddingLeft: '80px', paddingTop: '12px', background: '#F5F5F5', borderColor: '#C22D2D', borderWidth: '0', borderBottomWidth: '2px', borderStyle: 'solid' }}>
+                <div style={{ position: 'fixed', top: '56px', right: '0', left: '0', zIndex: '999', height: '60px', paddingLeft: this.props.leftMargin, paddingTop: '12px', background: '#F5F5F5', borderColor: '#C22D2D', borderWidth: '0', borderBottomWidth: '2px', borderStyle: 'solid' }}>
                     {dashSelector}&nbsp;&nbsp;
                     {typeSelector}&nbsp;&nbsp;
                     {this.state.selectionComplete && this.state.typeOption === 'plotting' ? addGraph : ''}

@@ -20,13 +20,13 @@ export default class StreamingContent extends React.Component {
     }
 
     changeLeftMargin = () => {
-        this.setState({ marginLeft: (this.state.marginLeft === '80px') ? '270px' : '80px' });
+        this.setState({ marginLeft: (this.state.marginLeft === '80px') ? '255px' : '80px' });
     }
 
     render = () => {
         return (
             <div id='streamingContent' style={{transition: 'all 0.15s', marginLeft: this.state.marginLeft }}>
-                {this.state.content === 'Dash' ? <StreamingDash /> : null}
+                {this.state.content === 'Dash' ? <StreamingDash leftMargin={this.state.marginLeft}/> : null}
                 {this.state.content === 'Custom Plots' ? <CustomVisDash /> : null}
                 {this.state.content === 'Data Analysis' ? <DataAnalysisDash /> : null}
                 {this.state.content === 'Digital Twin' ? <VirtualDash /> : null}

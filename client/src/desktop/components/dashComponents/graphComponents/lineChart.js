@@ -23,28 +23,33 @@ export default class LineChart extends Component {
 
     componentDidMount = () => {
         this.createChart();
-        this.getData();
     }
     componentWillUnmount = () => { this.chart.dispose(); }
     componentDidUpdate = (prevProps) => {
         if (prevProps.data !== this.props.data) this.pullData();
     }
 
-    addLineSeries = (data, parent) => {
+    addDerivativeSeries = (data, index) => {
         let map = [];
-        for (let i = 0; i < data.length; i++) map.push({ x: i + 1, y: data[i] }); //Can't get derivative of first value
-        var parentIndex;
+        for (let i = 0; i < data.length; i++) map.push({ x: i, y: data[i] }); 
         var colour = this.colours[this.lineSeries.length];
-        if (parent !== undefined) {
-            parentIndex = this.props.sensors.findIndex(item => item.name === parent);
+        if (index !== undefined) {
+            var parentIndex = this.props.sensors.findIndex(item => item.name + "'" === index);
             colour = this.colours[parentIndex];
         }
-        this.lineSeries.push(this.chart.addLineSeries({ dataPattern: DataPatterns.horizontalProgressive }).setName(''));
+        var childIndex = this.props.sensors.findIndex(item => item.name === index);
+        if(childIndex >= 0) {
+            this.removeSeries(index, parentIndex, true);
+        } 
+        this.lineSeries.push(
+            this.chart.addLineSeries({ dataPattern: DataPatterns.horizontalProgressive })
+                .setName(index)
+        );
         this.lineSeries[this.lineSeries.length - 1]
             .setStrokeStyle(new SolidLine({
                 thickness: 2,
                 fillStyle: new SolidFill({ color: ColorHEX(colour) })
-            }).setFillStyle(solidfill => solidfill.setA((parent !== undefined) ? '80' : 'FF')))
+            }).setFillStyle(solidfill => solidfill.setA((index !== undefined) ? '80' : 'FF')))
             .setMouseInteractions(false)
             .setResultTableFormatter((builder, series, Xvalue, Yvalue) => {
                 return builder.addRow(Yvalue.toFixed(3) + " " + this.props.sensors[this.lineSeries.length - 1].output_unit)
@@ -52,15 +57,20 @@ export default class LineChart extends Component {
             .add(map.map((point) => ({ x: point.x, y: point.y })));
     }
 
-    removeSeries = (index, parent) => {
-        this.lineSeries[index].dispose();
-        var temp = [];
-        for (var i = 0; i < this.lineSeries.length; i++) if (i !== index) temp.push(this.lineSeries[i]);
-        this.lineSeries = temp;
+    removeSeries = (index, parent, update) => {
+        for(var series in this.lineSeries) {
+            if (this.lineSeries[series].getName() === index) {
+                this.lineSeries[series].dispose();
+                this.lineSeries.splice(series, 1);
+            }
+        }
+        if(update) return;
         let min = Math.round(this.lineSeries[parent].getYMin() * 1.3);
         let max = Math.round(this.lineSeries[parent].getYMax() * 1.3);
-        if (Math.abs(min) < 1.5) min = -2;
-        if (Math.abs(max) < 1.5) max = 2;
+        if (Math.abs(min) < 1.5 && Math.abs(max) < 1.5) {
+            min = -2;
+            max = 2;
+        }
         if (min > 0) min = 0;
         this.minValue = min;
         this.maxValue = max;
@@ -170,7 +180,7 @@ export default class LineChart extends Component {
         );
         //Configure the line series
         for (var i = 0; i < this.props.sensors.length; i++) {
-            this.lineSeries.push(this.chart.addLineSeries({ dataPattern: DataPatterns.horizontalProgressive }).setName(''));
+            this.lineSeries.push(this.chart.addLineSeries({ dataPattern: DataPatterns.horizontalProgressive }).setName(this.props.sensors[i].name));
             this.lineSeries[i]
                 .setStrokeStyle(new SolidLine({
                     thickness: 2,
@@ -188,10 +198,6 @@ export default class LineChart extends Component {
     }
 
     changeInterval = (lower, upper) => { this.chart.getDefaultAxisX().setInterval(lower, upper) }
-
-    getData = () => {
-        //Get all available data here
-    }
 
     pullData = () => {
         let data = this.props.data;
@@ -244,7 +250,7 @@ export default class LineChart extends Component {
             if (sensors[sensor].derivative) continue;
             const derivative = sensors.filter(item => item.name === sensors[sensor].name + "'" && item.derivative);
             content.push(
-                <div class='col' style={{ textAlign: 'center', padding: '0', paddingBottom: '3px'}}>
+                <div class='col' style={{ textAlign: 'center', padding: '0', paddingBottom: '3px' }}>
                     <div class='row' style={{ textAlign: 'center', width: '100%', padding: '0', margin: '0' }}>
                         <div class='col' style={{ color: this.colours[sensor], fontStyle: 'bold', textAlign: 'right', padding: '0', fontSize: '1rem' }}>
                             <Button id='derivativeButton' onClick={() => { this.props.controlDerivative(sensors[sensor].name) }}><b style={{ fontStyle: 'italic', fontSize: '1rem' }}>f'(x)</b></Button>

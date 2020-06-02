@@ -5,7 +5,8 @@ export default class SensorData {
         fetch('http://localhost:5000/api/pgdb/getSensors', {
             method: 'GET',
             headers: {
-                'Content-Type': 'application/json'
+                'Content-Type': 'application/json',
+                "accepts":"application/json"
             }
         })
         .then(res => res.json())

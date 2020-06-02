@@ -108,9 +108,9 @@ export default class HeatMap extends React.Component {
                 <Button id='deleteGraph' onClick={() => this.props.delete(this.props.index)} style={{ position: 'relative', left: '15px', bottom: '20px' }}><b>Delete Graph</b></Button>
                 <div style={{ textAlign: 'center' }}>
                     <ButtonGroup id='dashSelector' style={{ margin: '20px' }}>
-                        <Button id='defaultButton' onClick={() => this.refreshMap('Speed')} disabled={(this.state.selection === 'Speed')}><b>Speed</b></Button>
-                        <Button id='customButton' onClick={() => this.refreshMap('Acceleration')} disabled={(this.state.selection === 'Acceleration')}><b>Acceleration</b></Button>
-                        <Button id='customButton' onClick={() => this.refreshMap('Throttle Position')} disabled={(this.state.selection === 'Throttle Position')}><b>Throttle Position</b></Button>
+                        <Button style={{width: '120px'}} id='defaultButton' onClick={() => this.refreshMap('Speed')} disabled={(this.state.selection === 'Speed')}><b>Speed</b></Button>
+                        <Button style={{width: '120px'}} id='customButton' onClick={() => this.refreshMap('Acceleration')} disabled={(this.state.selection === 'Acceleration')}><b>Acceleration</b></Button>
+                        <Button style={{width: '120px'}} id='customButton' onClick={() => this.refreshMap('Throttle Position')} disabled={(this.state.selection === 'Throttle Position')}><b>Throttle</b></Button>
                     </ButtonGroup >
                 </div>
             </div>

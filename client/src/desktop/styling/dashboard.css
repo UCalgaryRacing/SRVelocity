@@ -22,6 +22,32 @@
     opacity: 1;
 }
 
+#dashboard #addGraph {
+    background: rgb(194, 45, 45);
+    opacity: 1;
+    border: 0px solid;
+}
+
+#modalSelector #sensorButton {
+    background: rgb(194, 45, 45, 0.5);
+    border: 0px solid;
+}
+
+#modalSelector #sensorButton:disabled {
+    background: rgb(194, 45, 45);
+    opacity: 1;
+}
+
+#modalSelector #customButton {
+    background: rgb(194, 45, 45, 0.5);
+    border: 0px solid;
+}
+
+#modalSelector #customButton:disabled {
+    background: rgb(194, 45, 45);
+    opacity: 1;
+}
+
 #toggleButton {
     background: rgb(194, 45, 45);
     opacity: 1;

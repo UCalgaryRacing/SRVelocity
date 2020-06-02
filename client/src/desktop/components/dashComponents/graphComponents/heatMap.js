@@ -105,6 +105,7 @@ export default class HeatMap extends React.Component {
                     point={this.state.currentPoint}
                     dataTitle={this.state.selection}
                     unit={this.selectionUnit} />
+                <Button id='deleteGraph' onClick={() => this.props.delete(this.props.index)} style={{ position: 'relative', left: '15px', bottom: '20px' }}><b>Delete Graph</b></Button>
                 <div style={{ textAlign: 'center' }}>
                     <ButtonGroup id='dashSelector' style={{ margin: '20px' }}>
                         <Button style={{width: '120px'}} id='defaultButton' onClick={() => this.refreshMap('Speed')} disabled={(this.state.selection === 'Speed')}><b>Speed</b></Button>

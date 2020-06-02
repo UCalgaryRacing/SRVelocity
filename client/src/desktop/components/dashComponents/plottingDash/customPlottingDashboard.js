@@ -19,12 +19,29 @@ export default class CustomPlottingDash extends React.Component {
         }, this.props.updateSelectionComplete()); 
     }
 
+    deleteFromDash = (index) => {
+        const temp = this.state.selectedGraphs.filter(function(num, i){
+            return ((i === index-1) ? false : true)
+        });
+        this.setState({
+            selectedGraphs: temp
+        })
+        this.forceUpdate()
+    }
+
+    addToDash = (graphChoices) => {
+       this.setState({
+           selectedGraphs: this.state.selectedGraphs.concat(graphChoices)
+       })
+       this.forceUpdate()
+    }
+
     render = () => {
         return (
             <div id='customDash'>
                 {this.state.showChoice ?
                     <CustomChoice enter={this.enter} type={'plot'}/>:
-                    <GraphingDashboard plots={this.state.selectedGraphs} />}
+                    <GraphingDashboard delete={this.deleteFromDash} add={this.addToDash} plots={this.state.selectedGraphs} plotsLength={this.state.selectedGraphs.length}/>}
             </div>
         );
     }

@@ -59,3 +59,15 @@ span[class^="jss"] span[class^="jss"] span[class^="jss"] {
     opacity: 1;
     border: 0px solid;
 }
+
+#graphBox #deleteGraph {
+    background: rgb(194, 45, 45);
+    opacity: 1;
+    border: 0px solid;
+}
+
+#graphBox #deleteTrackMap {
+    background: rgb(194, 45, 45);
+    opacity: 1;
+    border: 0px solid;
+}

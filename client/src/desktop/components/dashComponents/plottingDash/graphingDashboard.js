@@ -25,32 +25,50 @@ export default class GraphingDashboard extends React.Component {
         this.createGraphs();
     }
 
-    componentDidUpdate = (prevProps) => {
-        if(this.props.plots != prevProps.plots){
-            this.graphs = []
-            this.container = []
-            this.setState({ plots: this.props.plots }, function(){ this.createGraphs() })
-        }
-    }
-
     showAddModal = () => {
         this.setState({
             showAddModal: !this.state.showAddModal
-        })
+        });
     }
-    
+
     updateModal = () => {
         this.setState({
             modalSelectionOption: (this.state.modalSelectionOption === 'sensor') ? 'custom' : 'sensor'
-        })
+        });
     }
 
     addToDash = (selectedGraphs) => {
-        this.props.add(selectedGraphs)
+        console.log(selectedGraphs)
+        SensorData.getInstance().getSensors().then(sensorData => {
+            var i = 0;
+            let prevLength = this.state.plots.length;
+            for (const graph of selectedGraphs) {
+                const sensors = sensorData.filter(item => { return item.category === graph; });
+                this.graphs.push(
+                    <GraphBox
+                        sensors={sensors}
+                        id={this.state.plots.length + i + 1}
+                        key={this.state.plots.length + i + 1}
+                        delete={this.deleteFromDash}
+                    />
+                );
+                this.state.plots.push(graph);
+            }
+            var j = 0;
+            for (const graph of this.graphs) {
+                if(prevLength <= j)
+                    this.container.push(<Row style={{ marginTop: '30px' }}><Col>{graph}</Col></Row>);
+                j++;
+            }
+            this.forceUpdate();
+        });
     }
 
     deleteFromDash = (index) => {
-        this.props.delete(index)
+        this.state.plots.splice(index - 1, 1);
+        this.graphs = [];
+        this.container = [];
+        this.createGraphs();
     }
 
     createGraphs = () => {
@@ -77,11 +95,11 @@ export default class GraphingDashboard extends React.Component {
         SensorData.getInstance().getSensors().then(sensorData => {
             const xSensor = sensorData.filter(item => { return item.category === x });
             const ySensor = sensorData.filter(item => { return item.category === y });
-             
+
             this.graphs.push(
                 <GraphBox
-                    delete={this.deleteFromDash}  
-                />    
+                    delete={this.deleteFromDash}
+                />
             );
         });
     }
@@ -92,13 +110,12 @@ export default class GraphingDashboard extends React.Component {
                 <Button id='sensorButton' onClick={this.updateModal} disabled={(this.state.modalSelectionOption === 'sensor') ? true : false}><b>Sensor Graph</b></Button>
                 <Button id='customButton' onClick={this.updateModal} disabled={(this.state.modalSelectionOption === 'custom') ? true : false}><b>Custom Graph</b></Button>
             </ButtonGroup>
-        )
+        );
         return (
             <div>
                 <div style={{ marginBottom: '20px' }}>
                     {this.container}
                 </div>
-                <Button id='addGraph' onClick={this.showAddModal} style={{ position: 'absolute', width: '93%' }}><b>Add Graph</b></Button>
                 <Modal show={this.state.showAddModal} onHide={this.showAddModal}>
                     <Modal.Header closeButton>
                         <Modal.Title>
@@ -108,8 +125,8 @@ export default class GraphingDashboard extends React.Component {
                     </Modal.Header>
                     <Modal.Body>
                         {(this.state.modalSelectionOption === 'sensor') ?
-                        <ModalSensorChoice hide={this.showAddModal} numDisplayed={this.props.plotsLength} displayed={this.props.plots} add={this.addToDash} updateSelectionComplete={this.updateAddedGraphs}/> :
-                        <ModalCustomChoice hide={this.showAddModal} sendOptions={this.sendOptions}/>}
+                            <ModalSensorChoice hide={this.showAddModal} numDisplayed={this.props.plots.length} displayed={this.props.plots} add={this.addToDash} updateSelectionComplete={this.updateAddedGraphs} /> :
+                            <ModalCustomChoice hide={this.showAddModal} sendOptions={this.sendOptions} />}
                     </Modal.Body>
                 </Modal>
             </div>

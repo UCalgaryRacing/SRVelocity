@@ -119,7 +119,8 @@ export default class GraphBox extends React.Component {
                 data = this.smoothenData(data, 1, false);
                 let dx = this.smoothenData(data, 0.1, true);
                 const name = this.props.sensors[this.dxdtParentIndices[i]].name + "'";
-                this.chart.current.addDerivativeSeries(dx, name);
+                if(this.chart.current !== null)
+                    this.chart.current.addDerivativeSeries(dx, name);
             });
         }
     }
@@ -184,11 +185,11 @@ export default class GraphBox extends React.Component {
             return (
                 <div id='graphBox' style={{ marginRight: '19px', marginLeft: '0px' }}>
                     <p id='graphTitle'><b style={{ fontSize: '1.8rem' }}>{'Track Map'}</b></p>
-                    <HeatMap currentPoint={this.state.data} delete={this.props.delete} index={this.props.id}/>
+                    <HeatMap currentPoint={this.state.data} delete={this.props.delete} index={this.props.id} hideClose={this.props.hideClose}/>
                 </div>
             );
         }
-        else{
+        else {
             return (
                 <div id='graphBox' style={{ borderColor: this.state.indicationColour, marginRight: '19px', marginLeft: '0px' }}>
                     <p id='graphTitle'><b style={{ color: this.state.indicationColour, fontSize: '1.8rem' }}>{this.props.sensors[0].category}</b></p>
@@ -205,13 +206,12 @@ export default class GraphBox extends React.Component {
                         />
                     </div>
                     <div style={{ width: '50%', margin: 'auto' }}>
-                        <Button id='toggleAxis' onClick={this.toggleRightAxis} style={{ position: 'absolute', right: '95px', bottom: '60px' }}>
-                            <img id="logoImg" src={require('../../../../assets/rightAxis.svg')} />
+                        <Button id='toggleAxis' onClick={this.toggleRightAxis} style={{ position: 'absolute', right: '100px', bottom: '18px' }}>
+                            <img id="logoImg" style={{ width: '16px', height: '20px', marginBottom: '2px' }} src={require('../../../../assets/rightAxis.svg')} />
                         </Button>
-                        <Button id='toggleAxis' onClick={this.toggleGrid} style={{ position: 'absolute', right: '45px', bottom: '60px' }}>
-                            <img id="logoImg" src={require('../../../../assets/grid.svg')} />
+                        <Button id='toggleAxis' onClick={this.toggleGrid} style={{ position: 'absolute', right: '50px', bottom: '18px' }}>
+                            <img id="logoImg" style={{ width: '15px', height: '20px', marginBottom: '2px' }} src={require('../../../../assets/grid.svg')} />
                         </Button>
-                        <p style={{ textAlign: 'center', marginBottom: '30px' }}><b>Data Range (minutes)</b></p>
                         <RangeSlider
                             defaultValue={[0, 0.5]}
                             onChangeCommitted={this.handleRangeChange}
@@ -225,8 +225,8 @@ export default class GraphBox extends React.Component {
                                 return x.toFixed(1);
                             }}
                         />
+                        <p style={{ textAlign: 'center', marginBottom: '30px' }}><b>Data Range (minutes)</b></p>
                         <div style={{ display: this.dxdtParentIndices.length > 0 ? '' : 'none' }}>
-                            <p style={{ textAlign: 'center', marginBottom: '25px' }}><b>Smoothing Factor</b></p>
                             <RangeSlider
                                 defaultValue={[5]}
                                 onChange={this.handleWindowChange}
@@ -240,8 +240,11 @@ export default class GraphBox extends React.Component {
                                     return x.toFixed(1);
                                 }}
                             />
+                            <p style={{ textAlign: 'center', marginBottom: '25px' }}><b>Smoothing Factor</b></p>
                         </div>
-                        <Button id='deleteGraph' onClick={() => this.props.delete(this.props.id)} style={{ position: 'absolute', left: '70px', bottom: '60px' }}><b>Delete Graph</b></Button>
+                        <Button id='deleteGraph' onClick={() => this.props.delete(this.props.id)} style={{ position: 'absolute', right: '50px', top: '18px' }}>
+                            <img id="logoImg" width="10px" src={require('../../../../assets/delete-x.svg')} />
+                        </Button>
                     </div>
                 </div>
             );

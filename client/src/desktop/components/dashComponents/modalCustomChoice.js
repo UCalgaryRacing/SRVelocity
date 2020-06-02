@@ -4,7 +4,6 @@ import ScatterSettings from './scatterSettings';
 import LineSettings from './lineSettings';
 import SensorData from "../../../constants";
 
-
 export default class ModalCustomChoice extends React.Component {
     constructor(props){
         super(props);

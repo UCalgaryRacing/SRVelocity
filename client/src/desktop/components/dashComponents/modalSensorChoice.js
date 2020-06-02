@@ -56,7 +56,7 @@ export default class ModalSensorChoice extends React.Component {
         return(
             <div id='graphChoice' style={{marginLeft: '20px'}}>
                 {(this.MAX_GRAPHS === 0) ? <p>Maximum number of graphs already displayed.</p> : 
-                (this.state.overMax) ? <p>Please select only {this.MAX_GRAPHS} {(this.MAX_GRAPHS === 1) ? 'graph.' : 'graphs.'} ({this.indices.length} currently chosen)</p> : null}
+                (this.state.overMax) ? <p>Please select {this.MAX_GRAPHS} {(this.MAX_GRAPHS === 1) ? 'only one graph.' : 'or fewer graphs.'} ({this.indices.length} currently chosen)</p> : null}
                 <Form>{this.switches}</Form>
                 <Button onClick={this.submit} style={{ fontWeight: "600", backgroundColor: "#C22D2D", borderColor: "#C22D2D", width: "95%", alignContent: 'center', marginTop: '15px'}}>Submit</Button>
             </div>

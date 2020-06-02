@@ -22,6 +22,32 @@
     opacity: 1;
 }
 
+#dashboard #addGraph {
+    background: rgb(194, 45, 45);
+    opacity: 1;
+    border: 0px solid;
+}
+
+#modalSelector #sensorButton {
+    background: rgb(194, 45, 45, 0.5);
+    border: 0px solid;
+}
+
+#modalSelector #sensorButton:disabled {
+    background: rgb(194, 45, 45);
+    opacity: 1;
+}
+
+#modalSelector #customButton {
+    background: rgb(194, 45, 45, 0.5);
+    border: 0px solid;
+}
+
+#modalSelector #customButton:disabled {
+    background: rgb(194, 45, 45);
+    opacity: 1;
+}
+
 #toggleButton {
     background: rgb(194, 45, 45);
     opacity: 1;
@@ -44,7 +70,7 @@
     background: rgb(194, 45, 45);
     opacity: 1;
     border: 0px solid;
-    width: 150px;
+    width: 160px;
 }
 
 #accelMapButton {
@@ -52,11 +78,12 @@
     opacity: 1;
     border: 0px solid;
     width: 160px;
+    right: 0;
 }
 
 #trackMap {
     position: fixed;
-    bottom: 0px;
+    bottom: 30px;
     right: 0px;
     width: 370px;
     height: 300px;
@@ -74,7 +101,7 @@
 
 #trackMap #graphBox {
     width: 370px !important;
-    height: 300px !important;
+    height: 340px !important;
     min-width: 100px !important;
     border-color: #C22E2D;
     border-top-width: 5px;
@@ -93,7 +120,7 @@
     bottom: 0px;
     right: 0px;
     width: 370px;
-    height: 300px;
+    height: 340px !important;
     background-color: #FFF;
     border-top-width: 5px;
     border-left-width: 5px;

@@ -1,19 +1,18 @@
 export default class SensorData {
-  static instance = null;
-  static sensors = fetch("http://localhost:5000/api/pgdb/getSensors", {
-    method: "GET",
-    headers: {
-      "Content-Type": "application/json",
-    },
-  })
-    .then((res) => res.json())
-    .then((res) => {
-      return res;
-    })
-    .catch((err) => {
-      console.log(err);
-    });
-  constructor() {}
+    static instance = null;
+    static sensors =
+        fetch('http://localhost:5000/api/pgdb/getSensors', {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+                "accepts":"application/json"
+            }
+        })
+        .then(res => res.json())
+        .then(res => { return res; })
+        .catch(err => { console.log(err) });
+
+    constructor() { }
 
   getCategories = async (category) => {
     var sensors = await SensorData.sensors;

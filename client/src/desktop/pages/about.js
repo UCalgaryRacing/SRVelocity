@@ -1,25 +1,27 @@
 import React from 'react';
 import TopNav from '../components/navigationComponents/topNav';
-import { Figure, Container  } from 'react-bootstrap'
+import { Figure, Container, Card, CardGroup, CardDeck  } from 'react-bootstrap'
 
 class Member extends React.Component {
     render = () => {
         return (
-            <div>
-                <Figure>
+            <div style={{paddingBottom: '20px'}}>
+                <Card border='light'>
+                    <Card.Body>
                     <Figure.Image
-                        width={200}
-                        height={200}
+                        width={250}
+                        height={250}
                         src={this.props.src}
                         roundedCircle
                     />
-                </Figure>
-                    <p fontWeight='bold'>
+                    <Card.Title fontWeight='bold'>
                         {this.props.name}
-                    </p>
-                    <p style={{opacity: '0.5'}}>
+                    </Card.Title>
+                    <Card.Text style={{opacity: '0.5'}}>
                         {this.props.description}
-                    </p>
+                    </Card.Text>
+                    </Card.Body>
+                </Card>
             </div>
         )
     }
@@ -45,7 +47,6 @@ export default class AboutPage extends React.Component {
             src: require('../../assets/teamPictures/Jeremy.jpg'),
             description: 'Software Team'
         }, 
-        
         {   name: 'Ryan',
             src: require('../../assets/teamPictures/Ryan.jpg'),
             description: 'Software Team'
@@ -56,21 +57,19 @@ export default class AboutPage extends React.Component {
         },
         {   name: 'Will',
             src: require('../../assets/teamPictures/Will.jpg'),
-            description: 'Electrical Team'
+            description: 'Software Team'
         },
-        ,
+        {   name: 'James',
+            src: require('../../assets/teamPictures/nopic.png'),
+            description: 'Software Team'
+        },
+        {   name: 'Arham',
+        src: require('../../assets/teamPictures/nopic.png'),
+        description: 'Software Team'
+        },
         {   name: 'Evan',
-            src: require('../../assets/teamPictures/nopic.png'),
-            description: 'Electrical Team'
-        },
-        ,
-        {   name: 'James',
-            src: require('../../assets/teamPictures/nopic.png'),
-            description: 'Software Team'
-        },
-        {   name: 'James',
-            src: require('../../assets/teamPictures/nopic.png'),
-            description: 'Software Team'
+        src: require('../../assets/teamPictures/nopic.png'),
+        description: 'Electrical Team'
         },
         {   name: 'Graison',
             src: require('../../assets/teamPictures/nopic.png'),
@@ -80,10 +79,7 @@ export default class AboutPage extends React.Component {
             src: require('../../assets/teamPictures/nopic.png'),
             description: 'Electrical Team'
         },
-        {   name: 'Arham',
-            src: require('../../assets/teamPictures/nopic.png'),
-            description: 'Software Team'
-        },
+
         {   name: 'Aidan',
             src: require('../../assets/teamPictures/nopic.png'),
             description: 'Electrical Team'
@@ -91,14 +87,14 @@ export default class AboutPage extends React.Component {
         ]
 
         this.teamLeads = this.teamLeads.map( member => {
-            return <div style={{display: 'inline-block', width:'50%', textAlign: 'center'}}>
+            return <div style={{textAlign: 'center'}}>
                 <Member name={member.name} src={member.src} description={member.description}/>
                 </div>
             })
 
 
         this.teamMembers = this.teamMembers.map( member => {
-            return <div style={{display: 'inline-block', width:'25%'}}>
+            return <div style={{textAlign: 'center'}}>
                 <Member name={member.name} src={member.src} description={member.description}/>
                 </div>
             })
@@ -111,24 +107,23 @@ export default class AboutPage extends React.Component {
                 <TopNav/>
                 <p style={{
                     textAlign:'center', 
-                    fontSize:'large', 
+                    fontSize:'xx-large', 
                     borderBottomStyle:'solid', 
                     borderBottomColor:'red',
                     paddingBottom:'20px',
                     marginBottom: '50px'}}>
                     Meet the Team
                 </p>
-                <div style={{marginLeft: '40px', marginBottom: '30px'}}>
-                    <Container fluid>
-                        {this.teamLeads}
-                    </Container>
-                </div>
-                <div style={{margin:'30px', marginLeft: '40px', marginRight: '40px'}}>
-                    <Container fluid>
-                        {this.teamMembers}
-                    </Container>
-                </div>
+                <CardDeck style={{justifyContent: 'center'}}>
+                    {this.teamLeads}
+                </CardDeck>
+                <CardDeck>
+                    {this.teamMembers}
+                </CardDeck>
             </div>
         );
     }
 }
+
+//style={{margin:'30px', marginLeft: '40px', marginRight: '40px'}}
+//style={{marginLeft: '40px', marginBottom: '30px'}}

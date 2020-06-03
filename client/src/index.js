@@ -37,7 +37,6 @@ export default class App extends React.Component {
 			headers: { 'Content-Type': 'application/json' }
 		})
 			.then(res => {
-				console.log('here')
 				if (res.status === 200) this.setState({ isSignedIn: true });
 				else {
 					this.setState({ isSignedIn: false });

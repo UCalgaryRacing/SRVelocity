@@ -5,7 +5,7 @@
     background: transparent;
     border: 0px solid transparent;
     font-style: bold;
-    font-size: 20px;
+    font-size: calc(0.8rem + 0.4vw);
     padding-right: 1rem;
     margin-left: 0 !important;
     color: rgba(194, 45, 45);

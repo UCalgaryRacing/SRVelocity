@@ -1,6 +1,7 @@
 import React from 'react';
 import { Nav, Navbar } from 'react-bootstrap';
 import { Redirect } from 'react-router-dom';
+import {Helmet} from "react-helmet";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import '../../styling/topNav.css';
 import './wTopBar/css/normalize.css';
@@ -64,7 +65,7 @@ export default class TopNav extends React.Component {
                                 </div>
                             </div>
                             <script src="https://d3e54v103j8qbb.cloudfront.net/js/jquery-3.4.1.min.220afd743d.js?site=5ea6989e70b505c4b14abb56" type="text/javascript" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
-                            <script src="wTopBar/js/webflow.js" type="text/javascript"></script>
+                            <script src="http://localhost:3000/wTopBar/js/webflow.js" type="text/javascript"></script>
                         </div>
                         :
                         < div >
@@ -77,7 +78,7 @@ export default class TopNav extends React.Component {
                                 </div>
                             </div>
                             <script src="https://d3e54v103j8qbb.cloudfront.net/js/jquery-3.4.1.min.220afd743d.js?site=5ea6989e70b505c4b14abb56" type="text/javascript" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
-                            <script src="wTopBar/js/webflow.js" type="text/javascript"></script>
+                            <script src="http://localhost:3000/wTopBar/js/webflow.js" async="true" type="text/javascript"></script>
                         </div>
                 }
             </div>

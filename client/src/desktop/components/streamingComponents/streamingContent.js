@@ -3,13 +3,14 @@ import StreamingDash from '../dashComponents/dashboard';
 import DataAnalysisDash from '../dataAnalysisComponents/dashboard';
 import CustomVisDash from '../customVisComponents/dashboard';
 import VirtualDash from '../3DComponents/virtualDash';
+import { isMobile } from "react-device-detect";
 
 export default class StreamingContent extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
             content: 'Dash',
-            marginLeft: '80px',
+            marginLeft: isMobile ? '0px':'80px',
             toggleDash: false
         }
     }

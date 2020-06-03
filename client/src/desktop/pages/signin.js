@@ -45,11 +45,6 @@ class SignInPage extends React.Component {
 	};
 
 	handleForgotPassword = () => { };
-
-	handleSignUpRedirct() {
-		this.props.history.push("/signup");
-	}
-
 	render = () => {
 		return (
 			<div id="signIn">
@@ -104,9 +99,7 @@ class SignInPage extends React.Component {
 						<Col>
 							<Button
 								className="signInButton"
-								onClick={() => {
-									this.handleSignUpRedirct();
-								}}
+								href="/signup"
 							>
 								<b>Sign Up</b>
 							</Button>

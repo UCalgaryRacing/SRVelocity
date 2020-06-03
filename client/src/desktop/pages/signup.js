@@ -17,36 +17,38 @@ class SignUpPage extends React.Component {
 		this.state = {
 			currentUser: "Not Logged In",
 			optionRender: [],
-		};
+			showConfirmation: false
+		}
 	}
 
 	async submit() {
-		try {
-			const requestURL = "http://localhost:7000/teamMember/postTeamMember";
-			let res = await fetch(requestURL, {
-				method: "POST",
-				credentials: "include",
-				headers: {
-					"Content-Type": "application/json",
-				},
-				body: JSON.stringify({
-					firstName: this.firstName.current.value,
-					lastName: this.lastName.current.value,
-					email: this.email.current.value,
-					subteamName: this.subteam.current.value,
-					password: this.password.current.value,
-				}),
-			});
-			if (res.status == 500) {
-				console.log("ERROR");
-			} else if (res.status == 400) {
-				console.log(res);
-			} else if (res.status == 200) {
-				this.props.history.push("/");
-			}
-		} catch (err) {
-			console.log(err);
-		}
+		//this.setState({showConfirmation: true});
+		// try {
+		// 	const requestURL = "http://localhost:7000/teamMember/postTeamMember";
+		// 	let res = await fetch(requestURL, {
+		// 		method: "POST",
+		// 		credentials: "include",
+		// 		headers: {
+		// 			"Content-Type": "application/json",
+		// 		},
+		// 		body: JSON.stringify({
+		// 			firstName: this.firstName.current.value,
+		// 			lastName: this.lastName.current.value,
+		// 			email: this.email.current.value,
+		// 			subteamName: this.subteam.current.value,
+		// 			password: this.password.current.value,
+		// 		}),
+		// 	});
+		// 	if (res.status == 500) {
+		// 		console.log("ERROR");
+		// 	} else if (res.status == 400) {
+		// 		console.log(res);
+		// 	} else if (res.status == 200) {
+		// 		this.props.history.push("/");
+		// 	}
+		// } catch (err) {
+		// 	console.log(err);
+		// }
 	}
 
 	async fetchSubteams() {
@@ -73,7 +75,6 @@ class SignUpPage extends React.Component {
 	async createOptions() {
 		let subteamRender = [];
 		let subteamList = await this.fetchSubteams();
-		console.log(subteamList);
 		subteamList.forEach((ele) => {
 			subteamRender.push(<option>{ele.name}</option>);
 		});
@@ -88,7 +89,7 @@ class SignUpPage extends React.Component {
 		return (
 			<div id="signUp">
 				<React.Fragment>
-					<TopNav />
+					<TopNav style={{zIndex: '10000'}}/>
 					<Jumbotron style={{ background: "white" }}>
 						<Row id="row">
 							<Col>
@@ -162,47 +163,13 @@ class SignUpPage extends React.Component {
 							</Col>
 						</Row>
 						<Row>
-						<Col>
-							<Button className="signInButton" onClick={this.handleSignIn}>
-								<b>Sign Up</b>
-							</Button>
-						</Col>
-					</Row>
-						<Row>
-							<Col md={{ span: 8, offset: 2 }}>
-								<Jumbotron>
-									<Form>
-										<Form.Group as={Row} controlId="subteam">
-											<Col md={{ span: 2 }}>
-												<Form.Label>
-													<h4>Subteam</h4>
-												</Form.Label>
-											</Col>
-											<Col md={{ span: 4 }}>
-												<Form.Control as="select" ref={this.subteam}>
-													{this.state.optionRender}
-												</Form.Control>
-											</Col>
-										</Form.Group>
-										<Row>
-											<Col>
-												<Button
-													style={{
-														backgroundColor: "rgb(194, 45, 45)",
-														color: "white",
-														float: "right",
-													}}
-													onClick={() => {
-														this.submit();
-													}}
-												>
-													Submit</Button>
-											</Col>
-										</Row>
-									</Form>
-								</Jumbotron>
+							<Col>
+								<Button className="signInButton" onClick={() => { this.setState({showConfirmation: true}); }}>
+									<b>Sign Up</b>
+								</Button>
 							</Col>
 						</Row>
+						{this.state.showConfirmation ? 'Request completed! You will gain access once you are approved by an admin.' : null}
 					</Jumbotron>
 					<BottomNav />
 				</React.Fragment>

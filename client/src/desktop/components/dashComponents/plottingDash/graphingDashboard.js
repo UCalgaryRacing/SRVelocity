@@ -1,5 +1,6 @@
 import React from 'react';
 import GraphBox from './graphBox';
+import CustomGraphBox from './customGraphBox';
 import { Row, Col, Modal } from 'react-bootstrap';
 import SensorData from '../../../../constants';
 import Button from 'react-bootstrap/Button';
@@ -18,7 +19,9 @@ export default class GraphingDashboard extends React.Component {
             modalSelectionOption: 'sensor'
         }
         this.graphs = [];
+        this.customGraph = [];
         this.container = [];
+        this.customSensors = [];
     }
 
     componentWillMount = () => {
@@ -75,14 +78,22 @@ export default class GraphingDashboard extends React.Component {
 
     sendOptions = (x, y) => {
         SensorData.getInstance().getSensors().then(sensorData => {
-            const xSensor = sensorData.filter(item => { return item.category === x });
-            const ySensor = sensorData.filter(item => { return item.category === y });
-             
+            const xSensor = sensorData.filter(item => { return item.category === x })
+            const ySensor = sensorData.filter(item => { return item.category === y })
+            this.customSensors = [];
+            this.customSensors.push(xSensor);
+            this.customSensors.push(ySensor);
             this.graphs.push(
-                <GraphBox
-                    delete={this.deleteFromDash}  
-                />    
+                <CustomGraphBox
+                    id={this.state.plots.length + 1}
+                    sensors={this.customSensors}
+                    delete={this.deleteFromDash}
+                />
             );
+            this.container = []
+            for (const graph of this.graphs) this.container.push(<Row style={{ marginTop: '30px' }}><Col>{graph}</Col></Row>);
+            this.showAddModal();
+            this.forceUpdate();
         });
     }
 
@@ -109,7 +120,7 @@ export default class GraphingDashboard extends React.Component {
                     <Modal.Body>
                         {(this.state.modalSelectionOption === 'sensor') ?
                         <ModalSensorChoice hide={this.showAddModal} numDisplayed={this.props.plotsLength} displayed={this.props.plots} add={this.addToDash} updateSelectionComplete={this.updateAddedGraphs}/> :
-                        <ModalCustomChoice hide={this.showAddModal} sendOptions={this.sendOptions}/>}
+                        <ModalCustomChoice hide={this.showAddModal} sendOptions={this.sendOptions} add={this.addToDash}/>}
                     </Modal.Body>
                 </Modal>
             </div>

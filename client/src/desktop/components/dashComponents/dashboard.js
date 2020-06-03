@@ -83,7 +83,7 @@ export default class StreamingDash extends React.Component {
                 </div>
                 <div style={{ paddingTop: '98px' }}>
                     {(this.state.dashOption === 'default') ?
-                        ((this.state.typeOption === 'plotting') ? <GraphingDashboard plots={defaultDash} /> : <DataDashboard categories={SensorData.getInstance().getCategories()} />) :
+                        ((this.state.typeOption === 'plotting') ? <GraphingDashboard delete={this.deleteFromDash} add={this.addToDash} plots={this.state.dashGraphs} /> : <DataDashboard categories={SensorData.getInstance().getCategories()} />) :
                         ((this.state.typeOption === 'plotting') ? <CustomPlottingDash updateSelectionComplete={this.updateSelectionComplete} /> : <CustomDataDash updateSelectionComplete={this.updateSelectionComplete} />)}
                 </div>
                 <QuickMaps />

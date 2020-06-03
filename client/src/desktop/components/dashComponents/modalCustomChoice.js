@@ -14,8 +14,6 @@ export default class ModalCustomChoice extends React.Component {
             selectTypePage: true,
             plotSettingsPage: false
         }
-        this.indices = [];
-        this.availableGraphs = [];
         this.plotChoice = '';
         this.MAX_GRAPHS = 10 - this.props.numDisplayed;
     }
@@ -35,7 +33,9 @@ export default class ModalCustomChoice extends React.Component {
     }
 
     sendOptions = (x, y) => {
-        this.props.sendOptions(x, y)
+        let graphs = ['Custom'];
+        this.props.add(graphs);
+        this.props.sendOptions(x, y);
     }
     
     render = () => {

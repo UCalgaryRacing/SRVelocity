@@ -1,5 +1,6 @@
 import React from "react";
 import { Row, Col, Button, Jumbotron, Form } from "react-bootstrap";
+import { withRouter } from "react-router-dom";
 
 class Member extends React.Component {
   constructor(props) {
@@ -80,7 +81,7 @@ class Member extends React.Component {
   }
 
   async errorDisplay(res, resJSON) {
-    if (!res.status == 401) {
+    if (res.status == 401) {
       this.props.history.push("/signin");
     } else if (res.status == 500) {
       this.setState({
@@ -401,4 +402,4 @@ class Member extends React.Component {
   }
 }
 
-export default Member;
+export default withRouter(Member);

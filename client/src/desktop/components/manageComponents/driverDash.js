@@ -1,14 +1,14 @@
 import React from "react";
-import VehicleList from "./vehicleList";
-import VehicleView from "./vehicleView";
-import VehicleForm from "./vehicleForm";
+import DriverList from "./driverList";
+import DriverView from "./driverView";
+import DriverForm from "./driverForm";
 import { Row, Col, Button } from "react-bootstrap";
-class VehicleDash extends React.Component {
+class DriverDash extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      vehicleMode: false,
-      selectedVehicle: {},
+      driverMode: false,
+      selectedDriver: {},
       addMode: false,
     };
     this.refs = {};
@@ -18,10 +18,10 @@ class VehicleDash extends React.Component {
     this.refs = childRefs;
   }
 
-  async toggleVehicleMode(vehicle) {
+  async toggleDriverMode(driver) {
     await this.setState({
-      vehicleMode: !this.state.vehicleMode,
-      selectedVehicle: vehicle,
+      driverMode: !this.state.driverMode,
+      selectedDriver: driver,
       addMode: false,
     });
   }
@@ -33,7 +33,7 @@ class VehicleDash extends React.Component {
   }
 
   async errorDisplay(res, resJSON) {
-    if (res.status === 401) {
+    if (!res.status === 401) {
       this.props.history.push("/signin");
     } else if (res.status === 500) {
       this.setState({
@@ -49,7 +49,7 @@ class VehicleDash extends React.Component {
 
   async submitPost() {
     try {
-      const requestURL = "http://localhost:7000/vehicle/postVehicle";
+      const requestURL = "http://localhost:7000/driver/postDriver";
       const res = await fetch(requestURL, {
         method: "POST",
         credentials: "include",
@@ -57,7 +57,8 @@ class VehicleDash extends React.Component {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          name: this.refs.name.current.value,
+          firstName: this.refs.first_name.current.value,
+          lastName: this.refs.last_name.current.value,
         }),
       });
       console.log(res);
@@ -72,8 +73,8 @@ class VehicleDash extends React.Component {
     if (this.state.addMode) {
       return (
         <React.Fragment>
-          <VehicleForm
-            vehicle={{}}
+          <DriverForm
+            driver={{}}
             setReferences={(refs) => {
               this.setReferences(refs);
             }}
@@ -108,12 +109,12 @@ class VehicleDash extends React.Component {
           </Row>
         </React.Fragment>
       );
-    } else if (!this.state.vehicleMode) {
+    } else if (!this.state.driverMode) {
       return (
         <React.Fragment>
-          <VehicleList
-            toggleVehicleMode={(vehicle) => {
-              this.toggleVehicleMode(vehicle);
+          <DriverList
+            toggleDriverMode={(driver) => {
+              this.toggleDriverMode(driver);
             }}
           />
           <Row>
@@ -137,10 +138,10 @@ class VehicleDash extends React.Component {
     } else {
       return (
         <React.Fragment>
-          <VehicleView
-            vehicle={this.state.selectedVehicle}
-            toggleVehicleMode={(vehicle) => {
-              this.toggleVehicleMode(vehicle);
+          <DriverView
+            driver={this.state.selectedDriver}
+            toggleDriverMode={(driver) => {
+              this.toggleDriverMode(driver);
             }}
             mode={this.state.mode}
           />
@@ -150,4 +151,4 @@ class VehicleDash extends React.Component {
   }
 }
 
-export default VehicleDash;
+export default DriverDash;

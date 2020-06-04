@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 import { ColorRGBA, IndividualPointFill, PointShape, lightningChart, emptyTick, AxisScrollStrategies, SolidFill, ColorHEX, AutoCursorModes, SolidLine, FontSettings } from '@arction/lcjs';
+import { isMobile } from 'react-device-detect'
+
 
 const theme = {
     whiteFill: new SolidFill({ color: ColorHEX('#FFFFFF') }),
@@ -108,9 +110,10 @@ export default class ScatterPlot extends Component {
     }
 
     render() {
+        let graphHeight = (isMobile ? '90vh' : '500px')
         return (
             <div style={{ marginBottom: '20px' }}>
-                <div id={this.chartId} className='fill' style={{ height: '500px' }} onWheel={(event) => { return true; }}></div>
+                <div id={this.chartId} className='fill' style={{ height: graphHeight }} onWheel={(event) => { return true; }}></div>
             </div>
         );
     }

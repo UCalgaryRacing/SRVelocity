@@ -21,6 +21,7 @@
     "react-dom": "^16.8.6",
     "react-helmet": "^6.0.0",
     "react-router-dom": "^5.0.1",
+    "react-screen-orientation": "0.0.4",
     "react-scripts": "^3.3.0",
     "react-sidebar": "^3.0.2",
     "react-social-icons": "^4.1.0",

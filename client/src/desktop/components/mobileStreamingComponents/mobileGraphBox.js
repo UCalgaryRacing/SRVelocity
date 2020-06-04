@@ -1,12 +1,14 @@
 import React from 'react';
-import LineChart from '../graphComponents/lineChart';
-import HeatMap from '../graphComponents/heatMap';
+import LineChart from '../dashComponents/graphComponents/lineChart';
+import HeatMap from '../dashComponents/graphComponents/heatMap';
 import { Button } from 'react-bootstrap';
 import { Slider } from '@material-ui/core';
 import { withStyles } from '@material-ui/core/styles';
-import Data from '../../../../data';
-import '../../../styling/graphBox.css';
+import Data from '../../../data';
+import '../../styling/graphBox.css';
 import savitzkyGolay from 'ml-savitzky-golay';
+import DeviceOrientation, {Orientation} from 'react-screen-orientation'
+import TopNav from '../navigationComponents/topNav'
 
 const RangeSlider = withStyles({
     root: {
@@ -23,7 +25,7 @@ const RangeSlider = withStyles({
     }
 })(Slider);
 
-export default class GraphBox extends React.Component {
+export default class MobileGraphBox extends React.Component {
     constructor(props) {
         super(props);
         this.chart = React.createRef()
@@ -182,17 +184,29 @@ export default class GraphBox extends React.Component {
     render = () => {
         if (this.state.sensors[0].category === 'Track Map') {
             return (
-                <div id='graphBox' style={{ marginRight: '15px', marginLeft: '0px' }}>
-                    <p id='graphTitle'><b style={{ fontSize: '1.8rem' }}>{'Track Map'}</b></p>
-                    <HeatMap currentPoint={this.state.data} delete={this.props.delete} index={this.props.id} hideClose={this.props.hideClose}/>
-                </div>
+                <DeviceOrientation lockOrientation={'portrait'}>
+                    <Orientation orientation='landscape' alwaysRender={false}>
+                    <div id='graphBoxMobile' style={{ marginTop: '-30px', marginLeft: '0px' }}>
+                        <p id='graphTitleMobile'><b style={{ fontSize: 'large' }}>{'Track Map'}</b></p>
+                        <HeatMap currentPoint={this.state.data} delete={this.props.delete} index={this.props.id} hideClose={this.props.hideClose}/>
+                    </div>
+                    </Orientation>
+                    <Orientation orientation='portrait' alwaysRender={false}>
+                        <TopNav/>
+                        <div style={{textAlign: 'center', marginTop:'40px'}}>
+                            <p>
+                                Please rotate your device to the landscape position to view the interactive streaming graphs.
+                            </p>
+                        </div>
+                    </Orientation>
+                </DeviceOrientation>
             );
         }
         else {
             return (
-                <div id='graphBox' style={{ borderColor: this.state.indicationColour, marginRight: '19px', marginLeft: '0px' }}>
-                    <p id='graphTitle'><b style={{ color: this.state.indicationColour, fontSize: '1.8rem' }}>{this.props.sensors[0].category}</b></p>
-                    <div style={{ marginBottom: '10px' }}>
+                <div id='graphBoxMobile' style={{ borderColor: this.state.indicationColour, marginRight: '19px', marginLeft: '0px' }}>
+                    <p id='graphTitleMobile'><b style={{ color: this.state.indicationColour, fontSize: '1.8rem' }}>{this.props.sensors[0].category}</b></p>
+                    <div>
                         <LineChart
                             id={this.props.id}
                             data={this.state.data}
@@ -206,10 +220,10 @@ export default class GraphBox extends React.Component {
                     </div>
                     <div style={{ width: '50%', margin: 'auto' }}>
                         <Button id='toggleAxis' onClick={this.toggleRightAxis} style={{ position: 'absolute', right: '100px', bottom: '18px' }}>
-                            <img id="logoImg" style={{ width: '16px', height: '20px', marginBottom: '2px' }} src={require('../../../../assets/rightAxis.svg')} />
+                            <img id="logoImg" style={{ width: '16px', height: '20px', marginBottom: '2px' }} src={require('../../../assets/rightAxis.svg')} />
                         </Button>
                         <Button id='toggleAxis' onClick={this.toggleGrid} style={{ position: 'absolute', right: '50px', bottom: '18px' }}>
-                            <img id="logoImg" style={{ width: '15px', height: '20px', marginBottom: '2px' }} src={require('../../../../assets/grid.svg')} />
+                            <img id="logoImg" style={{ width: '15px', height: '20px', marginBottom: '2px' }} src={require('../../../assets/grid.svg')} />
                         </Button>
                         <RangeSlider
                             defaultValue={[0, 0.5]}
@@ -241,9 +255,6 @@ export default class GraphBox extends React.Component {
                             />
                             <p style={{ textAlign: 'center', marginBottom: '25px' }}><b>Smoothing Factor</b></p>
                         </div>
-                        <Button id='deleteGraph' onClick={() => this.props.delete(this.props.id)} style={{ position: 'absolute', right: '50px', top: '18px' }}>
-                            <img id="logoImg" width="10px" src={require('../../../../assets/delete-x.svg')} />
-                        </Button>
                     </div>
                 </div>
             );

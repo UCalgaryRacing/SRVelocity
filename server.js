@@ -19,6 +19,7 @@ app.get("/historical", (req, res) => { res.sendFile(path.join(__dirname, 'client
 app.get("/manage", (req, res) => { res.sendFile(path.join(__dirname, 'client', 'build', 'index.html')); });
 app.get("/about", (req, res) => { res.sendFile(path.join(__dirname, 'client', 'build', 'index.html')); });
 app.get("/signin", (req, res) => { res.sendFile(path.join(__dirname, 'client', 'build', 'index.html')); });
+app.get("/signup", (req, res) => { res.sendFile(path.join(__dirname, 'client', 'build', 'index.html')); });
 app.get("/licenses", (req, res) => { res.sendFile(path.join(__dirname, 'client', 'build', 'index.html')); });
 
 app.use(session({

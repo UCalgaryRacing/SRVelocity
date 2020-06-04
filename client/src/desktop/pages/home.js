@@ -10,10 +10,10 @@ export default class HomePage extends React.Component {
     if (isMobile) {
       return (
         <React.Fragment>
-          <TopNav />
+          {/* <TopNav /> */}
           <div id="homePage">
             <Row id="row1" style={{margin: 'auto'}}>
-              <Col style={{ marginTop: "100px" }}>
+              <Col style={{ marginTop: "10px" }}>
                 <img
                   style={{
                     width: "100%",
@@ -28,22 +28,27 @@ export default class HomePage extends React.Component {
             <Row id="row2" style={{margin: 'auto'}}>
               <Col>
                 <p>
-                  <b style={{ fontSize: "30px", marginBottom:"20px" }}>
+                  <b style={{ fontSize: "20px", marginBottom:"5px" }}>
                     Welcome to Schulich Velocity!
                   </b>
                 </p>
-                <p style={{ fontSize: "15px", marginLeft:'5px', marginRight:'5px', marginBottom:'30px'}}>
+                <p>
+                  <b style={{ fontSize: "20px", marginBottom:"20px" }}>
+                    Our mobile version is currently under construction. Please visit our desktop site!
+                  </b>
+                </p>
+                {/* <p style={{ fontSize: "15px", marginLeft:'5px', marginRight:'5px', marginBottom:'30px'}}>
                   Schulich Velocity is telemetry software created for the SR21.
                   It is capable of receiving data from the SR21 at 60 Hz. This
                   data is stored, plotted, and analyzed in various ways to help
                   us make data driven decisions.
-                </p>
-                <Button id="streamingButton" href="/streaming" >
+                </p> */}
+                {/* <Button id="streamingButton" href="/streaming" >
                   <b>Go to Streaming</b>
-                </Button>
+                </Button> */}
               </Col>
             </Row>
-            <BottomNav />
+            {/* <BottomNav /> */}
           </div>
         </React.Fragment>
       );

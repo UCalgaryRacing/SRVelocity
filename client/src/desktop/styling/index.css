@@ -12,16 +12,18 @@ body {
   color: #212529 !important;
   line-height: normal !important;
 }
-/* Problems with following two objects
 html {
-  height: 100vh;
+  min-height: 100vh;
 }
+/* Problems with following two objects
+
+
+*/
 #root {
   overflow-x: hidden;
   overflow-y: scroll;
-  height: 100vh;
+  min-height: 100vh;
 }
-*/
 ::-webkit-scrollbar{
   width: 0px;
   background: transparent;

@@ -8,9 +8,9 @@ export default class BottomNav extends React.Component {
         return (
             <Navbar id='bottom'>
                 <Navbar.Brand><SocialMedia/></Navbar.Brand>
-                <Nav className='ml-auto'>
+                {/* <Nav className='ml-auto'>
                     <Button className='licensesButton' href='/licenses'><b>Licenses & Attributions</b></Button>
-                </Nav>
+                </Nav> */}
             </Navbar>
         );
     }

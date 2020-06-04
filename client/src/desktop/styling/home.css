@@ -6,9 +6,11 @@
 }
 
 #homePage .jumbotron {
-    margin: 0% 25%;
+    margin: auto;
     margin-top: 50px;
     background: white;
+    max-width: 800px;
+    min-width: 300px;
 }
 
 #homePage #row1{

@@ -265,7 +265,7 @@ export default class MobileGraphBox extends React.Component {
                 </Orientation>
                     <Orientation orientation='portrait' alwaysRender={false}>
                         <TopNav/>
-                        <div style={{textAlign: 'center', marginTop:'80px'}}>
+                        <div style={{textAlign: 'center', marginTop:'80px', paddingTop:'5vh'}}>
                             <p>
                                 Please rotate your device to the landscape position to view the interactive streaming graphs.
                             </p>

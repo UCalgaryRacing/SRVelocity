@@ -8,7 +8,7 @@ import Data from '../../../data';
 import SensorData from '../../../constants';
 import '../../styling/dashboard.css';
 
-export default class StreamingDash extends React.Component {
+export default class MobileDashboard extends React.Component {
     constructor(props) {
         super(props);
         this.graphDash = React.createRef();
@@ -44,7 +44,7 @@ export default class StreamingDash extends React.Component {
 
     render = () => {
         let testRun = (<Button id='accelMapButton' onClick={this.doTestRun} style={{ position: 'absolute', right: '15px' }}><b>Do a Test Run</b></Button>);
-=        return (
+        return (
             <div id='dashboard'>
                 <div style={{ position: 'fixed', top: '56px', right: '0', left: '0', zIndex: '999', height: '60px', paddingLeft: this.props.leftMargin, paddingTop: '12px', background: '#F5F5F5', borderColor: '#C22D2D', borderWidth: '0', borderBottomWidth: '2px', borderStyle: 'solid' }}>
                     {this.state.selectionComplete ? testRun : ''}

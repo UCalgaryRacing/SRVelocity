@@ -184,7 +184,7 @@ export default class MobileGraphBox extends React.Component {
     render = () => {
         if (this.state.sensors[0].category === 'Track Map') {
             return (
-                <DeviceOrientation lockOrientation={'portrait'}>
+                <DeviceOrientation lockOrientation={'landscape'}>
                     <Orientation orientation='landscape' alwaysRender={false}>
                     <div id='graphBoxMobile' style={{ marginTop: '0px', marginLeft: '0px' }}>
                         <p id='graphTitleMobile'><b style={{ fontSize: 'large' }}>{'Track Map'}</b></p>
@@ -204,7 +204,7 @@ export default class MobileGraphBox extends React.Component {
         }
         else {
             return (
-                <DeviceOrientation lockOrientation={'portrait'}>
+                <DeviceOrientation lockOrientation={'landscape'}>
                 <Orientation orientation='landscape' alwaysRender={false}>
                 <div id='graphBoxMobile' style={{ borderColor: this.state.indicationColour, marginRight: '0px', marginLeft: '0px' }}>
                     <p id='graphTitleMobile'><b style={{ color: this.state.indicationColour, fontSize: 'large' }}>{this.props.sensors[0].category}</b></p>

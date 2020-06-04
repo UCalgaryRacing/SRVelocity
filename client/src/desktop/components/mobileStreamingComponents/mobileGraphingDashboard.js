@@ -18,7 +18,7 @@ export default class MobileGraphingDashboard extends React.Component {
             modalSelectionOption: 'sensor'
         }
         this.modalButton =  <Button onClick={this.showAddModal} style={{margin: '20px'}}>Switch Graph</Button>
-        this.defaultPlot = 'Axes'
+        this.defaultPlot = 'Acceleration'
     }
 
   componentDidMount = () => {

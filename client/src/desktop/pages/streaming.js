@@ -18,7 +18,10 @@ export default class StreamingPage extends React.Component {
     if (!isMobile) {
       sideNav = <StreamingSideNav streamingContent={this.streamingContent} />;
       topNav = <TopNav />;
-    } else sideNav = <SideNavMobileStreaming />;
+    } else
+      sideNav = (
+        <SideNavMobileStreaming streamingContent={this.streamingContent} />
+      );
     return (
       <div id="streamingPage">
         {topNav}

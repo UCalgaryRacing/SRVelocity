@@ -1,6 +1,7 @@
 import React from "react";
 import Sidebar from "react-sidebar";
-import { Row, Col } from "react-bootstrap";
+import Cookie from "js-cookie";
+import { Row, Col, Button } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import "../../styling/sideNavMobile.css";
 
@@ -11,8 +12,9 @@ class SideNavMobileStreaming extends React.Component {
     this.onSetSidebarOpen = this.onSetSidebarOpen.bind(this);
   }
 
+  startTestRun() {}
   changeContent(newContent) {
-    this.props.streamingContent.current.changeContent(newContent);
+    this.props.streamingContent.current.changeContentMobile(newContent);
   }
 
   onSetSidebarOpen(open) {
@@ -20,6 +22,23 @@ class SideNavMobileStreaming extends React.Component {
   }
 
   render() {
+    let signInLink = null;
+    if (!Cookie.get("token")) {
+      signInLink = (
+        <Row
+          style={{ color: "grey" }}
+          onClick={() => {
+            this.changeContent("currentData");
+          }}
+        >
+          <Col style={{ margin: "10px" }}>
+            <Link to="/signin" style={{ fontSize: "25px", color: "grey" }}>
+              Sign In
+            </Link>
+          </Col>
+        </Row>
+      );
+    }
     return (
       <Sidebar
         sidebar={
@@ -34,7 +53,7 @@ class SideNavMobileStreaming extends React.Component {
             <Row
               style={{ color: "grey" }}
               onClick={() => {
-                console.log("Dash");
+                this.changeContent("plotting");
               }}
             >
               <Col style={{ margin: "10px" }}>
@@ -44,7 +63,7 @@ class SideNavMobileStreaming extends React.Component {
             <Row
               style={{ color: "grey" }}
               onClick={() => {
-                console.log("Data");
+                this.changeContent("currentData");
               }}
             >
               <Col style={{ margin: "10px" }}>
@@ -62,6 +81,44 @@ class SideNavMobileStreaming extends React.Component {
                     width: "90%",
                   }}
                 />
+              </Col>
+            </Row>
+            <Row
+              style={{ color: "grey" }}
+              onClick={() => {
+                this.changeContent("currentData");
+              }}
+            >
+              <Col style={{ margin: "10px" }}>
+                <Link to="/about" style={{ fontSize: "25px", color: "grey" }}>
+                  About
+                </Link>
+              </Col>
+            </Row>
+            {signInLink}
+            <Row>
+              <Col>
+                <hr
+                  style={{
+                    color: "#000000",
+                    backgroundColor: "#000000",
+                    height: 0.5,
+                    borderColor: "#000000",
+                    width: "90%",
+                  }}
+                />
+              </Col>
+            </Row>
+            <Row>
+              <Col style={{ margin: "10px" }}>
+                <Button
+                  onClick={() => {
+                    this.startTestRun();
+                  }}
+                  style={{ width: "100%", background: "#cc2d2d" }}
+                >
+                  Test Run
+                </Button>
               </Col>
             </Row>
           </React.Fragment>

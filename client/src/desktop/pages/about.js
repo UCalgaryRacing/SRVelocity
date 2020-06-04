@@ -60,22 +60,22 @@ export default class AboutPage extends React.Component {
             description: 'Software Team'
         },
         {   name: 'James',
-            src: require('../../assets/teamPictures/nopic.png'),
+            src: require('../../assets/teamPictures/James.jpg'),
             description: 'Software Team'
         },
         {   name: 'Arham',
-        src: require('../../assets/teamPictures/nopic.png'),
+        src: require('../../assets/teamPictures/Arham.jpg'),
         description: 'Software Team'
         },
         {   name: 'Evan',
-        src: require('../../assets/teamPictures/nopic.png'),
+        src: require('../../assets/teamPictures/Evan.jpg'),
         description: 'Electrical Team'
         },
-        {   name: 'Graison',
-            src: require('../../assets/teamPictures/nopic.png'),
+        {   name: 'Yashvin',
+            src: require('../../assets/teamPictures/Yashvin.jpg'),
             description: 'Electrical Team'
         },
-        {   name: 'Yashvin',
+        {   name: 'Graison',
             src: require('../../assets/teamPictures/nopic.png'),
             description: 'Electrical Team'
         },
@@ -117,7 +117,7 @@ export default class AboutPage extends React.Component {
                 <CardDeck style={{justifyContent: 'center'}}>
                     {this.teamLeads}
                 </CardDeck>
-                <CardDeck>
+                <CardDeck style={{justifyContent: 'center'}}>
                     {this.teamMembers}
                 </CardDeck>
             </div>

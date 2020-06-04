@@ -13,6 +13,7 @@ export default class StreamingContent extends React.Component {
             marginLeft: isMobile ? '0px':'80px',
             toggleDash: false
         }
+        
     }
 
     changeContent = (newContent) => {

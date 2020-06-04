@@ -8,6 +8,7 @@ import ModalSensorChoice from '../modalSensorChoice';
 import ModalCustomChoice from '../modalCustomChoice';
 import '../../../styling/dashboard.css';
 
+
 export default class GraphingDashboard extends React.Component {
     constructor(props) {
         super(props);
@@ -38,7 +39,6 @@ export default class GraphingDashboard extends React.Component {
     }
 
     addToDash = (selectedGraphs) => {
-        console.log(selectedGraphs)
         SensorData.getInstance().getSensors().then(sensorData => {
             var i = 0;
             let prevLength = this.state.plots.length;

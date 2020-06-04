@@ -30,9 +30,11 @@
     margin-top: 20px;
 }
 
+/* font-size: 2rem; */
+
 #homePage #infoPara{
-    font-size: 2rem;
     margin-top: 20px;
+    font-size: xx-large;
 }
 
 #homePage #streamingButton {

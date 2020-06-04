@@ -1,6 +1,6 @@
 import React from "react";
 import StreamingDash from "../dashComponents/dashboard";
-import MobileGraphingDashboard from "../mobileStreamingComponents/mobileGraphingDashboard";
+import MobileDash from "../mobileStreamingComponents/mobileDashboard";
 import DataAnalysisDash from "../dataAnalysisComponents/dashboard";
 import CustomVisDash from "../customVisComponents/dashboard";
 import VirtualDash from "../3DComponents/virtualDash";
@@ -18,6 +18,7 @@ export default class StreamingContent extends React.Component {
   }
 
   changeContentMobile = (newContent) => {
+    console.log("set");
     this.setState({ mobileContent: newContent });
   };
 
@@ -40,7 +41,7 @@ export default class StreamingContent extends React.Component {
       >
         {this.state.content === "Dash" ? (
           isMobile ? (
-            <MobileGraphingDashboard content={this.state.mobileContent} />
+            <MobileDash typeOption={this.state.mobileContent} />
           ) : (
             <StreamingDash leftMargin={this.state.marginLeft} />
           )

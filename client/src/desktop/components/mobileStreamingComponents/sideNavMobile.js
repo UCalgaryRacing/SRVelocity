@@ -13,7 +13,9 @@ class SideNavMobileStreaming extends React.Component {
   }
 
   startTestRun() {}
+
   changeContent(newContent) {
+    console.log(newContent);
     this.props.streamingContent.current.changeContentMobile(newContent);
   }
 
@@ -26,7 +28,7 @@ class SideNavMobileStreaming extends React.Component {
     if (!Cookie.get("token")) {
       signInLink = (
         <Row
-          style={{ color: "grey" }}
+          style={{ color: "grey", margin: "auto" }}
           onClick={() => {
             this.changeContent("currentData");
           }}
@@ -43,15 +45,17 @@ class SideNavMobileStreaming extends React.Component {
       <Sidebar
         sidebar={
           <React.Fragment>
-            <Row style={{ background: "#cc2d2d", color: "white" }}>
-              <Col style={{ margin: "15px" }}>
+            <Row
+              style={{ background: "#cc2d2d", color: "white", margin: "auto" }}
+            >
+              <Col style={{ margin: "10px" }}>
                 <Link to="/home" style={{ fontSize: "30px", color: "white" }}>
                   Schulich Velocity
                 </Link>
               </Col>
             </Row>
             <Row
-              style={{ color: "grey" }}
+              style={{ color: "grey", margin: "auto" }}
               onClick={() => {
                 this.changeContent("plotting");
               }}
@@ -61,7 +65,7 @@ class SideNavMobileStreaming extends React.Component {
               </Col>
             </Row>
             <Row
-              style={{ color: "grey" }}
+              style={{ color: "grey", margin: "auto" }}
               onClick={() => {
                 this.changeContent("currentData");
               }}
@@ -70,7 +74,7 @@ class SideNavMobileStreaming extends React.Component {
                 <p style={{ fontSize: "25px" }}>Current Data</p>
               </Col>
             </Row>
-            <Row>
+            <Row style={{ margin: "auto" }}>
               <Col>
                 <hr
                   style={{
@@ -84,7 +88,7 @@ class SideNavMobileStreaming extends React.Component {
               </Col>
             </Row>
             <Row
-              style={{ color: "grey" }}
+              style={{ color: "grey", margin: "auto" }}
               onClick={() => {
                 this.changeContent("currentData");
               }}
@@ -96,7 +100,7 @@ class SideNavMobileStreaming extends React.Component {
               </Col>
             </Row>
             {signInLink}
-            <Row>
+            <Row style={{ margin: "auto" }}>
               <Col>
                 <hr
                   style={{
@@ -109,7 +113,7 @@ class SideNavMobileStreaming extends React.Component {
                 />
               </Col>
             </Row>
-            <Row>
+            <Row style={{ margin: "auto" }}>
               <Col style={{ margin: "10px" }}>
                 <Button
                   onClick={() => {

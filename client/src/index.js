@@ -1,6 +1,7 @@
 import React from "react";
 import ReactDOM from "react-dom";
 import { Switch, BrowserRouter as Router, Route } from "react-router-dom";
+import ReactGA from 'react-ga';
 import { isMobile } from "react-device-detect";
 import "./desktop/styling/index.css";
 
@@ -17,7 +18,7 @@ import SignUpPage from "./desktop/pages/signup";
 
 import SensorData from "./constants";
 
-export default class App extends React.Component {
+class App extends React.Component {
 	constructor(props) {
 		super(props);
 		this.state = {
@@ -79,5 +80,10 @@ export default class App extends React.Component {
 		);
 	};
 }
+
+//Google analytics setup
+ReactGA.initialize('UA-168625961-1');
+ReactGA.pageview(window.location.pathname + window.location.search);
+export default ReactGA;
 
 ReactDOM.render(<App />, document.getElementById("root"));

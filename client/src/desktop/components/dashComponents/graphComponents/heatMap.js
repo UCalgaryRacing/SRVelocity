@@ -48,8 +48,8 @@ export default class HeatMap extends React.Component {
         let range = Math.abs(boundaries[1] - boundaries[0]);
         let index = (value[0] - boundaries[0]) / range;
         index = Math.round(index * 500);
-        if(index >= 500) index = 499;
-        return ColorHEX(colors[499 - index]);
+        if (index >= 500) index = 499;
+        return ColorHEX(colors[index]);
     }
 
     findParamColor = async (sensor) => {
@@ -105,11 +105,14 @@ export default class HeatMap extends React.Component {
                     point={this.state.currentPoint}
                     dataTitle={this.state.selection}
                     unit={this.selectionUnit} />
+                <Button id='deleteGraph' onClick={() => this.props.delete(this.props.index)} style={{ position: 'absolute', right: '50px', top: '18px', display: this.props.hideClose ? 'none': ''}}>
+                    <img id="logoImg" width="10px" src={require('../../../../assets/delete-x.svg')} />
+                </Button>
                 <div style={{ textAlign: 'center' }}>
                     <ButtonGroup id='dashSelector' style={{ margin: '20px' }}>
-                        <Button id='defaultButton' onClick={() => this.refreshMap('Speed')} disabled={(this.state.selection === 'Speed')}><b>Speed</b></Button>
-                        <Button id='customButton' onClick={() => this.refreshMap('Acceleration')} disabled={(this.state.selection === 'Acceleration')}><b>Acceleration</b></Button>
-                        <Button id='customButton' onClick={() => this.refreshMap('Throttle Position')} disabled={(this.state.selection === 'Throttle Position')}><b>Throttle Position</b></Button>
+                        <Button style={{ width: '120px' }} id='defaultButton' onClick={() => this.refreshMap('Speed')} disabled={(this.state.selection === 'Speed')}><b>Speed</b></Button>
+                        <Button style={{ width: '120px' }} id='customButton' onClick={() => this.refreshMap('Acceleration')} disabled={(this.state.selection === 'Acceleration')}><b>Acceleration</b></Button>
+                        <Button style={{ width: '120px' }} id='customButton' onClick={() => this.refreshMap('Throttle Position')} disabled={(this.state.selection === 'Throttle Position')}><b>Throttle</b></Button>
                     </ButtonGroup >
                 </div>
             </div>

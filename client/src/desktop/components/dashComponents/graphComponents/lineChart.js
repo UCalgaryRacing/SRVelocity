@@ -19,6 +19,7 @@ export default class LineChart extends Component {
         this.lineSeries = [];
         this.maxValue = 0;
         this.minValue = 0;
+        this.mouseInteractions = false;
         this.colours = ['#C22D2D', '#0071B2', '#009E73', '#E69D00', '#CC79A7']; //Add more colours
     }
 
@@ -51,7 +52,7 @@ export default class LineChart extends Component {
                 thickness: 2,
                 fillStyle: new SolidFill({ color: ColorHEX(colour) })
             }).setFillStyle(solidfill => solidfill.setA((index !== undefined) ? '80' : 'FF')))
-            .setMouseInteractions(false)
+            .setMouseInteractions(this.mouseInteractions)
             .setResultTableFormatter((builder, series, Xvalue, Yvalue) => {
                 return builder.addRow(Yvalue.toFixed(3) + " " + this.props.sensors[this.lineSeries.length - 1].output_unit)
             })
@@ -96,7 +97,7 @@ export default class LineChart extends Component {
                     .setGridStrokeStyle(new SolidLine({ thickness: 1, fillStyle: new SolidFill({ color: ColorHEX('#FFF') }) }))
             );
             axis.setScrollStrategy(AxisScrollStrategies.expansion)
-                .setMouseInteractions(false)
+                .setMouseInteractions(this.mouseInteractions)
                 .setStrokeStyle(new SolidLine({
                     thickness: 3,
                     fillStyle: new SolidFill({ color: ColorHEX('#C8C8C8') })
@@ -125,13 +126,13 @@ export default class LineChart extends Component {
             .setBackgroundFillStyle(theme.whiteFill)
             .setChartBackgroundFillStyle(theme.whiteFill);
         this.chart
-            .setMouseInteractions(false)
-            .setMouseInteractionWheelZoom(false)
-            .setMouseInteractionPan(false)
-            .setMouseInteractionRectangleFit(false)
-            .setMouseInteractionRectangleZoom(false)
-            .setMouseInteractionsWhileScrolling(false)
-            .setMouseInteractionsWhileZooming(false);
+            .setMouseInteractions(this.mouseInteractions)
+             .setMouseInteractionWheelZoom(this.mouseInteractions)
+             .setMouseInteractionPan(this.mouseInteractions)
+             .setMouseInteractionRectangleFit(this.mouseInteractions)
+             .setMouseInteractionRectangleZoom(this.mouseInteractions)
+             .setMouseInteractionsWhileScrolling(this.mouseInteractions)
+             .setMouseInteractionsWhileZooming(this.mouseInteractions);
         //Configure the cursor
         let autoCursor = this.chart.getAutoCursor();
         autoCursor.setGridStrokeXStyle(new SolidLine({
@@ -155,7 +156,7 @@ export default class LineChart extends Component {
         this.chart.getDefaultAxisX()
             .setScrollStrategy(AxisScrollStrategies.progressive)
             .setTickStyle(emptyTick)
-            .setMouseInteractions(false)
+            .setMouseInteractions(this.mouseInteractions)
             .setInterval(0, 300)
             .setStrokeStyle(new SolidLine({
                 thickness: 3,
@@ -163,7 +164,7 @@ export default class LineChart extends Component {
             }));
         this.chart.getDefaultAxisY()
             .setScrollStrategy(AxisScrollStrategies.expansion)
-            .setMouseInteractions(false)
+            .setMouseInteractions(this.mouseInteractions)
             .setStrokeStyle(new SolidLine({
                 thickness: 3,
                 fillStyle: new SolidFill({ color: ColorHEX('#C8C8C8') })
@@ -187,7 +188,7 @@ export default class LineChart extends Component {
                     thickness: 2,
                     fillStyle: new SolidFill({ color: ColorHEX(this.colours[i]) })
                 }))
-                .setMouseInteractions(false)
+                .setMouseInteractions(this.mouseInteractions)
                 .setResultTableFormatter((builder, series, Xvalue, Yvalue) => {
                     return builder
                         .addRow(Yvalue.toFixed(3) + ' ' + this.props.sensors[0].output_unit)
@@ -195,6 +196,8 @@ export default class LineChart extends Component {
         }
         //Don't allow scrolling
         this.chart.engine.container.onwheel = null;
+        this.chart.engine.container.ontouchstart = null
+        this.chart.engine.container.ontouchmove = null
         this.setupComplete = true;
     }
 
@@ -277,13 +280,13 @@ export default class LineChart extends Component {
             );
         }
 
-        let graphHeight = (isMobile ? '82vh' : '500px')
+        let graphHeight = (isMobile ? '80vh' : '500px')
         return (
             <div style={{ marginBottom: '20px' }}>
                 <div class='row' style={{ textAlign: 'center', fontSize: '1rem', fontStyle: 'bold', paddingTop: '0', paddingBottom: '0', marginBottom: '0px', marginTop: '10px', marginRight: '0', marginLeft: '0', width: '100%' }}>
                     {content}
                 </div>
-                <div id={this.chartId} className='fill' style={{ height: graphHeight }}></div>
+                <div id={this.chartId} className='fill' style={{ height: graphHeight}}></div>
             </div>
         );
     }

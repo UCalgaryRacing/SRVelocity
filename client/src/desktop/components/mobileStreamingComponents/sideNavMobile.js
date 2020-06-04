@@ -19,14 +19,7 @@ class SideNavMobileStreaming extends React.Component {
     Data.getInstance().doTestRun();
   }
 
-  componentDidMount() {
-    document.ontouchmove = (event) => {
-      event.preventDefault();
-    };
-  }
-
   changeContent(newContent) {
-    console.log(newContent);
     this.onSetSidebarOpen(false);
     this.props.streamingContent.current.changeContentMobile(newContent);
   }
@@ -158,6 +151,7 @@ class SideNavMobileStreaming extends React.Component {
           onSetOpen={this.onSetSidebarOpen}
           styles={{
             sidebar: {
+              position: "fixed",
               zIndex: "1001",
               background: "white",
             },

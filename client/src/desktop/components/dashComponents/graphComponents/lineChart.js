@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { Button } from 'react-bootstrap';
 import { lightningChart, emptyTick, DataPatterns, AxisScrollStrategies, SolidLine, SolidFill, ColorHEX, VisibleTicks, FontSettings, emptyLine } from '@arction/lcjs';
 import '../../../styling/lineChart.css';
+import { isMobile } from 'react-device-detect'
 
 const theme = {
     whiteFill: new SolidFill({ color: ColorHEX('#FFFFFF') }),
@@ -275,12 +276,14 @@ export default class LineChart extends Component {
                 </div>
             );
         }
+
+        let graphHeight = (isMobile ? '82vh' : '500px')
         return (
             <div style={{ marginBottom: '20px' }}>
                 <div class='row' style={{ textAlign: 'center', fontSize: '1rem', fontStyle: 'bold', paddingTop: '0', paddingBottom: '0', marginBottom: '0px', marginTop: '10px', marginRight: '0', marginLeft: '0', width: '100%' }}>
                     {content}
                 </div>
-                <div id={this.chartId} className='fill' style={{ height: '500px' }}></div>
+                <div id={this.chartId} className='fill' style={{ height: graphHeight }}></div>
             </div>
         );
     }

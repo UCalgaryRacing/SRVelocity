@@ -5,6 +5,7 @@ import SensorData from '../../../constants';
 import Button from 'react-bootstrap/Button';
 import ButtonGroup from 'react-bootstrap/ButtonGroup';
 import '../../styling/dashboard.css';
+import MobileChoiceModal from './mobileChoiceModal'
 
 
 export default class MobileGraphingDashboard extends React.Component {
@@ -16,12 +17,12 @@ export default class MobileGraphingDashboard extends React.Component {
             showAddModal: false,
             modalSelectionOption: 'sensor'
         }
-        this.graphs = [];
-        this.container = [];
+        this.modalButton =  <Button onClick={this.showAddModal} style={{margin: '20px'}}>Switch Graph</Button>
+        this.defaultPlot = 'Axes'
     }
 
   componentDidMount = () => {
-    this.createGraph();
+    this.createGraph(this.defaultPlot);
   };
 
     showAddModal = () => {
@@ -31,41 +32,27 @@ export default class MobileGraphingDashboard extends React.Component {
     }
 
 
-    deleteFromDash = (index) => {
-        this.state.plots.splice(index - 1, 1);
-        this.graphs = [];
-        this.container = [];
-        this.createGraph();
-    }
-
-    createGraph = () => {
-        this.setState()
+    createGraph = (plot) => {
         SensorData.getInstance().getSensors().then(sensorData => {
-            var i = 0;
-            for (const plot of this.state.plots) {
-                const sensors = sensorData.filter(item => { return item.category === plot; });
-                this.graphs.push(
-                    
-                );
-                i++;
-            }
-            for (const graph of this.graphs) this.container.push(<Row style={{ marginTop: '30px' }}><Col>{graph}</Col></Row>);
-            this.forceUpdate();
+            const sensors = sensorData.filter(item => { return item.category === plot; });
+            this.setState({currentGraph: null})
+            let tempGraph = <MobileGraphBox
+                                sensors={sensors}
+                                modalButton={this.modalButton}
+                            />
+            this.setState({
+                currentGraph: tempGraph
+             })
         });
     }
 
 
     render = () => {
-        let modalSelector = (
-            <ButtonGroup id='modalSelector' style={{ position: 'absolute', marginLeft: '140px' }}>
-                <Button id='sensorButton' onClick={this.updateModal} disabled={(this.state.modalSelectionOption === 'sensor') ? true : false}><b>Sensor Graph</b></Button>
-                <Button id='customButton' onClick={this.updateModal} disabled={(this.state.modalSelectionOption === 'custom') ? true : false}><b>Custom Graph</b></Button>
-            </ButtonGroup>
-        );
         return (
             <div>
                 <div>
-                    {this.container}
+                    {this.state.currentGraph}
+                    <MobileChoiceModal show={this.state.showAddModal} onHide={this.showAddModal} plots={this.state.plots} changeGraph={this.createGraph}/>
                 </div>
         
             </div>

@@ -186,14 +186,14 @@ export default class MobileGraphBox extends React.Component {
             return (
                 <DeviceOrientation lockOrientation={'portrait'}>
                     <Orientation orientation='landscape' alwaysRender={false}>
-                    <div id='graphBoxMobile' style={{ marginTop: '-30px', marginLeft: '0px' }}>
+                    <div id='graphBoxMobile' style={{ marginTop: '0px', marginLeft: '0px' }}>
                         <p id='graphTitleMobile'><b style={{ fontSize: 'large' }}>{'Track Map'}</b></p>
                         <HeatMap currentPoint={this.state.data} delete={this.props.delete} index={this.props.id} hideClose={this.props.hideClose}/>
                     </div>
                     </Orientation>
                     <Orientation orientation='portrait' alwaysRender={false}>
                         <TopNav/>
-                        <div style={{textAlign: 'center', marginTop:'40px'}}>
+                        <div style={{textAlign: 'center', marginTop:'80px'}}>
                             <p>
                                 Please rotate your device to the landscape position to view the interactive streaming graphs.
                             </p>
@@ -204,8 +204,10 @@ export default class MobileGraphBox extends React.Component {
         }
         else {
             return (
-                <div id='graphBoxMobile' style={{ borderColor: this.state.indicationColour, marginRight: '19px', marginLeft: '0px' }}>
-                    <p id='graphTitleMobile'><b style={{ color: this.state.indicationColour, fontSize: '1.8rem' }}>{this.props.sensors[0].category}</b></p>
+                <DeviceOrientation lockOrientation={'portrait'}>
+                <Orientation orientation='landscape' alwaysRender={false}>
+                <div id='graphBoxMobile' style={{ borderColor: this.state.indicationColour, marginRight: '0px', marginLeft: '0px' }}>
+                    <p id='graphTitleMobile'><b style={{ color: this.state.indicationColour, fontSize: 'large' }}>{this.props.sensors[0].category}</b></p>
                     <div>
                         <LineChart
                             id={this.props.id}
@@ -256,7 +258,18 @@ export default class MobileGraphBox extends React.Component {
                             <p style={{ textAlign: 'center', marginBottom: '25px' }}><b>Smoothing Factor</b></p>
                         </div>
                     </div>
+                    {this.props.modalButton}
                 </div>
+                </Orientation>
+                    <Orientation orientation='portrait' alwaysRender={false}>
+                        <TopNav/>
+                        <div style={{textAlign: 'center', marginTop:'80px'}}>
+                            <p>
+                                Please rotate your device to the landscape position to view the interactive streaming graphs.
+                            </p>
+                        </div>
+                    </Orientation>
+                </DeviceOrientation>
             );
         }
     }

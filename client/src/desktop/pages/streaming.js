@@ -13,10 +13,14 @@ export default class StreamingPage extends React.Component {
 
     render = () => {
         let sideNav = null;
-        if(!isMobile) sideNav = <StreamingSideNav streamingContent={this.streamingContent}/>
+        let topNav = null;
+        if(!isMobile) {
+            sideNav = <StreamingSideNav streamingContent={this.streamingContent}/>
+            topNav = <TopNav/>
+        }
         return (
             <div id='streamingPage'>
-                <TopNav/>
+                {topNav}
                 {sideNav}
                 <StreamingContent ref={this.streamingContent}/>
             </div>

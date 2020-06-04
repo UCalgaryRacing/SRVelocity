@@ -5,6 +5,7 @@ import SensorData from '../../../../constants';
 import ScatterPlot from './scatterPlot';
 import { ColorHEX } from '@arction/lcjs';
 import { Button, ButtonGroup } from 'react-bootstrap';
+import { isMobile } from 'react-device-detect'
 
 const colors = colormap({
     colormap: 'jet',
@@ -105,9 +106,10 @@ export default class HeatMap extends React.Component {
                     point={this.state.currentPoint}
                     dataTitle={this.state.selection}
                     unit={this.selectionUnit} />
+                { isMobile ? null :
                 <Button id='deleteGraph' onClick={() => this.props.delete(this.props.index)} style={{ position: 'absolute', right: '50px', top: '18px', display: this.props.hideClose ? 'none': ''}}>
                     <img id="logoImg" width="10px" src={require('../../../../assets/delete-x.svg')} />
-                </Button>
+                </Button> }
                 <div style={{ textAlign: 'center' }}>
                     <ButtonGroup id='dashSelector' style={{ margin: '20px' }}>
                         <Button style={{ width: '120px' }} id='defaultButton' onClick={() => this.refreshMap('Speed')} disabled={(this.state.selection === 'Speed')}><b>Speed</b></Button>

@@ -12,6 +12,7 @@ body {
   color: #212529 !important;
   line-height: normal !important;
 }
+/* Problems with following two objects
 html {
   height: 100vh;
 }
@@ -20,6 +21,7 @@ html {
   overflow-y: scroll;
   height: 100vh;
 }
+*/
 ::-webkit-scrollbar{
   width: 0px;
   background: transparent;

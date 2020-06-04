@@ -258,7 +258,9 @@ export default class MobileGraphBox extends React.Component {
                             <p style={{ textAlign: 'center', marginBottom: '25px' }}><b>Smoothing Factor</b></p>
                         </div>
                     </div>
-                    {this.props.modalButton}
+                    <Button onClick={this.props.showModal} style={{ margin: "20px" }}>
+                        Switch Graph
+                    </Button>
                 </div>
                 </Orientation>
                     <Orientation orientation='portrait' alwaysRender={false}>

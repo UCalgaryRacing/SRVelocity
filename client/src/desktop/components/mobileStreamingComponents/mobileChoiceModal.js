@@ -31,7 +31,7 @@ export default class ModalSensorChoice extends React.Component {
     render = () => {
         return(
             <div id='graphChoice' style={{marginLeft: '20px'}}>
-                <Modal centered show={this.props.show} onHide={this.props.onHide}>
+                <Modal centered show={this.props.show} onHide={this.props.onHide} size='lg'>
                     <ButtonGroup vertical>
                         {this.selections}
                     </ButtonGroup>

@@ -16,11 +16,6 @@ export default class MobileGraphingDashboard extends React.Component {
       showAddModal: false,
       modalSelectionOption: "sensor",
     };
-    this.modalButton = (
-      <Button onClick={this.showAddModal} style={{ margin: "20px" }}>
-        Switch Graph
-      </Button>
-    );
     this.defaultPlot = "Axes";
   }
 
@@ -43,7 +38,7 @@ export default class MobileGraphingDashboard extends React.Component {
         });
         this.setState({ currentGraph: null });
         let tempGraph = (
-          <MobileGraphBox sensors={sensors} modalButton={this.modalButton} />
+          <MobileGraphBox sensors={sensors} showModal={this.showAddModal} />
         );
         this.setState({
           currentGraph: tempGraph,

@@ -11,7 +11,7 @@ import Data from "../../../data";
 class SideNavMobileStreaming extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {};
+    this.state = { };
     this.onSetSidebarOpen = this.onSetSidebarOpen.bind(this);
   }
 
@@ -19,14 +19,8 @@ class SideNavMobileStreaming extends React.Component {
     Data.getInstance().doTestRun();
   }
 
-  componentDidMount() {
-    document.ontouchmove = (event) => {
-      event.preventDefault();
-    };
-  }
 
   changeContent(newContent) {
-    console.log(newContent);
     this.props.streamingContent.current.changeContentMobile(newContent);
   }
 

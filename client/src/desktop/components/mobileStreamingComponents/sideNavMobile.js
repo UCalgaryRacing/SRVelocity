@@ -27,6 +27,7 @@ class SideNavMobileStreaming extends React.Component {
 
   changeContent(newContent) {
     console.log(newContent);
+    this.onSetSidebarOpen(false);
     this.props.streamingContent.current.changeContentMobile(newContent);
   }
 

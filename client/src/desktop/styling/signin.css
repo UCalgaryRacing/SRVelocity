@@ -8,7 +8,7 @@
 #signIn .jumbotron {
     background: white;
     text-align: center;
-    min-width: 350px;
+    min-width: 320px;
     max-width: 70%;
     margin: auto;
     margin-top: 50px;
@@ -17,7 +17,6 @@
     text-align: center;
     margin-top: 10px;
     margin-bottom: 10px;
-    border-radius: 2rem;
     font-size: 17px;
 }
 #signIn .emailFormControl:focus {
@@ -28,7 +27,6 @@
     text-align: center;
     margin-top: 10px;
     margin-bottom: 10px;
-    border-radius: 2rem;
     font-size: 17px;
 }
 #signIn .passwordFormControl:focus {
@@ -41,9 +39,7 @@
     margin-bottom: 10px;
     background: rgba(194, 45, 45);
     border: 0px solid;
-    border-radius: 2rem;
     font-size: 17px;
-    min-width: 318px;
     margin-left: auto;
     margin-right: auto;
 }
@@ -57,7 +53,6 @@
     margin-top: 10px;
     background: rgba(194, 45, 45);
     border: 0px solid;
-    border-radius: 2rem;
     font-size: 17px;
 }
 #signIn .forgotPasswordButton:focus {

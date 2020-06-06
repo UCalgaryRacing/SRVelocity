@@ -16,7 +16,6 @@
   margin: auto;
   padding: 14px 0px;
   font-family: Helvetica !important;
-  color: #fff;
   font-size: 2em;
   line-height: 1em;
 }
@@ -29,11 +28,11 @@
   left: 0px;
   padding-top: 18px;
   padding-bottom: 18px;
-  color: hsla(0, 0%, 100%, 0.62);
+  color: #fff;
 }
 
 .nav-link-3 {
-  color: hsla(0, 0%, 100%, 0.62);
+  color: #fff;
 }
 
 .sticky-nav {
@@ -146,7 +145,7 @@
 
 .nav-link-5 {
   background-color: transparent;
-  color: hsla(0, 0%, 100%, 0.6);
+  color: #fff;
 }
 
 .nav-link-6 {
@@ -157,7 +156,7 @@
   padding-top: 18px;
   padding-bottom: 18px;
   font-family: Helvetica !important;
-  color: #FFFFFF99 !important;
+  color: #fff;
   text-align: center !important;
 }
 
@@ -171,7 +170,7 @@
   padding-top: 18px;
   padding-bottom: 18px;
   font-family: Helvetica !important;
-  color: #FFFFFF99 !important;
+  color: #fff;
   text-align: center !important;
 }
 
@@ -179,7 +178,7 @@
   padding-top: 18px;
   padding-bottom: 18px;
   font-family: Helvetica !important;
-  color: #FFFFFF99 !important;
+  color: #fff;
   text-align: center !important;
 }
 
@@ -187,7 +186,7 @@
   padding-top: 18px;
   padding-bottom: 18px;
   font-family: Helvetica !important;
-  color: #FFFFFF99 !important;
+  color: #fff;
   float: right;
   text-align: center !important;
 }
@@ -196,10 +195,11 @@
   padding-top: 18px;
   padding-bottom: 18px;
   font-family: Helvetica !important;
-  color: #FFFFFF99 !important;
+  color: #fff;
   float: right;
   text-align: center !important;
 }
+
 
 @media screen and (max-width: 991px) {
   .menu-button {
@@ -219,31 +219,30 @@
     margin-right: auto;
     margin-left: auto;
     padding-left: 20px;
-    background-color: #cc2d2d;
-    color: hsla(0, 0%, 100%, 0.6);
+    background-color: #c22e2d !important;
   }
   .nav-menu {
-    background-color: #cc2d2d;
+    background-color: #c22e2d !important;
   }
   .nav-link-7 {
     border-style: dashed;
     border-width: 1px 0px 0px;
     border-color: #343a40 #000 #000;
-    background-color: #cc2d2d;
+    background-color: #c22e2d !important;
   }
   .nav-link-8 {
     border-top: 1px dashed #343a40;
-    background-color: #cc2d2d;
+    background-color: #c22e2d !important;
   }
   .nav-link-9 {
     border-top: 1px dashed #343a40;
     border-right: 0px none #000;
-    background-color: #cc2d2d;
+    background-color: #c22e2d !important;
     float: none;
   }
   .nav-link-10 {
     border-top: 1px dashed #343a40;
-    background-color: #cc2d2d;
+    background-color: #c22e2d !important;
     float: none;
   }
 }
@@ -275,7 +274,7 @@
     line-height: 24px;
   }
   .menu-button {
-    color: #c22d2d;
+    color: #c22e2d !important;
   }
   .menu-button.w--open {
     padding-top: 16px;
@@ -288,12 +287,12 @@
   }
   .nav-link-2 {
     width: 100%;
-    background-color: #c22d2d;
+    background-color: #c22e2d;
   }
   .nav-link-3 {
     width: 100%;
-    border-top: 1px dashed #b12406;
-    background-color: #c22d2d;
+    border-top: 1px dashed #c22e2d !important;
+    background-color: #c22e2d !important;
   }
   .sticky-nav {
     padding: 0px;

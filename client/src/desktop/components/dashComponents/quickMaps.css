@@ -1,0 +1,9 @@
+#quickMap {
+    
+}
+
+@media screen and (orientation:landscape) {
+    #quickMap {
+        display: none;
+    }
+}

@@ -1,0 +1,153 @@
+#graphBox {
+    border-style: solid;
+    border-width: 1px;
+    border-radius: 0.5rem;
+    margin-left: 10px;
+    margin-right: 10px;
+}
+
+#graphTitle {
+    margin-top: 10px;
+    text-align: center;
+    font-size: 1.5rem;
+}
+
+#graphTitleMobile {
+    margin-top: 5px;
+    text-align: center;
+    font-size: 1.5rem;
+}
+
+span[class^="PrivateValueLabel-offset-"] {
+    top: -25px !important;
+    font-weight: 600 !important;
+    transform-origin: top !important;
+    right: 7px;
+    transition: none !important;
+}
+
+span[class^="PrivateValueLabel-circle-"] {
+    transform: none !important;
+    border-radius: 5px !important;
+    width: 200% !important;
+    height: 25px !important;
+    text-align: center;
+}
+
+span[class^="PrivateValueLabel-label-"] {
+    transform: none !important;
+    margin-left: -1px;
+    margin-right: -1px;
+}
+
+span[class^="jss"] {
+    top: -25px !important;
+    font-weight: 600 !important;
+    transform-origin: top !important;
+    right: -5px;
+    transition: none !important;
+}
+
+span[class^="jss"] span[class^="jss"] {
+    transform: none !important;
+    border-radius: 5px !important;
+    width: 150% !important;
+    text-align: center;
+}
+
+span[class^="jss"] span[class^="jss"] span[class^="jss"] {
+    transform: none !important;
+    margin-left: 3px;
+    margin-right: 3px;
+}
+
+#graphBox #toggleAxis {
+    background: rgb(194, 45, 45);
+    opacity: 1;
+    border: 0px solid;
+    right: 65px !important;
+    width: 40px;
+    bottom: 10px;
+    height: 40px;
+}
+
+#graphBox #toggleGrid {
+    background: rgb(194, 45, 45);
+    opacity: 1;
+    border: 0px solid;
+    right: 20px !important;
+    bottom: 10px;
+    width: 40px;
+    height: 40px;
+}
+
+#graphBox #deleteGraph {
+    background: rgb(194, 45, 45);
+    opacity: 1;
+    border: 0px solid;
+    right: 20px !important;
+    top: 10px;
+    bottom: 10px !important;
+    width: 40px;
+    height: 40px;
+}
+
+#graphBox #graphTitle {
+    font-size: 1.8rem !important;
+}
+
+#graphBox .fill {
+    touch-action: auto !important;
+}
+
+@media only screen and (max-width: 750px) {
+    #graphBox {
+        margin-left: 2px;
+        margin-right: 2px;
+        padding-bottom: 40px
+    }
+
+    #graphBox #graphTitle {
+        font-size: 1.2rem !important;
+        height: 40px !important;
+    }
+
+    #graphBox #graphTitle div{
+        padding-top: 9px !important;
+        padding-bottom: 9px !important;
+    }
+
+    #graphBox #toggleAxis{
+        right: 10px !important;
+        bottom: 50px !important;
+    }
+
+    #graphBox #graphBottom {
+        margin-right: 10px;
+        margin-left: 10px;
+        width: calc(100% - 40px) !important;
+    }
+
+    #graphBox #toggleAxis {
+        left: calc(50% - 45px) !important;
+        bottom: 10px !important;
+    }
+
+    #graphBox #toggleGrid {
+        left: calc(50% + 5px) !important;
+        bottom: 10px;
+    }
+
+    #graphBox #deleteGraph {
+        right: 10px !important;
+    }
+
+    #graphBox canvas {
+        height: 350px !important;
+    }
+
+    #graphBox .fill {
+        height: 350px !important;
+        margin-bottom: 30px;
+    }
+}

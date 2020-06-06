@@ -72,6 +72,8 @@ export default class ScatterPlot extends Component {
         autoCursor.getResultTable().getBackground().setFillStyle(new SolidFill({ color: ColorHEX('#C22D2D') }));
         //Don't allow scrolling
         this.chart.engine.container.onwheel = null;
+        this.chart.engine.container.ontouchstart = null;
+        this.chart.engine.container.ontouchmove = null;
         this.setupComplete = true;
     }
 

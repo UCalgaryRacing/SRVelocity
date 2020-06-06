@@ -49,34 +49,34 @@ export default class StreamingDash extends React.Component {
 
     render = () => {
         let dashSelector = (
-            <ButtonGroup id='dashSelector'>
+            <ButtonGroup id='dashSelector' style={{marginLeft: '10px'}}>
                 <Button id='defaultButton' onClick={this.changeDash} disabled={(this.state.dashOption === 'default') ? true : false}><b>Default</b></Button>
                 <Button id='customButton' onClick={this.changeDash} disabled={(this.state.dashOption === 'custom') ? true : false}><b>Custom</b></Button>
             </ButtonGroup >
         );
         let typeSelector = (
-            <ButtonGroup id='dashSelector'>
+            <ButtonGroup id='typeSelector'>
                 <Button id='defaultButton' onClick={this.changeType} disabled={(this.state.typeOption === 'plotting') ? true : false}><b>Plotting</b></Button>
-                <Button id='customButton' onClick={this.changeType} disabled={(this.state.typeOption === 'currentData') ? true : false}><b>Current Data</b></Button>
+                <Button id='customButton' onClick={this.changeType} disabled={(this.state.typeOption === 'currentData') ? true : false}><b>Current</b></Button>
             </ButtonGroup >
         );
-        let addGraph = (<Button id='addGraph' onClick={this.addGraph} style={{ position: 'fixed', textAlign: 'center' }}><b>Add Graph</b></Button>)
-        let testRun = (<Button id='accelMapButton' onClick={this.doTestRun} style={{ position: 'absolute', right: '15px' }}><b>Do a Test Run</b></Button>);
+        let addGraph = (<Button id='addGraph' onClick={this.addGraph} style={{ position: 'absolute', textAlign: 'center' }}><b>Add Graph</b></Button>)
+        let testRun = (<Button id='testButton' onClick={this.doTestRun} style={{ position: 'absolute', right: '10px' }}><b>Do a Test Run</b></Button>);
         let defaultDash = ['Track Map', 'Engine Temp', 'Oil Pressure', 'Oil Temp', 'Air To Fuel', 'Fuel Temp', 'Acceleration', 'Axes']
         return (
             <div id='dashboard'>
-                <div style={{ position: 'fixed', top: '56px', right: '0', left: '0', zIndex: '999', height: '60px', paddingLeft: this.props.leftMargin, paddingTop: '12px', background: '#F5F5F5', borderColor: '#C22D2D', borderWidth: '0', borderBottomWidth: '2px', borderStyle: 'solid' }}>
+                <div id='top' style={{ position: 'fixed', top: '56px', right: '0', left: '0', zIndex: '999', height: '56px', paddingLeft: this.props.marginLeft, paddingTop: '10px', background: '#F5F5F5', borderColor: '#C22D2D', borderWidth: '0', borderBottomWidth: '1px', borderStyle: 'solid' }}>
                     {dashSelector}&nbsp;&nbsp;
                     {typeSelector}&nbsp;&nbsp;
                     {this.state.selectionComplete && this.state.typeOption === 'plotting' ? addGraph : ''}
                     {this.state.selectionComplete ? testRun : ''}
                 </div>
-                <div style={{ paddingTop: '98px' }}>
+                <div style={{ paddingTop: '35px' }}>
                     {(this.state.dashOption === 'default') ?
                         ((this.state.typeOption === 'plotting') ? <GraphingDashboard plots={defaultDash} ref={this.graphDash}/> : <DataDashboard categories={SensorData.getInstance().getCategories()} />) :
                         ((this.state.typeOption === 'plotting') ? <CustomPlottingDash updateSelectionComplete={this.updateSelectionComplete} ref={this.graphDash}/> : <CustomDataDash updateSelectionComplete={this.updateSelectionComplete} />)}
                 </div>
-                <QuickMaps />
+                <QuickMaps marginLeft={this.props.marginLeft}/>
             </div>
         );
     }

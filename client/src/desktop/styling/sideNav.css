@@ -4,3 +4,9 @@
     position: fixed;
     z-index: 1000;
 }
+
+@media only screen and (max-width: 749px) {
+    .sidenav---sidenav---_2tBP {
+        display: none;
+    }
+}

@@ -26,41 +26,6 @@ class App extends React.Component {
 		}
 	}
 
-	componentWillMount = () => {
-		this.checkToken();
-		this.timerID = setInterval(() => this.checkToken(), 30000);
-	}
-
-	checkToken = () => {
-		fetch('http://localhost:7000/teamMember/checkToken', {
-			method: 'GET',
-			credentials: "include",
-			headers: { 'Content-Type': 'application/json' }
-		})
-			.then(res => {
-				if (res.status === 200) this.setState({ isSignedIn: true });
-				else {
-					this.setState({ isSignedIn: false });
-				}
-			})
-			.catch(err => { this.setState({ isSignedIn: false }) });
-	}
-
-	signOut = () => {
-		fetch('http://localhost:7000/teamMember/stopSession', {
-			method: 'GET',
-			credentials: "include",
-			headers: { 'Content-Type': 'application/json' }
-		})
-			.then(res => {
-				if (res.status === 200) this.setState({ isSignedIn: false });
-				else {
-					this.setState({ isSignedIn: true });
-				}
-			})
-			.catch(err => { this.setState({ isSignedIn: false }) });
-	}
-
 	render = () => {
 		return (
 			<Router>

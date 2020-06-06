@@ -22,9 +22,9 @@ export default class GraphingDashboard extends React.Component {
         this.container = [];
     }
 
-  componentWillMount = () => {
-    this.createGraphs();
-  };
+    componentWillMount = () => {
+        this.createGraphs();
+    };
 
     showAddModal = () => {
         this.setState({
@@ -44,6 +44,7 @@ export default class GraphingDashboard extends React.Component {
             let prevLength = this.state.plots.length;
             for (const graph of selectedGraphs) {
                 const sensors = sensorData.filter(item => { return item.category === graph; });
+                console.log(graph)
                 this.graphs.push(
                     <GraphBox
                         sensors={sensors}
@@ -56,7 +57,7 @@ export default class GraphingDashboard extends React.Component {
             }
             var j = 0;
             for (const graph of this.graphs) {
-                if(prevLength <= j)
+                if (prevLength <= j)
                     this.container.push(<Row style={{ marginTop: '30px' }}><Col>{graph}</Col></Row>);
                 j++;
             }
@@ -65,9 +66,10 @@ export default class GraphingDashboard extends React.Component {
     }
 
     deleteFromDash = (index) => {
-        this.state.plots.splice(index - 1, 1);
         this.graphs = [];
         this.container = [];
+        this.state.plots.splice(index - 1, 1);
+        this.setState({ plots: this.state.plots });
         this.createGraphs();
     }
 
@@ -86,7 +88,7 @@ export default class GraphingDashboard extends React.Component {
                 );
                 i++;
             }
-            for (const graph of this.graphs) this.container.push(<Row style={{ marginTop: '30px' }}><Col>{graph}</Col></Row>);
+            for (const graph of this.graphs) this.container.push(<Row style={{ marginTop: '30px', width: '100%', marginRight: '0', marginLeft: '0' }}><Col style={{ padding: '0', marginLeft: '0px', marginRight: '0px' }}>{graph}</Col></Row>);
             this.forceUpdate();
         });
     }

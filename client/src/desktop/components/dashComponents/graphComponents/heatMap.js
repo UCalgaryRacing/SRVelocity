@@ -5,7 +5,7 @@ import SensorData from '../../../../constants';
 import ScatterPlot from './scatterPlot';
 import { ColorHEX } from '@arction/lcjs';
 import { Button, ButtonGroup } from 'react-bootstrap';
-import { isMobile } from 'react-device-detect'
+import './heatMap.css';
 
 const colors = colormap({
     colormap: 'jet',
@@ -99,21 +99,17 @@ export default class HeatMap extends React.Component {
 
     render = () => {
         return (
-            <div style={{ width: '100%' }}>
+            <div id='heatMap' style={{ width: '100%' }}>
                 <ScatterPlot id='scatter'
                     mapUpdate={this.forceMapUpdate}
                     data={this.state.data[this.state.selection]}
                     point={this.state.currentPoint}
                     dataTitle={this.state.selection}
                     unit={this.selectionUnit} />
-                { isMobile ? null :
-                <Button id='deleteGraph' onClick={() => this.props.delete(this.props.index)} style={{ position: 'absolute', right: '50px', top: '18px', display: this.props.hideClose ? 'none': ''}}>
-                    <img id="logoImg" width="10px" src={require('../../../../assets/delete-x.svg')} />
-                </Button> }
                 <div style={{ textAlign: 'center' }}>
                     <ButtonGroup id='dashSelector' style={{ margin: '20px' }}>
-                        <Button style={{ width: '120px' }} id='defaultButton' onClick={() => this.refreshMap('Speed')} disabled={(this.state.selection === 'Speed')}><b>Speed</b></Button>
-                        <Button style={{ width: '120px' }} id='customButton' onClick={() => this.refreshMap('Acceleration')} disabled={(this.state.selection === 'Acceleration')}><b>Acceleration</b></Button>
+                        <Button style={{ width: '120px !important' }} id='customButton' onClick={() => this.refreshMap('Speed')} disabled={(this.state.selection === 'Speed')}><b>Speed</b></Button>
+                        <Button style={{ width: '120px' }} id='customButton' onClick={() => this.refreshMap('Acceleration')} disabled={(this.state.selection === 'Acceleration')}><b>Accel</b></Button>
                         <Button style={{ width: '120px' }} id='customButton' onClick={() => this.refreshMap('Throttle Position')} disabled={(this.state.selection === 'Throttle Position')}><b>Throttle</b></Button>
                     </ButtonGroup >
                 </div>

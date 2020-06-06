@@ -47,10 +47,18 @@ export default class ScatterPlot extends Component {
             .setScrollStrategy(AxisScrollStrategies.fitting)
             .setTickStyle(emptyTick)
             .setMouseInteractions(false)
+            .setStrokeStyle(new SolidLine({
+                thickness: 3,
+                fillStyle: new SolidFill({ color: ColorHEX('#C8C8C8') })
+            }));
         this.chart.getDefaultAxisY()
             .setScrollStrategy(AxisScrollStrategies.fitting)
             .setMouseInteractions(false)
             .setTickStyle(emptyTick)
+            .setStrokeStyle(new SolidLine({
+                thickness: 3,
+                fillStyle: new SolidFill({ color: ColorHEX('#C8C8C8') })
+            }));
         //Set up cursor
         let autoCursor = this.chart.getAutoCursor();
         autoCursor.setGridStrokeXStyle(new SolidLine({
@@ -114,7 +122,7 @@ export default class ScatterPlot extends Component {
     render() {
         let graphHeight = (isMobile ? '90vh' : '500px')
         return (
-            <div style={{ marginBottom: '20px' }}>
+            <div id='scatter' style={{ marginBottom: '20px' }}>
                 <div id={this.chartId} className='fill' style={{ height: graphHeight }} onWheel={(event) => { return true; }}></div>
             </div>
         );

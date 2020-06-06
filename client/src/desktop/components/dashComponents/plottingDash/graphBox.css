@@ -100,7 +100,18 @@ span[class^="jss"] span[class^="jss"] span[class^="jss"] {
     touch-action: auto !important;
 }
 
-@media only screen and (max-width: 750px) {
+#graphBox #scatter .fill {
+    height: 600px !important;
+    width: 600px !important;
+    margin: auto;
+}
+
+#graphBox #scatter canvas {
+    height: 600px !important;
+    width: 600px !important;
+}
+
+@media only screen and (max-width: 1000px) {
     #graphBox {
         margin-left: 2px;
         margin-right: 2px;
@@ -145,5 +156,38 @@ span[class^="jss"] span[class^="jss"] span[class^="jss"] {
     #graphBox .fill {
         height: 350px !important;
         margin-bottom: 30px;
+    }
+
+    #graphBox #scatter .fill {
+        height: 300px !important;
+        width: 300px !important;
+        margin: auto;
+    }
+    
+    #graphBox #scatter canvas {
+        height: 300px !important;
+        width: 300px !important;
+    }
+}
+
+@media screen and (orientation:landscape) and (max-width: 1000px) {
+    #graphBox .fill {
+        height: 200px !important;
+        margin-bottom: 35px;
+    }
+
+    #graphBox canvas {
+        height: 200px !important;
+    }
+
+    #graphBox #scatter .fill {
+        height: 300px !important;
+        width: 300px !important;
+        margin: auto;
+    }
+    
+    #graphBox #scatter canvas {
+        height: 300px !important;
+        width: 300px !important;
     }
 }

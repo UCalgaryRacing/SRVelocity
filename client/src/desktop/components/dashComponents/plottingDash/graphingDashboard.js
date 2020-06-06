@@ -56,7 +56,7 @@ export default class GraphingDashboard extends React.Component {
             var j = 0;
             for (const graph of this.graphs) {
                 if (prevLength <= j)
-                    this.container.push(<Row style={{ marginTop: '30px' }}><Col>{graph}</Col></Row>);
+                    this.container.push(<Row style={{ marginTop: '30px', width: '100%', marginRight: '0', marginLeft: '0' }}><Col style={{ padding: '0', marginLeft: '0px', marginRight: '0px' }}>{graph}</Col></Row>);
                 j++;
             }
             this.forceUpdate();

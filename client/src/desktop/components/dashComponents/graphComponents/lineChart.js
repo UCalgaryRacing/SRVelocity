@@ -36,7 +36,7 @@ export default class LineChart extends Component {
     }
 
     updateFontSize = () => {
-        if (window.innerWidth < 750) {
+        if (window.innerWidth < 1000) {
             var axis = this.chart.getDefaultAxisY();
             var font = new FontSettings();
             font = font.setFamily("helvetica");
@@ -273,7 +273,7 @@ export default class LineChart extends Component {
             const derivative = sensors.filter(item => item.name === sensors[sensor].name + "'" && item.derivative);
             content.push(
                 <div>
-                    <Card border='light' style={{ width: '313px' }}>
+                    <Card border='light' style={{ width: '313px', margin: 'auto'}}>
                         <Card.Body style={{ padding: '0' }}>
                             <div id='outer-col' class='col' style={{ textAlign: 'center', padding: '0', paddingBottom: '3px', margin: 'auto' }}>
                                 <div class='row' style={{ textAlign: 'center', padding: '0', margin: 'auto' }}>

@@ -186,7 +186,7 @@ export default class GraphBox extends React.Component {
                     <p id='graphTitle'><b>{'Track Map'}</b></p>
                     <HeatMap currentPoint={this.state.data} delete={this.props.delete} index={this.props.id} />
                     {
-                        this.props.hideClose ?
+                        !this.props.hideClose ?
                             <Button id='deleteGraph' onClick={() => this.props.delete(this.props.id)} style={{ position: 'absolute' }}>
                                 <img id="logoImg" width="10px" src={require('../../../../assets/delete-x.svg')} />
                             </Button>

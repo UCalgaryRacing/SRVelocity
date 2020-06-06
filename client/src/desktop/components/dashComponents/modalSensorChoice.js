@@ -1,9 +1,6 @@
 import React from 'react'
 import { Form, Button } from "react-bootstrap";
 import SensorData from "../../../constants";
-import GraphBox from './plottingDash/graphBox';
-import GraphingDashboard from './plottingDash/graphingDashboard';
-
 
 export default class ModalSensorChoice extends React.Component {
     constructor(props){

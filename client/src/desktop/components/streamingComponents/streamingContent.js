@@ -10,7 +10,7 @@ export default class StreamingContent extends React.Component {
     this.state = {
       mobileContent: "plotting",
       content: "Dash",
-      marginLeft: window.innerWidth < 750 ? "0px" : "64px",
+      marginLeft: window.innerWidth < 1000 ? "0px" : "64px",
       toggleDash: false,
     };
   }
@@ -20,7 +20,7 @@ export default class StreamingContent extends React.Component {
   }
 
   updateMargin = () => {
-    if (window.innerWidth < 750) {
+    if (window.innerWidth < 1000) {
       this.setState({
         marginLeft: "0px"
       });
@@ -47,7 +47,7 @@ export default class StreamingContent extends React.Component {
         id="streamingContent"
         style={{ transition: "all 0.15s", marginLeft: this.state.marginLeft }}
       >
-        {this.state.content === "Dash" ? <StreamingDash marginLeft={this.state.marginLeft} /> : null}
+        {this.state.content === "Dash" ? <StreamingDash marginLeft={this.state.marginLeft} refreshPage={this.props.refreshPage}/> : null}
         {this.state.content === "Custom Plots" ? <CustomVisDash /> : null}
         {this.state.content === "Data Analysis" ? <DataAnalysisDash /> : null}
         {this.state.content === "Digital Twin" ? <VirtualDash /> : null}

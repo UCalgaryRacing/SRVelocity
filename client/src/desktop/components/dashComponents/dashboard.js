@@ -35,6 +35,7 @@ export default class StreamingDash extends React.Component {
     }
 
     doTestRun = () => {
+        this.props.refreshPage();
         Data.getInstance().doTestRun();
     }
 
@@ -48,7 +49,7 @@ export default class StreamingDash extends React.Component {
 
     render = () => {
         let dashSelector = (
-            <ButtonGroup id='dashSelector' style={{marginLeft: '10px'}}>
+            <ButtonGroup id='dashSelector' style={{ marginLeft: '10px' }}>
                 <Button id='defaultButton' onClick={this.changeDash} disabled={(this.state.dashOption === 'default') ? true : false}><b>Default</b></Button>
                 <Button id='customButton' onClick={this.changeDash} disabled={(this.state.dashOption === 'custom') ? true : false}><b>Custom</b></Button>
             </ButtonGroup >
@@ -70,12 +71,12 @@ export default class StreamingDash extends React.Component {
                     {this.state.selectionComplete && this.state.typeOption === 'plotting' ? addGraph : ''}
                     {this.state.selectionComplete ? testRun : ''}
                 </div>
-                <div style={{ paddingTop: '35px' }}>
+                <div id='plots' style={{ paddingTop: '35px' }}>
                     {(this.state.dashOption === 'default') ?
-                        ((this.state.typeOption === 'plotting') ? <GraphingDashboard plots={defaultDash} ref={this.graphDash}/> : <DataDashboard categories={SensorData.getInstance().getCategories()} />) :
-                        ((this.state.typeOption === 'plotting') ? <CustomPlottingDash updateSelectionComplete={this.updateSelectionComplete} ref={this.graphDash}/> : <CustomDataDash updateSelectionComplete={this.updateSelectionComplete} />)}
+                        ((this.state.typeOption === 'plotting') ? <GraphingDashboard plots={defaultDash} ref={this.graphDash} /> : <DataDashboard categories={SensorData.getInstance().getCategories()} />) :
+                        ((this.state.typeOption === 'plotting') ? <CustomPlottingDash updateSelectionComplete={this.updateSelectionComplete} ref={this.graphDash} /> : <CustomDataDash updateSelectionComplete={this.updateSelectionComplete} />)}
                 </div>
-                <QuickMaps marginLeft={this.props.marginLeft}/>
+                <QuickMaps marginLeft={this.props.marginLeft} />
             </div>
         );
     }

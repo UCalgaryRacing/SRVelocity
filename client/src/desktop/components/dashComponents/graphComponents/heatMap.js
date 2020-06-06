@@ -65,7 +65,7 @@ export default class HeatMap extends React.Component {
             });
         }
         else if (sensor === 'Throttle Position') {
-            newValue = await Data.getInstance().getDataPoint('Throttle Position');
+            newValue = await Data.getInstance().getDataPoint('Throttle');
             newValue = this.getColor(newValue, [0, 100]);
         }
         else if (sensor === 'Speed') {

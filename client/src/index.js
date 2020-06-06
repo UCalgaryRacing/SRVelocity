@@ -21,9 +21,10 @@ import SensorData from "./constants";
 class App extends React.Component {
 	constructor(props) {
 		super(props);
-		this.state = {
-			isSignedIn: false
-		}
+	}
+
+	refreshPage = () => {
+		this.setState({});
 	}
 
 	render = () => {
@@ -32,7 +33,7 @@ class App extends React.Component {
 				<Switch>
 					<Route exact path="/" component={() => <HomePage />} />
 					<Route exact path="/home" component={() => <HomePage />} />
-					<Route exact path="/streaming" component={() => <StreamingPage />} />
+					<Route exact path="/streaming" component={() => <StreamingPage refreshPage={this.refreshPage}/>} />
 					<Route exact path="/historical" component={() => <HistoricalPage />} />
 					<Route exact path="/manage" component={() => <ManagePage />} />
 					<Route exact path="/about" component={() => <AboutPage />} />

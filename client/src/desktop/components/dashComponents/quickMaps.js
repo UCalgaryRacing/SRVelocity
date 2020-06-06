@@ -16,13 +16,13 @@ export default class QuickMaps extends React.Component {
     }
 
     toggleTrackMap = () => {
-        if(window.innerWidth > 804) this.setState({ showTrackMap: true, showTrack: !this.state.showTrack });
-        else this.setState({ showTrackMap: true, showTrack: !this.state.showTrack, showAccel: false});
+        this.setState({ showTrackMap: true, showTrack: !this.state.showTrack});
+        if(window.innerWidth < 1000) this.setState({showAccel: false});
     }
 
     toggleAccelMap = () => {
-        if(window.innerWidth > 804) this.setState({ showAccelMap: true, showAccel: !this.state.showAccel });
-        else this.setState({ showAccelMap: true, showAccel: !this.state.showAccel, showTrack: false});
+        this.setState({ showAccelMap: true, showAccel: !this.state.showAccel});
+        if(window.innerWidth < 1000) this.setState({showTrack: false});
     }
 
     render = () => {
@@ -45,7 +45,7 @@ export default class QuickMaps extends React.Component {
                     borderStyle: 'solid'
                 }}>
                     <Button style={{ position: 'absolute', left: '10px', bottom: '4px' }} id='trackMapButton' onClick={this.toggleTrackMap}><b>{(this.state.showTrack) ? 'Hide Track' : 'Show Track'}</b></Button>
-                    <Button style={{ position: 'absolute', right: '10px', bottom: '4px' }} id='accelMapButton' onClick={this.toggleAccelMap}><b>{(this.state.showAccelMap) ? 'Hide Accel' : 'Show Accel'}</b></Button>
+                    <Button style={{ position: 'absolute', right: '10px', bottom: '4px' }} id='accelMapButton' onClick={this.toggleAccelMap}><b>{(this.state.showAccel) ? 'Hide Accel' : 'Show Accel'}</b></Button>
                 </div>
             </div>
         );

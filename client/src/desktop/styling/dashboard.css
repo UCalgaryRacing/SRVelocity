@@ -42,7 +42,7 @@
     width: 150px;
 }
 
-@media only screen and (max-width: 750px) {
+@media only screen and (max-width: 1000px) {
     #dashboard {
         margin-top: 0px;
     }
@@ -188,11 +188,19 @@
 #accelMap canvas {
     width: 320px !important;
     margin-top: -200px;
-    margin-left: 15px;
 }
 
-@media only screen and (max-width: 750px) {
+#accelMap .fill {
+    margin: auto !important;
+    width: 320px !important;
+}
+
+@media only screen and (max-width: 1000px) {
     #trackMap {
+        left: 0px;
+        width: 100% !important;
+    }
+    #accelMap {
         left: 0px;
         width: 100% !important;
     }
@@ -209,8 +217,16 @@
 
 /* Landscape */
 
-@media screen and (orientation:landscape) {
+@media screen and (orientation:landscape) and (max-width: 1000px) {
     #topBar {
         display: none;
+    }
+
+    #top {
+        top: 0px !important;
+    }
+
+    #plots {
+        padding-top: 0px !important;
     }
 }

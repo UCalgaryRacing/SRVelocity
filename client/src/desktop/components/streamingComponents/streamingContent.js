@@ -1,10 +1,8 @@
 import React from "react";
 import StreamingDash from "../dashComponents/dashboard";
-import MobileDash from "../mobileStreamingComponents/mobileDashboard";
 import DataAnalysisDash from "../dataAnalysisComponents/dashboard";
 import CustomVisDash from "../customVisComponents/dashboard";
 import VirtualDash from "../3DComponents/virtualDash";
-import { isMobile } from "react-device-detect";
 
 export default class StreamingContent extends React.Component {
   constructor(props) {

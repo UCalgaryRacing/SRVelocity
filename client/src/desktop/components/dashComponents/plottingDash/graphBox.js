@@ -184,17 +184,22 @@ export default class GraphBox extends React.Component {
             return (
                 <div id='graphBox'>
                     <p id='graphTitle'><b>{'Track Map'}</b></p>
-                    <HeatMap currentPoint={this.state.data} delete={this.props.delete} index={this.props.id} hideClose={this.props.hideClose} />
-                    <Button id='deleteGraph' onClick={() => this.props.delete(this.props.id)} style={{ position: 'absolute' }}>
-                        <img id="logoImg" width="10px" src={require('../../../../assets/delete-x.svg')} />
-                    </Button>
+                    <HeatMap currentPoint={this.state.data} delete={this.props.delete} index={this.props.id} />
+                    {
+                        this.props.hideClose ?
+                            <Button id='deleteGraph' onClick={() => this.props.delete(this.props.id)} style={{ position: 'absolute' }}>
+                                <img id="logoImg" width="10px" src={require('../../../../assets/delete-x.svg')} />
+                            </Button>
+                            :
+                            null
+                    }
                 </div>
             );
         }
         else {
             return (
                 <div id='graphBox' style={{ borderColor: this.state.indicationColour }}>
-                    <p id='graphTitle' style={{ height: '30px' }}><div style={{paddingTop: '3.5px', paddingBottom: '3.5px'}}><b style={{ color: this.state.indicationColour}}>{this.props.sensors[0].category}</b></div></p>
+                    <p id='graphTitle' style={{ height: '30px' }}><div style={{ paddingTop: '3.5px', paddingBottom: '3.5px' }}><b style={{ color: this.state.indicationColour }}>{this.props.sensors[0].category}</b></div></p>
                     <div style={{ marginBottom: '10px' }}>
                         <LineChart
                             id={this.props.id}

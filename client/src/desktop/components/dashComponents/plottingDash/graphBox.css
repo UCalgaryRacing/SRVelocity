@@ -141,11 +141,7 @@ span[class^="jss"] span[class^="jss"] span[class^="jss"] {
     #graphBox #deleteGraph {
         right: 10px !important;
     }
-
-    #graphBox canvas {
-        height: 350px !important;
-    }
-
+    
     #graphBox .fill {
         height: 350px !important;
         margin-bottom: 30px;

@@ -3,6 +3,7 @@ import { Form, Button, FormCheck } from "react-bootstrap";
 import ScatterSettings from './scatterSettings';
 import LineSettings from './lineSettings';
 import SensorData from "../../../constants";
+import { isMobile } from 'react-device-detect';
 
 export default class ModalCustomChoice extends React.Component {
     constructor(props){
@@ -16,7 +17,7 @@ export default class ModalCustomChoice extends React.Component {
         this.indices = [];
         this.availableGraphs = [];
         this.plotChoice = '';
-        this.MAX_GRAPHS = 10 - this.props.numDisplayed;
+        this.MAX_GRAPHS = (isMobile ? 4 : 10) - this.props.numDisplayed;
     }
 
     continueToSettings = () => {

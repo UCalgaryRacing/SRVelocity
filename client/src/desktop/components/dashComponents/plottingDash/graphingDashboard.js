@@ -2,8 +2,6 @@ import React from 'react';
 import GraphBox from './graphBox';
 import { Row, Col, Modal } from 'react-bootstrap';
 import SensorData from '../../../../constants';
-import Button from 'react-bootstrap/Button';
-import ButtonGroup from 'react-bootstrap/ButtonGroup';
 import ModalSensorChoice from '../modalSensorChoice';
 import ModalCustomChoice from '../modalCustomChoice';
 import '../../../styling/dashboard.css';

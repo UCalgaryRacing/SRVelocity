@@ -1,7 +1,6 @@
 import React from 'react';
 import ButtonGroup from 'react-bootstrap/ButtonGroup';
 import Button from 'react-bootstrap/Button';
-import { Form, Modal } from 'react-bootstrap';
 import GraphingDashboard from './plottingDash/graphingDashboard';
 import DataDashboard from './dataDash/dataDashboard';
 import CustomPlottingDash from './plottingDash/customPlottingDashboard';

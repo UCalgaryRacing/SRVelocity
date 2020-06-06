@@ -1,6 +1,7 @@
 import React from 'react';
 import { Form, Button } from "react-bootstrap";
 import SensorData from "../../../constants";
+import { isMobile } from 'react-device-detect';
 
 export default class CustomChoice extends React.Component {
     constructor(props) {
@@ -11,7 +12,7 @@ export default class CustomChoice extends React.Component {
         }
         this.switches = [];
         this.indices = [];
-        this.MAX_GRAPHS = 10;
+        this.MAX_GRAPHS = isMobile ? 4 : 10;
     }
 
     componentWillMount = () => {
@@ -26,7 +27,6 @@ export default class CustomChoice extends React.Component {
     }
 
     selectData = (event) => {
-        console.log(event)
         if (!event.target.id) event.target.id = 0; 
         let i = this.indices.indexOf(event.target.id);
         if (i < 0) this.indices.push(event.target.id); 

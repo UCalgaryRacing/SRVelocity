@@ -1,8 +1,5 @@
-#heatMap #dashSelector {
-    width: 300px !important;
-    position: absolute;
-    bottom: 10px;
-}
-#heatMap #dashSelector #customButton {
+
+
+#heatMap #heatMapSelector #customButton {
     width: 100px !important;
 }

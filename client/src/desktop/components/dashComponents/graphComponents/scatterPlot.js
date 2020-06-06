@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { ColorRGBA, IndividualPointFill, PointShape, lightningChart, emptyTick, AxisScrollStrategies, SolidFill, ColorHEX, AutoCursorModes, SolidLine, FontSettings } from '@arction/lcjs';
-import { isMobile } from 'react-device-detect'
+import { isMobile } from 'react-device-detect';
 
 
 const theme = {

@@ -106,8 +106,8 @@ export default class HeatMap extends React.Component {
                     point={this.state.currentPoint}
                     dataTitle={this.state.selection}
                     unit={this.selectionUnit} />
-                <div style={{ textAlign: 'center' }}>
-                    <ButtonGroup id='dashSelector' style={{ margin: '20px' }}>
+                <div style={{ textAlign: 'center', marginBottom: '10px'}}>
+                    <ButtonGroup id='heatMapSelector'>
                         <Button style={{ width: '120px !important' }} id='customButton' onClick={() => this.refreshMap('Speed')} disabled={(this.state.selection === 'Speed')}><b>Speed</b></Button>
                         <Button style={{ width: '120px' }} id='customButton' onClick={() => this.refreshMap('Acceleration')} disabled={(this.state.selection === 'Acceleration')}><b>Accel</b></Button>
                         <Button style={{ width: '120px' }} id='customButton' onClick={() => this.refreshMap('Throttle Position')} disabled={(this.state.selection === 'Throttle Position')}><b>Throttle</b></Button>

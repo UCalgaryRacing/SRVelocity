@@ -216,19 +216,6 @@ export default class LineChart extends Component {
         }
         //Allow scrolling while hovering over chart
         this.chart.engine.container.onwheel = null;
-        this.chart.onPanelBackgroundTouchEnd = null;
-        this.chart.onPanelBackgroundTouchMove = null;
-        this.chart.onPanelBackgroundTouchStart = null;
-        this.chart.onSeriesBackgroundTouchEnd = null;
-        this.chart.onSeriesBackgroundTouchMove = null;
-        this.chart.onSeriesBackgroundTouchStart = null;
-        this.chart.onPanelBackgroundMouseDrag = null;
-        this.chart.onPanelBackgroundMouseDragStart = null;
-        this.chart.onPanelBackgroundMouseDragStop = null;
-        this.chart.onSeriesBackgroundMouseDrag = null;
-        this.chart.onSeriesBackgroundMouseDragStart = null;
-        this.chart.onSeriesBackgroundMouseDragStop = null;
-        console.log(this.chart)
         this.setupComplete = true;
     }
 

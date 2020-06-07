@@ -1,5 +1,6 @@
 import React from 'react';
 import GraphBox from './graphBox';
+import CustomScatterGraphBox from './customScatterGraphBox';
 import { Row, Col, Modal } from 'react-bootstrap';
 import SensorData from '../../../../constants';
 import ModalSensorChoice from '../modalSensorChoice';
@@ -74,15 +75,33 @@ export default class GraphingDashboard extends React.Component {
         SensorData.getInstance().getSensors().then(sensorData => {
             var i = 0;
             for (const plot of this.state.plots) {
-                const sensors = sensorData.filter(item => { return item.category === plot; });
-                this.graphs.push(
-                    <GraphBox
-                        sensors={sensors}
-                        id={i + 1}
-                        key={i + 1}
-                        delete={this.deleteFromDash}
-                    />
-                );
+                if(plot.includes('Custom')){
+                    var xTemp = plot.slice(plot.indexOf('-') + 1); //Part of the string that has sensor names
+                    var yTemp = xTemp.slice(xTemp.indexOf('-') + 1); //Get y sensor from end of string
+                    xTemp = xTemp.slice(0, xTemp.indexOf('-')); //Get x sensor from middle of string
+                    
+                    const xSensor = sensorData.filter(item => { return item.category === xTemp })
+                    const ySensor = sensorData.filter(item => { return item.category === yTemp })
+                    this.graphs.push(
+                        <CustomScatterGraphBox
+                            id={i + 1}
+                            xSensor={xSensor}
+                            ySensor={ySensor}
+                            delete={this.deleteFromDash}
+                        />
+                    );
+                }
+                else{
+                    const sensors = sensorData.filter(item => { return item.category === plot; });
+                    this.graphs.push(
+                        <GraphBox
+                            sensors={sensors}
+                            id={i + 1}
+                            key={i + 1}
+                            delete={this.deleteFromDash}
+                        />
+                    );
+                }
                 i++;
             }
             for (const graph of this.graphs) this.container.push(<Row style={{ marginTop: '30px', width: '100%', marginRight: '0', marginLeft: '0' }}><Col style={{ padding: '0', marginLeft: '0px', marginRight: '0px' }}>{graph}</Col></Row>);

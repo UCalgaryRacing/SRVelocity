@@ -14,13 +14,12 @@ export default class ModalCustomChoice extends React.Component {
             selectTypePage: true,
             plotSettingsPage: false
         }
-        this.indices = [];
-        this.availableGraphs = [];
         this.plotChoice = '';
         this.MAX_GRAPHS = (isMobile ? 4 : 10) - this.props.numDisplayed;
     }
 
     continueToSettings = () => {
+        if(this.MAX_GRAPHS === 0) return null;
         if(this.plotChoice === '') return null;
         this.setState({
             selectTypePage: false,
@@ -35,12 +34,15 @@ export default class ModalCustomChoice extends React.Component {
     }
 
     sendOptions = (x, y) => {
-        this.props.sendOptions(x, y)
+        let graphs = ['Custom' + '-' + x + '-' + y];
+        this.props.add(graphs);
+        this.props.hide();
     }
     
     render = () => {
         return(
             <div id='graphChoice' style={{marginLeft: '20px'}}>
+                {(this.MAX_GRAPHS === 0) ? <p>Maximum number of graphs already displayed.</p>: null}
                 {(this.state.selectTypePage) ?
                     <div>
                         <Form>

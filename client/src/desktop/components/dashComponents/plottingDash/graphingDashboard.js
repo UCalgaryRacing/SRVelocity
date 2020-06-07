@@ -123,7 +123,7 @@ export default class GraphingDashboard extends React.Component {
                             {/* &nbsp;&nbsp;{modalSelector}&nbsp;&nbsp; */}
                         </Modal.Title>
                     </Modal.Header>
-                    <Modal.Body>
+                    <Modal.Body style={{padding: '0'}}>
                         {(this.state.modalSelectionOption === 'sensor') ?
                             <ModalSensorChoice hide={this.showAddModal} numDisplayed={this.props.plots.length} displayed={this.props.plots} add={this.addToDash} updateSelectionComplete={this.updateAddedGraphs} /> :
                             <ModalCustomChoice hide={this.showAddModal} sendOptions={this.sendOptions} />}

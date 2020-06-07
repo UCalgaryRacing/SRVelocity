@@ -62,11 +62,11 @@ export default class CustomChoice extends React.Component {
 
     render = () => {
         return (
-            <div id='customChoice' style={{marginLeft: '20px', marginTop: '40px'}}>
+            <div id='customChoice' style={{margin: 'auto', marginTop: '40px'}}>
                 {this.state.overMax ?
                     <p>Please select only {this.MAX_GRAPHS} graphs. ({this.indices.length} currently chosen)</p> : null}
                 <Form>{this.switches}</Form>
-                <Button id='submitButton' onClick={this.submit} style={{ fontWeight: "600", backgroundColor: "#C22D2D", borderColor: "#C22D2D", marginLeft: "-10px", marginTop: "15px"}}>Submit</Button>
+                <Button id='submitButton' onClick={this.submit} style={{ fontWeight: "600", backgroundColor: "#C22D2D", borderColor: "#C22D2D", marginTop: "15px", marginLeft: '10px'}}>Submit</Button>
             </div>
         );
     }

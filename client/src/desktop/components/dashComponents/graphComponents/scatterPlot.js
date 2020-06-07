@@ -59,7 +59,7 @@ export default class ScatterPlot extends Component {
                 thickness: 3,
                 fillStyle: new SolidFill({ color: ColorHEX('#C8C8C8') })
             }));
-        //Set up cursor
+        // TODO: Need to show cursor with current value the heatmap
         let autoCursor = this.chart.getAutoCursor();
         autoCursor.setGridStrokeXStyle(new SolidLine({
             thickness: 1,
@@ -78,6 +78,7 @@ export default class ScatterPlot extends Component {
         autoCursor.getResultTable().setFont(font);
         autoCursor.getResultTable().setTextFillStyle(new SolidFill({ color: ColorHEX('#FFF') }));
         autoCursor.getResultTable().getBackground().setFillStyle(new SolidFill({ color: ColorHEX('#C22D2D') }));
+        this.pointSeries.setCursorEnabled(false);
         //Don't allow scrolling
         this.chart.engine.container.onwheel = null;
         this.chart.engine.container.ontouchstart = null;
@@ -120,10 +121,9 @@ export default class ScatterPlot extends Component {
     }
 
     render() {
-        let graphHeight = (isMobile ? '90vh' : '500px')
         return (
             <div id='scatter' style={{ marginBottom: '20px' }}>
-                <div id={this.chartId} className='fill' style={{ height: graphHeight }} onWheel={(event) => { return true; }}></div>
+                <div id={this.chartId} className='fill' onWheel={(event) => { return true; }}></div>
             </div>
         );
     }

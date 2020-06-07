@@ -19,7 +19,8 @@ export default class StreamingDash extends React.Component {
             typeOption: 'plotting',
             showTrackMap: false,
             showAccelMap: false,
-            selectionComplete: true
+            selectionComplete: true,
+            showBottomNav: true
         }
     }
 
@@ -47,6 +48,15 @@ export default class StreamingDash extends React.Component {
         this.graphDash.current.showAddModal();
     }
 
+    closeBottomNav = () => {
+        this.setState({ showBottomNav: false });
+    }
+
+    openBottomNav = () => {
+        this.setState({ showBottomNav: true });
+    }
+
+
     render = () => {
         let dashSelector = (
             <ButtonGroup id='dashSelector' style={{ marginLeft: '10px' }}>
@@ -65,18 +75,32 @@ export default class StreamingDash extends React.Component {
         let defaultDash = ['Track Map', 'Engine Temp', 'Oil Pressure', 'Oil Temp', 'Air To Fuel', 'Fuel Temp', 'Acceleration', 'Axes']
         return (
             <div id='dashboard'>
-                <div id='top' style={{ position: 'fixed', top: '56px', right: '0', left: '0', zIndex: '999', height: '56px', paddingLeft: this.props.marginLeft, paddingTop: '10px', background: '#F5F5F5', borderColor: '#C22D2D', borderWidth: '0', borderBottomWidth: '1px', borderStyle: 'solid' }}>
+                <div id='top' style={{
+                    position: 'fixed',
+                    top: '56px',
+                    right: '0',
+                    left: '0',
+                    zIndex: '999',
+                    height: this.state.typeOption === 'plotting' && this.state.showBottomNav && window.innerWidth < 1000 ? '102px' : '56px',
+                    paddingLeft: this.props.marginLeft,
+                    paddingTop: '10px',
+                    background: '#F5F5F5',
+                    borderColor: '#C22D2D',
+                    borderWidth: '0',
+                    borderBottomWidth: '1px',
+                    borderStyle: 'solid'
+                }}>
                     {dashSelector}&nbsp;&nbsp;
                     {typeSelector}&nbsp;&nbsp;
                     {this.state.selectionComplete && this.state.typeOption === 'plotting' ? addGraph : ''}
-                    {this.state.selectionComplete ? testRun : ''}
+                    {this.state.selectionComplete && this.state.typeOption === 'plotting' ? testRun : ''}
                 </div>
                 <div id='plots' style={{ paddingTop: '35px' }}>
                     {(this.state.dashOption === 'default') ?
                         ((this.state.typeOption === 'plotting') ? <GraphingDashboard plots={defaultDash} ref={this.graphDash} /> : <DataDashboard categories={SensorData.getInstance().getCategories()} />) :
-                        ((this.state.typeOption === 'plotting') ? <CustomPlottingDash updateSelectionComplete={this.updateSelectionComplete} ref={this.graphDash} /> : <CustomDataDash updateSelectionComplete={this.updateSelectionComplete} />)}
+                        ((this.state.typeOption === 'plotting') ? <CustomPlottingDash closeBottomNav={this.closeBottomNav} openBottomNav={this.openBottomNav} updateSelectionComplete={this.updateSelectionComplete} ref={this.graphDash} /> : <CustomDataDash closeBottomNav={this.closeBottomNav} openBottomNav={this.openBottomNav} updateSelectionComplete={this.updateSelectionComplete} />)}
                 </div>
-                <QuickMaps marginLeft={this.props.marginLeft} />
+                {this.state.showBottomNav ? <QuickMaps marginLeft={this.props.marginLeft} /> : null}
             </div>
         );
     }

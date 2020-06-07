@@ -188,7 +188,7 @@ export default class GraphBox extends React.Component {
                     {
                         !this.props.hideClose ?
                             <Button id='deleteGraph' onClick={() => this.props.delete(this.props.id)} style={{ position: 'absolute' }}>
-                                <img id="logoImg" width="10px" src={require('../../../../assets/delete-x.svg')} />
+                                <img id="logoImg" width="40px" style={{ marginTop: '2px' }} src={require('../../../../assets/delete-x.svg')} />
                             </Button>
                             :
                             null
@@ -217,7 +217,7 @@ export default class GraphBox extends React.Component {
                             <img id="logoImg" style={{ width: '15px', height: '20px', marginBottom: '2px' }} src={require('../../../../assets/rightAxis.svg')} />
                         </Button>
                         <Button id='toggleGrid' onClick={this.toggleGrid} style={{ position: 'absolute' }}>
-                            <img id="logoImg" style={{ width: '15px', height: '20px', marginBottom: '2px' }} src={require('../../../../assets/grid.svg')} />
+                            <img id="logoImg" style={{ width: '15px', height: '20px', marginBottom: '2px'}} src={require('../../../../assets/grid.svg')} />
                         </Button>
                         <RangeSlider
                             defaultValue={[0, 0.5]}
@@ -250,7 +250,7 @@ export default class GraphBox extends React.Component {
                             <p style={{ textAlign: 'center', marginBottom: '25px' }}><b>Smoothing Factor</b></p>
                         </div>
                         <Button id='deleteGraph' onClick={() => this.props.delete(this.props.id)} style={{ position: 'absolute' }}>
-                            <img id="logoImg" width="10px" src={require('../../../../assets/delete-x.svg')} />
+                            <img id="logoImg" width="40px" style={{ marginTop: '2px' }} src={require('../../../../assets/delete-x.svg')} />
                         </Button>
                     </div>
                 </div>

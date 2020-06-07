@@ -50,27 +50,28 @@ export default class HeatMap extends React.Component {
         let index = (value[0] - boundaries[0]) / range;
         index = Math.round(index * 500);
         if (index >= 500) index = 499;
-        return ColorHEX(colors[index]);
+        return ColorHEX(colors[499 - index]);
     }
 
     findParamColor = async (sensor) => {
         //Refactor
-        let newValue = 0;
+        let newValue = {};
         if (sensor === 'Acceleration') {
             newValue = await Data.getInstance().getDataPoint('X').then(async xValue => {
                 var yValue = await Data.getInstance().getDataPoint('Y');
-                var newValue = Math.abs(xValue[0]) + Math.abs(yValue[0]);
-                newValue = this.getColor([newValue], [0, 2]);
+                var newValue = {};
+                newValue.val = Math.abs(xValue[0]) + Math.abs(yValue[0]);
+                newValue.col = this.getColor([yValue], [-1.5, 1.5]);
                 return newValue;
             });
         }
         else if (sensor === 'Throttle Position') {
-            newValue = await Data.getInstance().getDataPoint('Throttle');
-            newValue = this.getColor(newValue, [0, 100]);
+            newValue.val = await Data.getInstance().getDataPoint('Throttle');
+            newValue.col = this.getColor(newValue.val, [0, 70]);
         }
         else if (sensor === 'Speed') {
-            newValue = await Data.getInstance().getDataPoint('Speed');
-            newValue = this.getColor(newValue, [0, 40]);
+            newValue.val = await Data.getInstance().getDataPoint('Speed');
+            newValue.col = this.getColor(newValue.val, [0, 40]);
         }
         return newValue;
     }
@@ -81,9 +82,10 @@ export default class HeatMap extends React.Component {
         if (this.forceMapUpdate) this.forceMapUpdate = false;
         let temp = this.props.currentPoint;
         for (var sensor in this.state.data) {
-            var paramColour = await this.findParamColor(sensor);
+            var val = await this.findParamColor(sensor);
             let point = { x: temp.x, y: temp.y };
-            point.color = paramColour;
+            point.color = val.col;
+            point.val = val.val;
             this.state.data[sensor].push(point);
         }
         let colArray = this.state.data[this.state.selection];

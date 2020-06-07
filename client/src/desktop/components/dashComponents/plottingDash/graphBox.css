@@ -66,9 +66,9 @@ span[class^="jss"] span[class^="jss"] span[class^="jss"] {
     opacity: 1;
     border: 0px solid;
     right: 65px !important;
-    width: 40px;
+    width: 36px;
     bottom: 10px;
-    height: 40px;
+    height: 36px;
 }
 
 #graphBox #toggleGrid {
@@ -77,8 +77,8 @@ span[class^="jss"] span[class^="jss"] span[class^="jss"] {
     border: 0px solid;
     right: 20px !important;
     bottom: 10px;
-    width: 40px;
-    height: 40px;
+    width: 36px;
+    height: 36px;
 }
 
 #graphBox #deleteGraph {
@@ -88,8 +88,8 @@ span[class^="jss"] span[class^="jss"] span[class^="jss"] {
     right: 20px !important;
     top: 10px;
     bottom: 10px !important;
-    width: 40px;
-    height: 40px;
+    width: 36px;
+    height: 36px;
 }
 
 #graphBox #graphTitle {

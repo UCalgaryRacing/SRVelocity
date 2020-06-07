@@ -21,6 +21,7 @@ export default class LineChart extends Component {
         this.minValue = 0;
         this.mouseInteractions = false;
         this.colours = ['#C22D2D', '#0071B2', '#009E73', '#E69D00', '#CC79A7']; //Add more colours
+        this.toggleSeries.bind(this);
     }
 
     componentDidMount = () => {
@@ -74,7 +75,7 @@ export default class LineChart extends Component {
             }).setFillStyle(solidfill => solidfill.setA((index !== undefined) ? '80' : 'FF')))
             .setMouseInteractions(this.mouseInteractions)
             .setResultTableFormatter((builder, series, Xvalue, Yvalue) => {
-                return builder.addRow(Yvalue.toFixed(3) + " " + this.props.sensors[this.lineSeries.length - 1].output_unit)
+                return builder.addRow(series.getName() + ": " + Yvalue.toFixed(2) + " " + this.props.sensors[this.lineSeries.length - 1].output_unit)
             })
             .add(map.map((point) => ({ x: point.x, y: point.y })));
     }
@@ -152,7 +153,7 @@ export default class LineChart extends Component {
             .setMouseInteractionRectangleFit(this.mouseInteractions)
             .setMouseInteractionRectangleZoom(this.mouseInteractions)
             .setMouseInteractionsWhileScrolling(this.mouseInteractions)
-            .setMouseInteractionsWhileZooming(this.mouseInteractions);
+            .setMouseInteractionsWhileZooming(this.mouseInteractions)
         //Configure the cursor
         let autoCursor = this.chart.getAutoCursor();
         autoCursor.setGridStrokeXStyle(new SolidLine({
@@ -211,7 +212,7 @@ export default class LineChart extends Component {
                 .setMouseInteractions(this.mouseInteractions)
                 .setResultTableFormatter((builder, series, Xvalue, Yvalue) => {
                     return builder
-                        .addRow(Yvalue.toFixed(3) + ' ' + this.props.sensors[0].output_unit)
+                        .addRow(series.getName() + ": " + Yvalue.toFixed(2) + ' ' + this.props.sensors[0].output_unit)
                 });
         }
         //Allow scrolling while hovering over chart
@@ -262,6 +263,12 @@ export default class LineChart extends Component {
         }
     }
 
+    toggleSeries = (index) => {
+        if (this.lineSeries[index].isDisposed()) this.lineSeries[index].restore();
+        else this.lineSeries[index].dispose();
+        this.setState({});
+    }
+
     render() {
         //Just to shorten the code a bit
         let data = this.props.data;
@@ -272,30 +279,31 @@ export default class LineChart extends Component {
             if (sensors[sensor].derivative) continue;
             const derivative = sensors.filter(item => item.name === sensors[sensor].name + "'" && item.derivative);
             content.push(
-                <div>
-                    <Card border='light' style={{ width: '313px', margin: 'auto'}}>
+                <div id='chart-text'>
+                    <Card border='light' style={{ width: '313px', margin: 'auto' }}>
                         <Card.Body style={{ padding: '0' }}>
                             <div id='outer-col' class='col' style={{ textAlign: 'center', padding: '0', paddingBottom: '3px', margin: 'auto' }}>
                                 <div class='row' style={{ textAlign: 'center', padding: '0', margin: 'auto' }}>
-                                    <div style={{ margin: 'auto'}}>
-                                        <div class='col-xs' style={{ color: this.colours[sensor], fontStyle: 'bold', textAlign: 'right', padding: '0', fontSize: '1rem', display: 'inline-block', marginTop: '5px', width: '143px'}}>
+                                    <div style={{ margin: 'auto' }}>
+                                        <div class='col-xs' style={{ color: this.colours[sensor], fontStyle: 'bold', textAlign: 'right', padding: '0', fontSize: '1rem', display: 'inline-block', marginTop: '5px', width: '143px' }}>
                                             <Button id='derivativeButton' onClick={() => { this.props.controlDerivative(sensors[sensor].name) }}><b style={{ fontStyle: 'italic', fontSize: '1rem' }}>f'(x)</b></Button>
-                                            <b style={{ fontSize: '1rem', float: 'right', dispaly: 'inline-block', marginTop: '3px' }}>{sensors[sensor].name}:</b>
+                                            <b style={{ fontSize: '1rem', float: 'right', display: 'inline-block', marginTop: '3px', cursor: 'pointer', textDecoration: this.lineSeries[sensor] !== undefined && this.lineSeries[sensor].isDisposed() ? 'line-through': 'none' }} onClick={() => this.toggleSeries(sensor)}>{sensors[sensor].name}:</b>
                                         </div>
                                         <div class='col-xs' style={{ fontStyle: 'bold', textAlign: 'center', padding: '0', fontSize: '1rem', width: '70px', display: 'inline-block' }}><b style={{ verticalAlign: 'middle' }}>{(data === undefined) ? '0' : data[sensor]}</b></div>
-                                        <div class='col-xs' style={{ fontStyle: 'bold', textAlign: 'left', padding: '0', fontSize: '1rem', display: 'inline-block', marginBottom: '5px', width: '100px'}}><b style={{ verticalAlign: 'middle', marginTop: '3px' }}>{sensors[0].output_unit}</b></div>
+                                        <div class='col-xs' style={{ fontStyle: 'bold', textAlign: 'left', padding: '0', fontSize: '1rem', display: 'inline-block', marginBottom: '5px', width: '100px' }}><b style={{ verticalAlign: 'middle', marginTop: '3px' }}>{sensors[0].output_unit}</b></div>
                                     </div>
                                 </div>
-                                {derivative.length !== 0 ?
-                                    <div class='row' style={{ textAlign: 'center', padding: '0', margin: 'auto', marginTop: '5px', width: '100%'}}>
-                                        <div style={{ margin: 'auto' }}>
-                                            <div class='col-xs' style={{ color: this.colours[sensor] + '80', fontStyle: 'bold', textAlign: 'right', padding: '0', fontSize: '1rem', display: 'inline-block', width: '143px'}}><div style={{width: '34px'}}/><b>{derivative[0].name}:</b></div>
-                                            <div class='col-xs' style={{ fontStyle: 'bold', textAlign: 'center', padding: '0', fontSize: '1rem', width: '70px', display: 'inline-block' }}><b>{(data === undefined) ? '0' : (data[sensor] * 10).toFixed(2)}</b></div>
-                                            <div class='col-xs' style={{ fontStyle: 'bold', textAlign: 'left', padding: '0', fontSize: '1rem', width: '100px', display: 'inline-block', marginBottom: '5px'}}><b style={{ verticalAlign: 'middle', marginTop: '3px' }}></b></div>
+                                {
+                                    derivative.length !== 0 ?
+                                        <div class='row' style={{ textAlign: 'center', padding: '0', margin: 'auto', marginTop: '5px', width: '100%' }}>
+                                            <div style={{ margin: 'auto' }}>
+                                                <div class='col-xs' style={{ color: this.colours[sensor] + '80', fontStyle: 'bold', textAlign: 'right', padding: '0', fontSize: '1rem', display: 'inline-block', width: '143px' }}><div style={{ width: '34px' }} /><b>{derivative[0].name}</b></div>
+                                                <div class='col-xs' style={{ fontStyle: 'bold', textAlign: 'center', padding: '0', fontSize: '1rem', width: '70px', display: 'inline-block' }}><b></b></div>
+                                                <div class='col-xs' style={{ fontStyle: 'bold', textAlign: 'left', padding: '0', fontSize: '1rem', width: '100px', display: 'inline-block', marginBottom: '5px' }}><b style={{ verticalAlign: 'middle', marginTop: '3px' }}></b></div>
+                                            </div>
                                         </div>
-                                    </div>
-                                    :
-                                    null
+                                        :
+                                        null
                                 }
                             </div>
                         </Card.Body>
@@ -306,12 +314,12 @@ export default class LineChart extends Component {
 
         return (
             <div id='lineChart' style={{ marginBottom: '20px' }}>
-                {window.innerHeight < 750 ? content :
+                {window.innerHeight < 1000 ? content :
                     <CardDeck style={{ justifyContent: 'center', marginLeft: '5px', marginRight: '5px' }}>
                         {content}
                     </CardDeck>
                 }
-                <div id={this.chartId} style={{ height: '500px'}} className='fill'></div>
+                <div id={this.chartId} style={{ height: '500px' }} className='fill'></div>
             </div>
         );
     }

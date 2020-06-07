@@ -1,5 +1,5 @@
 import React from "react";
-import { Row, Col, Button, Jumbotron, Form } from "react-bootstrap";
+import { Row, Col, Button, Jumbotron, Form, Table } from "react-bootstrap";
 
 class SensorView extends React.Component {
   constructor(props) {
@@ -22,6 +22,8 @@ class SensorView extends React.Component {
 
   async componentDidMount() {
     this.buttonRender();
+    this.renderDriverContents(this.props.sensor);
+    this.renderDriverFormContents(this.props.sensor);
   }
 
   async errorDisplay(res, resJSON) {
@@ -41,6 +43,222 @@ class SensorView extends React.Component {
     }
   }
 
+  async renderDriverFormContents(sensor) {
+    let render = [];
+    render.push(
+      <React.Fragment key={"driverFormFragment"}>
+        <tr>
+          <th>Sensor Name</th>
+          <td>
+            <Form>
+              <Form.Group>
+                <Form.Control
+                  type="input"
+                  defaultValue={sensor.name}
+                  ref={this.name}
+                ></Form.Control>
+              </Form.Group>
+            </Form>
+          </td>
+        </tr>
+        <tr>
+          <th>Output Units</th>
+          <td>
+            <Form>
+              <Form.Group>
+                <Form.Control
+                  type="input"
+                  defaultValue={sensor.output_unit}
+                  ref={this.output_unit}
+                ></Form.Control>
+              </Form.Group>
+            </Form>
+          </td>
+        </tr>
+        <tr>
+          <th>Category</th>
+          <td>
+            <Form>
+              <Form.Group>
+                <Form.Control
+                  type="input"
+                  defaultValue={sensor.category}
+                  ref={this.category}
+                ></Form.Control>
+              </Form.Group>
+            </Form>
+          </td>
+        </tr>
+        {/* <tr>
+          <th>Lower Bound</th>
+          <td>
+            <Form>
+              <Form.Group>
+                <Form.Control
+                  type="input"
+                  defaultValue={sensor.lower_bound}
+                  ref={this.lower_bound}
+                ></Form.Control>
+              </Form.Group>
+            </Form>
+          </td>
+        </tr>
+        <tr>
+          <th>Upper Bound</th>
+          <td>
+            <Form>
+              <Form.Group>
+                <Form.Control
+                  type="input"
+                  defaultValue={sensor.upper_bound}
+                  ref={this.upper_bound}
+                ></Form.Control>
+              </Form.Group>
+            </Form>
+          </td>
+        </tr> */}
+        <tr>
+          <th>Code Name</th>
+          <td>
+            <Form>
+              <Form.Group>
+                <Form.Control
+                  type="input"
+                  defaultValue={sensor.code_name}
+                  ref={this.code_name}
+                ></Form.Control>
+              </Form.Group>
+            </Form>
+          </td>
+        </tr>
+        <tr>
+          <th>CAN ID</th>
+          <td>
+            <Form>
+              <Form.Group>
+                <Form.Control
+                  type="input"
+                  defaultValue={sensor.can_id}
+                  ref={this.can_id}
+                ></Form.Control>
+              </Form.Group>
+            </Form>
+          </td>
+        </tr>
+        {/* <tr>
+          <th>Yellow Lower Bound</th>
+          <td>
+            <Form>
+              <Form.Group>
+                <Form.Control
+                  type="input"
+                  defaultValue={sensor.yellow_lower}
+                  ref={this.yellow_lower}
+                ></Form.Control>
+              </Form.Group>
+            </Form>
+          </td>
+        </tr>
+        <tr>
+          <th>Yellow Upper Bound</th>
+          <td>
+            <Form>
+              <Form.Group>
+                <Form.Control
+                  type="input"
+                  defaultValue={sensor.yellow_upper}
+                  ref={this.yellow_upper}
+                ></Form.Control>
+              </Form.Group>
+            </Form>
+          </td>
+        </tr>
+        <tr>
+          <th>Red Lower Bound</th>
+          <td>
+            <Form>
+              <Form.Group>
+                <Form.Control
+                  type="input"
+                  defaultValue={sensor.red_lower}
+                  ref={this.red_lower}
+                ></Form.Control>
+              </Form.Group>
+            </Form>
+          </td>
+        </tr>
+        <tr>
+          <th>Red Upper Bound</th>
+          <td>
+            <Form>
+              <Form.Group>
+                <Form.Control
+                  type="input"
+                  defaultValue={sensor.red_upper}
+                  ref={this.red_upper}
+                ></Form.Control>
+              </Form.Group>
+            </Form>
+          </td>
+        </tr> */}
+      </React.Fragment>
+    );
+    await this.setState({ sensorFormRender: render });
+  }
+
+  async renderDriverContents(sensor) {
+    let render = [];
+    render.push(
+      <React.Fragment key={"driverViewKey"}>
+        <tr>
+          <th>Sensor Name</th>
+          <td>{sensor.name}</td>
+        </tr>
+        <tr>
+          <th>Output Units</th>
+          <td>{sensor.output_unit}</td>
+        </tr>
+        <tr>
+          <th>Category</th>
+          <td>{sensor.category}</td>
+        </tr>
+        {/* <tr>
+          <th>Lower Bound</th>
+          <td>{sensor.lower_bound}</td>
+        </tr>
+        <tr>
+          <th>Upper Bound</th>
+          <td>{sensor.upper_bound}</td>
+        </tr> */}
+        <tr>
+          <th>Code Name</th>
+          <td>{sensor.code_name}</td>
+        </tr>
+        <tr>
+          <th>CAN ID</th>
+          <td>{sensor.can_id}</td>
+        </tr>
+        {/* <tr>
+          <th>Yellow Lower Bound</th>
+          <td>{sensor.yellow_lower}</td>
+        </tr>
+        <tr>
+          <th>Yellow Upper Bound</th>
+          <td>{sensor.yellow_upper}</td>
+        </tr>
+        <tr>
+          <th>Red Lower Bound</th>
+          <td>{sensor.red_lower}</td>
+        </tr>
+        <tr>
+          <th>Red Upper Bound</th>
+          <td>{sensor.red_upper}</td>
+        </tr> */}
+      </React.Fragment>
+    );
+    await this.setState({ sensorRender: render });
+  }
+
   async submit() {
     if (this.props.add) {
       try {
@@ -57,8 +275,8 @@ class SensorView extends React.Component {
             name: this.name.current.value,
             outputUnit: this.output_unit.current.value,
             category: this.category.current.value,
-            lowerBound: this.lower_bound.current.value,
-            upperBound: this.upper_bound.current.value,
+            // lowerBound: this.lower_bound.current.value,
+            // upperBound: this.upper_bound.current.value,
             codeName:
               this.code_name.current.value === ""
                 ? null
@@ -67,22 +285,22 @@ class SensorView extends React.Component {
               this.can_id.current.value === ""
                 ? null
                 : this.can_id.current.value,
-            yellowUpper:
-              this.yellow_upper.current.value === ""
-                ? null
-                : this.yellow_upper.current.value,
-            yellowLower:
-              this.yellow_lower.current.value === ""
-                ? null
-                : this.yellow_lower.current.value,
-            redUpper:
-              this.red_upper.current.value === ""
-                ? null
-                : this.red_upper.current.value,
-            redLower:
-              this.red_lower.current.value === ""
-                ? null
-                : this.red_lower.current.value,
+            // yellowUpper:
+            //   this.yellow_upper.current.value === ""
+            //     ? null
+            //     : this.yellow_upper.current.value,
+            // yellowLower:
+            //   this.yellow_lower.current.value === ""
+            //     ? null
+            //     : this.yellow_lower.current.value,
+            // redUpper:
+            //   this.red_upper.current.value === ""
+            //     ? null
+            //     : this.red_upper.current.value,
+            // redLower:
+            //   this.red_lower.current.value === ""
+            //     ? null
+            //     : this.red_lower.current.value,
           }),
         });
         let resJSON = await res.json();
@@ -106,8 +324,8 @@ class SensorView extends React.Component {
             name: this.name.current.value,
             outputUnit: this.output_unit.current.value,
             category: this.category.current.value,
-            lowerBound: this.lower_bound.current.value,
-            upperBound: this.upper_bound.current.value,
+            //lowerBound: this.lower_bound.current.value,
+            //upperBound: this.upper_bound.current.value,
             codeName:
               this.code_name.current.value === ""
                 ? null
@@ -116,22 +334,22 @@ class SensorView extends React.Component {
               this.can_id.current.value === ""
                 ? null
                 : this.can_id.current.value,
-            yellowUpper:
-              this.yellow_upper.current.value === ""
-                ? null
-                : this.yellow_upper.current.value,
-            yellowLower:
-              this.yellow_lower.current.value === ""
-                ? null
-                : this.yellow_lower.current.value,
-            redUpper:
-              this.red_upper.current.value === ""
-                ? null
-                : this.red_upper.current.value,
-            redLower:
-              this.red_lower.current.value === ""
-                ? null
-                : this.red_lower.current.value,
+            // yellowUpper:
+            //   this.yellow_upper.current.value === ""
+            //     ? null
+            //     : this.yellow_upper.current.value,
+            // yellowLower:
+            //   this.yellow_lower.current.value === ""
+            //     ? null
+            //     : this.yellow_lower.current.value,
+            // redUpper:
+            //   this.red_upper.current.value === ""
+            //     ? null
+            //     : this.red_upper.current.value,
+            // redLower:
+            //   this.red_lower.current.value === ""
+            //     ? null
+            //     : this.red_lower.current.value,
           }),
         });
         let resJSON = await res.json();
@@ -246,7 +464,33 @@ class SensorView extends React.Component {
         <React.Fragment>
           <Row>
             <Col md={{ span: 8, offset: 2 }}>
-              <Jumbotron>
+              <Table striped style={{ borderRadius: "25px" }}>
+                <thead
+                  style={{
+                    backgroundColor: "rgb(194, 45, 45)",
+                    color: "white",
+                  }}
+                >
+                  <tr>
+                    <th
+                      style={{
+                        width: "20%",
+                      }}
+                    >
+                      Label
+                    </th>
+                    <th
+                      style={{
+                        width: "80%",
+                      }}
+                    ></th>
+                  </tr>
+                </thead>
+                <tbody>{this.state.sensorFormRender}</tbody>
+              </Table>
+              {this.state.buttonRender}
+              <Row>{this.state.errorRender}</Row>
+              {/*<Jumbotron>
                 <Form>
                   <Form.Group as={Row} controlId="sensorName">
                     <Col md={{ span: 2 }}>
@@ -405,7 +649,7 @@ class SensorView extends React.Component {
                   {this.state.buttonRender}
                 </Form>
                 <Row>{this.state.errorRender}</Row>
-              </Jumbotron>
+              </Jumbotron> */}
             </Col>
           </Row>
         </React.Fragment>
@@ -415,7 +659,49 @@ class SensorView extends React.Component {
         <React.Fragment>
           <Row>
             <Col md={{ span: 8, offset: 2 }}>
-              <Jumbotron>
+              <Table striped style={{ borderRadius: "25px" }}>
+                <thead
+                  style={{
+                    backgroundColor: "rgb(194, 45, 45)",
+                    color: "white",
+                  }}
+                >
+                  <tr>
+                    <th
+                      style={{
+                        width: "20%",
+                      }}
+                    >
+                      Label
+                    </th>
+                    <th
+                      style={{
+                        width: "80%",
+                      }}
+                    >
+                      Content
+                    </th>
+                  </tr>
+                </thead>
+                <tbody>{this.state.sensorRender}</tbody>
+              </Table>
+              <Row>
+                <Col>
+                  <Button
+                    style={{
+                      backgroundColor: "rgb(194, 45, 45)",
+                      color: "white",
+                      float: "right",
+                    }}
+                    onClick={() => {
+                      this.toggleEditMode();
+                    }}
+                  >
+                    Edit
+                  </Button>
+                </Col>
+              </Row>
+              {/* <Jumbotron>
                 <Row>
                   <Col md={{ span: 2 }}>
                     <h4>Name:</h4>
@@ -520,7 +806,7 @@ class SensorView extends React.Component {
                     </Button>
                   </Col>
                 </Row>
-              </Jumbotron>
+              </Jumbotron> */}
             </Col>
           </Row>
         </React.Fragment>

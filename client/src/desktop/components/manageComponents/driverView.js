@@ -218,7 +218,9 @@ class DriverView extends React.Component {
                       style={{
                         width: "80%",
                       }}
-                    ></th>
+                    >
+                      Content
+                    </th>
                   </tr>
                 </thead>
                 <tbody>{this.state.driverTableFormRender}</tbody>

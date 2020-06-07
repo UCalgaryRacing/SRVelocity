@@ -1,7 +1,7 @@
 export default class SensorData {
   static instance = null;
   static sensors =
-    fetch('http://localhost:3000/api/pgdb/getSensors', {
+    fetch('/api/pgdb/getSensors', { //http://localhost:3000/api/pgdb/getSensors for dev
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',

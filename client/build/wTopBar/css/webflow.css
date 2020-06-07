@@ -1630,7 +1630,7 @@ textarea.w-select {
   left: 0;
   right: 0;
   width: 100%;
-  z-index: 1008 !important;
+  z-index: auto;
 }
 .w-nav-overlay [data-nav-menu-open] {
   top: 0;

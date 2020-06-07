@@ -110,7 +110,9 @@ export default class ScatterPlot extends Component {
     render() {
         return (
             <div style={{ marginBottom: '20px' }}>
-                <div id={this.chartId} className='fill' style={{ height: '500px' }} onWheel={(event) => { return true; }}></div>
+                {(this.props.custom === true) ? 
+                    <div id={this.chartId} className='fill' style={{ height: '500px', marginBottom: '50px' }} onWheel={(event) => { return true; }}></div> :
+                    <div id={this.chartId} className='fill' style={{ height: '500px' }} onWheel={(event) => { return true; }}></div>}
             </div>
         );
     }

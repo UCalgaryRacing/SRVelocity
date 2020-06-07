@@ -51,7 +51,6 @@ export default class StreamingDash extends React.Component {
         this.setState({
             dashGraphs: temp
         })
-        this.forceUpdate()
     }
 
     addToDash = (graphChoices) => {
@@ -83,7 +82,7 @@ export default class StreamingDash extends React.Component {
                 </div>
                 <div style={{ paddingTop: '98px' }}>
                     {(this.state.dashOption === 'default') ?
-                        ((this.state.typeOption === 'plotting') ? <GraphingDashboard delete={this.deleteFromDash} add={this.addToDash} plots={this.state.dashGraphs} /> : <DataDashboard categories={SensorData.getInstance().getCategories()} />) :
+                        ((this.state.typeOption === 'plotting') ? <GraphingDashboard delete={this.deleteFromDash} add={this.addToDash} plots={this.state.dashGraphs} plotsLength={this.state.dashGraphs.length}/> : <DataDashboard categories={SensorData.getInstance().getCategories()} />) :
                         ((this.state.typeOption === 'plotting') ? <CustomPlottingDash updateSelectionComplete={this.updateSelectionComplete} /> : <CustomDataDash updateSelectionComplete={this.updateSelectionComplete} />)}
                 </div>
                 <QuickMaps />

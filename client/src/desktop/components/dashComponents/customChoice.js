@@ -20,7 +20,7 @@ export default class CustomChoice extends React.Component {
         SensorData.getInstance().getCategories().then(categories => {
             var i = 1;
             for (const category of categories) {
-                this.switches.push(<Form.Check style={{width: isMobile ? '300px': ''}} name={category[i]} label={category} id={i} key={i} onChange={this.selectData} />);
+                this.switches.push(<Form.Check style={{width: '300px'}} name={category[i]} label={category} id={i} key={i} onChange={this.selectData} />);
                 i++;
             }
             this.setState({categories: categories});
@@ -64,7 +64,7 @@ export default class CustomChoice extends React.Component {
         return (
             <div id='customChoice' style={{margin: 'auto', marginTop: '40px'}}>
                 {this.state.overMax ?
-                    <p>Please select only {this.MAX_GRAPHS} graphs. ({this.indices.length} currently chosen)</p> : null}
+                    <p style={{marginLeft: '10px'}}>Please select only {this.MAX_GRAPHS} graphs. ({this.indices.length} currently chosen)</p> : null}
                 <Form>{this.switches}</Form>
                 <Button id='submitButton' onClick={this.submit} style={{ fontWeight: "600", backgroundColor: "#C22D2D", borderColor: "#C22D2D", marginTop: "15px", marginLeft: '10px'}}>Submit</Button>
             </div>

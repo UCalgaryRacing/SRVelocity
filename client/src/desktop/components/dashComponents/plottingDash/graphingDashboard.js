@@ -42,7 +42,6 @@ export default class GraphingDashboard extends React.Component {
             let prevLength = this.state.plots.length;
             for (const graph of selectedGraphs) {
                 const sensors = sensorData.filter(item => { return item.category === graph; });
-                console.log(graph)
                 this.graphs.push(
                     <GraphBox
                         sensors={sensors}
@@ -125,7 +124,7 @@ export default class GraphingDashboard extends React.Component {
                     </Modal.Header>
                     <Modal.Body style={{padding: '0'}}>
                         {(this.state.modalSelectionOption === 'sensor') ?
-                            <ModalSensorChoice hide={this.showAddModal} numDisplayed={this.props.plots.length} displayed={this.props.plots} add={this.addToDash} updateSelectionComplete={this.updateAddedGraphs} /> :
+                            <ModalSensorChoice hide={this.showAddModal} displayed={this.state.plots} add={this.addToDash} updateSelectionComplete={this.updateAddedGraphs} /> :
                             <ModalCustomChoice hide={this.showAddModal} sendOptions={this.sendOptions} />}
                     </Modal.Body>
                 </Modal>

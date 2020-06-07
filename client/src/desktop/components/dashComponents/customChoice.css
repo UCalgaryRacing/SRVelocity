@@ -6,8 +6,12 @@
     width: 320px;
 }
 
+.form-check {
+    margin-left: 0px;
+}
+
 @media only screen and (max-width: 1000px) {
-    .form-check {
+        .form-check {
         width: 100%;
         margin: 15px auto;
         position: relative;

@@ -1,6 +1,7 @@
 import React from 'react'
 import { Form, Button } from "react-bootstrap";
 import SensorData from "../../../constants";
+import { isMobile } from 'react-device-detect';
 
 export default class ModalSensorChoice extends React.Component {
     constructor(props){
@@ -12,7 +13,7 @@ export default class ModalSensorChoice extends React.Component {
         this.switches = [];
         this.indices = [];
         this.availableGraphs = [];
-        this.MAX_GRAPHS = 10 - this.props.numDisplayed;
+        this.MAX_GRAPHS = (isMobile ? 4 : 10) - this.props.displayed.length;
     }
 
     componentWillMount = () => {
@@ -52,9 +53,9 @@ export default class ModalSensorChoice extends React.Component {
     render = () => {
         return(
             <div id='graphChoice' style={{marginLeft: '20px'}}>
-                {(this.MAX_GRAPHS === 0) ? <p>Maximum number of graphs already displayed.</p> : 
-                (this.state.overMax) ? <p>Please select {this.MAX_GRAPHS} {(this.MAX_GRAPHS === 1) ? 'only one graph.' : 'or fewer graphs.'} ({this.indices.length} currently chosen)</p> : null}
-                <Form>{this.switches}</Form>
+                <Form style={{marginTop: '10px'}}>{this.switches}</Form>
+                {(this.MAX_GRAPHS === 0) ? <p style={{marginTop: '40px'}}>Maximum number of graphs already displayed.</p> : 
+                (this.state.overMax) ? <p style={{marginTop: '40px'}}>Please select {this.MAX_GRAPHS} {(this.MAX_GRAPHS === 1) ? 'only one graph.' : 'or fewer graphs.'} ({this.indices.length} currently chosen)</p> : null}
                 <Button onClick={this.submit} style={{ fontWeight: "600", backgroundColor: "#C22D2D", borderColor: "#C22D2D", width: "95%", alignContent: 'center', marginTop: '15px', marginBottom: '15px'}}>Submit</Button>
             </div>
         );

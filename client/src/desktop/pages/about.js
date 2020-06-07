@@ -1,6 +1,7 @@
 import React from 'react';
 import TopNav from '../components/navigationComponents/topNav';
 import { Figure, Container, Card, CardGroup, CardDeck } from 'react-bootstrap';
+import BottomNav from "../components/navigationComponents/bottomNav";
 import './about.css';
 
 class Member extends React.Component {
@@ -133,6 +134,7 @@ export default class AboutPage extends React.Component {
                 <CardDeck style={{ justifyContent: 'center' }}>
                     {this.teamMembers}
                 </CardDeck>
+                <BottomNav/>
             </div>
         );
     }

@@ -1,7 +1,7 @@
 import React from 'react';
 import { Button, Modal, Form } from 'react-bootstrap'
-import { GATEWAYSERVERIP } from '../../../dataServerEnv'
-import '../../styling/CSVBox.css'
+import { GATEWAYSERVERIP } from '../../../../dataServerEnv'
+import '../../../styling/CSVBox.css'
 import download from 'downloadjs'
 import RenameFileModal from './renameFileModal'
 

@@ -1,6 +1,8 @@
 #CSVBox {
     border-style: solid;
     border-width: 1px;
-    border-radius: 1rem;
+    border-radius: 0.25rem;
     padding: 10px;
+    margin-bottom: 30px;
+    min-height: 200px;
 }

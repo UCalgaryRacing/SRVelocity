@@ -1,7 +1,7 @@
 import React from 'react';
 import { Button, Modal, Form } from 'react-bootstrap'
 import Dropzone from 'react-dropzone'
-import { GATEWAYSERVERIP } from '../../../dataServerEnv'
+import { GATEWAYSERVERIP } from '../../../../dataServerEnv'
 
 export default class UploadFileModal extends React.Component {
     constructor(props) {

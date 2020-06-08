@@ -43,11 +43,13 @@ export default class HistoricalContent extends React.Component {
                 var files = []
                 let i = 0
                 for (var file of res) {
+                    console.log(file.metadata)
+                    let date = new Date(parseInt(file.metadata.date));
                     files.push(
                         <CSVBox filename={file.name}
                             driver={file.metadata.driver}
                             car={file.metadata.car}
-                            date={file.metadata.date}
+                            date={date.toLocaleDateString() + " " + date.toLocaleTimeString()}
                             deleteFile={this.deleteFile}
                             key={i}
                             index={i}
@@ -99,8 +101,6 @@ export default class HistoricalContent extends React.Component {
                             required
                         />
                     </Form>
-                    {/* {this.state.selectionComplete && this.state.typeOption === 'plotting' ? addGraph : ''}
-                    {this.state.selectionComplete && this.state.typeOption === 'plotting' ? testRun : ''} */}
                 </div>
                 <div id='dashboard'>
                     <UploadFileModal show={this.state.showUploadModal} onHide={() => this.setState({ showUploadModal: false })} />

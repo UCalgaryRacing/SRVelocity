@@ -13,31 +13,31 @@ export default class SensorData {
         .then(res => { return res; })
         .catch(err => { console.log(err) });
 
-    constructor() { }
+  constructor() { }
 
-    getCategories = async (category) => {
-        var sensors = await SensorData.sensors;
-        var lookup = {};
-        var result = [];
-        for (var sensor, i = 0; sensor = sensors[i++];) {
-            var category = sensor.category;
-            if (!(category in lookup)) {
-                lookup[category] = category;
-                result.push(category);
-            }
-        }
-        return result;
+  getCategories = async (category) => {
+    var sensors = await SensorData.sensors;
+    var lookup = {};
+    var result = [];
+    for (var sensor, i = 0; (sensor = sensors[i++]);) {
+      var category = sensor.category;
+      if (!(category in lookup)) {
+        lookup[category] = category;
+        result.push(category);
+      }
     }
+    return result;
+  };
 
-    getSensors = async () => {
-        var sensors = await SensorData.sensors;
-        return sensors;
-    }
+  getSensors = async () => {
+    var sensors = await SensorData.sensors;
+    return sensors;
+  };
 
-    static getInstance() {
-        if (SensorData.instance == null) SensorData.instance = new SensorData();
-        return this.instance;
-    }
+  static getInstance() {
+    if (SensorData.instance == null) SensorData.instance = new SensorData();
+    return this.instance;
+  }
 }
 
 SensorData.getInstance().getCategories();

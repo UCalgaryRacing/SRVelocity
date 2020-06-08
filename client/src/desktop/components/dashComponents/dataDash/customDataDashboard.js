@@ -23,7 +23,7 @@ export default class CustomDataDash extends React.Component {
         return (
             <div id='customDash' >
                 {this.state.showChoice ? 
-                    <CustomChoice enter={this.enter} type={'data'}/>:
+                    <CustomChoice closeBottomNav={this.props.closeBottomNav} openBottomNav={this.props.openBottomNav} enter={this.enter} type={'data'}/>:
                     <DataDashboard categories={this.state.selectedCategories}/>}
             </div>
         );

@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { ColorRGBA, IndividualPointFill, PointShape, lightningChart, emptyTick, AxisScrollStrategies, SolidFill, ColorHEX, AutoCursorModes, SolidLine, FontSettings } from '@arction/lcjs';
 
+
 const theme = {
     whiteFill: new SolidFill({ color: ColorHEX('#FFFFFF') }),
     lightGrayFill: new SolidFill({ color: ColorHEX('#A0A0A0A0') }),
@@ -45,11 +46,19 @@ export default class ScatterPlot extends Component {
             .setScrollStrategy(AxisScrollStrategies.fitting)
             .setTickStyle(emptyTick)
             .setMouseInteractions(false)
+            .setStrokeStyle(new SolidLine({
+                thickness: 3,
+                fillStyle: new SolidFill({ color: ColorHEX('#C8C8C8') })
+            }));
         this.chart.getDefaultAxisY()
             .setScrollStrategy(AxisScrollStrategies.fitting)
             .setMouseInteractions(false)
             .setTickStyle(emptyTick)
-        //Set up cursor
+            .setStrokeStyle(new SolidLine({
+                thickness: 3,
+                fillStyle: new SolidFill({ color: ColorHEX('#C8C8C8') })
+            }));
+        // TODO: Need to show cursor with current value the heatmap
         let autoCursor = this.chart.getAutoCursor();
         autoCursor.setGridStrokeXStyle(new SolidLine({
             thickness: 1,
@@ -68,8 +77,11 @@ export default class ScatterPlot extends Component {
         autoCursor.getResultTable().setFont(font);
         autoCursor.getResultTable().setTextFillStyle(new SolidFill({ color: ColorHEX('#FFF') }));
         autoCursor.getResultTable().getBackground().setFillStyle(new SolidFill({ color: ColorHEX('#C22D2D') }));
+        this.pointSeries.setCursorEnabled(false);
         //Don't allow scrolling
         this.chart.engine.container.onwheel = null;
+        this.chart.engine.container.ontouchstart = null;
+        this.chart.engine.container.ontouchmove = null;
         this.setupComplete = true;
     }
 
@@ -109,8 +121,8 @@ export default class ScatterPlot extends Component {
 
     render() {
         return (
-            <div style={{ marginBottom: '20px' }}>
-                <div id={this.chartId} className='fill' style={{ height: '500px' }} onWheel={(event) => { return true; }}></div>
+            <div id='scatter' style={{ marginBottom: '20px' }}>
+                <div id={this.chartId} className='fill' onWheel={(event) => { return true; }}></div>
             </div>
         );
     }

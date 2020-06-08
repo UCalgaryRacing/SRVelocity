@@ -1,10 +1,10 @@
 import React from 'react';
-import TopNav from '../components/navigationComponents/topNav';
 import ManageSideNav from '../components/navigationComponents/manageSideNav';
 import ManageContent from '../components/manageComponents/manageContent';
+import WithAuth from './withAuth';
 import '../styling/streaming.css'
 
-export default class HistoricalPage extends React.Component {
+class ManagePage extends React.Component {
     constructor(props) {
         super(props);
         this.manageContent = React.createRef();
@@ -13,10 +13,11 @@ export default class HistoricalPage extends React.Component {
     render = () => {
         return (
             <div id='streamingPage' style={{marginTop: '80px'}}>
-                <TopNav />
                 <ManageSideNav manageContent={this.manageContent} />
                 <ManageContent ref={this.manageContent}/>
             </div>
         );
     }
 }
+
+export default WithAuth(ManagePage);

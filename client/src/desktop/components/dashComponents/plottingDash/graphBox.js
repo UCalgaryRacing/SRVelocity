@@ -5,7 +5,8 @@ import { Button } from 'react-bootstrap';
 import { Slider } from '@material-ui/core';
 import { withStyles } from '@material-ui/core/styles';
 import Data from '../../../../data';
-import '../../../styling/graphBox.css';
+import './graphBox.css';
+import savitzkyGolay from 'ml-savitzky-golay';
 
 const RangeSlider = withStyles({
     root: {
@@ -32,9 +33,11 @@ export default class GraphBox extends React.Component {
             updatingRange: false,
             updatingTitles: false,
             updatingGrid: false,
-            sensors: this.props.sensors
+            sensors: this.props.sensors,
+            window: 5, // Default window size for smoothing
         }
-        this.derivativeIndices = [];
+        this.dxdtParentIndices = [];
+        this.index = 0;
     }
 
     componentWillMount() {
@@ -59,51 +62,64 @@ export default class GraphBox extends React.Component {
                     if (newDatasets[0] === undefined) return;
                     newColour = this.updateColours(newDatasets[0]);
                 }
-                for (var i in this.derivativeIndices) {
-                    if (this.state.data === undefined) break;
-                    let dx = newDatasets[i] - this.state.data[i];
-                    let dt = 1; //10 Hz
-                    newDatasets.push(dx / dt);
-                }
+                this.updateDerivative();
                 this.setState({ data: newDatasets, indicationColour: newColour, updatingRange: false, updatingTitles: false });
             }
+            this.index++;
         });
+    }
+
+    smoothenData = (data, h, dx) => {
+        let options = {
+            derivative: dx ? 1 : 0,
+            windowSize: this.state.window,
+            polynomial: 2,
+            pad: 'pre',
+            padValue: 'replicate'
+        };
+        return savitzkyGolay(data, h, options);
+    }
+
+    createDerivative = (parentIndex, sensor) => {
+        this.dxdtParentIndices.push(parentIndex);
+        Data.getInstance().getAllData(sensor).then(data => {
+            data = this.smoothenData(data, 1, false);
+            let dx = this.smoothenData(data, 0.1, true);
+            this.chart.current.addDerivativeSeries(dx, sensor + "'");
+            this.state.sensors.push({
+                derivative: true,
+                name: sensor + "'",
+                parent: sensor,
+                output_unit: this.props.sensors[0].output_unit.trim() !== "" ? this.props.sensors[0].output_unit + "/sec" : this.props.sensors[0].output_unit
+            });
+            this.setState({ updatingTitles: true });
+        });
+    }
+
+    removeDerivative = (parentIndex, sensor) => {
+        const index = this.dxdtParentIndices.indexOf(parentIndex);
+        this.dxdtParentIndices.splice(index, 1);
+        let name = this.props.sensors[parentIndex].name + "'";
+        this.chart.current.removeSeries(name, parentIndex);
+        this.state.sensors = this.state.sensors.filter(element => element.name !== sensor + "'");
+        this.setState({ updatingTitles: true });
     }
 
     controlDerivative = (sensor) => {
         const parentIndex = this.props.sensors.findIndex(item => item.name === sensor);
-        if (this.derivativeIndices.includes(parentIndex)) {
-            //This derivative is in trouble
-            const index = this.derivativeIndices.indexOf(parentIndex);
-            this.derivativeIndices.splice(index, 1);
-            //Remove from graph
-            var seriesIndex = -1;
-            this.state.sensors.find((item, i) => {
-                if (item.parent === sensor) seriesIndex = i;
-            });
-            this.chart.current.removeSeries(seriesIndex, parentIndex);
-            //Remove the sensor
-            this.state.sensors = this.state.sensors.filter(element => element.name !== sensor + "'");
-            //Update titles
-            this.setState({ updatingTitles: true });
-        } else {
-            this.derivativeIndices.push(parentIndex);
-            Data.getInstance().getAllData(sensor).then(data => {
-                var derivative = [];
-                for (let i = 0; i < data.length; i++) {
-                    if (i === 0) continue;
-                    let dx = data[i] - data[i - 1];
-                    let dt = 1; //10 Hz
-                    derivative.push(dx / dt);
-                }
-                this.chart.current.addLineSeries(derivative, sensor);
-                this.state.sensors.push({
-                    derivative: true,
-                    name: sensor + "'",
-                    parent: sensor,
-                    output_unit: this.props.sensors[0].output_unit + "/sec"
-                });
-                this.setState({ updatingTitles: true });
+        if (this.dxdtParentIndices.includes(parentIndex)) this.removeDerivative(parentIndex, sensor);
+        else this.createDerivative(parentIndex, sensor);
+    }
+
+    updateDerivative = async () => {
+        for (var i in this.dxdtParentIndices) {
+            const sensor = this.props.sensors[this.dxdtParentIndices[i]].name;
+            await Data.getInstance().getAllData(sensor).then(data => {
+                data = this.smoothenData(data, 1, false);
+                let dx = this.smoothenData(data, 0.1, true);
+                const name = this.props.sensors[this.dxdtParentIndices[i]].name + "'";
+                if (this.chart.current !== null)
+                    this.chart.current.addDerivativeSeries(dx, name);
             });
         }
     }
@@ -135,7 +151,23 @@ export default class GraphBox extends React.Component {
             this.setState({
                 currentRange: value, updatingRange: true
             },
-                this.chart.current.changeInterval(value[0] * 60 * 10, value[1] * 60 * 10));
+                this.chart.current.changeInterval(value[0] * 60 * 10, value[1] * 60 * 10)
+            );
+        }
+    }
+
+    handleWindowChange = async (event, value) => {
+        if (value !== this.state.window && value < this.index / 4) {
+            for (var i in this.dxdtParentIndices) {
+                const sensor = this.props.sensors[this.dxdtParentIndices[i]].name;
+                await Data.getInstance().getAllData(sensor).then(data => {
+                    data = this.smoothenData(data, 1, false);
+                    let dx = this.smoothenData(data, 0.1, true);
+                    const name = this.props.sensors[this.dxdtParentIndices[i]].name + "'";
+                    this.chart.current.addDerivativeSeries(dx, name);
+                });
+            }
+            this.setState({ window: value[0] });
         }
     }
 
@@ -150,16 +182,24 @@ export default class GraphBox extends React.Component {
     render = () => {
         if (this.state.sensors[0].category === 'Track Map') {
             return (
-                <div id='graphBox' style={{ marginRight: '19px', marginLeft: '0px' }}>
-                    <p id='graphTitle'><b style={{ fontSize: '1.8rem' }}>{'Track Map'}</b></p>
-                    <HeatMap currentPoint={this.state.data} />
+                <div id='graphBox'>
+                    <p id='graphTitle'><b>{'Track Map'}</b></p>
+                    <HeatMap currentPoint={this.state.data} delete={this.props.delete} index={this.props.id} />
+                    {
+                        !this.props.hideClose ?
+                            <Button id='deleteGraph' onClick={() => this.props.delete(this.props.id)} style={{ position: 'absolute' }}>
+                                <img id="logoImg" width="40px" style={{ marginTop: '2px' }} src={require('../../../../assets/delete-x.svg')} />
+                            </Button>
+                            :
+                            null
+                    }
                 </div>
             );
         }
         else {
             return (
-                <div id='graphBox' style={{ borderColor: this.state.indicationColour, marginRight: '19px', marginLeft: '0px' }}>
-                    <p id='graphTitle'><b style={{ color: this.state.indicationColour, fontSize: '1.8rem' }}>{this.props.sensors[0].category}</b></p>
+                <div id='graphBox' style={{ borderColor: this.state.indicationColour }}>
+                    <p id='graphTitle' style={{ height: '30px' }}><div style={{ paddingTop: '3.5px', paddingBottom: '3.5px' }}><b style={{ color: this.state.indicationColour }}>{this.props.sensors[0].category}</b></div></p>
                     <div style={{ marginBottom: '10px' }}>
                         <LineChart
                             id={this.props.id}
@@ -172,14 +212,13 @@ export default class GraphBox extends React.Component {
                             ref={this.chart}
                         />
                     </div>
-                    <div style={{ width: '50%', margin: 'auto' }}>
-                        <Button id='toggleAxis' onClick={this.toggleRightAxis} style={{ position: 'absolute', right: '95px', bottom: '60px' }}>
-                            <img id="logoImg" src={require('../../../../assets/rightAxis.svg')} />
+                    <div id='graphBottom' style={{ width: '50%', margin: 'auto' }}>
+                        <Button id='toggleAxis' onClick={this.toggleRightAxis} style={{ position: 'absolute' }}>
+                            <img id="logoImg" style={{ width: '15px', height: '20px', marginBottom: '2px' }} src={require('../../../../assets/rightAxis.svg')} />
                         </Button>
-                        <Button id='toggleAxis' onClick={this.toggleGrid} style={{ position: 'absolute', right: '45px', bottom: '60px' }}>
-                            <img id="logoImg" src={require('../../../../assets/grid.svg')} />
+                        <Button id='toggleGrid' onClick={this.toggleGrid} style={{ position: 'absolute' }}>
+                            <img id="logoImg" style={{ width: '15px', height: '20px', marginBottom: '2px'}} src={require('../../../../assets/grid.svg')} />
                         </Button>
-                        <p style={{ textAlign: 'center', marginBottom: '30px' }}><b>Data Range (minutes)</b></p>
                         <RangeSlider
                             defaultValue={[0, 0.5]}
                             onChangeCommitted={this.handleRangeChange}
@@ -193,6 +232,26 @@ export default class GraphBox extends React.Component {
                                 return x.toFixed(1);
                             }}
                         />
+                        <p style={{ textAlign: 'center', marginBottom: '20px', zIndex: '1000' }}><b>Data Range (minutes)</b></p>
+                        <div style={{ display: this.dxdtParentIndices.length > 0 ? '' : 'none' }}>
+                            <RangeSlider
+                                defaultValue={[5]}
+                                onChange={this.handleWindowChange}
+                                marks={false}
+                                aria-labelledby="discrete-slider"
+                                valueLabelDisplay='on'
+                                step={2}
+                                min={5}
+                                max={255}
+                                valueLabelFormat={(x) => {
+                                    return x.toFixed(1);
+                                }}
+                            />
+                            <p style={{ textAlign: 'center', marginBottom: '25px' }}><b>Smoothing Factor</b></p>
+                        </div>
+                        <Button id='deleteGraph' onClick={() => this.props.delete(this.props.id)} style={{ position: 'absolute' }}>
+                            <img id="logoImg" width="40px" style={{ marginTop: '2px' }} src={require('../../../../assets/delete-x.svg')} />
+                        </Button>
                     </div>
                 </div>
             );

@@ -1,6 +1,8 @@
 import React from 'react';
 import { Form, Button } from "react-bootstrap";
 import SensorData from "../../../constants";
+import { isMobile } from 'react-device-detect';
+import './customChoice.css';
 
 export default class CustomChoice extends React.Component {
     constructor(props) {
@@ -11,18 +13,26 @@ export default class CustomChoice extends React.Component {
         }
         this.switches = [];
         this.indices = [];
-        this.MAX_GRAPHS = 10;
+        this.MAX_GRAPHS = isMobile ? 4 : 10;
     }
 
     componentWillMount = () => {
         SensorData.getInstance().getCategories().then(categories => {
             var i = 1;
             for (const category of categories) {
-                this.switches.push(<Form.Check name={category[i]} label={category} id={i} key={i} onChange={this.selectData} />);
+                this.switches.push(<Form.Check style={{width: '300px'}} name={category[i]} label={category} id={i} key={i} onChange={this.selectData} />);
                 i++;
             }
             this.setState({categories: categories});
         })
+    }
+
+    componentDidMount = () => {
+        this.props.closeBottomNav();
+    }
+
+    componentWillUnmount = () => {
+        this.props.openBottomNav();
     }
 
     selectData = (event) => {
@@ -41,20 +51,22 @@ export default class CustomChoice extends React.Component {
             let selectedGraphs = [];
             for (const i of this.indices) selectedGraphs.push(this.state.categories[i - 1]); 
             this.props.enter(selectedGraphs);
+            this.props.openBottomNav();
         } else {
             let selectedData = [];
             for (const i of this.indices) selectedData.push(this.state.categories[i - 1]); 
             this.props.enter(selectedData);
+            this.props.openBottomNav();
         }
     }
 
     render = () => {
         return (
-            <div id='graphChoice' style={{marginLeft: '20px'}}>
+            <div id='customChoice' style={{margin: 'auto', marginTop: '40px'}}>
                 {this.state.overMax ?
-                    <p>Please select only {this.MAX_GRAPHS} graphs. ({this.indices.length} currently chosen)</p> : null}
+                    <p style={{marginLeft: '10px'}}>Please select only {this.MAX_GRAPHS} graphs. ({this.indices.length} currently chosen)</p> : null}
                 <Form>{this.switches}</Form>
-                <Button onClick={this.submit} style={{ fontWeight: "600", backgroundColor: "#C22D2D", borderColor: "#C22D2D", width: "366px", marginLeft: "-20px", marginTop: "15px" }}>Submit</Button>
+                <Button id='submitButton' onClick={this.submit} style={{ fontWeight: "600", backgroundColor: "#C22D2D", borderColor: "#C22D2D", marginTop: "15px", marginLeft: '10px'}}>Submit</Button>
             </div>
         );
     }

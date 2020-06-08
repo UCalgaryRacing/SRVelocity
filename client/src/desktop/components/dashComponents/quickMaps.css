@@ -1,0 +1,26 @@
+#quickMap {
+    display: none;
+}
+
+#quickMap #graphBox #scatter .fill {
+    height: 240px !important;
+    width: 240px !important;
+    margin: auto;
+}
+
+#quickMap #graphBox #scatter canvas {
+    height: 240px !important;
+    width: 240px !important;
+}
+
+@media screen and (orientation:landscape) {
+    #quickMap {
+        display: none !important;
+    }
+}
+
+@media screen and (max-width: 1000) {
+    #quickMap {
+        display: none !important;
+    }
+}

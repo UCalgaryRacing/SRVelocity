@@ -32,12 +32,12 @@ export default class DataDashboard extends React.Component {
                 if (this.dataBoxes[i + 1]) {
                     this.container.push(
                         <Row>
-                            <Col>{this.dataBoxes[i]}</Col>
-                            <Col>{this.dataBoxes[i + 1]}</Col>
+                            <Col style={{padding: '5px'}}>{this.dataBoxes[i]}</Col>
+                            <Col style={{padding: '5px'}}>{this.dataBoxes[i + 1]}</Col>
                         </Row>
                     );
                 }
-                else this.container.push(<Row><Col>{this.dataBoxes[i]}</Col></Row>);
+                else this.container.push(<Row><Col style={{padding: '5px'}}>{this.dataBoxes[i]}</Col></Row>);
             }
             this.forceUpdate();
         })
@@ -45,7 +45,7 @@ export default class DataDashboard extends React.Component {
 
     render = () => {
         return (
-            <div style={{ marginTop: '20px', marginRight: '15px', textAlign: 'center', color: '#FFF', fontWeight: '700' }}>
+            <div style={{ marginTop: '40px', marginRight: '20px', marginLeft: '20px', textAlign: 'center', color: '#FFF', fontWeight: '700' }}>
                 {this.container}
             </div>
         );

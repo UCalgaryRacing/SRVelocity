@@ -5,26 +5,28 @@ import GraphingDashboard from './plottingDash/graphingDashboard';
 import DataDashboard from './dataDash/dataDashboard';
 import CustomPlottingDash from './plottingDash/customPlottingDashboard';
 import CustomDataDash from './dataDash/customDataDashboard';
-import GraphBox from './plottingDash/graphBox';
-import RadialChart from './graphComponents/radialChart';
+import QuickMaps from './quickMaps';
 import Data from '../../../data';
 import SensorData from '../../../constants';
+import { isMobile } from 'react-device-detect';
 import '../../styling/dashboard.css';
 
 export default class StreamingDash extends React.Component {
     constructor(props) {
         super(props);
+        this.graphDash = React.createRef();
         this.state = {
             dashOption: 'default',
             typeOption: 'plotting',
             showTrackMap: false,
             showAccelMap: false,
-            selectionComplete: true
+            selectionComplete: true,
+            showBottomNav: true
         }
     }
 
     changeDash = () => {
-        this.setState({ 
+        this.setState({
             dashOption: (this.state.dashOption === 'default') ? 'custom' : 'default',
             selectionComplete: (this.state.dashOption === 'default') ? false : true
         });
@@ -34,53 +36,73 @@ export default class StreamingDash extends React.Component {
         this.setState({ typeOption: (this.state.typeOption === 'plotting') ? 'currentData' : 'plotting' });
     }
 
-    toggleTrackMap = () => {
-        if (!this.state.showTrackMap) { this.setState({ showAccelMap: false }); }
-        this.setState({ showTrackMap: (this.state.showTrackMap) ? false : true });
-    }
-
-    toggleAccelMap = () => {
-        if (!this.state.showAccelMap) { this.setState({ showTrackMap: false }); }
-        this.setState({ showAccelMap: (this.state.showAccelMap) ? false : true });
-    }
-
     doTestRun = () => {
-        Data.getInstance().doTestRun()
+        this.props.refreshPage();
+        Data.getInstance().doTestRun();
     }
 
     updateSelectionComplete = () => {
-        this.setState({selectionComplete: !this.state.selectionComplete})
+        this.setState({ selectionComplete: !this.state.selectionComplete });
     }
 
+    addGraph = () => {
+        this.graphDash.current.showAddModal();
+    }
+
+    closeBottomNav = () => {
+        this.setState({ showBottomNav: false });
+    }
+
+    openBottomNav = () => {
+        this.setState({ showBottomNav: true });
+    }
+
+
     render = () => {
-        let defaultDash = ['Track Map', 'Engine Temp', 'Oil Pressure', 'Oil Temp', 'Air To Fuel', 'Fuel Temp', 'Acceleration', 'Axes']
         let dashSelector = (
-            <ButtonGroup id='dashSelector'>
+            <ButtonGroup id='dashSelector' style={{ marginLeft: '10px' }}>
                 <Button id='defaultButton' onClick={this.changeDash} disabled={(this.state.dashOption === 'default') ? true : false}><b>Default</b></Button>
                 <Button id='customButton' onClick={this.changeDash} disabled={(this.state.dashOption === 'custom') ? true : false}><b>Custom</b></Button>
             </ButtonGroup >
         );
         let typeSelector = (
-            <ButtonGroup id='dashSelector'>
+            <ButtonGroup id='typeSelector'>
                 <Button id='defaultButton' onClick={this.changeType} disabled={(this.state.typeOption === 'plotting') ? true : false}><b>Plotting</b></Button>
-                <Button id='customButton' onClick={this.changeType} disabled={(this.state.typeOption === 'currentData') ? true : false}><b>Current Data</b></Button>
+                <Button id='customButton' onClick={this.changeType} disabled={(this.state.typeOption === 'currentData') ? true : false}><b>Current</b></Button>
             </ButtonGroup >
         );
-        let testRun = (<Button id='accelMapButton' onClick={this.doTestRun} style={{ position: 'absolute', right: '20px' }}><b>Do a Test Run</b></Button>);
-        let trackMap = (<div id='trackMap'><GraphBox sensors={[{ category: 'Track Map' }]} id={10000} key={10000} /></div>);
-        let accelMap = (<div id='accelMap'><RadialChart showLabels={false} /></div>);
+        let addGraph = (<Button id='addGraph' onClick={this.addGraph} style={{ position: 'absolute', textAlign: 'center' }}><b>Add Graph</b></Button>)
+        let testRun = (<Button id='testButton' onClick={this.doTestRun} style={{ position: 'absolute', right: '10px' }}><b>Do a Test Run</b></Button>);
+        let defaultDash = ['Track Map', 'Engine Temp', 'Oil Pressure', 'Oil Temp', 'Air To Fuel', 'Fuel Temp', 'Acceleration', 'Axes']
+        if(isMobile) defaultDash = ['Track Map', 'Engine Temp', 'Oil Pressure', 'Acceleration']
         return (
             <div id='dashboard'>
-                {dashSelector}&nbsp;&nbsp;
-                {typeSelector}&nbsp;&nbsp;
-                {this.state.selectionComplete ? <Button id='trackMapButton' onClick={this.toggleTrackMap}><b>{(this.state.showTrackMap) ? 'Hide Track Map' : 'Show Track Map'}</b></Button> : null}
-                {this.state.selectionComplete ? <Button id='accelMapButton' onClick={this.toggleAccelMap} style={{ marginLeft: '8px' }}><b>{(this.state.showAccelMap) ? 'Hide Accel Map' : 'Show Accel Map'}</b></Button> : null}
-                {this.state.selectionComplete ? testRun : ''}
-                {(this.state.dashOption === 'default') ?
-                    ((this.state.typeOption === 'plotting') ? <GraphingDashboard plots={defaultDash} /> : <DataDashboard categories={SensorData.getInstance().getCategories()} />) :
-                    ((this.state.typeOption === 'plotting') ? <CustomPlottingDash updateSelectionComplete={this.updateSelectionComplete}/> : <CustomDataDash updateSelectionComplete={this.updateSelectionComplete}/>)}
-                {this.state.showTrackMap ? trackMap : ''}
-                {this.state.showAccelMap ? accelMap : ''}
+                <div id='top' style={{
+                    position: 'fixed',
+                    top: '56px',
+                    right: '0',
+                    left: '0',
+                    zIndex: '999',
+                    height: this.state.typeOption === 'plotting' && this.state.showBottomNav && window.innerWidth < 1000 ? '102px' : '56px',
+                    paddingLeft: this.props.marginLeft,
+                    paddingTop: '10px',
+                    background: '#F5F5F5',
+                    borderColor: '#C22D2D',
+                    borderWidth: '0',
+                    borderBottomWidth: '1px',
+                    borderStyle: 'solid'
+                }}>
+                    {dashSelector}&nbsp;&nbsp;
+                    {typeSelector}&nbsp;&nbsp;
+                    {this.state.selectionComplete && this.state.typeOption === 'plotting' ? addGraph : ''}
+                    {this.state.selectionComplete && this.state.typeOption === 'plotting' ? testRun : ''}
+                </div>
+                <div id='plots' style={{ paddingTop: '35px' }}>
+                    {(this.state.dashOption === 'default') ?
+                        ((this.state.typeOption === 'plotting') ? <GraphingDashboard plots={defaultDash} ref={this.graphDash} /> : <DataDashboard categories={SensorData.getInstance().getCategories()} />) :
+                        ((this.state.typeOption === 'plotting') ? <CustomPlottingDash closeBottomNav={this.closeBottomNav} openBottomNav={this.openBottomNav} updateSelectionComplete={this.updateSelectionComplete} ref={this.graphDash} /> : <CustomDataDash closeBottomNav={this.closeBottomNav} openBottomNav={this.openBottomNav} updateSelectionComplete={this.updateSelectionComplete} />)}
+                </div>
+                {this.state.showBottomNav ? <QuickMaps marginLeft={this.props.marginLeft} /> : null}
             </div>
         );
     }

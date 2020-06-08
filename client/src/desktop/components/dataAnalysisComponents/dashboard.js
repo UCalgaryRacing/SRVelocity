@@ -12,11 +12,7 @@ export default class DataAnalysisDash extends React.Component {
                     Data Analysis Dashboard
                 </p>
                 <p style={{textAlign: 'center', marginTop: '100px', fontSize: '20px'}}>
-                    In Progress
-                </p>
-                <p style={{textAlign: 'center', marginTop: '100px', fontSize: '20px', margin: '40px'}}>
-                    This dashboard will include real-time data analysis. Currently looking into machine learning applications that may be useful. 
-                    Could also compare streaming data with historicals. Also looking into lap time predictions based on pace. 
+                    Under construction
                 </p>
             </div>
         )

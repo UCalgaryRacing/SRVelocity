@@ -43,7 +43,8 @@ export default class Data {
             this.datasets['Track Map'] = [{}];
         });
         //Connection to server for data receiving
-        const socket = socketIOClient('http://127.0.0.1:4000'); //CHANGE WHEN DEPLOYING!
+        const { DATASTREAMINGIP } = require('./dataServerEnv')
+        const socket = socketIOClient(DATASTREAMINGIP); //CHANGE WHEN DEPLOYING!
         socket.on('new data', (data) => {
             this.updateData(data)
         });

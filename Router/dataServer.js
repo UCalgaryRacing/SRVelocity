@@ -2,6 +2,7 @@ const express = require("express");
 const dataServer = express.Router();
 const DATASERVERIP = 'http://localhost:4500'
 const fetch = require('node-fetch')
+//const request = require('request')
 
 dataServer.get("/getFiles", (req, res) => {
     fetch(DATASERVERIP + '/fileServer/getFiles', {
@@ -16,6 +17,7 @@ dataServer.get("/getFiles", (req, res) => {
                     res.sendStatus(500) })
 });
 
+//Download file
 dataServer.get("/getFile/:filename", (req, res) => {
     fetch(DATASERVERIP + '/fileServer/getFile/' + req.params.filename, {
         method: 'GET'
@@ -65,4 +67,20 @@ dataServer.get("/deleteFile/:filename", (req, res) => {
     })
 })
 
+//Download file
+dataServer.post("/uploadFile", (req, res) => {
+    // fs.readFile(req.files.file.path, (err, data) => {
+    //     console.log(data)
+    // })
+    //req.pipe(DATASERVERIP + '/fileServer/uploadFile')
+
+    console.log(req.body)
+    // fetch(DATASERVERIP + '/fileServer/getFile/' + req.params.filename, {
+    //     method: 'GET'
+    // })
+    // .then(response => response.body)
+    // .then(response => response.pipe(res))
+    // .catch(err => { console.log(err);
+    //                 res.sendStatus(500) })
+})
 module.exports = dataServer;

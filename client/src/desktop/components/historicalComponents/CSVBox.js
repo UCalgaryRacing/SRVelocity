@@ -10,6 +10,8 @@ export default class CSVBox extends React.Component {
         super(props);
         this.state = {
             filename: this.props.filename,
+            driver: this.props.driver,
+            car: this.props.car,
             showRenameModal: false
         }
     }

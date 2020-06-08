@@ -5,6 +5,7 @@ import '../../../styling/CSVBox.css'
 import download from 'downloadjs'
 import RenameFileModal from './renameFileModal'
 import Quill from './quill';
+import Comment from './comment';
 
 export default class CSVBox extends React.Component {
     constructor(props) {
@@ -16,7 +17,7 @@ export default class CSVBox extends React.Component {
             date: this.props.date,
             showRenameModal: false,
             showComments: false,
-            showQuill: false
+            comments: []
         }
     }
 
@@ -77,7 +78,16 @@ export default class CSVBox extends React.Component {
     }
 
     pushComment = (content) => {
-        console.log(content)
+        this.state.comments.push(
+            <Comment
+                content={content}
+                date={'hello'}
+                poster={'Justin'}
+                ID={1}
+                key={this.state.comments.length + 1}
+            />
+        );
+        this.setState({ comments: this.state.comments })
     }
 
     fetchComments = () => {
@@ -89,7 +99,7 @@ export default class CSVBox extends React.Component {
     }
 
     toggleQuill = () => {
-        this.setState({showQuill: !this.state.showQuill})
+        this.setState({ showQuill: !this.state.showQuill })
     }
 
     render = () => {
@@ -120,15 +130,13 @@ export default class CSVBox extends React.Component {
                     <img id="logoImg" width="20px" style={{ marginTop: '-10px', marginLeft: '-10px', position: 'absolute' }} src={require('../../../../assets/comment.svg')} />
                 </Button>
                 <div id='comments' style={{ display: this.state.showComments ? '' : 'none', marginTop: '184px', paddingTop: '10px', borderTop: '1px solid', width: '100%', minHeight: 'calc(100% + 46px)' }}>
-                    <div style={{ height: '36px', lineHeight: '36px', fontSize: '20px' }} onClick={this.downloadFile}>
+                    <div style={{ height: '36px', lineHeight: '36px', fontSize: '20px' }}>
                         Comments
                     </div>
-                    <Button id='historicalButton' onClick={this.toggleQuill} style={{ position: 'absolute', right: '20px', marginTop: '-36px' }}>
-                        <img id="logoImg" width="20px" style={{ marginTop: '-10px', marginLeft: '-10px', position: 'absolute' }} src={require('../../../../assets/plus.svg')} />
-                    </Button>
-                    <div style={{display: this.state.showQuill ? '' : 'none'}}>
-                        <Quill pushComment={this.pushComment}/>
+                    <div >
+                        {this.state.comments.length > 0 ? this.state.comments : (<div style={{color: '#B0B0B0'}}>Nothing Yet!</div>)}
                     </div>
+                    <Quill pushComment={this.pushComment} />
                 </div>
                 <RenameFileModal showRenameModal={this.state.showRenameModal} onHide={() => this.setState({ showRenameModal: false })} renameFile={this.renameFile} />
             </div>

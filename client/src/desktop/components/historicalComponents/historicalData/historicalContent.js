@@ -16,6 +16,7 @@ export default class HistoricalContent extends React.Component {
             CSVFiles: [],
             showUploadModal: false
         }
+        this.comments = [];
     }
 
     componentDidMount = () => {

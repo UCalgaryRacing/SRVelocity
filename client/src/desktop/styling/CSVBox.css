@@ -6,3 +6,10 @@
     margin-bottom: 30px;
     min-height: 200px;
 }
+
+#CSVBox #historicalButton {
+    height: 36px;
+    width: 36px;
+    background-color: #C22E2D;
+    border: 0px solid;
+}

@@ -214,10 +214,10 @@ export default class GraphBox extends React.Component {
                     </div>
                     <div id='graphBottom' style={{ width: '50%', margin: 'auto' }}>
                         <Button id='toggleAxis' onClick={this.toggleRightAxis} style={{ position: 'absolute' }}>
-                            <img id="logoImg" style={{ width: '15px', height: '20px', marginBottom: '2px' }} src={require('../../../../assets/rightAxis.svg')} />
+                            <img id="logoImg" style={{ width: '26px', marginTop: '-11px', marginLeft: '-12px', position: 'absolute'}} src={require('../../../../assets/rightAxis.svg')} />
                         </Button>
                         <Button id='toggleGrid' onClick={this.toggleGrid} style={{ position: 'absolute' }}>
-                            <img id="logoImg" style={{ width: '15px', height: '20px', marginBottom: '2px'}} src={require('../../../../assets/grid.svg')} />
+                            <img id="logoImg" style={{ width: '23px', marginTop: '-11.5px', marginLeft: '-12.5px', position: 'absolute'}} src={require('../../../../assets/grid.svg')} />
                         </Button>
                         <RangeSlider
                             defaultValue={[0, 0.5]}

@@ -1,8 +1,10 @@
 import React from 'react';
-import { GATEWAYSERVERIP } from '../../../../dataServerEnv'
-import CSVBox from './CSVBox'
-import { Button } from 'react-bootstrap'
-import UploadFileModal from './uploadFileModal'
+import { GATEWAYSERVERIP } from '../../../../dataServerEnv';
+import CSVBox from './CSVBox';
+import { Button, Form } from 'react-bootstrap';
+import UploadFileModal from './uploadFileModal';
+import BottomNav from '../../navigationComponents/bottomNav';
+import './historicalContent.css';
 
 export default class HistoricalContent extends React.Component {
     constructor(props) {
@@ -70,7 +72,7 @@ export default class HistoricalContent extends React.Component {
             <Button style={{ width: '150px', height: '36px', background: '#C22E2D', borderColor: '#C22E2D' }} onClick={this.changeType} disabled={(this.state.typeOption === 'plotting') ? true : false}><b>Sort Data</b></Button>
         );
         return (
-            <div id='streamingPage' style={{ marginTop: '15px', transition: 'all 0.15s', marginLeft: this.state.marginLeft }}>
+            <div id='historicalPage' style={{ marginTop: '15px', transition: 'all 0.15s', marginLeft: this.state.marginLeft }}>
                 <div id='top' style={{
                     position: 'fixed',
                     top: '56px',
@@ -88,6 +90,15 @@ export default class HistoricalContent extends React.Component {
                 }}>
                     {dashSelector}&nbsp;&nbsp;
                     {typeSelector}&nbsp;&nbsp;
+                    <Form className="emailForm" style={{position: 'absolute', top: '10px', right: '10px'}}>
+                        <Form.Control style={{width: '150px', height: '36px'}}
+                            className="emailFormControl"
+                            ref={this.emailForm}
+                            autoComplete="on"
+                            placeHolder="Search"
+                            required
+                        />
+                    </Form>
                     {/* {this.state.selectionComplete && this.state.typeOption === 'plotting' ? addGraph : ''}
                     {this.state.selectionComplete && this.state.typeOption === 'plotting' ? testRun : ''} */}
                 </div>
@@ -95,6 +106,7 @@ export default class HistoricalContent extends React.Component {
                     <UploadFileModal show={this.state.showUploadModal} onHide={() => this.setState({ showUploadModal: false })} />
                     {this.state.CSVFiles}
                 </div>
+                <BottomNav/>
             </div>
         );
     }

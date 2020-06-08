@@ -1,9 +1,7 @@
 import React from "react";
-import TopNav from "../components/navigationComponents/topNav";
 import BottomNav from "../components/navigationComponents/bottomNav";
 import { Jumbotron, Row, Col, FormGroup, Form, Button } from "react-bootstrap";
 import { withRouter } from "react-router-dom";
-import Cookies from "js-cookie";
 import "../styling/signin.css";
 
 class SignInPage extends React.Component {
@@ -48,7 +46,6 @@ class SignInPage extends React.Component {
 	render = () => {
 		return (
 			<div id="signIn">
-				<TopNav />
 				<Jumbotron>
 					<Row id="row1">
 						<Col>

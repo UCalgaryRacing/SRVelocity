@@ -2,7 +2,6 @@ import React from "react";
 import ReactDOM from "react-dom";
 import { Switch, BrowserRouter as Router, Route } from "react-router-dom";
 import ReactGA from 'react-ga';
-import { isMobile } from "react-device-detect";
 import "./desktop/styling/index.css";
 
 //Import desktop pages
@@ -15,6 +14,7 @@ import ManagePage from "./desktop/pages/manage";
 import LicensesPage from "./desktop/pages/licenses";
 import ErrorPage from "./desktop/pages/error";
 import SignUpPage from "./desktop/pages/signup";
+import TopNav from './desktop/components/navigationComponents/topNav';
 
 import SensorData from "./constants";
 
@@ -30,6 +30,7 @@ class App extends React.Component {
 	render = () => {
 		return (
 			<Router>
+				<TopNav/>
 				<Switch>
 					<Route exact path="/" component={() => <HomePage />} />
 					<Route exact path="/home" component={() => <HomePage />} />

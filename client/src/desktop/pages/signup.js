@@ -1,9 +1,7 @@
 import React from "react";
-import TopNav from "../components/navigationComponents/topNav";
 import BottomNav from "../components/navigationComponents/bottomNav";
 import { Jumbotron, Row, Col, FormGroup, Form, Button } from "react-bootstrap";
 import { withRouter } from "react-router-dom";
-import Cookies from "js-cookie";
 import "../styling/signUp.css";
 
 class SignUpPage extends React.Component {
@@ -89,7 +87,6 @@ class SignUpPage extends React.Component {
     return (
       <div id="signUp">
         <React.Fragment>
-          <TopNav style={{ zIndex: "10000" }} />
           <Jumbotron style={{ background: "white" }}>
             <Row id="row">
               <Col>

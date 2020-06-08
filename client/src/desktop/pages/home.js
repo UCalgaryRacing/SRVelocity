@@ -1,5 +1,4 @@
 import React from "react";
-import TopNav from "../components/navigationComponents/topNav";
 import BottomNav from "../components/navigationComponents/bottomNav";
 import { Jumbotron, Row, Col, Button } from "react-bootstrap";
 import { isMobile } from "react-device-detect";
@@ -9,7 +8,6 @@ export default class HomePage extends React.Component {
 	render = () => {
 		return (
 			<div id="homePage">
-				<TopNav />
 				<Jumbotron>
 					<Row id="row1">
 						<Col>

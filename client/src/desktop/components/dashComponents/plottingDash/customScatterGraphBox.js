@@ -5,7 +5,6 @@ import { Slider } from '@material-ui/core';
 import { withStyles } from '@material-ui/core/styles';
 import Data from '../../../../data';
 import Dash from '../dashboard';
-import '../../../styling/graphBox.css';
 import savitzkyGolay from 'ml-savitzky-golay';
 
 export default class CustomScatterGraphBox extends React.Component {

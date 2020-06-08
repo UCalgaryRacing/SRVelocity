@@ -52,11 +52,11 @@ export default class ModalSensorChoice extends React.Component {
 
     render = () => {
         return(
-            <div id='graphChoice' style={{marginLeft: '20px'}}>
+            <div id='graphChoice' style={{margin: 'auto', marginTop: '15px'}}>
                 <Form style={{marginTop: '10px'}}>{this.switches}</Form>
-                {(this.MAX_GRAPHS === 0) ? <p style={{marginTop: '40px'}}>Maximum number of graphs already displayed.</p> : 
-                (this.state.overMax) ? <p style={{marginTop: '40px'}}>Please select {this.MAX_GRAPHS} {(this.MAX_GRAPHS === 1) ? 'only one graph.' : 'or fewer graphs.'} ({this.indices.length} currently chosen)</p> : null}
-                <Button onClick={this.submit} style={{ fontWeight: "600", backgroundColor: "#C22D2D", borderColor: "#C22D2D", width: "95%", alignContent: 'center', marginTop: '15px', marginBottom: '15px'}}>Submit</Button>
+                {(this.MAX_GRAPHS === 0) ? <p style={{marginTop: '40px', marginLeft: '10px'}}>Maximum number of graphs already displayed.</p> : 
+                (this.state.overMax) ? <p style={{marginTop: '40px', marginLeft: '10px'}}>Please select {this.MAX_GRAPHS} {(this.MAX_GRAPHS === 1) ? 'only one graph.' : 'or fewer graphs.'} ({this.indices.length} currently chosen)</p> : null}
+                <Button onClick={this.submit} style={{ fontWeight: "600", backgroundColor: "#C22D2D", borderColor: "#C22D2D", width: "calc(100% - 20px)", alignContent: 'center', marginLeft: '10px', marginTop: '15px', marginBottom: '15px'}}>Submit</Button>
             </div>
         );
     }

@@ -1,5 +1,4 @@
 import React from 'react';
-import TopNav from '../components/navigationComponents/topNav';
 import { Figure, Container, Card, CardGroup, CardDeck } from 'react-bootstrap';
 import BottomNav from "../components/navigationComponents/bottomNav";
 import './about.css';
@@ -117,7 +116,6 @@ export default class AboutPage extends React.Component {
     render = () => {
         return (
             <div id='aboutPage' style={{ marginTop: '80px' }}>
-                <TopNav />
                 <p style={{
                     textAlign: 'center',
                     fontSize: 'xx-large',

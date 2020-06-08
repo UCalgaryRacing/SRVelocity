@@ -68,7 +68,8 @@ input[type=checkbox]:checked + label {
   position: absolute;
   left: 0;
   top: 0;
-  margin: 6px;
+  margin-bottom: 40px;
+  margin-top: 3px;
   width: 13px;
   height: 13px;
   transition: transform 0.28s ease;
@@ -87,8 +88,8 @@ input[type=checkbox]:checked + label {
   -ms-transform: rotate(-45deg) scale(0);
   transform: rotate(-45deg) scale(0);
   position: absolute;
-  top: 10px;
-  left: 9px;
+  top: 7px;
+  left: 3px;
 }
 .form-check input[type="checkbox"]:checked ~ label::before {
   color: #C22D2D;

@@ -15,3 +15,34 @@
     color: #fff !important;
     background-color: #FFF !important;
 }
+#copyright {
+    position: relative;
+    
+    width: 100%;
+    font-size: 0.74rem;
+}
+
+#copyright p {
+    margin-bottom: 20px !important;
+}
+
+@media only screen and (max-width: 1000px) {
+    #copyright {
+        position: relative;
+        margin-top: 20px;
+        width: 100%;
+        background-color: #C22E2D;
+        height: 40px;
+        bottom: 0px;
+        color: #FFF;
+        margin-top: 0px !important;
+    }
+
+    #copyright p {
+        margin-bottom: 13px !important;
+    }
+
+    #bottom {
+        margin-top: 16px;
+    }
+}

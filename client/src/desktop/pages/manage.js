@@ -1,5 +1,4 @@
 import React from 'react';
-import TopNav from '../components/navigationComponents/topNav';
 import ManageSideNav from '../components/navigationComponents/manageSideNav';
 import ManageContent from '../components/manageComponents/manageContent';
 import WithAuth from './withAuth';
@@ -14,7 +13,6 @@ class ManagePage extends React.Component {
     render = () => {
         return (
             <div id='streamingPage' style={{marginTop: '80px'}}>
-                <TopNav />
                 <ManageSideNav manageContent={this.manageContent} />
                 <ManageContent ref={this.manageContent}/>
             </div>

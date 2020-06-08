@@ -1,6 +1,6 @@
 #dashboard {
-    padding-bottom: 80px;
     margin-top: 57px;
+    min-height: calc(100vh - 112px);
 }
 
 #dashboard #defaultButton {

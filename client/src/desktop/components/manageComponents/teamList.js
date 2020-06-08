@@ -107,7 +107,7 @@ class TeamList extends React.Component {
       <React.Fragment>
         <Row>
           <Col md={{ span: 8, offset: 2 }}>
-            <Table striped style={{ borderRadius: "25px" }}>
+            <Table striped hover style={{ borderRadius: "25px" }}>
               <thead
                 style={{ backgroundColor: "rgb(194, 45, 45)", color: "white" }}
               >

@@ -4,6 +4,7 @@ import CSVBox from './CSVBox';
 import { Button, Form } from 'react-bootstrap';
 import UploadFileModal from './uploadFileModal';
 import './historicalDash.css'
+import SearchModal from './searchModal';
 
 export default class HistoricalContent extends React.Component {
     constructor(props) {
@@ -14,7 +15,11 @@ export default class HistoricalContent extends React.Component {
             toggleDash: false,
             CSVFiles: [],
             showUploadModal: false,
-            sideOpen: false
+            sideOpen: false,
+            showSearched: false,
+            searchedFiles: [],
+            showSearchModal: false,
+            emptySearch: false
         }
         this.comments = [];
     }
@@ -64,6 +69,23 @@ export default class HistoricalContent extends React.Component {
         this.setState({ CSVFiles: this.state.CSVFiles.filter(file => file.props.index !== index) })
     }
 
+    search = (name, driver, car) => {
+        var filtered = [...this.state.CSVFiles]
+
+        function filterParam(param, value){
+            filtered = filtered.filter(file => file.props[param].toLowerCase().includes(value.toLowerCase()))
+        }
+        if(name && name !== "") { filterParam('filename', name) }
+        if(driver && driver !== "") { filterParam('driver', driver) }
+        if(car && car !== "") { filterParam('car', car) }
+
+        this.setState({
+            searchedFiles: filtered,
+            showSearched: true,
+            emptySearch: (filtered.length === 0)
+        })
+    }
+
     render = () => {
         return (
             <div id='historicalDash'>
@@ -83,20 +105,27 @@ export default class HistoricalContent extends React.Component {
                     borderStyle: 'solid'
                 }}>
                     <Button id='uploadButton' onClick={() => { this.setState({ showUploadModal: true }) }}><b>Upload CSV</b></Button>&nbsp;&nbsp;
-                    <Button id='sortButton' onClick={this.changeType} disabled={(this.state.typeOption === 'plotting') ? true : false}><b>Sort Data</b></Button>&nbsp;&nbsp;
-                    <Form className="searchForm" style={{ position: 'absolute', top: '10px', right: '10px' }}>
-                        <Form.Control
-                            className="searchFormControl"
-                            ref={this.emailForm}
-                            autoComplete="on"
-                            placeHolder="Search"
-                            required
-                        />
-                    </Form>
+                    <Button id='sortButton' onClick={this.changeType} ><b>Sort Data</b></Button>&nbsp;&nbsp;
+
+                    {this.state.showSearched ?
+                    <Button id='searchButton' 
+                    onClick={() => this.setState({showSearched: false})}>
+                        <b>Show all Files</b>
+                    </Button> : null}
+
+                    <Button id='searchButton' 
+                    onClick={() => this.setState({showSearchModal: true})}
+                    style={{ position: 'absolute', top: '10px', right: '10px' }}>
+                        <b>Search</b>
+                    </Button>&nbsp;&nbsp;
+
                 </div>
                 <div id='data'>
+                    <SearchModal show={this.state.showSearchModal} search={this.search} onHide={() => this.setState({ showSearchModal: false })} />
                     <UploadFileModal show={this.state.showUploadModal} onHide={() => this.setState({ showUploadModal: false })} />
-                    {this.state.CSVFiles}
+                    {this.state.showSearched && this.state.emptySearch ? 
+                    <p>No files matched your search.</p> : null}
+                    {this.state.showSearched ? this.state.searchedFiles : this.state.CSVFiles}
                 </div>
             </div>
         );

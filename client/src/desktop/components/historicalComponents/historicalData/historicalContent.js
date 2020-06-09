@@ -3,6 +3,7 @@ import { GATEWAYSERVERIP } from '../../../../dataServerEnv';
 import CSVBox from './CSVBox';
 import { Button, Form } from 'react-bootstrap';
 import UploadFileModal from './uploadFileModal';
+import SortFilesModal from './sortFilesModal';
 import BottomNav from '../../navigationComponents/bottomNav';
 import './historicalContent.css';
 
@@ -14,7 +15,8 @@ export default class HistoricalContent extends React.Component {
             marginLeft: '64px',
             toggleDash: false,
             CSVFiles: [],
-            showUploadModal: false
+            showUploadModal: false,
+            showSortFilesModal: false
         }
         this.comments = [];
     }
@@ -58,9 +60,66 @@ export default class HistoricalContent extends React.Component {
                     )
                     i++
                 }
+                files.sort(this.defaultSortFiles)
                 this.setState({ CSVFiles: files })
             })
             .catch(err => { console.log(err) });
+    }
+
+    defaultSortFiles = (a, b) => {
+        if(a.props.date > b.props.date) return -1
+        else if(a.props.date < b.props.date) return 1
+        else return 0
+    }
+
+    sortDate = (setting) => {
+        if(setting === 'Newest'){
+            const files = this.state.CSVFiles.slice(0).sort(function(a, b){
+                if(a.props.date > b.props.date) return -1
+                else if(a.props.date < b.props.date) return 1
+                else return 0
+            });
+            this.setState({ CSVFiles: files })
+        }
+        else if(setting === 'Oldest'){
+            const files = this.state.CSVFiles.slice(0).sort(function(a, b){
+                if(a.props.date > b.props.date) return 1
+                else if(a.props.date < b.props.date) return -1
+                else return 0
+            });
+            this.setState({ CSVFiles: files })
+        }
+        else return
+    }
+
+    sortCar = (setting) => {
+        if(setting === 'Newest'){
+            const files = this.state.CSVFiles.slice(0).sort(function(a, b){
+                if(a.props.car > b.props.car) return -1
+                else if(a.props.car < b.props.car) return 1
+                else return 0
+            });
+            this.setState({ CSVFiles: files })
+        }
+        else if(setting === 'Oldest'){
+            const files = this.state.CSVFiles.slice(0).sort(function(a, b){
+                if(a.props.car > b.props.car) return 1
+                else if(a.props.car < b.props.car) return -1
+                else return 0
+            });
+            this.setState({ CSVFiles: files })
+        }
+    }
+
+    sortDriver = () => {
+        const files = this.state.CSVFiles.slice(0).sort(function(a, b){
+            var lastA = a.props.driver.slice(a.props.driver.indexOf(' ') + 1)
+            var lastB = b.props.driver.slice(b.props.driver.indexOf(' ') + 1)
+            if(lastA > lastB) return 1
+            else if(lastA < lastB) return -1
+            else return 0
+        });
+        this.setState({ CSVFiles: files })
     }
 
     deleteFile = (index) => {
@@ -72,7 +131,7 @@ export default class HistoricalContent extends React.Component {
             <Button style={{ width: '150px', height: '36px', background: '#C22E2D', borderColor: '#C22E2D' }} onClick={() => { this.setState({ showUploadModal: true }) }}><b>Upload CSV</b></Button>
         );
         let typeSelector = (
-            <Button style={{ width: '150px', height: '36px', background: '#C22E2D', borderColor: '#C22E2D' }} onClick={this.changeType} disabled={(this.state.typeOption === 'plotting') ? true : false}><b>Sort Data</b></Button>
+            <Button style={{ width: '150px', height: '36px', background: '#C22E2D', borderColor: '#C22E2D' }} onClick={() => { this.setState({ showSortFilesModal: true }) }}><b>Sort Files</b></Button>
         );
         return (
             <div id='historicalPage' style={{ marginTop: '15px', transition: 'all 0.15s', marginLeft: this.state.marginLeft }}>
@@ -105,6 +164,7 @@ export default class HistoricalContent extends React.Component {
                 </div>
                 <div id='dashboard'>
                     <UploadFileModal show={this.state.showUploadModal} onHide={() => this.setState({ showUploadModal: false })} />
+                    <SortFilesModal show={this.state.showSortFilesModal} onHide={() => this.setState({ showSortFilesModal: false })} sortDate={this.sortDate} sortCar={this.sortCar} sortDriver={this.sortDriver}/>
                     {this.state.CSVFiles}
                 </div>
                 <BottomNav/>

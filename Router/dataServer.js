@@ -1,8 +1,7 @@
 const express = require("express");
 const dataServer = express.Router();
-const DATASERVERIP = 'http://localhost:4500'
-const fetch = require('node-fetch')
-//const request = require('request')
+const DATASERVERIP = 'http://localhost:4500';
+const fetch = require('node-fetch');
 
 dataServer.get("/getFiles", (req, res) => {
     fetch(DATASERVERIP + '/fileServer/getFiles', {
@@ -11,10 +10,12 @@ dataServer.get("/getFiles", (req, res) => {
             'Content-Type': 'application/json'
         }
     })
-    .then(response => response.json())
-    .then(response => res.send(response))
-    .catch(err => { console.log(err);
-                    res.sendStatus(500) })
+        .then(response => response.json())
+        .then(response => res.send(response))
+        .catch(err => {
+            console.log(err);
+            res.sendStatus(500)
+        })
 });
 
 //Download file
@@ -22,10 +23,12 @@ dataServer.get("/getFile/:filename", (req, res) => {
     fetch(DATASERVERIP + '/fileServer/getFile/' + req.params.filename, {
         method: 'GET'
     })
-    .then(response => response.body)
-    .then(response => response.pipe(res))
-    .catch(err => { console.log(err);
-                    res.sendStatus(500) })
+        .then(response => response.body)
+        .then(response => response.pipe(res))
+        .catch(err => {
+            console.log(err);
+            res.sendStatus(500)
+        })
 })
 
 dataServer.post("/renameFile", (req, res) => {
@@ -41,13 +44,14 @@ dataServer.post("/renameFile", (req, res) => {
         },
         body: JSON.stringify(postParams)
     })
-    .then(response => {
-        if(response.ok) res.sendStatus(200)
-        else res.sendStatus(500)})
-    .catch(err => {
-        console.log(err)
-        res.sendStatus(500)
-    })
+        .then(response => {
+            if (response.ok) res.sendStatus(200)
+            else res.sendStatus(500)
+        })
+        .catch(err => {
+            console.log(err)
+            res.sendStatus(500)
+        })
 })
 
 // Deletes file in storage. MUST contain full filename (including the file extension. e.g. '.csv').
@@ -55,16 +59,17 @@ dataServer.get("/deleteFile/:filename", (req, res) => {
     fetch(DATASERVERIP + '/fileServer/deleteFile/' + req.params.filename, {
         method: 'GET'
     })
-    .then(response => {
-        if(response.ok) {
-            res.sendStatus(200)
-        } else {
+        .then(response => {
+            if (response.ok) {
+                res.sendStatus(200)
+            } else {
+                res.sendStatus(500)
+            }
+        })
+        .catch(err => {
+            console.log(err)
             res.sendStatus(500)
-        }})
-    .catch(err => {
-        console.log(err)
-        res.sendStatus(500)
-    })
+        })
 })
 
 //Upload file
@@ -87,16 +92,12 @@ dataServer.post("/uploadFile", (req, res) => {
 //Updates attributes of the file (driver and car)
 dataServer.post("/updateMetadata", (req, res) => {
     let meta = {}
-    if (req.body.driver) {
-        meta['driver'] = req.body.driver
-    }
-    if (req.body.car) {
-        meta['car'] = req.body.car
-    }
+    if (req.body.driver) meta['driver'] = req.body.driver
+    if (req.body.car) meta['car'] = req.body.car
 
     let postParams = {
         filename: req.body.filename,
-        metadata : meta
+        metadata: meta
     }
 
     fetch(DATASERVERIP + '/fileServer/updateMetadata', {
@@ -106,37 +107,40 @@ dataServer.post("/updateMetadata", (req, res) => {
         },
         body: JSON.stringify(postParams)
     })
-    .then(response => {
-        if(response.ok) res.sendStatus(200)
-        else res.sendStatus(500)})
-    .catch(err => {
-        console.log(err)
-        res.sendStatus(500)
-    })
+        .then(response => {
+            if (response.ok) res.sendStatus(200)
+            else res.sendStatus(500)
+        })
+        .catch(err => {
+            console.log(err)
+            res.sendStatus(500)
+        })
 })
 
 dataServer.get("/getComments/:id", (req, res) => {
     fetch(DATASERVERIP + '/comments/getComments/' + req.params.id, {
         method: 'GET'
     })
-    .then(response => {
-        if(response.ok) {
-            response.json()
-            .then(response => res.send(response))
-        } else {
+        .then(response => {
+            if (response.ok) {
+                response.json()
+                    .then(response => res.send(response))
+            } else {
+                res.sendStatus(500)
+            }
+        })
+        .catch(err => {
+            console.log(err)
             res.sendStatus(500)
-        }})
-    .catch(err => {
-        console.log(err)
-        res.sendStatus(500)
-    })
+        })
 })
 
 dataServer.post("/addComment", (req, res) => {
     let postParams = {
-        fileID: req.body.id,
+        fileID: req.body.fileID,
+        content: req.body.content,
         commenter: req.body.commenter,
-        content: req.body.content
+        commenterID: req.body.commenterID
     }
 
     fetch(DATASERVERIP + '/comments/addComment', {
@@ -146,15 +150,37 @@ dataServer.post("/addComment", (req, res) => {
         },
         body: JSON.stringify(postParams)
     })
-    .then(response => {
-        if(response.ok) res.sendStatus(200)
-        else res.sendStatus(500)})
-    .catch(err => {
-        console.log(err)
-        res.sendStatus(500)
-    })
+        .then(response => response.json())
+        .then(response => {
+            res.send(response)
+        })
+        .catch(err => {
+            console.log(err)
+            res.sendStatus(500)
+        })
 })
 
+dataServer.delete("/deleteComment", (req, res) => {
+    let postParams = {
+        fileID: req.body.fileID,
+        commentID: req.body.commentID
+    }
 
+    fetch(DATASERVERIP + '/comments/deleteComment', {
+        method: 'DELETE',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(postParams)
+    })
+        .then(response => {
+            if (response.ok) res.sendStatus(200);
+            else res.sendStatus(500)
+        })
+        .catch(err => {
+            console.log(err)
+            res.sendStatus(500)
+        })
+})
 
 module.exports = dataServer;

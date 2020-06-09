@@ -44,7 +44,6 @@ export default class HistoricalContent extends React.Component {
                 var files = []
                 let i = 0
                 for (var file of res) {
-                    console.log(file.metadata)
                     let date = new Date(parseInt(file.metadata.date));
                     files.push(
                         <CSVBox filename={file.name}
@@ -52,6 +51,7 @@ export default class HistoricalContent extends React.Component {
                             car={file.metadata.car}
                             date={date.toLocaleDateString() + " " + date.toLocaleTimeString()}
                             deleteFile={this.deleteFile}
+                            ID={file.metadata.id}
                             key={i}
                             index={i}
                         />

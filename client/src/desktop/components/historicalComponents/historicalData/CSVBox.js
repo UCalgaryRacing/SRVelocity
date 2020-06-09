@@ -17,8 +17,13 @@ export default class CSVBox extends React.Component {
             date: this.props.date,
             showRenameModal: false,
             showComments: false,
-            comments: []
+            commentData: {}
         }
+        this.comments = [];
+    }
+
+    componentDidMount = () => {
+        this.fetchComments();
     }
 
     downloadFile = () => {
@@ -68,8 +73,30 @@ export default class CSVBox extends React.Component {
             method: 'GET'
         })
             .then(response => {
+                if (response.ok) this.props.deleteFile(this.props.index)
+            })
+            .catch(err => {
+                console.log(err)
+            })
+    }
+
+    deleteComment = (ID) => {
+        fetch(GATEWAYSERVERIP + '/historical/deleteComment/', {
+            method: 'DELETE',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                fileID: this.props.ID,
+                commentID: ID
+            })
+        })
+            .then(async response => {
                 if (response.ok) {
-                    this.props.deleteFile(this.props.index)
+                    let temp = this.state.commentData;
+                    delete temp[ID];
+                    await this.setState({commentData: temp});
+                    this.loadComments();
                 }
             })
             .catch(err => {
@@ -78,20 +105,62 @@ export default class CSVBox extends React.Component {
     }
 
     pushComment = (content) => {
-        this.state.comments.push(
-            <Comment
-                content={content}
-                date={'hello'}
-                poster={'Justin'}
-                ID={1}
-                key={this.state.comments.length + 1}
-            />
-        );
-        this.setState({ comments: this.state.comments })
+        fetch(GATEWAYSERVERIP + '/historical/addComment',  {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                fileID: this.props.ID,
+                content: content,
+                commenter: sessionStorage.getItem("Name"),
+                commenterID: sessionStorage.getItem("ID")
+            })
+        })
+        .then(res => res.json())
+        .then(async res => {
+            let temp = this.state.commentData;
+            let date = new Date(parseInt(res.date));
+            temp[res.ID] = {
+                commenter: sessionStorage.getItem("Name"),
+                commenterID: sessionStorage.getItem("ID"),
+                content: content,
+                date: date.toLocaleDateString() + " " + date.toLocaleTimeString()
+            }
+            await this.setState({commentData: temp});
+            this.loadComments();
+        })
     }
 
     fetchComments = () => {
+        fetch(GATEWAYSERVERIP + '/historical/getComments/' + this.props.ID, {
+            method: 'GET'
+        })
+            .then(res => res.json())
+            .then(async res => {
+                await this.setState({commentData: res});
+                this.loadComments();
+            })
+            .catch(err => { console.log(err) })
+    }
 
+    loadComments = () => {
+        this.comments = [];
+        for (var comment in this.state.commentData) {
+            let date = new Date(parseInt(this.state.commentData[comment].date));
+            this.comments.push(
+                <Comment
+                    content={this.state.commentData[comment].content}
+                    date={date.toLocaleDateString() + " " + date.toLocaleTimeString()}
+                    commenter={this.state.commentData[comment].commenter}
+                    commenterID={this.state.commentData[comment].commenterID}
+                    ID={comment}
+                    key={this.comments.length + 1}
+                    deleteComment={this.deleteComment}
+                />
+            );
+        }
+        this.forceUpdate();
     }
 
     toggleComments = () => {
@@ -134,7 +203,7 @@ export default class CSVBox extends React.Component {
                         Comments
                     </div>
                     <div >
-                        {this.state.comments.length > 0 ? this.state.comments : (<div style={{color: '#B0B0B0'}}>Nothing Yet!</div>)}
+                        {this.comments.length > 0 ? this.comments : (<div style={{ color: '#B0B0B0' }}>Nothing Yet!</div>)}
                     </div>
                     <Quill pushComment={this.pushComment} />
                 </div>

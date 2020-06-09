@@ -36,6 +36,8 @@ class SignInPage extends React.Component {
 				this.setState({ showErrorMessage: true, showConfirmationMessage: false });
 				throw new Error(res.status);
 			}
+			sessionStorage.setItem("Name", resJSON.firstName + " " + resJSON.lastName);
+			sessionStorage.setItem("ID", resJSON.ID);
 			this.setState({ isSignedIn: true, showErrorMessage: false, showConfirmationMessage: true });
 		} catch (err) {
 			console.log(err);

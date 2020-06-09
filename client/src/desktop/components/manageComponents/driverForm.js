@@ -10,6 +10,26 @@ class DriverForm extends React.Component {
     this.refs = {};
   }
 
+  fetchVehicles = async () => {
+    try {
+      const requesturl = "http://localhost:7000/vehicle/getVehicles/";
+      let res = await fetch(requesturl, {
+        method: "GET",
+        credentials: "include",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+      if (res.status == 401) {
+        this.props.history.push("/signin");
+      }
+      res = await res.json();
+      return await res;
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
   async componentDidMount() {
     this.renderDriverFormContents(this.props.driver);
     this.refs = {

@@ -107,6 +107,9 @@ class DriverDash extends React.Component {
               </Button>
             </Col>
           </Row>
+          <Row>
+            <Col>{this.state.errorRender}</Col>
+          </Row>
         </React.Fragment>
       );
     } else if (!this.state.driverMode) {

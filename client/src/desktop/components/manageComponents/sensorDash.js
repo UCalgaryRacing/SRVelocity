@@ -68,6 +68,7 @@ class SensorDash extends React.Component {
       sensorMode: true,
       vehicleMode: false,
       sensorSelected: false,
+      add: false,
     });
   }
 
@@ -106,6 +107,7 @@ class SensorDash extends React.Component {
             <td>{ele.category}</td>
             <td>{ele.code_name}</td>
             <td>{ele.can_id}</td>
+            <td>{ele.frequency}</td>
           </tr>
         );
       });
@@ -161,6 +163,7 @@ class SensorDash extends React.Component {
                     <th>Category</th>
                     <th>Code Name</th>
                     <th>Can ID</th>
+                    <th>Frequency</th>
                   </tr>
                 </thead>
                 <tbody>{this.state.sensorRender}</tbody>

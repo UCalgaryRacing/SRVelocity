@@ -18,12 +18,13 @@ class SensorView extends React.Component {
     this.upper_bound = React.createRef();
     this.yellow_lower = React.createRef();
     this.yellow_upper = React.createRef();
+    this.frequency = React.createRef();
   }
 
   async componentDidMount() {
     this.buttonRender();
-    this.renderDriverContents(this.props.sensor);
-    this.renderDriverFormContents(this.props.sensor);
+    this.renderSensorContents(this.props.sensor);
+    this.renderSensorFormContents(this.props.sensor);
   }
 
   async errorDisplay(res, resJSON) {
@@ -43,10 +44,10 @@ class SensorView extends React.Component {
     }
   }
 
-  async renderDriverFormContents(sensor) {
+  async renderSensorFormContents(sensor) {
     let render = [];
     render.push(
-      <React.Fragment key={"driverFormFragment"}>
+      <React.Fragment key={"sensorFormFragment"}>
         <tr>
           <th>Sensor Name</th>
           <td>
@@ -145,6 +146,20 @@ class SensorView extends React.Component {
             </Form>
           </td>
         </tr>
+        <tr>
+          <th>Frequency</th>
+          <td>
+            <Form>
+              <Form.Group>
+                <Form.Control
+                  type="input"
+                  defaultValue={sensor.frequency}
+                  ref={this.frequency}
+                ></Form.Control>
+              </Form.Group>
+            </Form>
+          </td>
+        </tr>
         {/* <tr>
           <th>Yellow Lower Bound</th>
           <td>
@@ -206,10 +221,10 @@ class SensorView extends React.Component {
     await this.setState({ sensorFormRender: render });
   }
 
-  async renderDriverContents(sensor) {
+  async renderSensorContents(sensor) {
     let render = [];
     render.push(
-      <React.Fragment key={"driverViewKey"}>
+      <React.Fragment key={"sensorViewKey"}>
         <tr>
           <th>Sensor Name</th>
           <td>{sensor.name}</td>
@@ -237,6 +252,10 @@ class SensorView extends React.Component {
         <tr>
           <th>CAN ID</th>
           <td>{sensor.can_id}</td>
+        </tr>
+        <tr>
+          <th>Frequency</th>
+          <td>{sensor.frequency}</td>
         </tr>
         {/* <tr>
           <th>Yellow Lower Bound</th>
@@ -285,6 +304,10 @@ class SensorView extends React.Component {
               this.can_id.current.value === ""
                 ? null
                 : this.can_id.current.value,
+            frequency:
+              this.frequency.current.value === ""
+                ? null
+                : this.frequency.current.value,
             // yellowUpper:
             //   this.yellow_upper.current.value === ""
             //     ? null
@@ -334,6 +357,10 @@ class SensorView extends React.Component {
               this.can_id.current.value === ""
                 ? null
                 : this.can_id.current.value,
+            frequency:
+              this.frequency.current.value === ""
+                ? null
+                : this.frequency.current.value,
             // yellowUpper:
             //   this.yellow_upper.current.value === ""
             //     ? null

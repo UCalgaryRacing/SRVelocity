@@ -12,7 +12,7 @@ class ManagePage extends React.Component {
 
     render = () => {
         return (
-            <div id='streamingPage' style={{marginTop: '80px'}}>
+            <div id='managePage'>
                 <ManageSideNav manageContent={this.manageContent} />
                 <ManageContent ref={this.manageContent}/>
             </div>

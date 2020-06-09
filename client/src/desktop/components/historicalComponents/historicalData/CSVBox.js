@@ -173,16 +173,16 @@ export default class CSVBox extends React.Component {
     render = () => {
         return (
             <div id="CSVBox">
-                <div style={{ height: '36px', position: 'absolute', lineHeight: '36px', fontSize: '20px', cursor: 'pointer', textDecoration: 'underline' }} onClick={this.downloadFile}>
+                <div style={{ height: '36px', position: 'absolute', lineHeight: '36px', fontSize: '20px', cursor: 'pointer', textDecoration: 'underline' }}>
                     {this.state.filename}
                 </div>
-                <div style={{ height: '36px', position: 'absolute', lineHeight: '36px', fontSize: '14px', marginTop: '46px', color: '#B0B0B0' }} onClick={this.downloadFile}>
+                <div style={{ height: '36px', position: 'absolute', lineHeight: '36px', fontSize: '14px', marginTop: '46px', color: '#B0B0B0' }} >
                     <div style={{ color: '#C22E2D', width: '60px', position: 'absolute' }}>Created:&nbsp;</div><div style={{ position: 'absolute', left: '65px', width: '160px' }}>{this.state.date}</div>
                 </div>
-                <div style={{ height: '36px', position: 'absolute', lineHeight: '36px', fontSize: '14px', marginTop: '92px', color: '#B0B0B0' }} onClick={this.downloadFile}>
+                <div style={{ height: '36px', position: 'absolute', lineHeight: '36px', fontSize: '14px', marginTop: '92px', color: '#B0B0B0' }}>
                     <div style={{ color: '#C22E2D', width: '60px', position: 'absolute' }}>Vehicle:&nbsp;</div><div style={{ position: 'absolute', left: '65px', width: '160px' }}>{this.state.car}</div>
                 </div>
-                <div style={{ height: '36px', position: 'absolute', lineHeight: '36px', fontSize: '14px', marginTop: '138px', color: '#B0B0B0' }} onClick={this.downloadFile}>
+                <div style={{ height: '36px', position: 'absolute', lineHeight: '36px', fontSize: '14px', marginTop: '138px', color: '#B0B0B0' }}>
                     <div style={{ color: '#C22E2D', width: '60px', position: 'absolute' }}>Driver:&nbsp;</div><div style={{ position: 'absolute', left: '65px', width: '160px' }}>{this.state.driver}</div>
                 </div>
                 <Button id='historicalButton' onClick={this.deleteFile} style={{ position: 'absolute', right: '20px' }}>

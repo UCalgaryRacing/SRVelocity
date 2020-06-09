@@ -2,6 +2,10 @@ const express = require("express");
 const dataServer = express.Router();
 const DATASERVERIP = 'http://localhost:4500';
 const fetch = require('node-fetch');
+const multer = require('multer')
+const storage = multer.memoryStorage()
+const upload = multer({ storage: storage})
+const FormData = require('form-data')
 
 dataServer.get("/getFiles", (req, res) => {
     fetch(DATASERVERIP + '/fileServer/getFiles', {
@@ -73,20 +77,29 @@ dataServer.get("/deleteFile/:filename", (req, res) => {
 })
 
 //Upload file
-dataServer.post("/uploadFile", (req, res) => {
-    // fs.readFile(req.files.file.path, (err, data) => {
-    //     console.log(data)
-    // })
-    //req.pipe(DATASERVERIP + '/fileServer/uploadFile')
+dataServer.post("/uploadFile/", upload.any(), (req, res) => {
 
-    console.log(req.body)
-    // fetch(DATASERVERIP + '/fileServer/getFile/' + req.params.filename, {
-    //     method: 'GET'
-    // })
-    // .then(response => response.body)
-    // .then(response => response.pipe(res))
-    // .catch(err => { console.log(err);
-    //                 res.sendStatus(500) })
+    // Theres only one file but still need to iterate
+    req.files.forEach(file => {
+        var form = new FormData()
+        form.append('data', file.buffer, file.originalname)
+        fetch(DATASERVERIP + '/fileServer/uploadFile/', {
+        method: 'POST',
+        body: form
+        })
+        .then(response => {
+            if(response.ok) {
+                res.sendStatus(200)
+            } else {
+                res.sendStatus(500)
+            }})
+        .catch(err => {
+            console.log(err)
+            res.sendStatus(500)
+        })
+        
+    })
+    
 })
 
 //Updates attributes of the file (driver and car)

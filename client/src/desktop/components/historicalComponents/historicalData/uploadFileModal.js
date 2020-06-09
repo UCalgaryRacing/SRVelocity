@@ -24,29 +24,28 @@ export default class UploadFileModal extends React.Component {
         this.props.onHide()
         if (!this.state.file) return;
 
-        //const reader = new FileReader()
-        //reader.onload = (e) => {
-        // var formData = new FormData()
-        // formData.append('file', this.state.file)
-        //     fetch(GATEWAYSERVERIP + '/historical/uploadFile/', {
-        //         method: 'POST',
-        //         headers: {
-        //           'Content-Type': 'multipart/form-data'
-        //         },
-        //         body: formData
-        //     })
-        //     .then(response => {
-        //         if(response.ok) {
-        //             this.props.onHide()
-        //         } else {
-        //             this.props.onHide()
-        //         }})
-        //     .catch(err => {
-        //         console.log(err)
-        //     })
-        // //}
+        const reader = new FileReader()
+        
+        reader.onload = (e) => {
+            var formData = new FormData()
+            formData.append('file', this.state.file)
 
-        //reader.readAsText(this.state.file)
+            fetch(GATEWAYSERVERIP + '/historical/uploadFile/', {
+                method: 'POST',
+                body: formData
+            })
+            .then(response => {
+                if(response.ok) {
+                    this.props.onHide()
+                } else {
+                    this.props.onHide()
+                }})
+            .catch(err => {
+                console.log(err)
+            })
+        }
+
+        reader.readAsText(this.state.file)
     }
 
     render = () => {

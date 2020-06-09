@@ -1,6 +1,7 @@
 import React from 'react';
 import { Row, Col, Table, Button, Form } from "react-bootstrap";
 import ManageEdit from './manageEdit';
+import ConfirmationModal from '../confirmationModal';
 import './manageBox.css';
 
 export default class ManageBox extends React.Component {
@@ -10,7 +11,8 @@ export default class ManageBox extends React.Component {
             labels: this.props.labels,
             values: this.props.values,
             ID: this.props.ID,
-            showEdit: false
+            showEdit: false,
+            showConfirmation: false
         }
         this.info = [];
     }
@@ -32,6 +34,7 @@ export default class ManageBox extends React.Component {
             margin += 30;
             i++;
         }
+        this.forceUpdate();
     }
 
     submitEdit = (data) => {
@@ -50,15 +53,39 @@ export default class ManageBox extends React.Component {
                 canId: data[3],
                 frequency: data[4],
             })
-        }).then(res => {
-            if(res.ok) { 
-                this.setState({ values: data, showEdit: false }, this.generateBox());
+        }).then(async res => {
+            if (res.ok) {
+                await this.setState({ values: data, showEdit: false });
+                this.generateBox();
             }
         })
     }
 
     toggleEdit = () => {
         this.setState({ showEdit: !this.state.showEdit });
+    }
+
+    deleteSensor = () => {
+        const requestURL = "http://localhost:7000/sensor/" + this.props.ID;
+        fetch(requestURL, {
+            method: "DELETE",
+            credentials: "include",
+            headers: {
+                "Content-Type": "application/json",
+            },
+        })
+            .then(res => {
+                if (res.ok) {
+                    this.props.deleteSensor(this.props.ID)
+                }
+            })
+            .catch((error) => {
+                console.log(error)
+            });
+    }
+
+    hideModal = () => {
+        this.setState({ showConfirmation: false })
     }
 
     render = () => {
@@ -68,15 +95,17 @@ export default class ManageBox extends React.Component {
                     {this.state.values[0]}
                 </div>
                 {this.info}
-                <Button id='boxButton' onClick={this.deleteSensor} style={{ position: 'absolute', right: '20px' }}>
+                <Button id='boxButton' onClick={() => { this.setState({ showConfirmation: true }) }} style={{ position: 'absolute', right: '20px' }}>
                     <img id="logoImg" width="40px" style={{ marginTop: '2px' }} src={require('../../../assets/delete-x.svg')} />
                 </Button>
                 <Button id='boxButton' onClick={this.toggleEdit} style={{ position: 'absolute', right: '20px', marginTop: '46px' }}>
                     <img id="logoImg" width="27px" style={{ marginTop: '-14px', marginLeft: '-13px', position: 'absolute' }} src={require('../../../assets/edit.svg')} />
                 </Button>
-                <div style={{ display: this.state.showEdit ? '' : 'none' }}>
+                {this.state.showEdit ?
                     <ManageEdit labels={this.state.labels} values={this.state.values} submitEdit={this.submitEdit} />
-                </div>
+                    :
+                    null}
+                <ConfirmationModal showModal={this.state.showConfirmation} hideModal={this.hideModal} delete={this.deleteSensor} name={this.state.values[0]}/>
             </div>
         )
     }

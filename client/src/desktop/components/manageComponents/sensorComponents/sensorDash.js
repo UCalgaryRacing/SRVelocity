@@ -1,20 +1,16 @@
 import React from "react";
-import { Row, Col, Table, Button, Form } from "react-bootstrap";
+import { Row, Col, Table, Button, Form, Modal } from "react-bootstrap";
 import { withRouter } from "react-router-dom";
 import ManageBox from '../manageBox';
+import ManageAddModal from '../manageAddModal';
 import './sensorDash.css';
 
 class SensorDash extends React.Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			selectedVehicle: {},
-			vehicleTableRender: [],
 			sensorRender: [],
-			sensorMode: false,
-			selectedSensor: {},
-			sensorSelected: false,
-			add: false,
+			showAddModal: false
 		};
 		this.vehicles = [];
 	}
@@ -28,11 +24,7 @@ class SensorDash extends React.Component {
 		try {
 			const sensors = await this.fetchSensors();
 			await this.renderSensorTable(sensors);
-			await this.setState({
-				sensorMode: true,
-				sensorSelected: false,
-				add: false,
-			});
+			this.forceUpdate();
 		} catch (err) {
 			console.log(err);
 		}
@@ -75,12 +67,53 @@ class SensorDash extends React.Component {
 		}
 	};
 
-	addSensor() {
-
+	addSensor = async (data) => {
+		const requesturl = "http://localhost:7000/sensor/postSensor";
+		fetch(requesturl, {
+			method: "POST",
+			credentials: "include",
+			headers: {
+				"Content-Type": "application/json",
+			},
+			body: JSON.stringify({
+                name: data[0],
+                outputUnit: data[2],
+                category: data[1],
+                codeName: data[5],
+                canId: data[3],
+				frequency: parseInt(data[4]),
+				vehicleId: 14
+            })
+		})
+		.then(res => res.json())
+		.then(res => {
+			let box = (
+				<ManageBox
+					labels={["Name", "Category", "Output Unit", "CAN ID", "Frequency", "Code Name"]}
+					values={[data[0], data[1], data[2], data[3], data[4], data[5]]}
+					ID={res.ID} //Get from req
+					key={res.ID}
+					deleteSensor={this.deleteSensor}
+				/>
+			)
+			let temp = this.state.sensorRender;
+			temp.push(box);
+			this.setState({sensorRender: temp});
+		})
+		.catch(err => {
+			console.log(err)
+		})
 	}
 
-	deleteSensor = () => {
-
+	deleteSensor = (ID) => {
+		for(var el in this.state.sensorRender) {
+			if(parseInt(this.state.sensorRender[el].key) === ID) {
+				let temp = this.state.sensorRender;
+				temp.splice(el, 1);
+				this.setState({sensorRender: temp});
+				break;
+			}
+		}
 	}
 
 	renderSensorTable = async (sensors) => {
@@ -92,13 +125,18 @@ class SensorDash extends React.Component {
 						labels={["Name", "Category", "Output Unit", "CAN ID", "Frequency", "Code Name"]}
 						values={[ele.name, ele.category, ele.output_unit, ele.can_id, ele.frequency, ele.code_name]}
 						ID={ele.sensor_id}
-						key={ele.name}
+						key={ele.sensor_id}
+						deleteSensor={this.deleteSensor}
 					/>
 				);
 			});
 		}
 		this.setState({ sensorRender: render });
 	};
+
+	toggleAddModal = () => {
+		this.setState({ showAddModal: !this.state.showAddModal });
+	}
 
 	render() {
 		return (
@@ -118,7 +156,7 @@ class SensorDash extends React.Component {
 					borderBottomWidth: '1px',
 					borderStyle: 'solid'
 				}}>
-					<Button id='uploadButton' onClick={() => { this.addSensor({}); }}><b>Add</b></Button>&nbsp;&nbsp;
+					<Button id='uploadButton' onClick={this.toggleAddModal}><b>Add</b></Button>&nbsp;&nbsp;
 					<Button id='sortButton' onClick={this.changeType} disabled={(this.state.typeOption === 'plotting') ? true : false}><b>Sort Data</b></Button>&nbsp;&nbsp;
 					<Form className="searchForm" style={{ position: 'absolute', top: '10px', right: '10px' }}>
 						<Form.Control
@@ -133,6 +171,7 @@ class SensorDash extends React.Component {
 				<div id='data'>
 					{this.state.sensorRender}
 				</div>
+				<ManageAddModal submit={this.addSensor} show={this.state.showAddModal} toggleAddModal={this.toggleAddModal} labels={["Name", "Category", "Output Unit", "CAN ID", "Frequency", "Code Name"]} title={"Add Sensor"} />
 			</div>
 		);
 	}

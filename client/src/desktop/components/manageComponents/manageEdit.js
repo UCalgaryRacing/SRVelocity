@@ -16,6 +16,7 @@ export default class ManageEdit extends React.Component {
     }
 
     componentWillMount = () => {
+        this.formRefs = new Array();
         this.generateFields();
     }
 

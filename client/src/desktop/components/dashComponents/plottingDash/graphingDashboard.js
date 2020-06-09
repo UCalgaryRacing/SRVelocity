@@ -134,7 +134,7 @@ export default class GraphingDashboard extends React.Component {
                 <div style={{ marginBottom: '20px' }}>
                     {this.container}
                 </div>
-                <Modal show={this.state.showAddModal} onHide={this.showAddModal}>
+                {/* <Modal show={this.state.showAddModal} onHide={this.showAddModal}>
                     <Modal.Header closeButton>
                         <Modal.Title>
                             <b style={{ position: 'absolute', marginLeft: '8px', marginBottom: '16px', marginTop: '2px', fontSize: '2rem'}}>Add Graph</b>
@@ -146,7 +146,7 @@ export default class GraphingDashboard extends React.Component {
                             <ModalSensorChoice hide={this.showAddModal} displayed={this.state.plots} add={this.addToDash} updateSelectionComplete={this.updateAddedGraphs} /> :
                             <ModalCustomChoice hide={this.showAddModal} displayed={this.state.plots} sendOptions={this.sendOptions} />}
                     </Modal.Body>
-                </Modal>
+                </Modal> */}
             </div>
         ); //Add copyright at the bottom
     }

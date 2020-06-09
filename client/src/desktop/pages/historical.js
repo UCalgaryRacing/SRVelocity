@@ -1,8 +1,8 @@
 import React from 'react';
 import HistoricalSideNav from '../components/navigationComponents/historicalSideNav';
-import HistoricalContent from '../components/historicalComponents/historicalData/historicalContent';
+import HistoricalContent from '../components/historicalComponents/historicalContent';
 import WithAuth from './withAuth';
-import '../styling/streaming.css'
+import '../styling/historical.css'
 
 class HistoricalPage extends React.Component {
     constructor(props) {
@@ -12,7 +12,7 @@ class HistoricalPage extends React.Component {
 
     render = () => {
         return (
-            <div id='streamingPage' style={{marginTop: '125px', marginLeft: '10px', marginRight: '10px'}}>
+            <div id='historicalPage'>
                 <HistoricalSideNav streamingContent={this.historicalContent} />
                 <HistoricalContent ref={this.historicalContent}/>
             </div>

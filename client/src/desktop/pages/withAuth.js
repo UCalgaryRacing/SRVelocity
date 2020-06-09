@@ -38,7 +38,7 @@ export default function WithAuth(ComponentToProtect) {
             if (redirect) return <Redirect to='/signin' />
             return (
                 <React.Fragment>
-                    <ComponentToProtect />
+                    <ComponentToProtect/>
                 </React.Fragment>
             );
         }

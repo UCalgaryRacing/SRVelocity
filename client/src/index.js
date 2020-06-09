@@ -4,6 +4,11 @@ import { Switch, BrowserRouter as Router, Route } from "react-router-dom";
 import ReactGA from 'react-ga';
 import "./desktop/styling/index.css";
 
+import 'bootstrap/dist/css/bootstrap.min.css';
+import './wTopBar/css/normalize.css';
+import './wTopBar/css/webflow.css';
+import './wTopBar/css/schulich-velocity.webflow.css';
+
 //Import desktop pages
 import HomePage from "./desktop/pages/home";
 import StreamingPage from "./desktop/pages/streaming";
@@ -14,7 +19,6 @@ import ManagePage from "./desktop/pages/manage";
 import LicensesPage from "./desktop/pages/licenses";
 import ErrorPage from "./desktop/pages/error";
 import SignUpPage from "./desktop/pages/signup";
-import TopNav from './desktop/components/navigationComponents/topNav';
 
 import SensorData from "./constants";
 
@@ -30,7 +34,6 @@ class App extends React.Component {
 	render = () => {
 		return (
 			<Router>
-				<TopNav/>
 				<Switch>
 					<Route exact path="/" component={() => <HomePage />} />
 					<Route exact path="/home" component={() => <HomePage />} />

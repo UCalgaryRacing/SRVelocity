@@ -12,12 +12,13 @@ export default (props) => {
             [{ list: 'ordered'}, { list: 'bullet' }],
         ],
     };
-    const placeholder = "What's the qualitative data?";
+    const placeholder = "Write with velocity...";
     const formats = ['bold', 'italic', 'underline', 'list'];
     const { quill, quillRef } = useQuill({ theme, modules, formats, placeholder });
 
     const addComment = () => {
         props.pushComment(quill.root.innerHTML)
+        quill.deleteText();
     }
 
     return (

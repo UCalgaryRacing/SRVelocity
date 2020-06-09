@@ -3,33 +3,30 @@ import { GATEWAYSERVERIP } from '../../../../dataServerEnv';
 import CSVBox from './CSVBox';
 import { Button, Form } from 'react-bootstrap';
 import UploadFileModal from './uploadFileModal';
-import BottomNav from '../../navigationComponents/bottomNav';
-import './historicalContent.css';
+import './historicalDash.css'
 
 export default class HistoricalContent extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
             content: 'Dash',
-            marginLeft: '64px',
+            marginLeft: this.props.marginLeft,
             toggleDash: false,
             CSVFiles: [],
-            showUploadModal: false
+            showUploadModal: false,
+            sideOpen: false
         }
         this.comments = [];
     }
 
     componentDidMount = () => {
-        this.getAllFiles()
+        this.getAllFiles();
     }
+
 
     changeContent = (newContent) => {
         this.setState({ content: newContent });
         this.forceUpdate();
-    }
-
-    changeLeftMargin = () => {
-        this.setState({ marginLeft: (this.state.marginLeft === '64px') ? '270px' : '64px' });
     }
 
     getAllFiles = () => {
@@ -68,14 +65,8 @@ export default class HistoricalContent extends React.Component {
     }
 
     render = () => {
-        let dashSelector = (
-            <Button style={{ width: '150px', height: '36px', background: '#C22E2D', borderColor: '#C22E2D' }} onClick={() => { this.setState({ showUploadModal: true }) }}><b>Upload CSV</b></Button>
-        );
-        let typeSelector = (
-            <Button style={{ width: '150px', height: '36px', background: '#C22E2D', borderColor: '#C22E2D' }} onClick={this.changeType} disabled={(this.state.typeOption === 'plotting') ? true : false}><b>Sort Data</b></Button>
-        );
         return (
-            <div id='historicalPage' style={{ marginTop: '15px', transition: 'all 0.15s', marginLeft: this.state.marginLeft }}>
+            <div id='historicalDash'>
                 <div id='top' style={{
                     position: 'fixed',
                     top: '56px',
@@ -83,7 +74,7 @@ export default class HistoricalContent extends React.Component {
                     left: '0',
                     zIndex: '999',
                     height: this.state.typeOption === 'plotting' && this.state.showBottomNav && window.innerWidth < 1000 ? '102px' : '56px',
-                    paddingLeft: 'calc(' + this.state.marginLeft + ' + 10px)',
+                    paddingLeft: 'calc(' + this.props.marginLeft + ' + 10px)',
                     paddingTop: '10px',
                     background: '#F5F5F5',
                     borderColor: '#C22D2D',
@@ -91,11 +82,11 @@ export default class HistoricalContent extends React.Component {
                     borderBottomWidth: '1px',
                     borderStyle: 'solid'
                 }}>
-                    {dashSelector}&nbsp;&nbsp;
-                    {typeSelector}&nbsp;&nbsp;
-                    <Form className="emailForm" style={{position: 'absolute', top: '10px', right: '10px'}}>
-                        <Form.Control style={{width: '150px', height: '36px'}}
-                            className="emailFormControl"
+                    <Button id='uploadButton' onClick={() => { this.setState({ showUploadModal: true }) }}><b>Upload CSV</b></Button>&nbsp;&nbsp;
+                    <Button id='sortButton' onClick={this.changeType} disabled={(this.state.typeOption === 'plotting') ? true : false}><b>Sort Data</b></Button>&nbsp;&nbsp;
+                    <Form className="searchForm" style={{ position: 'absolute', top: '10px', right: '10px' }}>
+                        <Form.Control
+                            className="searchFormControl"
                             ref={this.emailForm}
                             autoComplete="on"
                             placeHolder="Search"
@@ -103,11 +94,10 @@ export default class HistoricalContent extends React.Component {
                         />
                     </Form>
                 </div>
-                <div id='dashboard'>
+                <div id='data'>
                     <UploadFileModal show={this.state.showUploadModal} onHide={() => this.setState({ showUploadModal: false })} />
                     {this.state.CSVFiles}
                 </div>
-                <BottomNav/>
             </div>
         );
     }

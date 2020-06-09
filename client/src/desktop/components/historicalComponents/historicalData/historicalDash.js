@@ -4,7 +4,7 @@ import CSVBox from './CSVBox';
 import { Button, Form } from 'react-bootstrap';
 import UploadFileModal from './uploadFileModal';
 import './historicalDash.css'
-import SearchModal from './searchModal';
+var _ = require('lodash');
 
 export default class HistoricalContent extends React.Component {
     constructor(props) {
@@ -18,8 +18,7 @@ export default class HistoricalContent extends React.Component {
             sideOpen: false,
             showSearched: false,
             searchedFiles: [],
-            showSearchModal: false,
-            emptySearch: false
+            showSearchModal: false
         }
         this.comments = [];
     }
@@ -78,7 +77,6 @@ export default class HistoricalContent extends React.Component {
             return;
         }
         var filtered = [...this.state.CSVFiles]
-
         function filterParam(param, value) {
             return filtered.filter(file => file.props[param].toLowerCase().includes(value.toLowerCase()))
         }
@@ -86,7 +84,9 @@ export default class HistoricalContent extends React.Component {
         var driverFilter = filterParam('driver', text);
         var carFilter = filterParam('car', text);
         var dateFilter = filterParam('date', text);
-        filtered = [...fileFilter,...driverFilter,...carFilter,...dateFilter]
+        let temp1 = _.unionBy(fileFilter, driverFilter, 'key');
+        let temp2 = _.unionBy(carFilter, dateFilter);
+        filtered = _.unionBy(temp1, temp2, 'key');
         this.setState({
             searchedFiles: filtered,
             showSearched: true

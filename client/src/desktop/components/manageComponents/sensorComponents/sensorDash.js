@@ -4,13 +4,16 @@ import { withRouter } from "react-router-dom";
 import ManageBox from '../manageBox';
 import ManageAddModal from '../manageAddModal';
 import './sensorDash.css';
+var _ = require('lodash');
 
 class SensorDash extends React.Component {
 	constructor(props) {
 		super(props);
 		this.state = {
 			sensorRender: [],
-			showAddModal: false
+			showAddModal: false,
+			searchedFiles: [],
+			showSearchModal: false,
 		};
 		this.vehicles = [];
 	}
@@ -76,41 +79,41 @@ class SensorDash extends React.Component {
 				"Content-Type": "application/json",
 			},
 			body: JSON.stringify({
-                name: data[0],
-                outputUnit: data[2],
-                category: data[1],
-                codeName: data[5],
-                canId: data[3],
+				name: data[0],
+				outputUnit: data[2],
+				category: data[1],
+				codeName: data[5],
+				canId: data[3],
 				frequency: parseInt(data[4]),
 				vehicleId: 14
-            })
+			})
 		})
-		.then(res => res.json())
-		.then(res => {
-			let box = (
-				<ManageBox
-					labels={["Name", "Category", "Output Unit", "CAN ID", "Frequency", "Code Name"]}
-					values={[data[0], data[1], data[2], data[3], data[4], data[5]]}
-					ID={res.ID} //Get from req
-					key={res.ID}
-					deleteSensor={this.deleteSensor}
-				/>
-			)
-			let temp = this.state.sensorRender;
-			temp.push(box);
-			this.setState({sensorRender: temp});
-		})
-		.catch(err => {
-			console.log(err)
-		})
+			.then(res => res.json())
+			.then(res => {
+				let box = (
+					<ManageBox
+						labels={["Name", "Category", "Output Unit", "CAN ID", "Frequency", "Code Name"]}
+						values={[data[0], data[1], data[2], data[3], data[4], data[5]]}
+						ID={res.ID} //Get from req
+						key={res.ID}
+						deleteSensor={this.deleteSensor}
+					/>
+				)
+				let temp = this.state.sensorRender;
+				temp.push(box);
+				this.setState({ sensorRender: temp });
+			})
+			.catch(err => {
+				console.log(err)
+			})
 	}
 
 	deleteSensor = (ID) => {
-		for(var el in this.state.sensorRender) {
-			if(parseInt(this.state.sensorRender[el].key) === ID) {
+		for (var el in this.state.sensorRender) {
+			if (parseInt(this.state.sensorRender[el].key) === ID) {
 				let temp = this.state.sensorRender;
 				temp.splice(el, 1);
-				this.setState({sensorRender: temp});
+				this.setState({ sensorRender: temp });
 				break;
 			}
 		}
@@ -138,6 +141,30 @@ class SensorDash extends React.Component {
 		this.setState({ showAddModal: !this.state.showAddModal });
 	}
 
+	search = (e) => {
+		e.preventDefault();
+		const text = e.target.value;
+		if (text === "") {
+			this.setState({ showSearched: false });
+			return;
+		}
+		var filtered = [...this.state.sensorRender]
+
+		function filterParam(param, index, value) {
+			return filtered.filter(file => file.props[param][index].toLowerCase().includes(value.toLowerCase()))
+		}
+
+		var nameFilter = filterParam('values', 0, text);
+		var categoryFilter = filterParam('values', 1, text);
+		var codeFilter = filterParam('values', 5, text);
+		let temp = _.unionBy(nameFilter, categoryFilter, 'key');
+		filtered = _.unionBy(temp, codeFilter, 'key');
+		this.setState({
+			searchedFiles: filtered,
+			showSearched: true
+		})
+	}
+
 	render() {
 		return (
 			<div id='sensorDash'>
@@ -160,6 +187,7 @@ class SensorDash extends React.Component {
 					<Button id='sortButton' onClick={this.changeType} disabled={(this.state.typeOption === 'plotting') ? true : false}><b>Sort Data</b></Button>&nbsp;&nbsp;
 					<Form className="searchForm" style={{ position: 'absolute', top: '10px', right: '10px' }}>
 						<Form.Control
+							onChange={this.search}
 							className="searchFormControl"
 							ref={this.emailForm}
 							autoComplete="on"
@@ -169,7 +197,7 @@ class SensorDash extends React.Component {
 					</Form>
 				</div>
 				<div id='data'>
-					{this.state.sensorRender}
+					{this.state.showSearched ? this.state.searchedFiles : this.state.sensorRender}
 				</div>
 				<ManageAddModal submit={this.addSensor} show={this.state.showAddModal} toggleAddModal={this.toggleAddModal} labels={["Name", "Category", "Output Unit", "CAN ID", "Frequency", "Code Name"]} title={"Add Sensor"} />
 			</div>

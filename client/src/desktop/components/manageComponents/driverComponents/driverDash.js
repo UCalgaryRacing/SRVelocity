@@ -4,7 +4,6 @@ import DriverView from "./driverView";
 import DriverForm from "./driverForm";
 import { Row, Col, Button } from "react-bootstrap";
 
-
 class DriverDash extends React.Component {
   constructor(props) {
     super(props);

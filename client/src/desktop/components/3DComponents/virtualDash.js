@@ -11,7 +11,7 @@ export default class VirtualDash extends React.Component {
         return (
             <div id ='dashboard'>
                 <p style={{textAlign: 'center', marginTop: '100px', fontSize: '20px'}}>
-                    Digital Twin Dasboard
+                    Digital Twin Dashboard
                 </p>
                 <p style={{textAlign: 'center', marginTop: '100px', fontSize: '20px'}}>
                     Under Construction

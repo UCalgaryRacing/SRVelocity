@@ -9,7 +9,7 @@ export default (props) => {
         toolbar: [
             [{ header: [1, 2, false] }],
             ['bold', 'italic', 'underline'],
-            [{ list: 'ordered'}, { list: 'bullet' }],
+            [{ list: 'ordered' }, { list: 'bullet' }],
         ],
     };
     const placeholder = "Write with velocity...";
@@ -18,7 +18,9 @@ export default (props) => {
 
     const addComment = () => {
         props.pushComment(quill.root.innerHTML)
-        quill.deleteText();
+        quill.setContents([
+            { insert: '\n' }
+        ]);
     }
 
     return (

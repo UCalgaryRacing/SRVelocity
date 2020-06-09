@@ -118,3 +118,14 @@ input[type=checkbox]:checked + label {
 .form-check input[type="checkbox"]:focus + label::before {
   outline: 0;
 }
+
+.w-nav-link.w--current {
+  color: #FFF !important;
+}
+
+@media only screen and (max-width: 1000px) {
+  .w-nav-link.w--current {
+    color: #FFF !important;
+    background: '#FFF'
+  }
+}

@@ -2,6 +2,7 @@ import React from "react";
 import BottomNav from "../components/navigationComponents/bottomNav";
 import { Jumbotron, Row, Col, FormGroup, Form, Button } from "react-bootstrap";
 import { withRouter } from "react-router-dom";
+import { Redirect } from 'react-router-dom';
 import "../styling/signin.css";
 
 class SignInPage extends React.Component {
@@ -11,7 +12,6 @@ class SignInPage extends React.Component {
 		this.passwordForm = React.createRef();
 		this.state = {
 			showErrorMessage: false,
-			showConfirmationMessage: false,
 			isSignedIn: false
 		};
 	}
@@ -38,13 +38,16 @@ class SignInPage extends React.Component {
 			}
 			sessionStorage.setItem("Name", resJSON.firstName + " " + resJSON.lastName);
 			sessionStorage.setItem("ID", resJSON.ID);
-			this.setState({ isSignedIn: true, showErrorMessage: false, showConfirmationMessage: true });
+			this.setState({ isSignedIn: true, showErrorMessage: false });
+			this.props.refreshPage();
+			this.props.history.push('/historical')
 		} catch (err) {
 			console.log(err);
 		}
 	};
 
 	handleForgotPassword = () => { };
+
 	render = () => {
 		return (
 			<div id="signIn">
@@ -83,8 +86,7 @@ class SignInPage extends React.Component {
 					</Row>
 					<Row>
 						<Col>
-							{this.state.showErrorMessage ? <p><b>Oops! Please try again.</b></p>: null}
-							{this.state.showConfirmationMessage ? <p><b>Success!</b></p>: null}
+							{this.state.showErrorMessage ? <p><b>Oops! Please try again.</b></p> : null}
 						</Col>
 					</Row>
 					<Row>

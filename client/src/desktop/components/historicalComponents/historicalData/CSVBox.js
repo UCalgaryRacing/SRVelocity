@@ -120,12 +120,11 @@ export default class CSVBox extends React.Component {
         .then(res => res.json())
         .then(async res => {
             let temp = this.state.commentData;
-            let date = new Date(parseInt(res.date));
             temp[res.ID] = {
                 commenter: sessionStorage.getItem("Name"),
                 commenterID: sessionStorage.getItem("ID"),
                 content: content,
-                date: date.toLocaleDateString() + " " + date.toLocaleTimeString()
+                date: res.date
             }
             await this.setState({commentData: temp});
             this.loadComments();

@@ -5,6 +5,7 @@ import SensorData from '../../../../constants';
 import ScatterPlot from './scatterPlot';
 import { ColorHEX } from '@arction/lcjs';
 import { Button, ButtonGroup } from 'react-bootstrap';
+import './heatMap.css';
 
 const colors = colormap({
     colormap: 'jet',
@@ -49,27 +50,28 @@ export default class HeatMap extends React.Component {
         let index = (value[0] - boundaries[0]) / range;
         index = Math.round(index * 500);
         if (index >= 500) index = 499;
-        return ColorHEX(colors[index]);
+        return ColorHEX(colors[499 - index]);
     }
 
     findParamColor = async (sensor) => {
         //Refactor
-        let newValue = 0;
+        let newValue = {};
         if (sensor === 'Acceleration') {
             newValue = await Data.getInstance().getDataPoint('X').then(async xValue => {
                 var yValue = await Data.getInstance().getDataPoint('Y');
-                var newValue = Math.abs(xValue[0]) + Math.abs(yValue[0]);
-                newValue = this.getColor([newValue], [0, 2]);
+                var newValue = {};
+                newValue.val = Math.abs(xValue[0]) + Math.abs(yValue[0]);
+                newValue.col = this.getColor([yValue], [-1.5, 1.5]);
                 return newValue;
             });
         }
         else if (sensor === 'Throttle Position') {
-            newValue = await Data.getInstance().getDataPoint('Throttle Position');
-            newValue = this.getColor(newValue, [0, 100]);
+            newValue.val = await Data.getInstance().getDataPoint('Throttle');
+            newValue.col = this.getColor(newValue.val, [0, 70]);
         }
         else if (sensor === 'Speed') {
-            newValue = await Data.getInstance().getDataPoint('Speed');
-            newValue = this.getColor(newValue, [0, 40]);
+            newValue.val = await Data.getInstance().getDataPoint('Speed');
+            newValue.col = this.getColor(newValue.val, [0, 40]);
         }
         return newValue;
     }
@@ -80,9 +82,10 @@ export default class HeatMap extends React.Component {
         if (this.forceMapUpdate) this.forceMapUpdate = false;
         let temp = this.props.currentPoint;
         for (var sensor in this.state.data) {
-            var paramColour = await this.findParamColor(sensor);
+            var val = await this.findParamColor(sensor);
             let point = { x: temp.x, y: temp.y };
-            point.color = paramColour;
+            point.color = val.col;
+            point.val = val.val;
             this.state.data[sensor].push(point);
         }
         let colArray = this.state.data[this.state.selection];
@@ -98,20 +101,17 @@ export default class HeatMap extends React.Component {
 
     render = () => {
         return (
-            <div style={{ width: '100%' }}>
+            <div id='heatMap' style={{ width: '100%' }}>
                 <ScatterPlot id='scatter'
                     mapUpdate={this.forceMapUpdate}
                     data={this.state.data[this.state.selection]}
                     point={this.state.currentPoint}
                     dataTitle={this.state.selection}
                     unit={this.selectionUnit} />
-                <Button id='deleteGraph' onClick={() => this.props.delete(this.props.index)} style={{ position: 'absolute', right: '50px', top: '18px', display: this.props.hideClose ? 'none': ''}}>
-                    <img id="logoImg" width="10px" src={require('../../../../assets/delete-x.svg')} />
-                </Button>
-                <div style={{ textAlign: 'center' }}>
-                    <ButtonGroup id='dashSelector' style={{ margin: '20px' }}>
-                        <Button style={{ width: '120px' }} id='defaultButton' onClick={() => this.refreshMap('Speed')} disabled={(this.state.selection === 'Speed')}><b>Speed</b></Button>
-                        <Button style={{ width: '120px' }} id='customButton' onClick={() => this.refreshMap('Acceleration')} disabled={(this.state.selection === 'Acceleration')}><b>Acceleration</b></Button>
+                <div style={{ textAlign: 'center', marginBottom: '10px'}}>
+                    <ButtonGroup id='heatMapSelector'>
+                        <Button style={{ width: '120px !important' }} id='customButton' onClick={() => this.refreshMap('Speed')} disabled={(this.state.selection === 'Speed')}><b>Speed</b></Button>
+                        <Button style={{ width: '120px' }} id='customButton' onClick={() => this.refreshMap('Acceleration')} disabled={(this.state.selection === 'Acceleration')}><b>Accel</b></Button>
                         <Button style={{ width: '120px' }} id='customButton' onClick={() => this.refreshMap('Throttle Position')} disabled={(this.state.selection === 'Throttle Position')}><b>Throttle</b></Button>
                     </ButtonGroup >
                 </div>

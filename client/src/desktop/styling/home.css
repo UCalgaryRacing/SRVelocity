@@ -6,9 +6,11 @@
 }
 
 #homePage .jumbotron {
-    margin: 0% 25%;
+    margin: auto;
     margin-top: 50px;
     background: white;
+    max-width: 800px;
+    min-width: 300px;
 }
 
 #homePage #row1{
@@ -30,9 +32,11 @@
     margin-top: 20px;
 }
 
+/* font-size: 2rem; */
+
 #homePage #infoPara{
-    font-size: 2rem;
     margin-top: 20px;
+    font-size: xx-large;
 }
 
 #homePage #streamingButton {
@@ -40,6 +44,5 @@
     background: rgb(194, 45, 45);
     border-color: #fff;
     width: 100%;
-    border-radius: 3rem;
     font-size: 3rem;
 }

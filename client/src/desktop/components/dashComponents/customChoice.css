@@ -1,0 +1,94 @@
+#graphChoice {
+    font-weight: 600;
+}
+
+#customChoice #submitButton {
+    width: 320px;
+}
+
+.form-check {
+    margin-left: 0px;
+}
+
+@media only screen and (max-width: 1000px) {
+        .form-check {
+        width: 100%;
+        margin: 15px auto;
+        position: relative;
+        display: block;
+      }
+      
+      .form-check input[type="checkbox"] {
+        width: auto;
+        opacity: 0.00000001;
+        position: absolute;
+        left: 0;
+        margin-left: -20px;
+      }
+      .form-check label {
+        position: relative;
+      }
+      .form-check label:before {
+        content: '';
+        position: absolute;
+        left: 0;
+        top: 0;
+        margin: 6px;
+        margin-bottom: 0px;
+        margin-top: 3px;
+        width: 44px;
+        height: 44px;
+        transition: transform 0.28s ease;
+        border-radius: 3px;
+        border: 2px solid #C22D2D;
+      }
+      .form-check label:after {
+        content: '';
+        display: block;
+        width: 20px;
+        height: 10px;
+        border-bottom: 2px solid #C22D2D;
+        border-left: 2px solid #C22D2D;
+        -webkit-transform: rotate(-45deg) scale(0);
+        -moz-transform: rotate(-45deg) scale(0);
+        -ms-transform: rotate(-45deg) scale(0);
+        transform: rotate(-45deg) scale(0);
+        position: absolute;
+        top: 18px;
+        left: 18px;
+      }
+      .form-check input[type="checkbox"]:checked ~ label::before {
+        color: #C22D2D;
+      }
+      .form-check input[type="checkbox"]:checked ~ label::after {
+        -webkit-transform: rotate(-45deg) scale(1);
+        -moz-transform: rotate(-45deg) scale(1);
+        -ms-transform: rotate(-45deg) scale(1);
+        transform: rotate(-45deg) scale(1);
+      }
+      .form-check label {
+        min-height: 10px;
+        display: block;
+        padding-left: 60px;
+        padding-top: 14px;
+        font-size: 20px;
+        margin-bottom: 0;
+        cursor: pointer;
+        vertical-align: sub;
+      }
+      .form-check label span {
+        position: absolute;
+        top: 50%;
+        -webkit-transform: translateY(-50%);
+        transform: translateY(-50%);
+      }
+      .form-check input[type="checkbox"]:focus + label::before {
+        outline: 0;
+      }
+      #customChoice #submitButton {
+          width: calc(100% - 20px) !important;
+          margin-left: 10px;
+          margin-right: 10px;
+      }
+}
+

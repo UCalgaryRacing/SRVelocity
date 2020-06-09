@@ -23,7 +23,7 @@ export default class CustomPlottingDash extends React.Component {
         return (
             <div id='customDash'>
                 {this.state.showChoice ?
-                    <CustomChoice enter={this.enter} type={'plot'}/>:
+                    <CustomChoice closeBottomNav={this.props.closeBottomNav} openBottomNav={this.props.openBottomNav} enter={this.enter} type={'plot'}/>:
                     <GraphingDashboard plots={this.state.selectedGraphs}/>}
             </div>
         );

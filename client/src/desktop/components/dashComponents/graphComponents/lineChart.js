@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 import { Button } from 'react-bootstrap';
 import { lightningChart, emptyTick, DataPatterns, AxisScrollStrategies, SolidLine, SolidFill, ColorHEX, VisibleTicks, FontSettings, emptyLine } from '@arction/lcjs';
-import '../../../styling/lineChart.css';
+import './lineChart.css';
+import { Figure, Container, Card, CardGroup, CardDeck } from 'react-bootstrap';
 
 const theme = {
     whiteFill: new SolidFill({ color: ColorHEX('#FFFFFF') }),
@@ -18,29 +19,51 @@ export default class LineChart extends Component {
         this.lineSeries = [];
         this.maxValue = 0;
         this.minValue = 0;
+        this.mouseInteractions = false;
         this.colours = ['#C22D2D', '#0071B2', '#009E73', '#E69D00', '#CC79A7']; //Add more colours
+        this.toggleSeries.bind(this);
     }
 
     componentDidMount = () => {
         this.createChart();
+        this.updateFontSize();
+        window.addEventListener("resize", this.updateFontSize);
     }
+
     componentWillUnmount = () => { this.chart.dispose(); }
+
     componentDidUpdate = (prevProps) => {
         if (prevProps.data !== this.props.data) this.pullData();
     }
 
+    updateFontSize = () => {
+        if (window.innerWidth < 1000) {
+            var axis = this.chart.getDefaultAxisY();
+            var font = new FontSettings();
+            font = font.setFamily("helvetica");
+            font = font.setWeight("bold");
+            font = font.setSize(12);
+            axis.setTickStyle((visibleTick) =>
+                visibleTick
+                    .setTickStyle(emptyLine)
+                    .setLabelFont(font)
+                    .setLabelFillStyle(new SolidFill({ color: ColorHEX('#000') }))
+                    .setGridStrokeStyle(new SolidLine({ thickness: 1.5, fillStyle: new SolidFill({ color: ColorHEX('#FFF') }) })))
+        }
+    }
+
     addDerivativeSeries = (data, index) => {
         let map = [];
-        for (let i = 0; i < data.length; i++) map.push({ x: i, y: data[i] }); 
+        for (let i = 0; i < data.length; i++) map.push({ x: i, y: data[i] });
         var colour = this.colours[this.lineSeries.length];
         if (index !== undefined) {
             var parentIndex = this.props.sensors.findIndex(item => item.name + "'" === index);
             colour = this.colours[parentIndex];
         }
         var childIndex = this.props.sensors.findIndex(item => item.name === index);
-        if(childIndex >= 0) {
+        if (childIndex >= 0) {
             this.removeSeries(index, parentIndex, true);
-        } 
+        }
         this.lineSeries.push(
             this.chart.addLineSeries({ dataPattern: DataPatterns.horizontalProgressive })
                 .setName(index)
@@ -50,21 +73,21 @@ export default class LineChart extends Component {
                 thickness: 2,
                 fillStyle: new SolidFill({ color: ColorHEX(colour) })
             }).setFillStyle(solidfill => solidfill.setA((index !== undefined) ? '80' : 'FF')))
-            .setMouseInteractions(false)
+            .setMouseInteractions(this.mouseInteractions)
             .setResultTableFormatter((builder, series, Xvalue, Yvalue) => {
-                return builder.addRow(Yvalue.toFixed(3) + " " + this.props.sensors[this.lineSeries.length - 1].output_unit)
+                return builder.addRow(series.getName() + ": " + Yvalue.toFixed(2) + " " + this.props.sensors[this.lineSeries.length - 1].output_unit)
             })
             .add(map.map((point) => ({ x: point.x, y: point.y })));
     }
 
     removeSeries = (index, parent, update) => {
-        for(var series in this.lineSeries) {
+        for (var series in this.lineSeries) {
             if (this.lineSeries[series].getName() === index) {
                 this.lineSeries[series].dispose();
                 this.lineSeries.splice(series, 1);
             }
         }
-        if(update) return;
+        if (update) return;
         let min = Math.round(this.lineSeries[parent].getYMin() * 1.3);
         let max = Math.round(this.lineSeries[parent].getYMax() * 1.3);
         if (Math.abs(min) < 1.5 && Math.abs(max) < 1.5) {
@@ -95,7 +118,7 @@ export default class LineChart extends Component {
                     .setGridStrokeStyle(new SolidLine({ thickness: 1, fillStyle: new SolidFill({ color: ColorHEX('#FFF') }) }))
             );
             axis.setScrollStrategy(AxisScrollStrategies.expansion)
-                .setMouseInteractions(false)
+                .setMouseInteractions(this.mouseInteractions)
                 .setStrokeStyle(new SolidLine({
                     thickness: 3,
                     fillStyle: new SolidFill({ color: ColorHEX('#C8C8C8') })
@@ -124,13 +147,13 @@ export default class LineChart extends Component {
             .setBackgroundFillStyle(theme.whiteFill)
             .setChartBackgroundFillStyle(theme.whiteFill);
         this.chart
-            .setMouseInteractions(false)
-            .setMouseInteractionWheelZoom(false)
-            .setMouseInteractionPan(false)
-            .setMouseInteractionRectangleFit(false)
-            .setMouseInteractionRectangleZoom(false)
-            .setMouseInteractionsWhileScrolling(false)
-            .setMouseInteractionsWhileZooming(false);
+            .setMouseInteractions(this.mouseInteractions)
+            .setMouseInteractionWheelZoom(this.mouseInteractions)
+            .setMouseInteractionPan(this.mouseInteractions)
+            .setMouseInteractionRectangleFit(this.mouseInteractions)
+            .setMouseInteractionRectangleZoom(this.mouseInteractions)
+            .setMouseInteractionsWhileScrolling(this.mouseInteractions)
+            .setMouseInteractionsWhileZooming(this.mouseInteractions)
         //Configure the cursor
         let autoCursor = this.chart.getAutoCursor();
         autoCursor.setGridStrokeXStyle(new SolidLine({
@@ -154,7 +177,7 @@ export default class LineChart extends Component {
         this.chart.getDefaultAxisX()
             .setScrollStrategy(AxisScrollStrategies.progressive)
             .setTickStyle(emptyTick)
-            .setMouseInteractions(false)
+            .setMouseInteractions(this.mouseInteractions)
             .setInterval(0, 300)
             .setStrokeStyle(new SolidLine({
                 thickness: 3,
@@ -162,7 +185,7 @@ export default class LineChart extends Component {
             }));
         this.chart.getDefaultAxisY()
             .setScrollStrategy(AxisScrollStrategies.expansion)
-            .setMouseInteractions(false)
+            .setMouseInteractions(this.mouseInteractions)
             .setStrokeStyle(new SolidLine({
                 thickness: 3,
                 fillStyle: new SolidFill({ color: ColorHEX('#C8C8C8') })
@@ -186,13 +209,13 @@ export default class LineChart extends Component {
                     thickness: 2,
                     fillStyle: new SolidFill({ color: ColorHEX(this.colours[i]) })
                 }))
-                .setMouseInteractions(false)
+                .setMouseInteractions(this.mouseInteractions)
                 .setResultTableFormatter((builder, series, Xvalue, Yvalue) => {
                     return builder
-                        .addRow(Yvalue.toFixed(3) + ' ' + this.props.sensors[0].output_unit)
+                        .addRow(series.getName() + ": " + Yvalue.toFixed(2) + ' ' + this.props.sensors[0].output_unit)
                 });
         }
-        //Don't allow scrolling
+        //Allow scrolling while hovering over chart
         this.chart.engine.container.onwheel = null;
         this.setupComplete = true;
     }
@@ -240,6 +263,12 @@ export default class LineChart extends Component {
         }
     }
 
+    toggleSeries = (index) => {
+        if (this.lineSeries[index].isDisposed()) this.lineSeries[index].restore();
+        else this.lineSeries[index].dispose();
+        this.setState({});
+    }
+
     render() {
         //Just to shorten the code a bit
         let data = this.props.data;
@@ -250,37 +279,47 @@ export default class LineChart extends Component {
             if (sensors[sensor].derivative) continue;
             const derivative = sensors.filter(item => item.name === sensors[sensor].name + "'" && item.derivative);
             content.push(
-                <div class='col' style={{ textAlign: 'center', padding: '0', paddingBottom: '3px' }}>
-                    <div class='row' style={{ textAlign: 'center', width: '100%', padding: '0', margin: '0' }}>
-                        <div class='col' style={{ color: this.colours[sensor], fontStyle: 'bold', textAlign: 'right', padding: '0', fontSize: '1rem' }}>
-                            <Button id='derivativeButton' onClick={() => { this.props.controlDerivative(sensors[sensor].name) }}><b style={{ fontStyle: 'italic', fontSize: '1rem' }}>f'(x)</b></Button>
-                            <b style={{ fontSize: '1rem', verticalAlign: 'middle' }}>{sensors[sensor].name}:</b>
-                        </div>
-                        <div class='col-xs' style={{ fontStyle: 'bold', textAlign: 'center', padding: '0', fontSize: '1rem', width: '100px' }}><b style={{ verticalAlign: 'middle' }}>{(data === undefined) ? '0' : data[sensor]}</b></div>
-                        <div class='col' style={{ fontStyle: 'bold', textAlign: 'left', padding: '0', fontSize: '1rem' }}><b style={{ verticalAlign: 'middle' }}>{sensors[0].output_unit}</b></div>
-                    </div>
-                    {derivative.length !== 0 ?
-                        <div class='row' style={{ textAlign: 'center', width: '100%', padding: '0', margin: '0', marginTop: '10px' }}>
-                            <div class='col' style={{ color: this.colours[sensor] + '80', fontStyle: 'bold', textAlign: 'right', padding: '0', fontSize: '1rem' }}><b>{derivative[0].name}:</b></div>
-                            <div class='col-xs' style={{ fontStyle: 'bold', textAlign: 'center', padding: '0', fontSize: '1rem', width: '100px' }}><b>{(data === undefined) ? '0' : (data[sensor] * 10).toFixed(2)}</b></div>
-                            <div class='col' style={{ fontStyle: 'bold', textAlign: 'left', padding: '0' }}>
-                                <b>
-                                    {!sensors[sensor].output_unit.includes('/sec') ? derivative[0].output_unit : <span>{sensors[sensor].output_unit}<sup>2</sup></span>}
-                                </b>
+                <div id='chart-text'>
+                    <Card border='light' style={{ width: '313px', margin: 'auto' }}>
+                        <Card.Body style={{ padding: '0' }}>
+                            <div id='outer-col' class='col' style={{ textAlign: 'center', padding: '0', paddingBottom: '3px', margin: 'auto' }}>
+                                <div class='row' style={{ textAlign: 'center', padding: '0', margin: 'auto' }}>
+                                    <div style={{ margin: 'auto' }}>
+                                        <div class='col-xs' style={{ color: this.colours[sensor], fontStyle: 'bold', textAlign: 'right', padding: '0', fontSize: '1rem', display: 'inline-block', marginTop: '5px', width: '143px' }}>
+                                            <Button id='derivativeButton' onClick={() => { this.props.controlDerivative(sensors[sensor].name) }}><b style={{ fontStyle: 'italic', fontSize: '1rem' }}>f'(x)</b></Button>
+                                            <b style={{ fontSize: '1rem', float: 'right', display: 'inline-block', marginTop: '3px', cursor: 'pointer', textDecoration: this.lineSeries[sensor] !== undefined && this.lineSeries[sensor].isDisposed() ? 'line-through': 'none' }} onClick={() => this.toggleSeries(sensor)}>{sensors[sensor].name}:</b>
+                                        </div>
+                                        <div class='col-xs' style={{ fontStyle: 'bold', textAlign: 'center', padding: '0', fontSize: '1rem', width: '70px', display: 'inline-block' }}><b style={{ verticalAlign: 'middle' }}>{(data === undefined) ? '0' : data[sensor]}</b></div>
+                                        <div class='col-xs' style={{ fontStyle: 'bold', textAlign: 'left', padding: '0', fontSize: '1rem', display: 'inline-block', marginBottom: '5px', width: '100px' }}><b style={{ verticalAlign: 'middle', marginTop: '3px' }}>{sensors[0].output_unit}</b></div>
+                                    </div>
+                                </div>
+                                {
+                                    derivative.length !== 0 ?
+                                        <div class='row' style={{ textAlign: 'center', padding: '0', margin: 'auto', marginTop: '5px', width: '100%' }}>
+                                            <div style={{ margin: 'auto' }}>
+                                                <div class='col-xs' style={{ color: this.colours[sensor] + '80', fontStyle: 'bold', textAlign: 'right', padding: '0', fontSize: '1rem', display: 'inline-block', width: '143px' }}><div style={{ width: '34px' }} /><b>{derivative[0].name}</b></div>
+                                                <div class='col-xs' style={{ fontStyle: 'bold', textAlign: 'center', padding: '0', fontSize: '1rem', width: '70px', display: 'inline-block' }}><b></b></div>
+                                                <div class='col-xs' style={{ fontStyle: 'bold', textAlign: 'left', padding: '0', fontSize: '1rem', width: '100px', display: 'inline-block', marginBottom: '5px' }}><b style={{ verticalAlign: 'middle', marginTop: '3px' }}></b></div>
+                                            </div>
+                                        </div>
+                                        :
+                                        null
+                                }
                             </div>
-                        </div>
-                        :
-                        null
-                    }
+                        </Card.Body>
+                    </Card>
                 </div>
             );
         }
+
         return (
-            <div style={{ marginBottom: '20px' }}>
-                <div class='row' style={{ textAlign: 'center', fontSize: '1rem', fontStyle: 'bold', paddingTop: '0', paddingBottom: '0', marginBottom: '0px', marginTop: '10px', marginRight: '0', marginLeft: '0', width: '100%' }}>
-                    {content}
-                </div>
-                <div id={this.chartId} className='fill' style={{ height: '500px' }}></div>
+            <div id='lineChart' style={{ marginBottom: '20px' }}>
+                {window.innerHeight < 1000 ? content :
+                    <CardDeck style={{ justifyContent: 'center', marginLeft: '5px', marginRight: '5px' }}>
+                        {content}
+                    </CardDeck>
+                }
+                <div id={this.chartId} style={{ height: '500px' }} className='fill'></div>
             </div>
         );
     }

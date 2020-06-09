@@ -1,38 +1,55 @@
-import React from 'react';
+import React from "react";
+import HistoricalDash from './historicalData/historicalDash';
+import BottomNav from '../navigationComponents/bottomNav';
+import '../../styling/historicalContent.css';
 
-export default class HistoricalContent extends React.Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            content: 'Dash',
-            marginLeft: '80px',
-            toggleDash: false
-        }
-    }
+export default class StreamingContent extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      content: "Data",
+      marginLeft: window.innerWidth < 1000 ? "0px" : "64px",
+      toggleDash: false,
+      sideOpen: false
+    };
+  }
 
-    changeContent = (newContent) => {
-        this.setState({ content: newContent });
-        this.forceUpdate();
-    }
+  componentWillMount = () => {
+    window.addEventListener("resize", this.updateMargin);
+  }
 
-    changeLeftMargin = () => {
-        this.setState({ marginLeft: (this.state.marginLeft === '80px') ? '270px' : '80px' });
+  updateMargin = () => {
+    if (window.innerWidth < 1000) {
+      this.setState({
+        marginLeft: "0px"
+      });
+    } else {
+      this.setState({
+        marginLeft: this.state.sideOpen ? '240px' : '64px'
+      });
     }
+  }
 
-    render = () => {
-        return (
-            <div id='streamingPage' style={{ marginTop: '15px', transition: 'all 0.15s', marginLeft: this.state.marginLeft }}>
-                <div id='dashboard'>
-                    <p style={{ textAlign: 'center', marginTop: '20px', fontSize: '1.5rem' }}>
-                        Historical Dashboard
-                        </p>
-                    <p style={{ textAlign: 'center', marginTop: '20px', fontSize: '1.5rem' }}>
-                        On this dashboard, you will be able to download CSV data, comment on CSV data, create and save custom data 
-                        visualization. There may also be some applications for race/driver comparisons. This part of the system will
-                        not be visible to the public. 
-                        </p>
-                </div>
-            </div>
-        );
-    }
+  changeLeftMargin = () => {
+    this.setState({
+      marginLeft: this.state.marginLeft === "64px" ? "240px" : "64px",
+      sideOpen: !this.state.sideOpen
+    });
+  };
+
+  changeContent = (newContent) => {
+    this.setState({ content: newContent });
+  }
+
+  render = () => {
+    return (
+      <div
+        id="historicalContent"
+        style={{ transition: "all 0.15s", marginLeft: this.state.marginLeft}}
+      >
+        {this.state.content === "Data" ? <HistoricalDash marginLeft={this.state.marginLeft}/> : null}
+        <BottomNav/>
+      </div>
+    );
+  };
 }

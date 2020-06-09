@@ -43,7 +43,8 @@ export default class Data {
             this.datasets['Track Map'] = [{}];
         });
         //Connection to server for data receiving
-        const socket = socketIOClient('http://127.0.0.1:4000'); //CHANGE WHEN DEPLOYING!
+        const { DATASTREAMINGIP } = require('./dataServerEnv')
+        const socket = socketIOClient(DATASTREAMINGIP); //CHANGE WHEN DEPLOYING!
         socket.on('new data', (data) => {
             this.updateData(data)
         });
@@ -99,11 +100,7 @@ export default class Data {
         sensorData.then(sensorData => {
             if (this.count > 254) {
                 clearInterval(this.timer);
-                //this.datasets = {};
-                //for (var sensor of sensorData) this.datasets[sensor.code_name] = [];
-                // this.datasets['Track Map'] = [{}];
-                //this.testing = false;
-                //this.count = 0;
+                this.testing = false;
                 return;
             }
             var data = {
@@ -200,6 +197,10 @@ export default class Data {
     doTestRun = () => {
         sensorData.then(sensorData => {
             if(!this.testing) {
+                this.datasets = {};
+                for (var sensor of sensorData) this.datasets[sensor.code_name] = [];
+                this.datasets['Track Map'] = [{}];
+                this.count = 0;
                 this.timer = setInterval(this.pushTestData.bind(this), 100);
                 this.testing = true;
             } 

@@ -1,24 +1,25 @@
+import { GATEWAYSERVERIP } from './dataServerEnv'
+
 export default class SensorData {
     static instance = null;
     static sensors =
-        fetch('http://localhost:5000/api/pgdb/getSensors', {
+        fetch(GATEWAYSERVERIP + '/api/pgdb/getSensors', {
             method: 'GET',
             headers: {
-                'Content-Type': 'application/json',
-                "accepts":"application/json"
+                'Content-Type': 'application/json'
             }
         })
         .then(res => res.json())
         .then(res => { return res; })
         .catch(err => { console.log(err) });
 
-    constructor() { }
+  constructor() { }
 
   getCategories = async (category) => {
     var sensors = await SensorData.sensors;
     var lookup = {};
     var result = [];
-    for (var sensor, i = 0; (sensor = sensors[i++]); ) {
+    for (var sensor, i = 0; (sensor = sensors[i++]);) {
       var category = sensor.category;
       if (!(category in lookup)) {
         lookup[category] = category;

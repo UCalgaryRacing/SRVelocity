@@ -5,8 +5,7 @@ import { Button } from 'react-bootstrap';
 import { Slider } from '@material-ui/core';
 import { withStyles } from '@material-ui/core/styles';
 import Data from '../../../../data';
-import Dash from '../dashboard';
-import '../../../styling/graphBox.css';
+import './graphBox.css';
 import savitzkyGolay from 'ml-savitzky-golay';
 
 const RangeSlider = withStyles({
@@ -119,7 +118,7 @@ export default class GraphBox extends React.Component {
                 data = this.smoothenData(data, 1, false);
                 let dx = this.smoothenData(data, 0.1, true);
                 const name = this.props.sensors[this.dxdtParentIndices[i]].name + "'";
-                if(this.chart.current !== null)
+                if (this.chart.current !== null)
                     this.chart.current.addDerivativeSeries(dx, name);
             });
         }
@@ -183,16 +182,24 @@ export default class GraphBox extends React.Component {
     render = () => {
         if (this.state.sensors[0].category === 'Track Map') {
             return (
-                <div id='graphBox' style={{ marginRight: '19px', marginLeft: '0px' }}>
-                    <p id='graphTitle'><b style={{ fontSize: '1.8rem' }}>{'Track Map'}</b></p>
-                    <HeatMap currentPoint={this.state.data} delete={this.props.delete} index={this.props.id} hideClose={this.props.hideClose}/>
+                <div id='graphBox'>
+                    <p id='graphTitle'><b>{'Track Map'}</b></p>
+                    <HeatMap currentPoint={this.state.data} delete={this.props.delete} index={this.props.id} />
+                    {
+                        !this.props.hideClose ?
+                            <Button id='deleteGraph' onClick={() => this.props.delete(this.props.id)} style={{ position: 'absolute' }}>
+                                <img id="logoImg" width="40px" style={{ marginTop: '2px' }} src={require('../../../../assets/delete-x.svg')} />
+                            </Button>
+                            :
+                            null
+                    }
                 </div>
             );
         }
         else {
             return (
-                <div id='graphBox' style={{ borderColor: this.state.indicationColour, marginRight: '19px', marginLeft: '0px' }}>
-                    <p id='graphTitle'><b style={{ color: this.state.indicationColour, fontSize: '1.8rem' }}>{this.props.sensors[0].category}</b></p>
+                <div id='graphBox' style={{ borderColor: this.state.indicationColour }}>
+                    <p id='graphTitle' style={{ height: '30px' }}><div style={{ paddingTop: '3.5px', paddingBottom: '3.5px' }}><b style={{ color: this.state.indicationColour }}>{this.props.sensors[0].category}</b></div></p>
                     <div style={{ marginBottom: '10px' }}>
                         <LineChart
                             id={this.props.id}
@@ -205,12 +212,12 @@ export default class GraphBox extends React.Component {
                             ref={this.chart}
                         />
                     </div>
-                    <div style={{ width: '50%', margin: 'auto' }}>
-                        <Button id='toggleAxis' onClick={this.toggleRightAxis} style={{ position: 'absolute', right: '100px', bottom: '18px' }}>
-                            <img id="logoImg" style={{ width: '16px', height: '20px', marginBottom: '2px' }} src={require('../../../../assets/rightAxis.svg')} />
+                    <div id='graphBottom' style={{ width: '50%', margin: 'auto' }}>
+                        <Button id='toggleAxis' onClick={this.toggleRightAxis} style={{ position: 'absolute' }}>
+                            <img id="logoImg" style={{ width: '26px', marginTop: '-11px', marginLeft: '-12px', position: 'absolute'}} src={require('../../../../assets/rightAxis.svg')} />
                         </Button>
-                        <Button id='toggleAxis' onClick={this.toggleGrid} style={{ position: 'absolute', right: '50px', bottom: '18px' }}>
-                            <img id="logoImg" style={{ width: '15px', height: '20px', marginBottom: '2px' }} src={require('../../../../assets/grid.svg')} />
+                        <Button id='toggleGrid' onClick={this.toggleGrid} style={{ position: 'absolute' }}>
+                            <img id="logoImg" style={{ width: '23px', marginTop: '-11.5px', marginLeft: '-12.5px', position: 'absolute'}} src={require('../../../../assets/grid.svg')} />
                         </Button>
                         <RangeSlider
                             defaultValue={[0, 0.5]}
@@ -225,12 +232,12 @@ export default class GraphBox extends React.Component {
                                 return x.toFixed(1);
                             }}
                         />
-                        <p style={{ textAlign: 'center', marginBottom: '30px' }}><b>Data Range (minutes)</b></p>
+                        <p style={{ textAlign: 'center', marginBottom: '20px', zIndex: '1000' }}><b>Data Range (minutes)</b></p>
                         <div style={{ display: this.dxdtParentIndices.length > 0 ? '' : 'none' }}>
                             <RangeSlider
                                 defaultValue={[5]}
                                 onChange={this.handleWindowChange}
-                                marks={true}
+                                marks={false}
                                 aria-labelledby="discrete-slider"
                                 valueLabelDisplay='on'
                                 step={2}
@@ -242,8 +249,8 @@ export default class GraphBox extends React.Component {
                             />
                             <p style={{ textAlign: 'center', marginBottom: '25px' }}><b>Smoothing Factor</b></p>
                         </div>
-                        <Button id='deleteGraph' onClick={() => this.props.delete(this.props.id)} style={{ position: 'absolute', right: '50px', top: '18px' }}>
-                            <img id="logoImg" width="10px" src={require('../../../../assets/delete-x.svg')} />
+                        <Button id='deleteGraph' onClick={() => this.props.delete(this.props.id)} style={{ position: 'absolute' }}>
+                            <img id="logoImg" width="40px" style={{ marginTop: '2px' }} src={require('../../../../assets/delete-x.svg')} />
                         </Button>
                     </div>
                 </div>

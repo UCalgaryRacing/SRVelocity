@@ -57,6 +57,7 @@ class SignInPage extends React.Component {
 							<img id="logoImg" src={require("../../assets/logo.svg")} />
 						</Col>
 					</Row>
+					<p style={{textAlign: 'center'}}>Looking to log in? Email: guest@sv.com ; Password: fsae2020</p>
 					<Row id="row2">
 						<Col>
 							<Form className="emailForm">

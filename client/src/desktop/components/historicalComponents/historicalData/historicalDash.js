@@ -51,6 +51,7 @@ export default class HistoricalContent extends React.Component {
                             driver={file.metadata.driver}
                             car={file.metadata.car}
                             date={date.toLocaleDateString() + " " + date.toLocaleTimeString()}
+                            realDate={date}
                             deleteFile={this.deleteFile}
                             ID={file.metadata.id}
                             key={i}
@@ -59,6 +60,13 @@ export default class HistoricalContent extends React.Component {
                     )
                     i++
                 }
+                files.sort(function(a, b){ //Newest first
+                    var tempA = b.props.realDate
+                    var tempB = a.props.realDate
+                    if(tempA > tempB) return 1
+                    else if(tempA < tempB) return -1
+                    else return 0
+                });
                 this.setState({ CSVFiles: files })
             })
             .catch(err => { console.log(err) });
@@ -73,6 +81,7 @@ export default class HistoricalContent extends React.Component {
                 driver={driver}
                 car={vehicle}
                 date={date.toLocaleDateString() + " " + date.toLocaleTimeString()}
+                realDate={date}
                 deleteFile={this.deleteFile}
                 ID={ID}
                 key={filename}
@@ -85,6 +94,37 @@ export default class HistoricalContent extends React.Component {
     deleteFile = (index) => {
         this.setState({ CSVFiles: this.state.CSVFiles.filter(file => file.props.index !== index) })
     }
+
+    insert = (box, temp, startIndex, endIndex) => {
+		var length = temp.length;
+		var start = typeof(startIndex) != 'undefined' ? startIndex : 0;
+		var end = typeof(endIndex) != 'undefined' ? endIndex : length - 1;
+		var m = start + Math.floor((end-start)/2);
+
+		if(length == 0){
+			temp.push(box);
+			return;
+		}
+		if(box.props.values[0].toUpperCase() > temp[end].props.values[0].toUpperCase()){
+			temp.splice(end+1, 0, box);
+			return;
+		}
+		if(box.props.values[0].toUpperCase() < temp[start].props.values[0].toUpperCase()){
+			temp.splice(start, 0, box);
+			return;
+		}
+		if(start >= end){
+			return;
+		}
+		if(box.props.values[0].toUpperCase() < temp[m].props.values[0].toUpperCase()){
+			this.insert(box, temp, start, m-1);
+			return;
+		}
+		if(box.props.values[0].toUpperCase() > temp[m].props.values[0].toUpperCase()){
+			this.insert(box, temp, m+1, end);
+			return;
+		}
+	}
 
     search = (e) => {
         e.preventDefault();

@@ -13,8 +13,7 @@ export default class UploadFileModal extends React.Component {
             filename: "",
             showError: false,
             showEmpty: false,
-            showFailure: false,
-            disableButton: false
+            showFailure: false
         }
     }
 
@@ -33,7 +32,7 @@ export default class UploadFileModal extends React.Component {
             this.setState({ showEmpty: true });
             return;
         }
-        this.setState({ showEmpty: false, disableButton: true });
+        this.setState({ showEmpty: false});
         if (!this.state.file) return;
 
         const reader = new FileReader()
@@ -62,6 +61,7 @@ export default class UploadFileModal extends React.Component {
                     })
                         .then(res => {
                             this.props.addCSVBox(filename, driver, vehicle, ID);
+                            this.setState({ showEmpty: false});
                             this.props.onHide();
                         })
                         .catch(err => {
@@ -78,7 +78,7 @@ export default class UploadFileModal extends React.Component {
 
     render = () => {
         return (
-            <Modal show={this.props.show} onHide={this.props.onHide} centered>
+            <Modal show={this.props.show} onHide={this.props.onHide} centered id='renameModal'>
                 <Modal.Header closeButton>
                     <Modal.Title>Upload a CSV File</Modal.Title>
                 </Modal.Header>
@@ -124,7 +124,7 @@ export default class UploadFileModal extends React.Component {
                 </Modal.Body>
                 <Modal.Footer>
                     {this.state.showFailure && <p style={{ textAlign: 'center' }}>Something went wrong. Ensure the name is not a duplicate.</p>}
-                    <Button disabled={this.state.disableButton} style={{ width: '100%', height: '36px', background: '#C22E2D', borderColor: '#C22E2D', marginTop: '10px' }} onClick={this.uploadFile}><b>Upload</b></Button>
+                    <Button style={{ width: '100%', height: '36px', background: '#C22E2D', borderColor: '#C22E2D', marginTop: '10px' }} onClick={this.uploadFile}><b>Upload</b></Button>
                 </Modal.Footer>
             </Modal>
         );

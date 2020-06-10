@@ -44,7 +44,7 @@ export default class RenameFileModal extends React.Component {
                     </Form.Group>
                 </Modal.Body>
                 <Modal.Footer>
-                    <Button style={{ width: '100%', height: '36px', background: '#C22E2D', borderColor: '#C22E2D', marginTop: '10px' }} onClick={this.submitEdit}><b>Submit Name</b></Button>
+                    <Button style={{ width: '100%', height: '36px', background: '#C22E2D', borderColor: '#C22E2D', marginTop: '10px' }} onClick={this.submitName}><b>Submit Name</b></Button>
                 </Modal.Footer>
             </Modal>
         );

@@ -97,12 +97,43 @@ class SensorDash extends React.Component {
 				/>
 			)
 			let temp = this.state.sensorRender;
-			temp.push(box);
+			this.insert(box, temp)
 			this.setState({sensorRender: temp});
 		})
 		.catch(err => {
 			console.log(err)
 		})
+	}
+
+	insert = (box, temp, startIndex, endIndex) => {
+		var length = temp.length;
+		var start = typeof(startIndex) != 'undefined' ? startIndex : 0;
+		var end = typeof(endIndex) != 'undefined' ? endIndex : length - 1;
+		var m = start + Math.floor((end-start)/2);
+
+		if(length == 0){
+			temp.push(box);
+			return;
+		}
+		if(box.props.values[0].toUpperCase() > temp[end].props.values[0].toUpperCase()){
+			temp.splice(end+1, 0, box);
+			return;
+		}
+		if(box.props.values[0].toUpperCase() < temp[start].props.values[0].toUpperCase()){
+			temp.splice(start, 0, box);
+			return;
+		}
+		if(start >= end){
+			return;
+		}
+		if(box.props.values[0].toUpperCase() < temp[m].props.values[0].toUpperCase()){
+			this.insert(box, temp, start, m-1);
+			return;
+		}
+		if(box.props.values[0].toUpperCase() > temp[m].props.values[0].toUpperCase()){
+			this.insert(box, temp, m+1, end);
+			return;
+		}
 	}
 
 	deleteSensor = (ID) => {
@@ -131,6 +162,13 @@ class SensorDash extends React.Component {
 				);
 			});
 		}
+		render.sort(function(a, b){
+			var tempA = a.props.values[0].toUpperCase()
+			var tempB = b.props.values[0].toUpperCase()
+			if(tempA > tempB) return 1
+			else if(tempA < tempB) return -1
+			else return 0
+		});
 		this.setState({ sensorRender: render });
 	};
 

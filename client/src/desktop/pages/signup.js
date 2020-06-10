@@ -16,37 +16,46 @@ class SignUpPage extends React.Component {
       currentUser: "Not Logged In",
       optionRender: [],
       showConfirmation: false,
+      showError: false
     };
   }
 
-  async submit() {
-    // this.setState({ showConfirmation: true });
-    // try {
-    //   const requestURL = "http://localhost:7000/teamMember/postTeamMember";
-    //   let res = await fetch(requestURL, {
-    //     method: "POST",
-    //     credentials: "include",
-    //     headers: {
-    //       "Content-Type": "application/json",
-    //     },
-    //     body: JSON.stringify({
-    //       firstName: this.firstName.current.value,
-    //       lastName: this.lastName.current.value,
-    //       email: this.email.current.value,
-    //       subteamName: this.subteam.current.value,
-    //       password: this.password.current.value,
-    //     }),
-    //   });
-    //   if (res.status == 500) {
-    //     console.log("ERROR");
-    //   } else if (res.status == 400) {
-    //     console.log(res);
-    //   } else if (res.status == 200) {
-    //     this.props.history.push("/");
-    //   }
-    // } catch (err) {
-    //   console.log(err);
-    // }
+  // async submit() {
+  //   try {
+  //     const requestURL = "http://localhost:7000/teamMember/postTeamMember";
+  //     let res = await fetch(requestURL, {
+  //       method: "POST",
+  //       credentials: "include",
+  //       headers: {
+  //         "Content-Type": "application/json",
+  //       },
+  //       body: JSON.stringify({
+  //         firstName: this.firstName.current.value,
+  //         lastName: this.lastName.current.value,
+  //         email: this.email.current.value,
+  //         subteamName: this.subteam.current.value,
+  //         password: this.password.current.value,
+  //       }),
+  //     });
+  //     if (res.status == 500) {
+  //       console.log("ERROR");
+  //     } else if (res.status == 400) {
+  //       console.log(res);
+  //     } else if (res.status == 200) {
+  //       this.props.history.push("/");
+  //     }
+  //   } catch (err) {
+  //     console.log(err);
+  //   }
+  // }
+
+  submit = () => {
+    if(!this.firstName.current.value) this.setState({ showError: true })
+    else if(!this.lastName.current.value) this.setState({ showError: true })
+    else if(!this.email.current.value) this.setState({ showError: true })
+    else if(!this.password.current.value) this.setState({ showError: true })
+    else if(!this.subteam.current.value) this.setState({ showError: true })
+    else this.setState({ showConfirmation: true })
   }
 
   async fetchSubteams() {
@@ -163,9 +172,7 @@ class SignUpPage extends React.Component {
               <Col>
                 <Button
                   className="signInButton"
-                  onClick={() => {
-                    this.setState({ showConfirmation: true });
-                  }}
+                  onClick={this.submit}
                 >
                   <b>Sign Up</b>
                 </Button>
@@ -173,6 +180,9 @@ class SignUpPage extends React.Component {
             </Row>
             {this.state.showConfirmation
               ? "Request completed! You will gain access once you are approved by an admin."
+              : 
+              this.state.showError
+              ? "Invalid credentials. Please ensure all fields are filled in and try again."
               : null}
           </Jumbotron>
           <BottomNav />

@@ -1,5 +1,5 @@
 import React from "react";
-import TeamList from "./teamMemberComponents/teamList";
+import TeamDash from "./teamMemberComponents/teamDash";
 import SensorDash from "./sensorComponents/sensorDash";
 import VehicleDash from "./vehicleComponents/vehicleDash";
 import DriverDash from "./driverComponents/driverDash";
@@ -53,9 +53,9 @@ export default class ManageContent extends React.Component {
 				}}
 			>
 				{this.state.content === "Sensors" ? <SensorDash marginLeft={this.state.marginLeft} /> : null}
-				{this.state.content === "Drivers" ? <DriverDash /> : null}
-				{this.state.content === "Vehicles" ? <VehicleDash /> : null}
-				{this.state.content === "People" ? <TeamList /> : null}
+				{this.state.content === "Drivers" ? <DriverDash marginLeft={this.state.marginLeft}/> : null}
+				{this.state.content === "Vehicles" ? <VehicleDash marginLeft={this.state.marginLeft}/> : null}
+				{this.state.content === "People" ? <TeamDash marginLeft={this.state.marginLeft}/> : null}
 				<BottomNav />
 			</div>
 		);

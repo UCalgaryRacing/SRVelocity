@@ -12,10 +12,8 @@ class SensorDash extends React.Component {
 		this.state = {
 			sensorRender: [],
 			showAddModal: false,
-			searchedFiles: [],
-			showSearchModal: false,
+			searchedFiles: []
 		};
-		this.vehicles = [];
 	}
 
 	componentWillMount = () => {

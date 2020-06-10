@@ -1,0 +1,70 @@
+#driverDash {
+    margin-top: 57px;
+    min-height: calc(100vh - 112px);
+}
+
+#driverDash #data {
+    padding-top: 66px;
+    margin-left: 10px;
+    margin-right: 10px;
+}
+
+#driverDash #top #uploadButton {
+    width: 150px;
+    height: 36px;
+    background: #C22E2D;
+    border: 0px;
+}
+
+#driverDash  #top #sortButton {
+    width: 150px;
+    height: 36px;
+    background: #C22E2D;
+    border: 0px;
+}
+
+#driverDash #top .form-control:focus {
+    box-shadow: 0 0 0 0.2rem rgba(194, 45, 45, 0.6);
+    border: 0px solid;
+}
+
+#driverDash #manageBox {
+    min-height: 102px !important;
+}
+
+@media only screen and (max-width: 1000px) {
+    #driverDash {
+        margin-top: 0px;
+    }
+
+    #driverDash #top {
+        position: relative !important;
+        height: 102px !important;
+    }
+
+    #driverDash #top #sortButton {
+        width: calc(50% - 16px) !important;
+        position: absolute;
+        left: 10px;
+        top: 10px;
+    }
+
+    #driverDash #top #uploadButton {
+        width: calc(50% - 16px) !important;
+        position: absolute;
+        right: 10px;
+        top: 10px;
+    }
+
+    #driverDash #top .searchForm {
+        width: calc(100% - 20px) !important;
+        position: absolute;
+        left: 10px;
+        margin-top: 46px;
+        text-align: center;
+    }
+
+    #driverDash #top .form-control {
+        text-align: center;
+    }
+}

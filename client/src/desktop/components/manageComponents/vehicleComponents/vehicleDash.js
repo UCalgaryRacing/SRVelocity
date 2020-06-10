@@ -31,7 +31,7 @@ class VehicleDash extends React.Component {
 
 	fetchVehicles = async () => {
 		try {
-			const requesturl = "http://localhost:7000/vehicle/getVehicles/";
+			const requesturl = "/vehicle/getVehicles/";
 			let res = await fetch(requesturl, {
 				method: "GET",
 				credentials: "include",
@@ -69,7 +69,7 @@ class VehicleDash extends React.Component {
 	}
 
 	addVehicle = (data) => {
-		const requestURL = "http://localhost:7000/vehicle/postVehicle";
+		const requestURL = "/vehicle/postVehicle";
 		fetch(requestURL, {
 			method: "POST",
 			credentials: "include",
@@ -103,7 +103,7 @@ class VehicleDash extends React.Component {
 	}
 
 	submitEdit = async (data, ID) => {
-		const requestURL = "http://localhost:7000/vehicle/putVehicle/" + ID;
+		const requestURL = "/vehicle/putVehicle/" + ID;
 		return fetch(requestURL, {
 			method: "PUT",
 			credentials: "include",
@@ -128,7 +128,7 @@ class VehicleDash extends React.Component {
 	}
 
 	deleteVehicle = (ID) => {
-		const requestURL = "http://localhost:7000/vehicle/deleteVehicle/" + ID;
+		const requestURL = "/vehicle/deleteVehicle/" + ID;
 		fetch(requestURL, {
 			method: "DELETE",
 			credentials: "include",

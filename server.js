@@ -31,10 +31,6 @@ app.use(session({
 }));
 app.use(cookieParser());
 
-app.get("/api", (req, res) => {
-    res.json({ message: "API Working" });
-});
-
 //Import routes
 const pgDatabase = require("./Router/pgDatabase");
 const dataServer = require("./Router/dataServer");
@@ -44,14 +40,14 @@ app.use("/api/pgdb", pgDatabase);
 app.use("/historical", dataServer);
 
 //Import Routes
-const driver = require("./Routes/driver");
-const log = require("./Routes/log");
-const race = require("./Routes/race");
-const sensor = require("./Routes/sensor");
-const subteam = require("./Routes/subteam");
-const team = require("./Routes/team");
-const teamMember = require("./Routes/teamMember");
-const vehicle = require("./Routes/vehicle");
+const driver = require("./Router/driver");
+const log = require("./Router/log");
+const race = require("./Router/race");
+const sensor = require("./Router/sensor");
+const subteam = require("./Router/subteam");
+const team = require("./Router/team");
+const teamMember = require("./Router/teamMember");
+const vehicle = require("./Router/vehicle");
 
 //Add Routes
 app.use("/driver", driver);

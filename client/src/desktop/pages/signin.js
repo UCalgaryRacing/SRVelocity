@@ -20,7 +20,7 @@ class SignInPage extends React.Component {
 
 	handleSignIn = async () => {
 		try {
-			const res = await fetch("18.217.215.72:7000/teamMember/authenticate", {
+			const res = await fetch("/teamMember/authenticate", {
 				method: "POST",
 				credentials: "include",
 				headers: {

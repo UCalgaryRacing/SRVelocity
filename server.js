@@ -43,6 +43,26 @@ const dataServer = require("./Router/dataServer");
 app.use("/api/pgdb", pgDatabase);
 app.use("/historical", dataServer);
 
+//Import Routes
+const driver = require("./Routes/driver");
+const log = require("./Routes/log");
+const race = require("./Routes/race");
+const sensor = require("./Routes/sensor");
+const subteam = require("./Routes/subteam");
+const team = require("./Routes/team");
+const teamMember = require("./Routes/teamMember");
+const vehicle = require("./Routes/vehicle");
+
+//Add Routes
+app.use("/driver", driver);
+app.use("/log", log);
+app.use("/race", race);
+app.use("/sensor", sensor);
+app.use("/subteam", subteam);
+app.use("/team", team);
+app.use("/teamMember", teamMember);
+app.use("/vehicle", vehicle);
+
 
 //Python and React socket setup
 var io = require('socket.io')(4000);

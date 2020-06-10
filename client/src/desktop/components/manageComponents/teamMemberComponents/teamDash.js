@@ -33,7 +33,7 @@ class TeamDash extends React.Component {
 	fetchTeamMembers = async () => {
 		try {
 			let res = await fetch(
-				"18.217.215.72:7000/teamMember/getAllTeamMembers",
+				"/teamMember/getAllTeamMembers",
 				{
 					method: "GET",
 					credentials: "include",
@@ -73,7 +73,7 @@ class TeamDash extends React.Component {
 	}
 
 	submitEdit = async (data, ID) => {
-		const requestURL = "18.217.215.72:7000/teamMember/" + ID;
+		const requestURL = "/teamMember/" + ID;
 		return fetch(requestURL, {
 			method: "PUT",
 			credentials: "include",
@@ -102,7 +102,7 @@ class TeamDash extends React.Component {
 	}
 
 	deleteMember = (ID) => {
-		const requestURL = "18.217.215.72:7000/teamMember/" + ID;
+		const requestURL = "/teamMember/" + ID;
 		fetch(requestURL, {
 			method: "DELETE",
 			credentials: "include",

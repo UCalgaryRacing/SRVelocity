@@ -12,7 +12,7 @@ export default function WithAuth(ComponentToProtect) {
         }
 
         checkToken = () => {
-            fetch('18.217.215.72:7000/teamMember/checkToken', {
+            fetch('/teamMember/checkToken', {
                 method: 'GET',
                 credentials: "include",
                 headers: { 'Content-Type': 'application/json' }

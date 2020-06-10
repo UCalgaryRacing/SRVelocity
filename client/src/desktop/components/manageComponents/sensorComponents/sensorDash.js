@@ -33,7 +33,7 @@ class SensorDash extends React.Component {
 
 	fetchVehicles = async () => {
 		try {
-			const requesturl = "18.217.215.72:7000/vehicle/getVehicles/";
+			const requesturl = "/vehicle/getVehicles/";
 			let res = await fetch(requesturl, {
 				method: "GET",
 				credentials: "include",
@@ -53,7 +53,7 @@ class SensorDash extends React.Component {
 
 	fetchSensors = async () => {
 		try {
-			const requesturl = "18.217.215.72:7000/sensor/getSensors/" + 14;
+			const requesturl = "/sensor/getSensors/" + 14;
 			let res = await fetch(requesturl, {
 				method: "GET",
 				credentials: "include",
@@ -69,7 +69,7 @@ class SensorDash extends React.Component {
 	};
 
 	addSensor = async (data) => {
-		const requesturl = "18.217.215.72:7000/sensor/postSensor";
+		const requesturl = "/sensor/postSensor";
 		fetch(requesturl, {
 			method: "POST",
 			credentials: "include",
@@ -112,7 +112,7 @@ class SensorDash extends React.Component {
 	}
 
 	submitEdit = async(data, ID) => {
-		const requestURL = "18.217.215.72:7000/sensor/putSensor/" + ID;
+		const requestURL = "/sensor/putSensor/" + ID;
         return fetch(requestURL, {
             method: "PUT",
             credentials: "include",
@@ -172,7 +172,7 @@ class SensorDash extends React.Component {
 	}
 
 	deleteSensor = (ID) => {
-		const requestURL = "18.217.215.72:7000/sensor/" + ID;
+		const requestURL = "/sensor/" + ID;
         fetch(requestURL, {
             method: "DELETE",
             credentials: "include",

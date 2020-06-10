@@ -3,10 +3,11 @@ import { GATEWAYSERVERIP } from './dataServerEnv'
 export default class SensorData {
     static instance = null;
     static sensors =
-        fetch(GATEWAYSERVERIP + '/api/pgdb/getSensors', {
+        fetch(GATEWAYSERVERIP + '/sensor/getSensors', {
             method: 'GET',
             headers: {
-                'Content-Type': 'application/json'
+                'Content-Type': 'application/json',
+                apikey: "VQ2SBXW-1N14EQ7-PWX5JBZ-C5S45FA"
             }
         })
         .then(res => res.json())

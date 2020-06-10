@@ -3,14 +3,16 @@ import ManageBox from '../manageBox';
 import ManageAddModal from '../manageAddModal';
 import { Row, Col, Button, Form } from "react-bootstrap";
 import './driverDash.css';
+var _ = require('lodash');
 
 class DriverDash extends React.Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			drivers: [],
 			driverRender: [],
-			showAddModal: false
+			showAddModal: false,
+			searchedDrivers: [],
+			showSearched: false
 		}
 	}
 
@@ -58,7 +60,8 @@ class DriverDash extends React.Component {
 						values={[ele.first_name, ele.last_name]}
 						ID={ele.driver_id}
 						key={ele.driver_id}
-						deleteDriver={this.deleteDriver}
+						delete={this.deleteDriver}
+						submitEdit={this.submitEdit}
 					/>
 				);
 			});
@@ -66,33 +69,102 @@ class DriverDash extends React.Component {
 		this.setState({ driverRender: render });
 	}
 
-	deleteDriver = () => {
-
+	addDriver = async (data) => {
+		const requestURL = "http://localhost:7000/driver/postDriver";
+		fetch(requestURL, {
+			method: "POST",
+			credentials: "include",
+			headers: {
+				"Content-Type": "application/json",
+			},
+			body: JSON.stringify({
+				firstName: data[0],
+				lastName: data[1],
+			})
+		})
+		.then(res => res.json())
+		.then(res => {
+			let box = (
+				<ManageBox
+					labels={["First Name", "Last Name"]}
+					values={[data[0], data[1]]}
+					ID={res.ID} //Get from req
+					key={res.ID}
+					delete={this.deleteDriver}
+					submitEdit={this.submitEdit}
+				/>
+			)
+			let temp = this.state.driverRender;
+			temp.push(box);
+			this.setState({ sensorRender: temp });
+		})
 	}
 
-	async submitPost() {
-		try {
-			const requestURL = "http://localhost:7000/driver/postDriver";
-			const res = await fetch(requestURL, {
-				method: "POST",
-				credentials: "include",
-				headers: {
-					"Content-Type": "application/json",
-				},
-				body: JSON.stringify({
-					firstName: this.refs.first_name.current.value,
-					lastName: this.refs.last_name.current.value,
-				}),
+	submitEdit = (data, ID) => {
+		const requestURL = "http://localhost:7000/driver/putDriver/" + ID;
+		fetch(requestURL, {
+			method: "PUT",
+			credentials: "include",
+			headers: {
+				"Content-Type": "application/json",
+			},
+			body: JSON.stringify({
+				firstName: data[0],
+				lastName: data[1]
+			})
+		}).then(async res => { })
+	}
+
+	deleteDriver = (ID) => {
+		const requestURL = "http://localhost:7000/driver/deleteDriver/" + ID;
+		fetch(requestURL, {
+			method: "DELETE",
+			credentials: "include",
+			headers: {
+				"Content-Type": "application/json",
+			},
+		})
+			.then(res => {
+				if (res.ok) {
+					for (var el in this.state.driverRender) {
+						if (parseInt(this.state.driverRender[el].key) === ID) {
+							let temp = this.state.driverRender;
+							temp.splice(el, 1);
+							this.setState({ driverRender: temp });
+							break;
+						}
+					}
+				}
+			})
+			.catch((error) => {
+				console.log(error)
 			});
-			const resJSON = await res.json();
-			this.errorDisplay(res, resJSON);
-		} catch (err) {
-			console.log(err);
-		}
 	}
 
 	toggleAddModal = () => {
 		this.setState({ showAddModal: !this.state.showAddModal });
+	}
+
+	search = (e) => {
+		e.preventDefault();
+		const text = e.target.value;
+		if (text === "") {
+			this.setState({ showSearched: false });
+			return;
+		}
+		var filtered = [...this.state.driverRender]
+
+		function filterParam(param, index, value) {
+			return filtered.filter(file => file.props[param][index].toLowerCase().includes(value.toLowerCase()))
+		}
+
+		var fNameFilter = filterParam('values', 0, text);
+		var lNameFilter = filterParam('values', 1, text);
+		filtered = _.unionBy(fNameFilter, lNameFilter, 'key');
+		this.setState({
+			searchedFiles: filtered,
+			showSearched: true
+		})
 	}
 
 	render() {
@@ -113,7 +185,7 @@ class DriverDash extends React.Component {
 					borderBottomWidth: '1px',
 					borderStyle: 'solid'
 				}}>
-				<Button id='uploadButton' onClick={this.toggleAddModal}><b>Add</b></Button>&nbsp;&nbsp;
+					<Button id='uploadButton' onClick={this.toggleAddModal}><b>Add</b></Button>&nbsp;&nbsp;
 				<Button id='sortButton' onClick={this.changeType} disabled={(this.state.typeOption === 'plotting') ? true : false}><b>Sort Data</b></Button>&nbsp;&nbsp;
 				<Form className="searchForm" style={{ position: 'absolute', top: '10px', right: '10px' }}>
 						<Form.Control
@@ -127,9 +199,9 @@ class DriverDash extends React.Component {
 					</Form>
 				</div>
 				<div id='data'>
-					{this.state.showSearched ? this.state.searchedFiles : this.state.driverRender}
+					{this.state.showSearched ? this.state.searchedDrivers : this.state.driverRender}
 				</div>
-				<ManageAddModal submit={this.addSensor} show={this.state.showAddModal} toggleAddModal={this.toggleAddModal} labels={["First Name", "Last Name"]} title={"Add Driver"} />
+				<ManageAddModal submit={this.addDriver} show={this.state.showAddModal} toggleAddModal={this.toggleAddModal} labels={["First Name", "Last Name"]} title={"Add Driver"} />
 			</div>
 		)
 	}

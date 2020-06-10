@@ -4,6 +4,7 @@ import Member from "./memberView";
 import ManageBox from '../manageBox';
 import ManageAddModal from '../manageAddModal';
 import { withRouter } from "react-router-dom";
+var _ = require('lodash');
 
 class TeamDash extends React.Component {
 	constructor(props) {
@@ -11,7 +12,8 @@ class TeamDash extends React.Component {
 		this.state = {
 			memberRender: [],
 			showAddModal: false,
-			searchedMembers: []
+			searchedMembers: [],
+			showSearched: false
 		}
 	}
 
@@ -61,7 +63,8 @@ class TeamDash extends React.Component {
 						values={[ele.first_name, ele.last_name, ele.email, ele.subteam_name]}
 						ID={ele.member_id}
 						key={ele.member_id}
-						deleteSensor={this.deleteMember}
+						delete={this.deleteMember}
+						submitEdit={this.submitEdit}
 					/>
 				);
 			});
@@ -69,8 +72,71 @@ class TeamDash extends React.Component {
 		this.setState({ memberRender: render });
 	}
 
-	deleteMember = () => {
+	submitEdit = (data, ID) => {
+		const requestURL = "http://localhost:7000/teamMember/" + ID;
+		fetch(requestURL, {
+			method: "PUT",
+			credentials: "include",
+			headers: {
+				"Content-Type": "application/json",
+			},
+			body: JSON.stringify({
+				firstName: data[0],
+				lastName: data[1],
+				email: data[2],
+				subteamName: data[3],
+				isLead: false,
+				isApproved: false
+			})
+		}).then(async res => { })
+	}
 
+	deleteMember = (ID) => {
+		const requestURL = "http://localhost:7000/teamMember/" + ID;
+		fetch(requestURL, {
+			method: "DELETE",
+			credentials: "include",
+			headers: {
+				"Content-Type": "application/json",
+			},
+		})
+			.then(res => {
+				if (res.ok) {
+					for (var el in this.state.memberRender) {
+						if (parseInt(this.state.memberRender[el].key) === ID) {
+							let temp = this.state.memberRender;
+							temp.splice(el, 1);
+							this.setState({ memberRender: temp });
+							break;
+						}
+					}
+				}
+			})
+			.catch((error) => {
+				console.log(error)
+			});
+	}
+
+	search = (e) => {
+		e.preventDefault();
+		const text = e.target.value;
+		if (text === "") {
+			this.setState({ showSearched: false });
+			return;
+		}
+		var filtered = [...this.state.memberRender]
+		function filterParam(param, index, value) {
+			return filtered.filter(file => file.props[param][index].toLowerCase().includes(value.toLowerCase()))
+		}
+		var fNameFilter = filterParam('values', 0, text);
+		var lNameFilter = filterParam('values', 1, text);
+		var emailFilter = filterParam('values', 2, text);
+		let temp = _.unionBy(fNameFilter, lNameFilter, 'key');
+		filtered = _.unionBy(temp, emailFilter, 'key');
+		this.setState({
+			searchedFiles: filtered,
+			showSearched: true
+		})
 	}
 
 	render() {
@@ -91,8 +157,7 @@ class TeamDash extends React.Component {
 					borderBottomWidth: '1px',
 					borderStyle: 'solid'
 				}}>
-					<Button id='uploadButton' onClick={this.toggleAddModal}><b>Add</b></Button>&nbsp;&nbsp;
-				<Button id='sortButton' onClick={this.changeType} disabled={(this.state.typeOption === 'plotting') ? true : false}><b>Sort Data</b></Button>&nbsp;&nbsp;
+				<Button id='sortButton' style={{marginLeft: '0px'}} onClick={this.changeType} disabled={(this.state.typeOption === 'plotting') ? true : false}><b>Sort Data</b></Button>&nbsp;&nbsp;
 				<Form className="searchForm" style={{ position: 'absolute', top: '10px', right: '10px' }}>
 						<Form.Control
 							onChange={this.search}

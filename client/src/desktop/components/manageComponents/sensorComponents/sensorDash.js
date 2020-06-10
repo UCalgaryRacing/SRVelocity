@@ -94,7 +94,8 @@ class SensorDash extends React.Component {
 						values={[data[0], data[1], data[2], data[3], data[4], data[5]]}
 						ID={res.ID} //Get from req
 						key={res.ID}
-						deleteSensor={this.deleteSensor}
+						delete={this.deleteSensor}
+						submitEdit={this.submitEdit}
 					/>
 				)
 				let temp = this.state.sensorRender;
@@ -106,15 +107,49 @@ class SensorDash extends React.Component {
 			})
 	}
 
+	submitEdit = (data, ID) => {
+		const requestURL = "http://localhost:7000/sensor/putSensor/" + ID;
+        fetch(requestURL, {
+            method: "PUT",
+            credentials: "include",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+                name: data[0],
+                outputUnit: data[2],
+                category: data[1],
+                codeName: data[5],
+                canId: data[3],
+                frequency: data[4],
+            })
+        }).then(async res => {})
+	}
+
 	deleteSensor = (ID) => {
-		for (var el in this.state.sensorRender) {
-			if (parseInt(this.state.sensorRender[el].key) === ID) {
-				let temp = this.state.sensorRender;
-				temp.splice(el, 1);
-				this.setState({ sensorRender: temp });
-				break;
-			}
-		}
+		const requestURL = "http://localhost:7000/sensor/" + ID;
+        fetch(requestURL, {
+            method: "DELETE",
+            credentials: "include",
+            headers: {
+                "Content-Type": "application/json",
+            },
+        })
+            .then(res => {
+                if (res.ok) {
+					for (var el in this.state.sensorRender) {
+						if (parseInt(this.state.sensorRender[el].key) === ID) {
+							let temp = this.state.sensorRender;
+							temp.splice(el, 1);
+							this.setState({ sensorRender: temp });
+							break;
+						}
+					}
+                }
+            })
+            .catch((error) => {
+                console.log(error)
+            });
 	}
 
 	renderSensorTable = async (sensors) => {
@@ -127,7 +162,8 @@ class SensorDash extends React.Component {
 						values={[ele.name, ele.category, ele.output_unit, ele.can_id, ele.frequency, ele.code_name]}
 						ID={ele.sensor_id}
 						key={ele.sensor_id}
-						deleteSensor={this.deleteSensor}
+						delete={this.deleteSensor}
+						submitEdit={this.submitEdit}
 					/>
 				);
 			});

@@ -37,51 +37,18 @@ export default class ManageBox extends React.Component {
         this.forceUpdate();
     }
 
-    submitEdit = (data) => {
-        const requestURL = "http://localhost:7000/sensor/putSensor/" + this.state.ID;
-        fetch(requestURL, {
-            method: "PUT",
-            credentials: "include",
-            headers: {
-                "Content-Type": "application/json",
-            },
-            body: JSON.stringify({
-                name: data[0],
-                outputUnit: data[2],
-                category: data[1],
-                codeName: data[5],
-                canId: data[3],
-                frequency: data[4],
-            })
-        }).then(async res => {
-            if (res.ok) {
-                await this.setState({ values: data, showEdit: false });
-                this.generateBox();
-            }
-        })
+    submitEdit = async(data) => {
+        this.props.submitEdit(data, this.props.ID);
+        await this.setState({ values: data, showEdit: false });
+        this.generateBox();
     }
 
     toggleEdit = () => {
         this.setState({ showEdit: !this.state.showEdit });
     }
 
-    deleteSensor = () => {
-        const requestURL = "http://localhost:7000/sensor/" + this.props.ID;
-        fetch(requestURL, {
-            method: "DELETE",
-            credentials: "include",
-            headers: {
-                "Content-Type": "application/json",
-            },
-        })
-            .then(res => {
-                if (res.ok) {
-                    this.props.deleteSensor(this.props.ID)
-                }
-            })
-            .catch((error) => {
-                console.log(error)
-            });
+    delete = () => {
+        this.props.delete(this.props.ID);
     }
 
     hideModal = () => {
@@ -105,7 +72,7 @@ export default class ManageBox extends React.Component {
                     <ManageEdit labels={this.state.labels} values={this.state.values} submitEdit={this.submitEdit} />
                     :
                     null}
-                <ConfirmationModal showModal={this.state.showConfirmation} hideModal={this.hideModal} delete={this.deleteSensor} name={this.state.values[0]}/>
+                <ConfirmationModal showModal={this.state.showConfirmation} hideModal={this.hideModal} delete={this.delete} name={this.state.values[0]}/>
             </div>
         )
     }

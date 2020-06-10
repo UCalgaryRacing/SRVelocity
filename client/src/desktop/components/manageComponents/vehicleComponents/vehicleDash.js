@@ -1,9 +1,7 @@
 import React from "react";
 import { Row, Col, Table, Button, Form, Modal } from "react-bootstrap";
-import { withRouter } from "react-router-dom";
 import ManageBox from '../manageBox';
 import ManageAddModal from '../manageAddModal';
-//import './sensorDash.css';
 var _ = require('lodash');
 
 class VehicleDash extends React.Component {
@@ -12,6 +10,8 @@ class VehicleDash extends React.Component {
 		this.state = {
 			vehicleRender: [],
 			showAddModal: false,
+			searchedVehicles: [],
+			showSearched: false
 		}
 	}
 
@@ -19,12 +19,12 @@ class VehicleDash extends React.Component {
 		this.createVehicleList();
 	}
 
-	createVehicleList = async() => {
+	createVehicleList = async () => {
 		try {
 			const vehicles = await this.fetchVehicles();
 			await this.renderVehicleTable(vehicles);
 			this.forceUpdate();
-		} catch(err) {
+		} catch (err) {
 			console.log(err)
 		}
 	}
@@ -59,7 +59,8 @@ class VehicleDash extends React.Component {
 						values={[ele.name]}
 						ID={ele.vehicle_id}
 						key={ele.vehicle_id}
-						deleteSensor={this.deleteVehicle}
+						delete={this.deleteVehicle}
+						submitEdit={this.submitEdit}
 					/>
 				);
 			});
@@ -67,31 +68,96 @@ class VehicleDash extends React.Component {
 		this.setState({ vehicleRender: render });
 	}
 
-	deleteVehicle = () => {
-
+	addVehicle = (data) => {
+		const requestURL = "http://localhost:7000/vehicle/postVehicle";
+		fetch(requestURL, {
+			method: "POST",
+			credentials: "include",
+			headers: {
+				"Content-Type": "application/json",
+			},
+			body: JSON.stringify({
+				name: data[0],
+			})
+		})
+			.then(res => res.json())
+			.then(res => {
+				let box = (
+					<ManageBox
+						labels={["Name"]}
+						values={[data[0]]}
+						ID={res.ID} //Get from req
+						key={res.ID}
+						delete={this.deleteVehicle}
+						submitEdit={this.submitEdit}
+					/>
+				)
+				let temp = this.state.vehicleRender;
+				temp.push(box);
+				this.setState({ sensorRender: temp });
+			})
 	}
 
-	async submitPost() {
-		try {
-			const requestURL = "http://localhost:7000/vehicle/postVehicle";
-			const res = await fetch(requestURL, {
-				method: "POST",
-				credentials: "include",
-				headers: {
-					"Content-Type": "application/json",
-				},
-				body: JSON.stringify({
-					name: this.refs.name.current.value,
-				}),
+	submitEdit = (data, ID) => {
+		const requestURL = "http://localhost:7000/vehicle/putVehicle/" + ID;
+		fetch(requestURL, {
+			method: "PUT",
+			credentials: "include",
+			headers: {
+				"Content-Type": "application/json",
+			},
+			body: JSON.stringify({
+				name: data[0]
+			})
+		}).then(async res => { })
+	}
+
+	deleteVehicle = (ID) => {
+		const requestURL = "http://localhost:7000/vehicle/deleteVehicle/" + ID;
+		fetch(requestURL, {
+			method: "DELETE",
+			credentials: "include",
+			headers: {
+				"Content-Type": "application/json",
+			},
+		})
+			.then(res => {
+				if (res.ok) {
+					for (var el in this.state.vehicleRender) {
+						if (parseInt(this.state.vehicleRender[el].key) === ID) {
+							let temp = this.state.vehicleRender;
+							temp.splice(el, 1);
+							this.setState({ vehicleRender: temp });
+							break;
+						}
+					}
+				}
+			})
+			.catch((error) => {
+				console.log(error)
 			});
-			await res.json();
-		} catch (err) {
-			console.log(err);
-		}
 	}
 
 	toggleAddModal = () => {
 		this.setState({ showAddModal: !this.state.showAddModal });
+	}
+
+	search = (e) => {
+		e.preventDefault();
+		const text = e.target.value;
+		if (text === "") {
+			this.setState({ showSearched: false });
+			return;
+		}
+		var filtered = [...this.state.vehicleRender]
+		function filterParam(param, index, value) {
+			return filtered.filter(file => file.props[param][index].toLowerCase().includes(value.toLowerCase()))
+		}
+		filtered = filterParam('values', 0, text);
+		this.setState({
+			searchedVehicles: filtered,
+			showSearched: true
+		})
 	}
 
 	render() {
@@ -112,7 +178,7 @@ class VehicleDash extends React.Component {
 					borderBottomWidth: '1px',
 					borderStyle: 'solid'
 				}}>
-					<Button id='uploadButton' onClick={this.toggleAddModal}><b>Add</b></Button>&nbsp;&nbsp;
+				<Button id='uploadButton' onClick={this.toggleAddModal}><b>Add</b></Button>&nbsp;&nbsp;
 				<Button id='sortButton' onClick={this.changeType} disabled={(this.state.typeOption === 'plotting') ? true : false}><b>Sort Data</b></Button>&nbsp;&nbsp;
 				<Form className="searchForm" style={{ position: 'absolute', top: '10px', right: '10px' }}>
 						<Form.Control
@@ -126,9 +192,9 @@ class VehicleDash extends React.Component {
 					</Form>
 				</div>
 				<div id='data'>
-					{this.state.showSearched ? this.state.searchedFiles : this.state.vehicleRender}
+					{this.state.showSearched ? this.state.searchedVehicles : this.state.vehicleRender}
 				</div>
-				<ManageAddModal submit={this.addSensor} show={this.state.showAddModal} toggleAddModal={this.toggleAddModal} labels={["Name"]} title={"Add Vehicle"} />
+				<ManageAddModal submit={this.addVehicle} show={this.state.showAddModal} toggleAddModal={this.toggleAddModal} labels={["Name"]} title={"Add Vehicle"} />
 			</div>
 		)
 	}

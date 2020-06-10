@@ -12,7 +12,7 @@ export default class DataAnalysisDash extends React.Component {
                     Data Analysis Dashboard
                 </p>
                 <p style={{textAlign: 'center', marginTop: '100px', fontSize: '20px'}}>
-                    Under construction
+                    Under Construction
                 </p>
             </div>
         )

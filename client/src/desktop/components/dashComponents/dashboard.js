@@ -73,7 +73,7 @@ export default class StreamingDash extends React.Component {
         );
         let addGraph = (<Button id='addGraph' onClick={this.addGraph} style={{ position: 'absolute', textAlign: 'center' }}><b>Add Graph</b></Button>)
         let testRun = (<Button id='testButton' onClick={this.doTestRun} style={{ position: 'absolute', right: '10px' }}><b>Do a Test Run</b></Button>);
-        let defaultDash = ['Track Map', 'Engine Temp', 'Oil Pressure', 'Oil Temp', 'Air To Fuel', 'Fuel Temp', 'Acceleration', 'Axes']
+        let defaultDash = ['Track Map', 'Oil Pressure', 'Oil Temp', 'Acceleration', 'Axes']
         if(isMobile) defaultDash = ['Track Map', 'Engine Temp', 'Oil Pressure', 'Acceleration']
         return (
             <div id='dashboard'>

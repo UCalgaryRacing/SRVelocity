@@ -51,17 +51,20 @@ export default class ManageEdit extends React.Component {
         }
     }
 
-    submitEdit = () => {
+    submitEdit = async() => {
         let data = [];
         for(var form of this.formRefs) {
             if(form.value === '') data.push(form.placeholder);
             else data.push(form.value)
+        } 
+        let status = await this.props.submitEdit(data);
+        if(!status) return;
+        for(var form of this.formRefs) {
             if(form.value !== form.placeholder && form.value !== '') {
                 form.placeholder = form.value;
                 form.value = '';
             } 
         } 
-        this.props.submitEdit(data);
     }
 
     render = () => {

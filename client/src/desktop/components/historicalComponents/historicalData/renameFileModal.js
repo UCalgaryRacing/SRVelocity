@@ -12,12 +12,12 @@ export default class RenameFileModal extends React.Component {
 
     componentDidUpdate = () => {
         if (this.props.showRenameModal !== this.state.showRenameModal) {
-            this.setState({ showRenameModal: this.props.showRenameModal})
+            this.setState({ showRenameModal: this.props.showRenameModal })
         }
     }
-    
+
     handleNameChange = (event) => {
-        this.setState({ newName: event.target.value})
+        this.setState({ newName: event.target.value })
     }
 
     submitName = () => {
@@ -26,22 +26,27 @@ export default class RenameFileModal extends React.Component {
 
     render = () => {
         return (
-                <Modal show={this.state.showRenameModal} onHide={this.props.onHide} centered>
-                    <Modal.Header closeButton>
-                      <Modal.Title>Rename a File</Modal.Title>
-                    </Modal.Header>
-                    <Modal.Body>
-                        Please enter the new name for the file.
-                        <Form.Group>
-                            <Form.Control type="text" placeholder="New name" onChange={this.handleNameChange} />
-                        </Form.Group>
-                    </Modal.Body>
-                    <Modal.Footer>
-                      <Button variant="primary" onClick={this.submitName}>
-                        Save Changes
-                      </Button>
-                    </Modal.Footer>
-                  </Modal> 
+            <Modal show={this.state.showRenameModal} onHide={this.props.onHide} centered id='renameModal'>
+                <Modal.Header closeButton>
+                    <Modal.Title>Rename This File</Modal.Title>
+                </Modal.Header>
+                <Modal.Body>
+                    <Form.Group>
+                        <Form id='#renameForm' className="searchForm" >
+                            <Form.Control style={{ textAlign: 'center' }}
+                                className="searchFormControl"
+                                autoComplete="on"
+                                placeholder={this.props.currentName}
+                                required
+                                onChange={this.handleNameChange}
+                            />
+                        </Form>
+                    </Form.Group>
+                </Modal.Body>
+                <Modal.Footer>
+                    <Button style={{ width: '100%', height: '36px', background: '#C22E2D', borderColor: '#C22E2D', marginTop: '10px' }} onClick={this.submitEdit}><b>Submit Name</b></Button>
+                </Modal.Footer>
+            </Modal>
         );
     }
 }

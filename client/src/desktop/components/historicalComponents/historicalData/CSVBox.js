@@ -206,7 +206,7 @@ export default class CSVBox extends React.Component {
                     </div>
                     <Quill pushComment={this.pushComment} />
                 </div>
-                <RenameFileModal showRenameModal={this.state.showRenameModal} onHide={() => this.setState({ showRenameModal: false })} renameFile={this.renameFile} />
+                <RenameFileModal currentName={this.state.filename} showRenameModal={this.state.showRenameModal} onHide={() => this.setState({ showRenameModal: false })} renameFile={this.renameFile} />
             </div>
         );
     }

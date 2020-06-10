@@ -82,6 +82,10 @@ class VehicleDash extends React.Component {
 		})
 			.then(res => res.json())
 			.then(res => {
+				if(!res.ok) {
+					//show error
+					return;
+				}
 				let box = (
 					<ManageBox
 						labels={["Name"]}
@@ -98,9 +102,9 @@ class VehicleDash extends React.Component {
 			})
 	}
 
-	submitEdit = (data, ID) => {
+	submitEdit = async (data, ID) => {
 		const requestURL = "http://localhost:7000/vehicle/putVehicle/" + ID;
-		fetch(requestURL, {
+		return fetch(requestURL, {
 			method: "PUT",
 			credentials: "include",
 			headers: {
@@ -109,7 +113,18 @@ class VehicleDash extends React.Component {
 			body: JSON.stringify({
 				name: data[0]
 			})
-		}).then(async res => { })
+		})
+			.then(res => {
+				if (res.ok) return true;
+				else {
+					//show error
+					return false;
+				}
+			})
+			.catch(err => {
+				//show error
+				return false;
+			})
 	}
 
 	deleteVehicle = (ID) => {
@@ -131,9 +146,12 @@ class VehicleDash extends React.Component {
 							break;
 						}
 					}
+				} else {
+					//show error
 				}
 			})
 			.catch((error) => {
+				//show error
 				console.log(error)
 			});
 	}
@@ -178,7 +196,7 @@ class VehicleDash extends React.Component {
 					borderBottomWidth: '1px',
 					borderStyle: 'solid'
 				}}>
-				<Button id='uploadButton' onClick={this.toggleAddModal}><b>Add</b></Button>&nbsp;&nbsp;
+					<Button id='uploadButton' onClick={this.toggleAddModal}><b>Add</b></Button>&nbsp;&nbsp;
 				<Button id='sortButton' onClick={this.changeType} disabled={(this.state.typeOption === 'plotting') ? true : false}><b>Sort Data</b></Button>&nbsp;&nbsp;
 				<Form className="searchForm" style={{ position: 'absolute', top: '10px', right: '10px' }}>
 						<Form.Control

@@ -36,7 +36,7 @@ class App extends React.Component {
 		this.checkToken()
 	}
 
-	refreshPage = (link) => {
+	refreshPage = () => {
 		this.checkToken();
 	}
 

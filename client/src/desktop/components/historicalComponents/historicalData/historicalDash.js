@@ -27,7 +27,6 @@ export default class HistoricalContent extends React.Component {
         this.getAllFiles();
     }
 
-
     changeContent = (newContent) => {
         this.setState({ content: newContent });
         this.forceUpdate();
@@ -63,6 +62,10 @@ export default class HistoricalContent extends React.Component {
                 this.setState({ CSVFiles: files })
             })
             .catch(err => { console.log(err) });
+    }
+
+    addCSVBox = () => {
+
     }
 
     deleteFile = (index) => {
@@ -125,7 +128,7 @@ export default class HistoricalContent extends React.Component {
                     </Form>
                 </div>
                 <div id='data'>
-                    <UploadFileModal show={this.state.showUploadModal} onHide={() => this.setState({ showUploadModal: false })} />
+                    <UploadFileModal show={this.state.showUploadModal} onHide={() => this.setState({ showUploadModal: false })} addCSBBox={this.addCSVBox()} />
                     {this.state.showSearched ? this.state.searchedFiles : this.state.CSVFiles}
                 </div>
             </div>

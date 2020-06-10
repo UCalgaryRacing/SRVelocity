@@ -38,9 +38,14 @@ export default class ManageBox extends React.Component {
     }
 
     submitEdit = async(data) => {
-        this.props.submitEdit(data, this.props.ID);
-        await this.setState({ values: data, showEdit: false });
-        this.generateBox();
+        let status = await this.props.submitEdit(data, this.props.ID);
+        if(status) {
+            await this.setState({ values: data, showEdit: false });
+            this.generateBox();
+        } else {
+            //Oops, something went wrong
+        }
+        return status;
     }
 
     toggleEdit = () => {

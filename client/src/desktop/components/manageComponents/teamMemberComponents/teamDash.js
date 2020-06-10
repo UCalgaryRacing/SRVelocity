@@ -72,9 +72,9 @@ class TeamDash extends React.Component {
 		this.setState({ memberRender: render });
 	}
 
-	submitEdit = (data, ID) => {
+	submitEdit = async (data, ID) => {
 		const requestURL = "http://localhost:7000/teamMember/" + ID;
-		fetch(requestURL, {
+		return fetch(requestURL, {
 			method: "PUT",
 			credentials: "include",
 			headers: {
@@ -88,7 +88,17 @@ class TeamDash extends React.Component {
 				isLead: false,
 				isApproved: false
 			})
-		}).then(async res => { })
+		})
+			.then(res => {
+				if (res.ok) return true;
+				else{
+					//show error
+					return false;
+				}
+			})
+			.catch(err => {
+				return false;
+			})
 	}
 
 	deleteMember = (ID) => {
@@ -110,9 +120,12 @@ class TeamDash extends React.Component {
 							break;
 						}
 					}
+				} else {
+					//show error
 				}
 			})
 			.catch((error) => {
+				//show error
 				console.log(error)
 			});
 	}
@@ -157,7 +170,7 @@ class TeamDash extends React.Component {
 					borderBottomWidth: '1px',
 					borderStyle: 'solid'
 				}}>
-				<Button id='sortButton' style={{marginLeft: '0px'}} onClick={this.changeType} disabled={(this.state.typeOption === 'plotting') ? true : false}><b>Sort Data</b></Button>&nbsp;&nbsp;
+					<Button id='sortButton' style={{ marginLeft: '0px' }} onClick={this.changeType} disabled={(this.state.typeOption === 'plotting') ? true : false}><b>Sort Data</b></Button>&nbsp;&nbsp;
 				<Form className="searchForm" style={{ position: 'absolute', top: '10px', right: '10px' }}>
 						<Form.Control
 							onChange={this.search}

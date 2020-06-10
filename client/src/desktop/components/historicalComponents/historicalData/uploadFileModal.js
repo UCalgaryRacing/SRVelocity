@@ -25,7 +25,7 @@ export default class UploadFileModal extends React.Component {
         if (!this.state.file) return;
 
         const reader = new FileReader()
-        
+
         reader.onload = (e) => {
             var formData = new FormData()
             formData.append('file', this.state.file)
@@ -34,15 +34,16 @@ export default class UploadFileModal extends React.Component {
                 method: 'POST',
                 body: formData
             })
-            .then(response => {
-                if(response.ok) {
-                    this.props.onHide()
-                } else {
-                    this.props.onHide()
-                }})
-            .catch(err => {
-                console.log(err)
-            })
+                .then(response => {
+                    if (response.ok) {
+                        this.props.onHide()
+                    } else {
+                        this.props.onHide()
+                    }
+                })
+                .catch(err => {
+                    console.log(err)
+                })
         }
 
         reader.readAsText(this.state.file)
@@ -54,9 +55,9 @@ export default class UploadFileModal extends React.Component {
                 <Modal.Header closeButton>
                     <Modal.Title>Upload a CSV File</Modal.Title>
                 </Modal.Header>
-                <Modal.Body>
+                <Modal.Body style={{ background: '#B0B0B0', border: '1px dashed' }}>
                     {this.state.showError ?
-                        <p style={{ color: 'red' }}>Please enter a '.CSV' file</p>
+                        <p style={{ color: 'red' }}>Please choose a '.CSV' file</p>
                         : null}
                     <Dropzone
                         accept='.csv'
@@ -66,17 +67,15 @@ export default class UploadFileModal extends React.Component {
                         {({ getRootProps, getInputProps }) => (
                             <div {...getRootProps()}>
                                 <input {...getInputProps()} />
-                                <p>Drag 'n' drop a file here, or click on me to select a file</p>
-                                <p>File: {this.state.filename}</p>
+                                <p style={{ textAlign: 'center' }}>Drag 'n' drop or click me</p>
+                                <p style={{ textAlign: 'center' }}>{this.state.filename}</p>
                             </div>
                         )}
                     </Dropzone>
 
                 </Modal.Body>
                 <Modal.Footer>
-                    <Button variant="primary" onClick={this.uploadFile}>
-                        Upload File
-                      </Button>
+                    <Button style={{ width: '100%', height: '36px', background: '#C22E2D', borderColor: '#C22E2D', marginTop: '10px' }} onClick={this.uploadFile}><b>Upload</b></Button>
                 </Modal.Footer>
             </Modal>
         );

@@ -196,14 +196,16 @@ export default class Data {
 
     doTestRun = () => {
         sensorData.then(sensorData => {
-            if(!this.testing) {
-                this.datasets = {};
-                for (var sensor of sensorData) this.datasets[sensor.code_name] = [];
-                this.datasets['Track Map'] = [{}];
-                this.count = 0;
-                this.timer = setInterval(this.pushTestData.bind(this), 100);
-                this.testing = true;
-            } 
+            if(this.testing) {
+                clearInterval(this.timer);
+                this.testing = false;
+            }
+            this.datasets = {};
+            for (var sensor of sensorData) this.datasets[sensor.code_name] = [];
+            this.datasets['Track Map'] = [{}];
+            this.count = 0;
+            this.timer = setInterval(this.pushTestData.bind(this), 100);
+            this.testing = true;
         })
     }
 }

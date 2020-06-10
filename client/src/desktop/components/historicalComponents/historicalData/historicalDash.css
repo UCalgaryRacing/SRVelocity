@@ -55,3 +55,8 @@
         top: 10px;
     }
 }
+
+#renameModal .form-control:focus {
+    box-shadow: 0 0 0 0.2rem rgba(194, 45, 45, 0.6);
+    border: 0px solid;
+}

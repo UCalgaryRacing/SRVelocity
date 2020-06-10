@@ -13,7 +13,7 @@ export default class StreamingPage extends React.Component {
     return (
       <div id="streamingPage">
         <StreamingSideNav streamingContent={this.streamingContent} />
-        <StreamingContent ref={this.streamingContent} />
+        <StreamingContent ref={this.streamingContent} refreshPage={this.props.refreshPage}/>
       </div>
     );
   };

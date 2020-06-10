@@ -82,27 +82,35 @@ class DriverDash extends React.Component {
 				lastName: data[1],
 			})
 		})
-		.then(res => res.json())
-		.then(res => {
-			let box = (
-				<ManageBox
-					labels={["First Name", "Last Name"]}
-					values={[data[0], data[1]]}
-					ID={res.ID} //Get from req
-					key={res.ID}
-					delete={this.deleteDriver}
-					submitEdit={this.submitEdit}
-				/>
-			)
-			let temp = this.state.driverRender;
-			temp.push(box);
-			this.setState({ sensorRender: temp });
-		})
+			.then(res => res.json())
+			.then(res => {
+				if(!res.ok) {
+					//show error
+					return;
+				} else {
+					let box = (
+						<ManageBox
+							labels={["First Name", "Last Name"]}
+							values={[data[0], data[1]]}
+							ID={res.ID} //Get from req
+							key={res.ID}
+							delete={this.deleteDriver}
+							submitEdit={this.submitEdit}
+						/>
+					)
+					let temp = this.state.driverRender;
+					temp.push(box);
+					this.setState({ sensorRender: temp });
+				}
+			})
+			.catch(err => {
+				//show error
+			})
 	}
 
-	submitEdit = (data, ID) => {
+	submitEdit = async (data, ID) => {
 		const requestURL = "http://localhost:7000/driver/putDriver/" + ID;
-		fetch(requestURL, {
+		return fetch(requestURL, {
 			method: "PUT",
 			credentials: "include",
 			headers: {
@@ -112,7 +120,18 @@ class DriverDash extends React.Component {
 				firstName: data[0],
 				lastName: data[1]
 			})
-		}).then(async res => { })
+		})
+			.then(res => {
+				if (res.ok) return true;
+				else {
+					//Show error
+					return false;
+				}
+			})
+			.catch(err => {
+				//show error
+				return false;
+			})
 	}
 
 	deleteDriver = (ID) => {
@@ -134,9 +153,12 @@ class DriverDash extends React.Component {
 							break;
 						}
 					}
+				} else {
+					//show error
 				}
 			})
 			.catch((error) => {
+				//show error
 				console.log(error)
 			});
 	}

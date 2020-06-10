@@ -32,7 +32,7 @@ class DriverDash extends React.Component {
 
 	fetchDrivers = async () => {
 		try {
-			const requesturl = "http://localhost:7000/driver/getDrivers";
+			const requesturl = "https://schulichvelocity.com/driver/getDrivers";
 			let res = await fetch(requesturl, {
 				method: "GET",
 				credentials: "include",
@@ -70,7 +70,7 @@ class DriverDash extends React.Component {
 	}
 
 	addDriver = async (data) => {
-		const requestURL = "http://localhost:7000/driver/postDriver";
+		const requestURL = "https://schulichvelocity.com/driver/postDriver";
 		fetch(requestURL, {
 			method: "POST",
 			credentials: "include",
@@ -109,7 +109,7 @@ class DriverDash extends React.Component {
 	}
 
 	submitEdit = async (data, ID) => {
-		const requestURL = "http://localhost:7000/driver/putDriver/" + ID;
+		const requestURL = "https://schulichvelocity.com/driver/putDriver/" + ID;
 		return fetch(requestURL, {
 			method: "PUT",
 			credentials: "include",
@@ -135,7 +135,7 @@ class DriverDash extends React.Component {
 	}
 
 	deleteDriver = (ID) => {
-		const requestURL = "http://localhost:7000/driver/deleteDriver/" + ID;
+		const requestURL = "https://schulichvelocity.com/driver/deleteDriver/" + ID;
 		fetch(requestURL, {
 			method: "DELETE",
 			credentials: "include",

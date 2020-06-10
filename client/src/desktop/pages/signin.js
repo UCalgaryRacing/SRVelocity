@@ -22,7 +22,6 @@ class SignInPage extends React.Component {
 		try {
 			const res = await fetch("http://localhost:7000/teamMember/authenticate", {
 				method: "POST",
-				credentials: "include",
 				headers: {
 					"Content-Type": "application/json",
 				},

@@ -3,7 +3,7 @@ import { GATEWAYSERVERIP } from './dataServerEnv'
 export default class SensorData {
     static instance = null;
     static sensors =
-        fetch(GATEWAYSERVERIP + '/sensor/getSensors', {
+        fetch('/sensor/getSensors/14', {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json',

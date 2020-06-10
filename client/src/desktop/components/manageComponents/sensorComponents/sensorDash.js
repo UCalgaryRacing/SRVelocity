@@ -33,7 +33,7 @@ class SensorDash extends React.Component {
 
 	fetchVehicles = async () => {
 		try {
-			const requesturl = "https://schulichvelocity.com/vehicle/getVehicles/";
+			const requesturl = "http://localhost:7000/vehicle/getVehicles/";
 			let res = await fetch(requesturl, {
 				method: "GET",
 				credentials: "include",
@@ -53,7 +53,7 @@ class SensorDash extends React.Component {
 
 	fetchSensors = async () => {
 		try {
-			const requesturl = "https://schulichvelocity.com/sensor/getSensors/" + 14;
+			const requesturl = "http://localhost:7000/sensor/getSensors/" + 14;
 			let res = await fetch(requesturl, {
 				method: "GET",
 				credentials: "include",
@@ -69,7 +69,7 @@ class SensorDash extends React.Component {
 	};
 
 	addSensor = async (data) => {
-		const requesturl = "https://schulichvelocity.com/sensor/postSensor";
+		const requesturl = "http://localhost:7000/sensor/postSensor";
 		fetch(requesturl, {
 			method: "POST",
 			credentials: "include",
@@ -112,7 +112,7 @@ class SensorDash extends React.Component {
 	}
 
 	submitEdit = async(data, ID) => {
-		const requestURL = "https://schulichvelocity.com/sensor/putSensor/" + ID;
+		const requestURL = "http://localhost:7000/sensor/putSensor/" + ID;
         return fetch(requestURL, {
             method: "PUT",
             credentials: "include",

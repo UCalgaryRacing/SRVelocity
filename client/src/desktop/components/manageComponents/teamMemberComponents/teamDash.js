@@ -1,5 +1,6 @@
 import React from "react";
 import { Row, Col, Table, Button, Form } from "react-bootstrap";
+import Member from "./memberView";
 import ManageBox from '../manageBox';
 import ManageAddModal from '../manageAddModal';
 import { withRouter } from "react-router-dom";
@@ -32,7 +33,7 @@ class TeamDash extends React.Component {
 	fetchTeamMembers = async () => {
 		try {
 			let res = await fetch(
-				"https://schulichvelocity.com/teamMember/getAllTeamMembers",
+				"http://localhost:7000/teamMember/getAllTeamMembers",
 				{
 					method: "GET",
 					credentials: "include",
@@ -72,7 +73,7 @@ class TeamDash extends React.Component {
 	}
 
 	submitEdit = async (data, ID) => {
-		const requestURL = "https://schulichvelocity.com/teamMember/" + ID;
+		const requestURL = "http://localhost:7000/teamMember/" + ID;
 		return fetch(requestURL, {
 			method: "PUT",
 			credentials: "include",
@@ -101,7 +102,7 @@ class TeamDash extends React.Component {
 	}
 
 	deleteMember = (ID) => {
-		const requestURL = "https://schulichvelocity.com/teamMember/" + ID;
+		const requestURL = "http://localhost:7000/teamMember/" + ID;
 		fetch(requestURL, {
 			method: "DELETE",
 			credentials: "include",

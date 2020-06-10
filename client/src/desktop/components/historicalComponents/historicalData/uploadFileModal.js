@@ -6,10 +6,15 @@ import { GATEWAYSERVERIP } from '../../../../dataServerEnv'
 export default class UploadFileModal extends React.Component {
     constructor(props) {
         super(props);
+        this.driver = React.createRef();
+        this.vehicle = React.createRef();
         this.state = {
             file: null,
             filename: "",
-            showError: false
+            showError: false,
+            showEmpty: false,
+            showFailure: false,
+            disableButton: false
         }
     }
 
@@ -21,7 +26,14 @@ export default class UploadFileModal extends React.Component {
     }
 
     uploadFile = () => {
-        this.props.onHide()
+        let driver = this.driver.current.value;
+        let vehicle = this.vehicle.current.value;
+        let filename = this.state.filename;
+        if (driver === "" || vehicle === "") {
+            this.setState({ showEmpty: true });
+            return;
+        }
+        this.setState({ showEmpty: false, disableButton: true });
         if (!this.state.file) return;
 
         const reader = new FileReader()
@@ -30,16 +42,31 @@ export default class UploadFileModal extends React.Component {
             var formData = new FormData()
             formData.append('file', this.state.file)
 
+            var meta = {
+                driver: driver,
+                car: vehicle,
+                filename: filename
+            }
+
             fetch(GATEWAYSERVERIP + '/historical/uploadFile/', {
                 method: 'POST',
                 body: formData
             })
+                .then(response => response.json())
                 .then(response => {
-                    if (response.ok) {
-                        this.props.onHide()
-                    } else {
-                        this.props.onHide()
-                    }
+                    let ID = response.ID;
+                    fetch(GATEWAYSERVERIP + '/historical/updateMetadata', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify(meta)
+                    })
+                        .then(res => {
+                            this.props.addCSVBox(filename, driver, vehicle, ID);
+                            this.props.onHide();
+                        })
+                        .catch(err => {
+                            this.props.onHide();
+                        })
                 })
                 .catch(err => {
                     console.log(err)
@@ -55,27 +82,49 @@ export default class UploadFileModal extends React.Component {
                 <Modal.Header closeButton>
                     <Modal.Title>Upload a CSV File</Modal.Title>
                 </Modal.Header>
-                <Modal.Body style={{ background: '#B0B0B0', border: '1px dashed' }}>
+                <Modal.Body>
                     {this.state.showError ?
                         <p style={{ color: 'red' }}>Please choose a '.CSV' file</p>
                         : null}
-                    <Dropzone
-                        accept='.csv'
-                        multiple={false}
-                        onDropRejected={() => this.setState({ showError: true })}
-                        onDropAccepted={file => this.setFile(file)}>
-                        {({ getRootProps, getInputProps }) => (
-                            <div {...getRootProps()}>
-                                <input {...getInputProps()} />
-                                <p style={{ textAlign: 'center' }}>Drag 'n' drop or click me</p>
-                                <p style={{ textAlign: 'center' }}>{this.state.filename}</p>
-                            </div>
-                        )}
-                    </Dropzone>
-
+                    <div style={{ background: '#B0B0B0', border: '1px dashed', height: '500px' }}>
+                        <Dropzone
+                            accept='.csv'
+                            multiple={false}
+                            onDropRejected={() => this.setState({ showError: true })}
+                            onDropAccepted={file => this.setFile(file)}>
+                            {({ getRootProps, getInputProps }) => (
+                                <div {...getRootProps()} style={{ width: '100%', height: '100%' }}>
+                                    <input {...getInputProps()} />
+                                    <p style={{ textAlign: 'center' }}>Drag 'n' drop or click me</p>
+                                    <p style={{ textAlign: 'center' }}>{this.state.filename}</p>
+                                </div>
+                            )}
+                        </Dropzone>
+                    </div>
+                    <Form.Group style={{ marginTop: '30px' }}>
+                        <Form className="searchForm" style={{ marginBottom: '10px' }}>
+                            <Form.Control style={{ textAlign: 'center' }}
+                                className="searchFormControl"
+                                autoComplete="on"
+                                placeholder='Vehicle'
+                                required
+                                ref={this.vehicle}
+                            />
+                        </Form>
+                        <Form className="searchForm" >
+                            <Form.Control style={{ textAlign: 'center' }}
+                                className="searchFormControl"
+                                autoComplete="on"
+                                placeholder='Driver'
+                                required
+                                ref={this.driver}
+                            />
+                        </Form>
+                    </Form.Group>
                 </Modal.Body>
                 <Modal.Footer>
-                    <Button style={{ width: '100%', height: '36px', background: '#C22E2D', borderColor: '#C22E2D', marginTop: '10px' }} onClick={this.uploadFile}><b>Upload</b></Button>
+                    {this.state.showFailure && <p style={{ textAlign: 'center' }}>Something went wrong. Ensure the name is not a duplicate.</p>}
+                    <Button disabled={this.state.disableButton} style={{ width: '100%', height: '36px', background: '#C22E2D', borderColor: '#C22E2D', marginTop: '10px' }} onClick={this.uploadFile}><b>Upload</b></Button>
                 </Modal.Footer>
             </Modal>
         );

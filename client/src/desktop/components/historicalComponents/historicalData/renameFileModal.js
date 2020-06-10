@@ -32,7 +32,7 @@ export default class RenameFileModal extends React.Component {
                 </Modal.Header>
                 <Modal.Body>
                     <Form.Group>
-                        <Form id='#renameForm' className="searchForm" >
+                        <Form className="searchForm" >
                             <Form.Control style={{ textAlign: 'center' }}
                                 className="searchFormControl"
                                 autoComplete="on"

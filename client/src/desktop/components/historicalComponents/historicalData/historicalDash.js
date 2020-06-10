@@ -64,8 +64,22 @@ export default class HistoricalContent extends React.Component {
             .catch(err => { console.log(err) });
     }
 
-    addCSVBox = () => {
-
+    addCSVBox = (filename, driver, vehicle, ID) => {
+        let files = [...this.state.CSVFiles];
+        let date = new Date();
+        files.push(
+            <CSVBox
+                filename={filename}
+                driver={driver}
+                car={vehicle}
+                date={date.toLocaleDateString() + " " + date.toLocaleTimeString()}
+                deleteFile={this.deleteFile}
+                ID={ID}
+                key={filename}
+                index={this.state.CSVFiles.length + 1}
+            />
+        );
+        this.setState({CSVFiles: files}, this.forceUpdate());
     }
 
     deleteFile = (index) => {
@@ -128,7 +142,7 @@ export default class HistoricalContent extends React.Component {
                     </Form>
                 </div>
                 <div id='data'>
-                    <UploadFileModal show={this.state.showUploadModal} onHide={() => this.setState({ showUploadModal: false })} addCSBBox={this.addCSVBox()} />
+                    <UploadFileModal show={this.state.showUploadModal} onHide={() => this.setState({ showUploadModal: false })} addCSVBox={this.addCSVBox} />
                     {this.state.showSearched ? this.state.searchedFiles : this.state.CSVFiles}
                 </div>
             </div>

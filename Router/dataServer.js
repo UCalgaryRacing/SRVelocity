@@ -4,7 +4,7 @@ const DATASERVERIP = 'http://localhost:4500';
 const fetch = require('node-fetch');
 const multer = require('multer')
 const storage = multer.memoryStorage()
-const upload = multer({ storage: storage})
+const upload = multer({ storage: storage })
 const FormData = require('form-data')
 
 dataServer.get("/getFiles", (req, res) => {
@@ -84,26 +84,30 @@ dataServer.post("/uploadFile/", upload.any(), (req, res) => {
         var form = new FormData()
         form.append('data', file.buffer, file.originalname)
         fetch(DATASERVERIP + '/fileServer/uploadFile/', {
-        method: 'POST',
-        body: form
+            method: 'POST',
+            body: form
         })
-        .then(response => {
-            if(response.ok) {
-                res.sendStatus(200)
-            } else {
+        .then(response => response.json())
+            .then(response => {
+                //if (response.ok) {
+                console.log(response)
+                res.send({ ID: response.ID })
+                // } else {
+                //     res.sendStatus(500)
+                // }
+            })
+            .catch(err => {
+                console.log(err)
                 res.sendStatus(500)
-            }})
-        .catch(err => {
-            console.log(err)
-            res.sendStatus(500)
-        })
-        
+            })
+
     })
-    
+
 })
 
 //Updates attributes of the file (driver and car)
 dataServer.post("/updateMetadata", (req, res) => {
+    console.log(req.body)
     let meta = {}
     if (req.body.driver) meta['driver'] = req.body.driver
     if (req.body.car) meta['car'] = req.body.car
@@ -120,8 +124,10 @@ dataServer.post("/updateMetadata", (req, res) => {
         },
         body: JSON.stringify(postParams)
     })
-        .then(response => {
-            if (response.ok) res.sendStatus(200)
+        .then(async response => {
+            if (response.ok) {
+                res.sendStatus(200);
+            }
             else res.sendStatus(500)
         })
         .catch(err => {

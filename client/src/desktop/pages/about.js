@@ -2,6 +2,8 @@ import React from 'react';
 import { Figure, Container, Card, CardGroup, CardDeck } from 'react-bootstrap';
 import BottomNav from "../components/navigationComponents/bottomNav";
 import './about.css';
+import { SocialIcon } from 'react-social-icons';
+import '../styling/socialMedia.css'
 
 class Member extends React.Component {
     render = () => {
@@ -21,7 +23,15 @@ class Member extends React.Component {
                         <Card.Text style={{ opacity: '0.5' }}>
                             {this.props.description}
                         </Card.Text>
+                        
+                        <div id='socialMedia'>
+                        {this.props.linkedin ? 
+                        <SocialIcon id='linkedin' url={this.props.linkedin} target='_blank' />
+                            : null }
+                        </div>
+                        
                     </Card.Body>
+
                 </Card>
             </div>
         )
@@ -38,11 +48,14 @@ export default class AboutPage extends React.Component {
             {
                 name: 'Tyler',
                 src: require('../../assets/teamPictures/Tyler.jpg'),
-                description: 'Electrical Lead'
-            }, {
+                description: 'Electrical Lead',
+                linkedin: 'http://linkedin.com/in/tyler-sawatzky'
+            }, 
+            {
                 name: 'Justin',
                 src: require('../../assets/teamPictures/Justin.jpg'),
-                description: 'Software Lead'
+                description: 'Software Lead',
+                linkedin: 'https://www.linkedin.com/in/justintijun/'
             }
         ];
 
@@ -55,7 +68,8 @@ export default class AboutPage extends React.Component {
             {
                 name: 'Ryan',
                 src: require('../../assets/teamPictures/Ryan.jpg'),
-                description: 'Software'
+                description: 'Software',
+                linkedin: 'https://www.linkedin.com/in/ryan-ward-3177b61a1/'
             },
             {
                 name: 'James',
@@ -80,34 +94,34 @@ export default class AboutPage extends React.Component {
             {
                 name: 'Evan',
                 src: require('../../assets/teamPictures/Evan.jpg'),
-                description: 'Electrical Team'
+                description: 'Electrical'
             },
             {
                 name: 'Yashvin',
                 src: require('../../assets/teamPictures/Yashvin.jpg'),
-                description: 'Electrical Team'
+                description: 'Electrical'
             },
             {
                 name: 'Aidan',
                 src: require('../../assets/teamPictures/Aidan.jpg'),
-                description: 'Electrical Team'
+                description: 'Electrical'
             },
             {
                 name: 'Graison',
                 src: require('../../assets/teamPictures/nopic.png'),
-                description: 'Electrical Team'
+                description: 'Electrical'
             }
         ];
 
         this.teamLeads = this.teamLeads.map(member => {
             return <div style={{ textAlign: 'center' }}>
-                <Member name={member.name} src={member.src} description={member.description} />
+                <Member name={member.name} src={member.src} description={member.description} linkedin={member.linkedin}/>
             </div>
         });
 
         this.teamMembers = this.teamMembers.map(member => {
             return <div style={{ textAlign: 'center' }}>
-                <Member name={member.name} src={member.src} description={member.description} />
+                <Member name={member.name} src={member.src} description={member.description} linkedin={member.linkedin}/>
             </div>
         });
     }

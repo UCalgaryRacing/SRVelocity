@@ -48,7 +48,7 @@ class Member extends React.Component {
 
   async fetchSubteams() {
     try {
-      let res = await fetch("http://localhost:7000/subteam/getSubteams", {
+      let res = await fetch("18.217.215.72:7000/subteam/getSubteams", {
         method: "GET",
         credentials: "include",
         headers: {
@@ -99,7 +99,7 @@ class Member extends React.Component {
   async submit() {
     try {
       const requestURL =
-        "http://localhost:7000/teamMember/" + this.props.member.member_id;
+        "18.217.215.72:7000/teamMember/" + this.props.member.member_id;
       const res = await fetch(requestURL, {
         method: "PUT",
         credentials: "include",
@@ -136,7 +136,7 @@ class Member extends React.Component {
   async deleteMember() {
     try {
       const requestURL =
-        "http://localhost:7000/teamMember/" + this.props.member.member_id;
+        "18.217.215.72:7000/teamMember/" + this.props.member.member_id;
       const res = await fetch(requestURL, {
         method: "DELETE",
         credentials: "include",

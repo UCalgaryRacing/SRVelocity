@@ -41,7 +41,7 @@ class App extends React.Component {
 	}
 
 	checkToken = () => {
-		fetch('http://localhost:7000/teamMember/checkToken', {
+		fetch('18.217.215.72:7000/teamMember/checkToken', {
 			method: 'GET',
 			credentials: "include",
 			headers: { 'Content-Type': 'application/json' }
@@ -56,7 +56,7 @@ class App extends React.Component {
 	}
 
 	signOut = () => {
-		fetch('http://localhost:7000/teamMember/stopSession', {
+		fetch('18.217.215.72:7000/teamMember/stopSession', {
 			method: 'GET',
 			credentials: "include",
 			headers: { 'Content-Type': 'application/json' }

@@ -60,7 +60,7 @@ class SignUpPage extends React.Component {
 
   async fetchSubteams() {
     try {
-      let res = await fetch("http://localhost:7000/subteam/getSubteams", {
+      let res = await fetch("18.217.215.72:7000/subteam/getSubteams", {
         method: "GET",
         //credentials: "include",
         headers: {

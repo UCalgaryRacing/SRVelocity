@@ -19,6 +19,7 @@
     "react-dom": "^16.8.6",
     "react-dropzone": "^11.0.1",
     "react-ga": "^2.7.0",
+    "react-helmet": "^6.1.0",
     "react-quilljs": "^1.2.11",
     "react-router-dom": "^5.0.1",
     "react-scripts": "^3.3.0",

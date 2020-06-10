@@ -7,8 +7,8 @@ import "./desktop/styling/index.css";
 
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './wTopBar/css/normalize.css';
-import './wTopBar/css/webflow.css';
-import './wTopBar/css/schulich-velocity.webflow.css';
+// import './wTopBar/css/webflow.css';
+// import './wTopBar/css/schulich-velocity.webflow.css';
 
 //Import desktop pages
 import HomePage from "./desktop/pages/home";
@@ -62,7 +62,7 @@ class App extends React.Component {
 			headers: { 'Content-Type': 'application/json' }
 		})
 			.then(res => {
-				if (res.status === 200) this.setState({ isSignedIn: false, redirect: true}, this.checkToken());
+				if (res.status === 200) this.setState({ isSignedIn: false, redirect: true }, this.checkToken());
 				else this.setState({ isSignedIn: false, redirect: true });
 			})
 			.catch(err => {
@@ -74,11 +74,11 @@ class App extends React.Component {
 		if (this.state.redirect) window.history.replaceState(null, "New Page Title", "/signin")
 		return (
 			<React.Fragment>
-				{this.state.isSignedIn ?
+				{/* {this.state.isSignedIn ?
 					<div id='topBar'>
 						<div data-collapse="medium" data-animation="default" data-duration="400" class="navbar w-nav">
 							<div class="container w-container"><a href="/" class="nav-link w-nav-link">Schulich Velocity</a>
-								<nav role="navigation" class="nav-menu w-nav-menu"><a href="/streaming" class="nav-link-6 w-nav-link">Streaming</a><a href="/historical" class="nav-link-7 w-nav-link">Historical</a><a href="/manage" class="nav-link-8 w-nav-link">Manage</a><a href="/signin" onClick={this.signOut} class="nav-link-10 w-nav-link">Sign Out</a><a href="/about"class="nav-link-9 w-nav-link">About</a></nav>
+								<nav role="navigation" class="nav-menu w-nav-menu"><a href="/streaming" class="nav-link-6 w-nav-link">Streaming</a><a href="/historical" class="nav-link-7 w-nav-link">Historical</a><a href="/manage" class="nav-link-8 w-nav-link">Manage</a><a href="/signin" onClick={this.signOut} class="nav-link-10 w-nav-link">Sign Out</a><a class="nav-link-9 w-nav-link">About</a></nav>
 								<div class="menu-button w-nav-button">
 									<div class="icon w-icon-nav-menu"></div>
 								</div>
@@ -96,7 +96,7 @@ class App extends React.Component {
 							</div>
 						</div>
 					</div>
-				}
+				} */}
 				<Router>
 					<Switch>
 						<Route exact path="/" component={() => <HomePage />} />
@@ -118,7 +118,7 @@ class App extends React.Component {
 	};
 }
 
-console.log = console.warn = console.error = () => {};
+console.log = console.warn = console.error = () => { };
 
 //Google analytics setup
 ReactGA.initialize('UA-168625961-1');

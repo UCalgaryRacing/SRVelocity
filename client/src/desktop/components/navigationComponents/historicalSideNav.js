@@ -12,18 +12,18 @@ export default class HistoricalSideNav extends React.Component {
                     onSelect={(selected) => { this.props.streamingContent.current.changeContent(selected) }}
                     style={{ top: '56px', fontSize: '2rem' }}>
                     <SideNav.Toggle />
-                    <SideNav.Nav defaultSelected="Dash">
+                    <SideNav.Nav defaultSelected="Data">
                         <NavItem eventKey="Data">
                             <NavIcon>
-                                <img src={require('../../../assets/streaming.svg')} style={{ marginLeft: '14px', marginTop: '8px' }} alt='Dash' />
+                                <img src={require('../../../assets/data.svg')} style={{ marginLeft: '14px', marginTop: '8px' }} alt='Dash' />
                             </NavIcon>
                             <NavText>
-                                <b>&nbsp;&nbsp;&nbsp;Download Data</b>
+                                <b>&nbsp;&nbsp;&nbsp;Historical Data</b>
                             </NavText>
                         </NavItem>
                         <NavItem eventKey="Create Plots">
                             <NavIcon>
-                                <img src={require('../../../assets/plot.svg')} style={{ marginLeft: '15px', marginTop: '8px' }} alt='Custom Plots' />
+                                <img src={require('../../../assets/chart.svg')} style={{ marginLeft: '19px', marginTop: '10px' }} alt='Custom Plots' />
                             </NavIcon>
                             <NavText>
                                 <b>&nbsp;&nbsp;&nbsp;Create Plots</b>
@@ -31,7 +31,7 @@ export default class HistoricalSideNav extends React.Component {
                         </NavItem>
                         <NavItem eventKey="Data Analysis">
                             <NavIcon>
-                                <img src={require('../../../assets/analysis.svg')} style={{ marginLeft: '16px', marginTop: '10px' }} alt='Data Analysis' />
+                                <img src={require('../../../assets/inspect.svg')} style={{ marginLeft: '-34px', marginTop: '10px', transform: 'scaleX(-1)'}} alt='Data Analysis' />
                             </NavIcon>
                             <NavText>
                                 <b>&nbsp;&nbsp;&nbsp;Data Analysis</b>

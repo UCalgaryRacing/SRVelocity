@@ -17,24 +17,12 @@ export default class ManageSideNav extends React.Component {
           style={{ top: "56px", fontSize: "2rem" }}
         >
           <SideNav.Toggle />
-          <SideNav.Nav defaultSelected="Data">
-            <NavItem eventKey="Data">
-              <NavIcon>
-                <img
-                  src={require("../../../assets/streaming.svg")}
-                  style={{ marginLeft: "14px", marginTop: "8px" }}
-                  alt="Data"
-                />
-              </NavIcon>
-              <NavText>
-                <b>&nbsp;&nbsp;&nbsp;Manage Data</b>
-              </NavText>
-            </NavItem>
+          <SideNav.Nav defaultSelected="Sensors">
             <NavItem eventKey="Sensors">
               <NavIcon>
                 <img
-                  src={require("../../../assets/plot.svg")}
-                  style={{ marginLeft: "15px", marginTop: "8px" }}
+                  src={require("../../../assets/sensor.svg")}
+                  style={{ marginLeft: "14px", marginTop: "8px" }}
                   alt="Sensors"
                 />
               </NavIcon>
@@ -45,8 +33,8 @@ export default class ManageSideNav extends React.Component {
             <NavItem eventKey="Drivers">
               <NavIcon>
                 <img
-                  src={require("../../../assets/analysis.svg")}
-                  style={{ marginLeft: "16px", marginTop: "10px" }}
+                  src={require("../../../assets/driver.svg")}
+                  style={{ marginLeft: "12px", marginTop: "8px"}}
                   alt="Drivers"
                 />
               </NavIcon>
@@ -57,8 +45,8 @@ export default class ManageSideNav extends React.Component {
             <NavItem eventKey="Vehicles">
               <NavIcon>
                 <img
-                  src={require("../../../assets/analysis.svg")}
-                  style={{ marginLeft: "16px", marginTop: "10px" }}
+                  src={require("../../../assets/f1.svg")}
+                  style={{ marginLeft: "5px", marginTop: "-3px" }}
                   alt="Vehicles"
                 />
               </NavIcon>
@@ -66,11 +54,23 @@ export default class ManageSideNav extends React.Component {
                 <b>&nbsp;&nbsp;&nbsp;Manage Vehicles</b>
               </NavText>
             </NavItem>
+            <NavItem eventKey="Subteams">
+              <NavIcon>
+                <img
+                  src={require("../../../assets/subteam.svg")}
+                  style={{ marginLeft: "12px", marginTop: "15px" }}
+                  alt="Subteams"
+                />
+              </NavIcon>
+              <NavText>
+                <b>&nbsp;&nbsp;&nbsp;Manage Subteams</b>
+              </NavText>
+            </NavItem>
             <NavItem eventKey="People">
               <NavIcon>
                 <img
-                  src={require("../../../assets/analysis.svg")}
-                  style={{ marginLeft: "16px", marginTop: "10px" }}
+                  src={require("../../../assets/person.svg")}
+                  style={{ marginLeft: "15.5px", marginTop: "9px" }}
                   alt="People"
                 />
               </NavIcon>

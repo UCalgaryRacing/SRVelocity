@@ -3,6 +3,7 @@ import StreamingDash from "../dashComponents/dashboard";
 import DataAnalysisDash from "../dataAnalysisComponents/dashboard";
 import CustomVisDash from "../customVisComponents/dashboard";
 import VirtualDash from "../3DComponents/virtualDash";
+import BottomNav from '../navigationComponents/bottomNav';
 
 export default class StreamingContent extends React.Component {
   constructor(props) {
@@ -12,6 +13,7 @@ export default class StreamingContent extends React.Component {
       content: "Dash",
       marginLeft: window.innerWidth < 1000 ? "0px" : "64px",
       toggleDash: false,
+      sideOpen: false
     };
   }
 
@@ -26,7 +28,7 @@ export default class StreamingContent extends React.Component {
       });
     } else {
       this.setState({
-        marginLeft: "64px"
+        marginLeft: this.state.sideOpen ? '240px' : '64px'
       });
     }
   }
@@ -34,6 +36,7 @@ export default class StreamingContent extends React.Component {
   changeLeftMargin = () => {
     this.setState({
       marginLeft: this.state.marginLeft === "64px" ? "240px" : "64px",
+      sideOpen: !this.state.sideOpen
     });
   };
 
@@ -45,12 +48,13 @@ export default class StreamingContent extends React.Component {
     return (
       <div
         id="streamingContent"
-        style={{ transition: "all 0.15s", marginLeft: this.state.marginLeft }}
+        style={{ transition: "all 0.15s", marginLeft: this.state.marginLeft}}
       >
         {this.state.content === "Dash" ? <StreamingDash marginLeft={this.state.marginLeft} refreshPage={this.props.refreshPage}/> : null}
         {this.state.content === "Custom Plots" ? <CustomVisDash /> : null}
         {this.state.content === "Data Analysis" ? <DataAnalysisDash /> : null}
         {this.state.content === "Digital Twin" ? <VirtualDash /> : null}
+        <BottomNav/>
       </div>
     );
   };

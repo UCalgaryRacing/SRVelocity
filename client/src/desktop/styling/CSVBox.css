@@ -1,0 +1,15 @@
+#CSVBox {
+    border-style: solid;
+    border-width: 1px;
+    border-radius: 0.25rem;
+    padding: 10px;
+    margin-bottom: 20px;
+    min-height: 200px;
+}
+
+#CSVBox #historicalButton {
+    height: 36px;
+    width: 36px;
+    background-color: #C22E2D;
+    border: 0px solid;
+}

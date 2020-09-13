@@ -1,0 +1,35 @@
+#manageBox {
+    border-style: solid;
+    border-width: 1px;
+    border-radius: 0.25rem;
+    padding: 10px;
+    margin-bottom: 20px;
+    min-height: 200px;
+}
+
+#manageBox #boxButton {
+    height: 36px;
+    width: 36px;
+    background-color: #C22E2D;
+    border: 0px solid;
+}
+
+#manageBox #column {
+    height: 36px;
+    position: absolute;
+    line-height: 36px;
+    font-size: 14px;
+    color: #B0B0B0;
+}
+
+#manageBox #label {
+    color: #C22E2D;
+    width: 90px;
+    position: absolute;
+}
+
+#manageBox #value {
+    width: 160px;
+    left: 90px;
+    position: absolute;
+}

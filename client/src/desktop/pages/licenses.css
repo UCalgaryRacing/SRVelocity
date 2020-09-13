@@ -1,0 +1,29 @@
+#licenses {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    margin-top: 20px;
+}
+#licenses .jumbotron{
+    background: white;
+    margin: auto;
+    margin-top: 0px;
+    min-width: 300px;
+}
+#licenses #largeFont {
+    font-size: 35px;
+    text-align: center;
+}
+#licenses #headerFont {
+    font-size: 20px;
+}
+#licenses #textFont {
+    font-size: 15px;
+    line-height: 1;
+}
+#licenses #linkFont {
+    font-size: 15px;
+    font-weight: bold;
+    line-height: 1;
+    color: rgba(194, 45, 45);
+}

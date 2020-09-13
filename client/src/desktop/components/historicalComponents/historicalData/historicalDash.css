@@ -1,0 +1,62 @@
+#historicalDash {
+    margin-top: 57px;
+    min-height: calc(100vh - 112px);
+}
+
+#historicalDash #data {
+    padding-top: 66px;
+    margin-left: 10px;
+    margin-right: 10px;
+}
+
+#historicalDash #top #uploadButton {
+    width: 150px;
+    height: 36px;
+    background: #C22E2D;
+    border: 0px;
+}
+
+#historicalDash  #top #sortButton {
+    width: 150px;
+    height: 36px;
+    background: #C22E2D;
+    border: 0px;
+}
+
+#historicalDash #top .form-control:focus {
+    box-shadow: 0 0 0 0.2rem rgba(194, 45, 45, 0.6);
+    border: 0px solid;
+}
+
+@media only screen and (max-width: 1000px) {
+    #historicalDash {
+        margin-top: 0px;
+    }
+
+    #historicalDash #top {
+        position: relative !important;
+    }
+
+    #historicalDash #top #sortButton {
+        width: calc(50% - 16px) !important;
+        position: absolute;
+        left: 10px;
+        top: 10px;
+    }
+
+    #historicalDash #top #uploadButton {
+        display :none;
+    }
+
+    #historicalDash #top .searchForm {
+        width: calc(50% - 16px) !important;
+        position: absolute;
+        right: 10px;
+        top: 10px;
+    }
+}
+
+#renameModal .form-control:focus {
+    box-shadow: 0 0 0 0.2rem rgba(194, 45, 45, 0.6);
+    border: 0px solid;
+}

@@ -1,16 +1,18 @@
+import { GATEWAYSERVERIP } from './dataServerEnv'
+
 export default class SensorData {
-  static instance = null;
-  static sensors =
-    fetch('/api/pgdb/getSensors', { //http://localhost:3000/api/pgdb/getSensors for dev
-      method: 'GET',
-      headers: {
-        'Content-Type': 'application/json',
-        "accepts": "application/json"
-      }
-    })
-      .then(res => res.json())
-      .then(res => { return res; })
-      .catch(err => { console.log(err) });
+    static instance = null;
+    static sensors =
+        fetch('/sensor/getSensors/14', {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+                apikey: "VQ2SBXW-1N14EQ7-PWX5JBZ-C5S45FA"
+            }
+        })
+        .then(res => res.json())
+        .then(res => { return res; })
+        .catch(err => { console.log(err) });
 
   constructor() { }
 

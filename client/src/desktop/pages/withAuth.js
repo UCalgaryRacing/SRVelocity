@@ -12,7 +12,7 @@ export default function WithAuth(ComponentToProtect) {
         }
 
         checkToken = () => {
-            fetch('http://localhost:7000/teamMember/checkToken', {
+            fetch('/teamMember/checkToken', {
                 method: 'GET',
                 credentials: "include",
                 headers: { 'Content-Type': 'application/json' }
@@ -38,7 +38,7 @@ export default function WithAuth(ComponentToProtect) {
             if (redirect) return <Redirect to='/signin' />
             return (
                 <React.Fragment>
-                    <ComponentToProtect />
+                    <ComponentToProtect/>
                 </React.Fragment>
             );
         }

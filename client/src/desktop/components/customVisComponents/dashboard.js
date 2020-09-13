@@ -12,7 +12,7 @@ export default class CustomVisDash extends React.Component {
                     Custom Data Visualization Dashboard
                 </p>
                 <p style={{textAlign: 'center', marginTop: '100px', fontSize: '20px'}}>
-                    Under construction
+                    Under Construction
                 </p>
             </div>
         )

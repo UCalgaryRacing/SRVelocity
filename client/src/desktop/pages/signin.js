@@ -1,9 +1,8 @@
 import React from "react";
-import TopNav from "../components/navigationComponents/topNav";
 import BottomNav from "../components/navigationComponents/bottomNav";
 import { Jumbotron, Row, Col, FormGroup, Form, Button } from "react-bootstrap";
 import { withRouter } from "react-router-dom";
-import Cookies from "js-cookie";
+import { Redirect } from 'react-router-dom';
 import "../styling/signin.css";
 
 class SignInPage extends React.Component {
@@ -13,7 +12,6 @@ class SignInPage extends React.Component {
 		this.passwordForm = React.createRef();
 		this.state = {
 			showErrorMessage: false,
-			showConfirmationMessage: false,
 			isSignedIn: false
 		};
 	}
@@ -22,7 +20,7 @@ class SignInPage extends React.Component {
 
 	handleSignIn = async () => {
 		try {
-			const res = await fetch("http://localhost:7000/teamMember/authenticate", {
+			const res = await fetch("/teamMember/authenticate", {
 				method: "POST",
 				credentials: "include",
 				headers: {
@@ -38,23 +36,28 @@ class SignInPage extends React.Component {
 				this.setState({ showErrorMessage: true, showConfirmationMessage: false });
 				throw new Error(res.status);
 			}
-			this.setState({ isSignedIn: true, showErrorMessage: false, showConfirmationMessage: true });
+			sessionStorage.setItem("Name", resJSON.firstName + " " + resJSON.lastName);
+			sessionStorage.setItem("ID", resJSON.ID);
+			this.setState({ isSignedIn: true, showErrorMessage: false });
+			this.props.refreshPage();
+			this.props.history.push('/historical')
 		} catch (err) {
 			console.log(err);
 		}
 	};
 
 	handleForgotPassword = () => { };
+
 	render = () => {
 		return (
 			<div id="signIn">
-				<TopNav />
 				<Jumbotron>
 					<Row id="row1">
 						<Col>
 							<img id="logoImg" src={require("../../assets/logo.svg")} />
 						</Col>
 					</Row>
+					<p style={{textAlign: 'center'}}>Looking to log in? Email: guest@sv.com ; Password: fsae2020</p>
 					<Row id="row2">
 						<Col>
 							<Form className="emailForm">
@@ -84,8 +87,7 @@ class SignInPage extends React.Component {
 					</Row>
 					<Row>
 						<Col>
-							{this.state.showErrorMessage ? <p><b>Oops! Please try again.</b></p>: null}
-							{this.state.showConfirmationMessage ? <p><b>Success!</b></p>: null}
+							{this.state.showErrorMessage ? <p><b>Oops! Please try again.</b></p> : null}
 						</Col>
 					</Row>
 					<Row>

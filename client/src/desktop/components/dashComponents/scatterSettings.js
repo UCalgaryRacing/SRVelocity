@@ -87,8 +87,6 @@ export default class ScatterSettings extends React.Component {
                 (this.state.notChosen === true) ? 
                 <p>Please select 1 option for each axis (Not enough selected)</p> : null}
                 <Form>
-                    <Form.Label style={{ fontSize: '15px' }}>Plot Settings - Scatter Plot Data</Form.Label>
-                    
                     <div style={{ position: 'relative', float: 'left', width: '223px', height: '500px' }}>
                         <Form.Label style={{ position: 'relative', marginLeft: '70px', marginTop: '10px' }}>X Axis</Form.Label>
                         <Form.Check>{this.dataX}</Form.Check>

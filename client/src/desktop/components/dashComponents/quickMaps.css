@@ -19,8 +19,9 @@
     }
 }
 
-@media screen and (max-width: 1000) {
+@media screen and (max-width: 1000px) {
     #quickMap {
         display: none !important;
     }
 }
+

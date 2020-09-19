@@ -118,7 +118,7 @@ class App extends React.Component {
 	};
 }
 
-console.log = console.warn = console.error = () => { };
+//console.log = console.warn = console.error = () => { };
 
 //Google analytics setup
 ReactGA.initialize('UA-168625961-1');

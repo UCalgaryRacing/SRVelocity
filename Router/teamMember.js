@@ -48,7 +48,7 @@ teamMember.post("/authenticate", async (req, res) => {
           jwt.sign(
             payload,
             data.is_lead ? "AdminSecret" : "NonAdminSecret",
-            { expiresIn: "60m" },
+            { expiresIn: "30m" },
             (err, token) => {
               if (err) res.status(500).send("Error!").end();
               res.cookie("token", token, { httpOnly: true });

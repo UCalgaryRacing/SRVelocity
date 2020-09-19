@@ -36,6 +36,13 @@ const withAnyAuth = async (req, res, next) => {
         if (err) verified += 1;
         else {
           req.user = decoded.user;
+          const payload = {
+            user: req.user,
+          };
+          const newToken = jwt.sign(payload, "AdminSecret", {
+            expiresIn: "20m",
+          });
+          res.cookie("token", newToken, { httpOnly: true });
           next();
         }
       });
@@ -43,6 +50,13 @@ const withAnyAuth = async (req, res, next) => {
         if (err) verified += 1;
         else {
           req.user = decoded.user;
+          const payload = {
+            user: req.user,
+          };
+          const newToken = jwt.sign(payload, "NonAdminSecret", {
+            expiresIn: "20m",
+          });
+          res.cookie("token", newToken, { httpOnly: true });
           next();
         }
       });
@@ -83,6 +97,13 @@ const withAdminAuth = async (req, res, next) => {
         if (err) res.status(401).send({ error: "Not authorized!" }).end();
         else {
           req.user = decoded.user;
+          const payload = {
+            user: req.user,
+          };
+          const newToken = jwt.sign(payload, "AdminSecret", {
+            expiresIn: "20m",
+          });
+          res.cookie("token", newToken, { httpOnly: true });
           next();
         }
       });

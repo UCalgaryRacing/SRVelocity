@@ -101,7 +101,8 @@ const postTeamMemberSchema = Joi.object({
 
 const defaultTeamName = "Schulich Racing";
 
-teamMember.post("/postTeamMember", async (req, res) => {
+//Sign up
+teamMember.post("/", async (req, res) => {
   //Validate the request
   const postTeamMemberSchemaCheck = postTeamMemberSchema.validate(req.body);
   if (postTeamMemberSchemaCheck.error) {
@@ -114,6 +115,7 @@ teamMember.post("/postTeamMember", async (req, res) => {
   }
   //Encrypt the password
   const salt = await bcrypt.genSalt(10);
+  console.log(req.body.password);
   const password = await bcrypt.hash(req.body.password, salt);
   //Execute the stored procedure
   database
@@ -127,7 +129,6 @@ teamMember.post("/postTeamMember", async (req, res) => {
       defaultTeamName,
     ])
     .then((data) => {
-      console.log("Success");
       res.status(200).send({ msg: "Success!" }).end();
     })
     .catch((error) => {
@@ -242,7 +243,7 @@ teamMember.get("/stopSession", withAnyAuth, (req, res) => {
   const payload = {};
   const token = jwt.sign(payload, "x", { expiresIn: "1" });
   res.cookie("token", token, { httpOnly: true });
-  res.status(200).end();
+  res.status(200).send({ msg: "Success!" }).end();
 });
 
 module.exports = teamMember;

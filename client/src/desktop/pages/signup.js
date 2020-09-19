@@ -23,7 +23,7 @@ class SignUpPage extends React.Component {
 
   async submit() {
     try {
-      const requestURL = "teamMember/postTeamMember";
+      const requestURL = "/teamMember";
       let res = await fetch(requestURL, {
         method: "POST",
         credentials: "include",
@@ -77,6 +77,7 @@ class SignUpPage extends React.Component {
         console.log("LOG IN REQUIRED");
         this.props.history.push("/signin");
       }
+      console.log(res);
       return await res;
     } catch (err) {
       console.log(err);
@@ -138,12 +139,15 @@ class SignUpPage extends React.Component {
                   <Col>
                     <Form className="emailForm">
                       <Form.Control
+                        as="select"
                         className="emailFormControl"
                         ref={this.subteam}
                         autoComplete="on"
                         placeHolder="Subteam"
                         required
-                      />
+                      >
+                        {this.state.optionRender}
+                      </Form.Control>
                     </Form>
                   </Col>
                 </Row>

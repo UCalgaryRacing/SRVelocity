@@ -18,7 +18,7 @@ const withAnyAuth = async (req, res, next) => {
         return;
       })
       .catch((error) => {
-        res.status(401).send({ error: "Not authorized!" }).end();
+        res.status(401).send({ error: "Not Authorized!" }).end();
         return;
       });
   } else {

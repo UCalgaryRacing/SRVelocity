@@ -119,6 +119,10 @@ export default class HistoricalPlotDash extends React.Component {
                     borderBottomWidth: '1px',
                     borderStyle: 'solid'
                 }}>
+                    {this.state.showPlots ? 
+                    <Button id='backButton' onClick={() => this.setState({showPlots: false})}>Back</Button> 
+                    :
+                    <div>
                     <Button id='sortButton' onClick={this.changeType} ><b>Sort Data</b></Button>&nbsp;&nbsp;
                     <Form className="searchForm" style={{ position: 'absolute', top: '10px', right: '10px' }}>
                         <Form.Control
@@ -130,14 +134,19 @@ export default class HistoricalPlotDash extends React.Component {
                             required
                         />
                     </Form>
+                    </div>
+                    }
                 </div>
                 <div id='data'>
                     {this.state.showPlots ? 
                         <HistoricalPlot currentCSV={this.state.currentCSV}/> 
                         :
+                        <div>
+                        <p style={{textAlign:'center', fontFamily:'Helvetica', fontSize:'large'}}>Click on a box to view custom plots</p>
                         <CardDeck>
                         {this.state.showSearched ? this.state.searchedFiles : this.state.CSVFiles}
                         </CardDeck>
+                        </div>
                     }
                 </div>
             </div>

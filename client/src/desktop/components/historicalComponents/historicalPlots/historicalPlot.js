@@ -1,6 +1,7 @@
 import React from 'react';
 import Select from 'react-select'
 import { Row, Col, Container } from 'react-bootstrap'
+import ScatterPlot from './historicalGraphComponents/scatterPlot'
 
 
 export default class HistoricalPlotDash extends React.Component {
@@ -44,7 +45,6 @@ export default class HistoricalPlotDash extends React.Component {
             yData: tempData
         })
 
-        this.updateGraph()
     }
 
     handleXChange = (selectedOption) => {
@@ -55,25 +55,14 @@ export default class HistoricalPlotDash extends React.Component {
             xData: tempData
         })
 
-        this.updateGraph()
-    }
-
-    updateGraph = () => {
     }
 
 
     render = () => {
         return (
+            <div>
             <Container>
                 <Row>
-                    <Col>
-                        <p>Please choose a field for the X Axis:</p>
-                        <Select
-                            value={this.state.xAxis}
-                            onChange={this.handleXChange}
-                            options={this.state.options}
-                            />
-                    </Col>
                     <Col>
                         <p>Please choose a field for the Y Axis:</p>
                         <Select
@@ -82,8 +71,18 @@ export default class HistoricalPlotDash extends React.Component {
                             options={this.state.options}
                             />
                     </Col>
+                    <Col>
+                        <p>Please choose a field for the X Axis:</p>
+                        <Select
+                            value={this.state.xAxis}
+                            onChange={this.handleXChange}
+                            options={this.state.options}
+                            />
+                    </Col>
                 </Row>
             </Container>
+            <ScatterPlot yData={this.state.yData} xData={this.state.xData}/>
+            </div>
         );
     }
 }

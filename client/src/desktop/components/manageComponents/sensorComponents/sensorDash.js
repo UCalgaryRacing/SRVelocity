@@ -3,6 +3,7 @@ import { Row, Col, Table, Button, Form, Modal } from "react-bootstrap";
 import { withRouter } from "react-router-dom";
 import ManageBox from '../manageBox';
 import ManageAddModal from '../manageAddModal';
+import ManageSortModal from '../manageSortModal';
 import './sensorDash.css';
 var _ = require('lodash');
 
@@ -12,6 +13,7 @@ class SensorDash extends React.Component {
 		this.state = {
 			sensorRender: [],
 			showAddModal: false,
+			showSortModal: false,
 			searchedFiles: []
 		};
 	}
@@ -225,8 +227,33 @@ class SensorDash extends React.Component {
 		this.setState({ sensorRender: render });
 	};
 
+	sortSensorTable = async (sortType) => {
+		let render = this.state.sensorRender;
+		render.sort(function(a, b){
+			if(sortType === 'Sensor Name'){
+				var tempA = a.props.values[0].toUpperCase();
+				var tempB = b.props.values[0].toUpperCase();
+				if(tempA > tempB) return 1;
+				else if(tempA < tempB) return -1;
+				else return 0;
+			}
+			else if(sortType === 'Category'){
+				var tempA = a.props.values[1].toUpperCase();
+				var tempB = b.props.values[1].toUpperCase();
+				if(tempA > tempB) return 1;
+				else if(tempA < tempB) return -1;
+				else return 0;
+			}
+			this.setState({ sensorRender: render });
+		});
+	}
+
 	toggleAddModal = () => {
 		this.setState({ showAddModal: !this.state.showAddModal });
+	}
+
+	toggleSortModal = () => {
+		this.setState({ showSortModal: !this.state.showSortModal });
 	}
 
 	search = (e) => {
@@ -272,7 +299,7 @@ class SensorDash extends React.Component {
 					borderStyle: 'solid'
 				}}>
 					<Button id='uploadButton' onClick={this.toggleAddModal}><b>Add</b></Button>&nbsp;&nbsp;
-					<Button id='sortButton' onClick={this.changeType} disabled={(this.state.typeOption === 'plotting') ? true : false}><b>Sort Data</b></Button>&nbsp;&nbsp;
+					<Button id='sortButton' onClick={this.toggleSortModal} disabled={(this.state.typeOption === 'plotting') ? true : false}><b>Sort Data</b></Button>&nbsp;&nbsp;
 					<Form className="searchForm" style={{ position: 'absolute', top: '10px', right: '10px' }}>
 						<Form.Control
 							onChange={this.search}
@@ -288,6 +315,7 @@ class SensorDash extends React.Component {
 					{this.state.showSearched ? this.state.searchedFiles : this.state.sensorRender}
 				</div>
 				<ManageAddModal submit={this.addSensor} show={this.state.showAddModal} toggleAddModal={this.toggleAddModal} labels={["Name", "Category", "Output Unit", "CAN ID", "Frequency", "Code Name"]} title={"Add Sensor"} />
+				<ManageSortModal submit={this.sortSensorTable} show={this.state.showSortModal} toggleSortModal={this.toggleSortModal} title={"Sort Sensors"}/>
 			</div>
 		);
 	}

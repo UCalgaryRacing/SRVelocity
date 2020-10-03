@@ -48,7 +48,7 @@ teamMember.post("/authenticate", async (req, res) => {
           jwt.sign(
             payload,
             data.is_lead ? "AdminSecret" : "NonAdminSecret",
-            { expiresIn: "60m" },
+            { expiresIn: "30m" },
             (err, token) => {
               if (err) res.status(500).send("Error!").end();
               res.cookie("token", token, { httpOnly: true });
@@ -59,7 +59,7 @@ teamMember.post("/authenticate", async (req, res) => {
                   lastName: data.last_name,
                   email: data.email,
                   subteam: data.subteam_name,
-                  ID: data.member_id
+                  ID: data.member_id,
                 })
                 .end();
             }
@@ -101,16 +101,21 @@ const postTeamMemberSchema = Joi.object({
 
 const defaultTeamName = "Schulich Racing";
 
-teamMember.post("/postTeamMember", async (req, res) => {
+//Sign up
+teamMember.post("/", async (req, res) => {
   //Validate the request
   const postTeamMemberSchemaCheck = postTeamMemberSchema.validate(req.body);
   if (postTeamMemberSchemaCheck.error) {
-    res.status(400).json({ error: postTeamMemberSchemaCheck.error }).end();
+    res
+      .status(400)
+      .json({ error: postTeamMemberSchemaCheck.error.details[0].message })
+      .end();
     console.log(postTeamMemberSchemaCheck.error);
     return;
   }
   //Encrypt the password
   const salt = await bcrypt.genSalt(10);
+  console.log(req.body.password);
   const password = await bcrypt.hash(req.body.password, salt);
   //Execute the stored procedure
   database
@@ -122,16 +127,13 @@ teamMember.post("/postTeamMember", async (req, res) => {
       req.body.subteamName,
       false,
       defaultTeamName,
-      //req.body.isLead,
-      //req.body.teamName,
     ])
     .then((data) => {
-      console.log("Success");
-      res.status(200).send("Success!").end();
+      res.status(200).send({ msg: "Success!" }).end();
     })
     .catch((error) => {
       console.log(error);
-      res.status(500).send("Error!").end();
+      res.status(500).send({ error: "Error" }).end();
     });
 });
 
@@ -233,15 +235,15 @@ teamMember.delete("/:memberID", withAdminAuth, async (req, res) => {
     });
 });
 
-teamMember.get('/checkToken', withAnyAuth, (req, res) => {
-    res.sendStatus(200).end();
+teamMember.get("/checkToken", withAnyAuth, (req, res) => {
+  res.sendStatus(200).end();
 });
 
 teamMember.get("/stopSession", withAnyAuth, (req, res) => {
-    const payload = {};
-    const token = jwt.sign(payload, "x", {expiresIn: '1'});
-    res.cookie('token', token, { httpOnly: true });
-    res.status(200).end();
+  const payload = {};
+  const token = jwt.sign(payload, "x", { expiresIn: "1" });
+  res.cookie("token", token, { httpOnly: true });
+  res.status(200).send({ msg: "Success!" }).end();
 });
 
 module.exports = teamMember;

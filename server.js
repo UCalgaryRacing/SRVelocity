@@ -60,22 +60,22 @@ app.use("/api/pgdb", pgDatabase);
 app.use("/historical", dataServer);
 
 //Import Routes
-// const log = require("./Router/log");
-// const race = require("./Router/race");
-// const sensor = require("./Router/sensor");
-// const subteam = require("./Router/subteam");
 // const team = require("./Router/team");
-// const vehicle = require("./Router/vehicle");
+const log = require("./Router/log");
+const race = require("./Router/race");
+const vehicle = require("./Router/vehicle");
+const subteam = require("./Router/subteam");
+const sensor = require("./Router/sensor");
 const teamMember = require("./Router/teamMember");
 const driver = require("./Router/driver");
 
 //Add Routes
-// app.use("/log", log);
-// app.use("/race", race);
-// app.use("/sensor", sensor);
-// app.use("/subteam", subteam);
 // app.use("/team", team);
-// app.use("/vehicle", vehicle);
+app.use("/log", log);
+app.use("/race", race);
+app.use("/vehicle", vehicle);
+app.use("/subteam", subteam);
+app.use("/sensor", sensor);
 app.use("/teamMember", teamMember);
 app.use("/driver", driver);
 

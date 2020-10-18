@@ -56,7 +56,7 @@ const withAdminAuth = async (req, res, next) => {
         const payload = {
           user: req.user,
         };
-        if (user.isLead) {
+        if (req.user.isLead) {
           const newToken = jwt.sign(payload, "VerBigSuperScarySecret", {
             expiresIn: "20m",
           });

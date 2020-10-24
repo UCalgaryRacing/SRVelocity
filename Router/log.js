@@ -1,49 +1,26 @@
-/**
- * Logs endpoint.
- *
- * Used to add a log, which is periodically emited from car while it is moving.
- **/
 "use strict";
 
-const database = require("../Configuration/postgreSQL");
 const express = require("express");
+const withAnyAuth = require("../Middleware/auth")[0];
 const withAdminAuth = require("../Middleware/auth")[1];
-const Joi = require("@hapi/joi");
-const apiKeySchema = require("../Middleware/sanitizeAuth");
-const sanitizeInputs = require("./helperFunctions");
+const logSchema = require("../Middleware/schema/logSchema");
+const sanitizeInputs = require("../Middleware/helperFunctions");
+const api = require("../Util/call");
 const log = express.Router();
 
-// Sanitize log input.
-const postLogSchema = Joi.object({
-	utc: Joi.number().integer().required(),
-	value: Joi.number().required(),
-	raceId: Joi.number().integer().required(),
-	sensorId: Joi.number().integer().required()
-});
-
-// Post a new log entry in the database
-// Posts time, values, specific race ID, and sensor sensor ID to table 
-log.post("/postLog", withAdminAuth, async (req, res) => {
-	//Validate the request
-	const checkParamsNotBody = 0;
-	const result = await sanitizeInputs(req, res, apiKeySchema, postLogSchema, checkParamsNotBody);
-	if (result < 0) return;
-	//Execute the stored procedure
-	database.proc("postLog", [
-			req.user.APIKey,
-			req.body.utc,
-			req.body.value,
-			req.body.raceId,
-			req.body.sensorId
-		])
-		.then(data => {
-			console.log(data)
-			res.status(200).send("Success!").end();
-		})
-		.catch(error => {
-			console.log(error)
-			res.status(500).send("Error!").end();
-		});
+log.post("/", [withAdminAuth, sanitizeInputs(logSchema.LogPost.body)], async (req, res) => {
+  const response = await api.call("log/", "POST", {
+    searchParams: {
+      APIKey: req.user.APIKey,
+    },
+    json: {
+      utc: req.body.utc,
+      value: req.body.value,
+      raceId: req.body.raceId,
+      sensorId: req.body.sensorId,
+    },
+  });
+  res.status(response.status).json(response.body);
 });
 
 module.exports = log;

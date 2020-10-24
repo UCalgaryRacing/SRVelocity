@@ -8,7 +8,7 @@ import '../styling/socialMedia.css'
 class Member extends React.Component {
     render = () => {
         return (
-            <div style={{ paddingBottom: '20px' }}>
+            <div id="memberCard" style={{ paddingBottom: '20px' }}>
                 <Card border='light'>
                     <Card.Body>
                         <Figure.Image

@@ -1,35 +1,28 @@
 import React from 'react';
 import { GATEWAYSERVERIP } from '../../../../dataServerEnv';
-import CSVBox from './CSVBox';
-import { Button, Form } from 'react-bootstrap';
-import UploadFileModal from './uploadFileModal';
-import '../../../styling/historicalDash.css'
+import { Button, Form, CardDeck } from 'react-bootstrap';
+import { readString } from 'react-papaparse'
+import SimpleCSVBox from './SimpleCSVBox'
+import HistoricalPlot from './historicalPlot'
+import '../../../styling/historicalPlotDash.css'
 var _ = require('lodash');
 
-export default class HistoricalContent extends React.Component {
+
+export default class HistoricalPlotDash extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            content: 'Dash',
             marginLeft: this.props.marginLeft,
-            toggleDash: false,
             CSVFiles: [],
-            showUploadModal: false,
-            sideOpen: false,
             showSearched: false,
             searchedFiles: [],
-            showSearchModal: false
+            showPlots: false,
+            currentCSV: null
         }
-        this.comments = [];
     }
 
     componentDidMount = () => {
         this.getAllFiles();
-    }
-
-    changeContent = (newContent) => {
-        this.setState({ content: newContent });
-        this.forceUpdate();
     }
 
     getAllFiles = () => {
@@ -46,16 +39,15 @@ export default class HistoricalContent extends React.Component {
                 for (var file of res) {
                     let date = new Date(parseInt(file.metadata.date));
                     files.push(
-                        <CSVBox
+                        <SimpleCSVBox
                             filename={file.name}
                             driver={file.metadata.driver}
                             car={file.metadata.car}
                             date={date.toLocaleDateString() + " " + date.toLocaleTimeString()}
-                            realDate={date}
-                            deleteFile={this.deleteFile}
                             ID={file.metadata.id}
                             key={i}
                             index={i}
+                            showFilePlot={this.showFilePlots}
                         />
                     )
                     i++
@@ -72,59 +64,18 @@ export default class HistoricalContent extends React.Component {
             .catch(err => { console.log(err) });
     }
 
-    addCSVBox = (filename, driver, vehicle, ID) => {
-        let files = [...this.state.CSVFiles];
-        let date = new Date();
-        files.push(
-            <CSVBox
-                filename={filename}
-                driver={driver}
-                car={vehicle}
-                date={date.toLocaleDateString() + " " + date.toLocaleTimeString()}
-                realDate={date}
-                deleteFile={this.deleteFile}
-                ID={ID}
-                key={filename}
-                index={this.state.CSVFiles.length + 1}
-            />
-        );
-        this.setState({CSVFiles: files}, this.forceUpdate());
+    showFilePlots = (CSVString) => {
+        const config = {
+            header: true,
+            dynamicTyping: true
+        }
+
+        let parseResult = readString(CSVString, config)
+
+        this.setState({currentCSV: parseResult,
+                        showPlots: true})
     }
 
-    deleteFile = (index) => {
-        this.setState({ CSVFiles: this.state.CSVFiles.filter(file => file.props.index !== index) })
-    }
-
-    insert = (box, temp, startIndex, endIndex) => {
-		var length = temp.length;
-		var start = typeof(startIndex) != 'undefined' ? startIndex : 0;
-		var end = typeof(endIndex) != 'undefined' ? endIndex : length - 1;
-		var m = start + Math.floor((end-start)/2);
-
-		if(length == 0){
-			temp.push(box);
-			return;
-		}
-		if(box.props.values[0].toUpperCase() > temp[end].props.values[0].toUpperCase()){
-			temp.splice(end+1, 0, box);
-			return;
-		}
-		if(box.props.values[0].toUpperCase() < temp[start].props.values[0].toUpperCase()){
-			temp.splice(start, 0, box);
-			return;
-		}
-		if(start >= end){
-			return;
-		}
-		if(box.props.values[0].toUpperCase() < temp[m].props.values[0].toUpperCase()){
-			this.insert(box, temp, start, m-1);
-			return;
-		}
-		if(box.props.values[0].toUpperCase() > temp[m].props.values[0].toUpperCase()){
-			this.insert(box, temp, m+1, end);
-			return;
-		}
-	}
 
     search = (e) => {
         e.preventDefault();
@@ -152,7 +103,7 @@ export default class HistoricalContent extends React.Component {
 
     render = () => {
         return (
-            <div id='historicalDash'>
+            <div id='historicalPlotDash'>
                 <div id='top' style={{
                     position: 'fixed',
                     top: '56px',
@@ -168,7 +119,10 @@ export default class HistoricalContent extends React.Component {
                     borderBottomWidth: '1px',
                     borderStyle: 'solid'
                 }}>
-                    <Button id='uploadButton' onClick={() => { this.setState({ showUploadModal: true }) }}><b>Upload CSV</b></Button>&nbsp;&nbsp;
+                    {this.state.showPlots ? 
+                    <Button id='backButton' onClick={() => this.setState({showPlots: false})}>Back</Button> 
+                    :
+                    <div>
                     <Button id='sortButton' onClick={this.changeType} ><b>Sort Data</b></Button>&nbsp;&nbsp;
                     <Form className="searchForm" style={{ position: 'absolute', top: '10px', right: '10px' }}>
                         <Form.Control
@@ -180,10 +134,20 @@ export default class HistoricalContent extends React.Component {
                             required
                         />
                     </Form>
+                    </div>
+                    }
                 </div>
                 <div id='data'>
-                    <UploadFileModal show={this.state.showUploadModal} onHide={() => this.setState({ showUploadModal: false })} addCSVBox={this.addCSVBox} />
-                    {this.state.showSearched ? this.state.searchedFiles : this.state.CSVFiles}
+                    {this.state.showPlots ? 
+                        <HistoricalPlot currentCSV={this.state.currentCSV}/> 
+                        :
+                        <div>
+                        <p style={{textAlign:'center', fontFamily:'Helvetica', fontSize:'large'}}>Click on a box to view custom plots</p>
+                        <CardDeck>
+                        {this.state.showSearched ? this.state.searchedFiles : this.state.CSVFiles}
+                        </CardDeck>
+                        </div>
+                    }
                 </div>
             </div>
         );

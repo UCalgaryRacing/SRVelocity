@@ -33,7 +33,7 @@ class TeamDash extends React.Component {
 
   fetchTeamMembers = async () => {
     try {
-      let res = await fetch("/teamMember/getAllTeamMembers", {
+      let res = await fetch("/teamMember/all", {
         method: "GET",
         credentials: "include",
         headers: {
@@ -58,23 +58,13 @@ class TeamDash extends React.Component {
         render.push(
           <ManageBox
             labels={["First Name", "Last Name", "Email", "Subteam"]}
-            values={[
-              ele.first_name,
-              ele.last_name,
-              ele.email,
-              ele.subteam_name,
-            ]}
+            values={[ele.first_name, ele.last_name, ele.email, ele.subteam_name]}
             ID={ele.member_id}
             key={ele.member_id}
             delete={this.deleteMember}
             submitEdit={this.submitEdit}
           >
-            {ele.is_approved ? null : (
-              <MemberApprove
-                member_id={ele.member_id}
-                submit={this.submitApproval}
-              />
-            )}
+            {ele.is_approved ? null : <MemberApprove member_id={ele.member_id} submit={this.submitApproval} />}
           </ManageBox>
         );
       });
@@ -149,9 +139,7 @@ class TeamDash extends React.Component {
     }
     var filtered = [...this.state.memberRender];
     function filterParam(param, index, value) {
-      return filtered.filter((file) =>
-        file.props[param][index].toLowerCase().includes(value.toLowerCase())
-      );
+      return filtered.filter((file) => file.props[param][index].toLowerCase().includes(value.toLowerCase()));
     }
     var fNameFilter = filterParam("values", 0, text);
     var lNameFilter = filterParam("values", 1, text);
@@ -194,10 +182,7 @@ class TeamDash extends React.Component {
             <b>Sort Data</b>
           </Button>
           &nbsp;&nbsp;
-          <Form
-            className="searchForm"
-            style={{ position: "absolute", top: "10px", right: "10px" }}
-          >
+          <Form className="searchForm" style={{ position: "absolute", top: "10px", right: "10px" }}>
             <Form.Control
               onChange={this.search}
               className="searchFormControl"
@@ -208,11 +193,7 @@ class TeamDash extends React.Component {
             />
           </Form>
         </div>
-        <div id="data">
-          {this.state.showSearched
-            ? this.state.searchedFiles
-            : this.state.memberRender}
-        </div>
+        <div id="data">{this.state.showSearched ? this.state.searchedFiles : this.state.memberRender}</div>
         <ManageAddModal
           submit={this.addSensor}
           show={this.state.showAddModal}

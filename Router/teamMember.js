@@ -13,12 +13,12 @@ const withAnyAuth = require("../Middleware/auth")[0];
 const withAdminAuth = require("../Middleware/auth")[1];
 
 //Login
-teamMember.post("/authenticate", sanitizeInputs(teamMemberSchema.TeamMemberAuthenticate), async (req, res) => {
-  const authenticateSchemaCheck = authenticateSchema.validate(req.body);
-  if (authenticateSchemaCheck.error) {
-    res.status(400).json({ error: authenticateSchemaCheck.error.message }).end();
-    return;
-  }
+teamMember.post("/authenticate", sanitizeInputs(teamMemberSchema.TeamMemberAuthenticate.body), async (req, res) => {
+  // const authenticateSchemaCheck = authenticateSchema.validate(req.body);
+  // if (authenticateSchemaCheck.error) {
+  //   res.status(400).json({ error: authenticateSchemaCheck.error.message }).end();
+  //   return;
+  // }
 
   const user = await api.call(`teammember/${req.body.email}/email`, "GET");
   if (user.status === 200) {

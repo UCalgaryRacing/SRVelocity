@@ -10,7 +10,11 @@ const api = require("../Util/call");
 const driver = express.Router();
 
 driver.get("/", withAnyAuth, async (req, res) => {
-  const response = await api.call("driver/", "GET");
+  const response = await api.call("driver/", "GET", {
+    searchParams: {
+      APIKey: req.user.APIKey,
+    },
+  });
   res.status(response.status).json(response.body).end();
 });
 

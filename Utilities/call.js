@@ -1,3 +1,5 @@
+"use strict";
+
 const got = require("got");
 
 class Call {
@@ -18,7 +20,6 @@ class Call {
     const searchParams = options.searchParams || {};
     const headers = options.headers || {};
     const json = options.json || (method === "GET" ? undefined : {});
-
     let res;
     try {
       res = await this.api(path, {
@@ -29,6 +30,7 @@ class Call {
       });
     } catch (error) {
       console.log(error);
+      return { status: 500 }
     }
     res = { status: res.statusCode, body: res.body };
     return res;

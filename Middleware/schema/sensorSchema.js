@@ -1,3 +1,5 @@
+"use strict";
+
 const Joi = require("@hapi/joi");
 
 const SensorPost = {
@@ -9,7 +11,7 @@ const SensorPost = {
     codeName: Joi.string().alphanum(),
     canId: Joi.string().alphanum(),
     frequency: Joi.number().integer(),
-  }),
+  })
 };
 
 const SensorPut = {
@@ -20,10 +22,10 @@ const SensorPut = {
     codeName: Joi.string().alphanum(),
     canId: Joi.string().alphanum(),
     frequency: Joi.number().integer(),
-  }),
+  })
 };
 
 module.exports = {
   SensorPost,
-  SensorPut,
+  SensorPut
 };

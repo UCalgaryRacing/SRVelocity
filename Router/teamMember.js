@@ -3,9 +3,7 @@
 const jwt = require("jsonwebtoken");
 const express = require("express");
 const teamMember = express.Router();
-const Joi = require("@hapi/joi");
-const api = require("../Util/call");
-const { options } = require("@hapi/joi");
+const api = require("../Utilities/call");
 const bcrypt = require("bcryptjs");
 const sanitizeInputs = require("../Middleware/helperFunctions");
 const teamMemberSchema = require("../Middleware/schema/teamMemberSchema");
@@ -14,13 +12,7 @@ const withAdminAuth = require("../Middleware/auth")[1];
 
 //Login
 teamMember.post("/authenticate", sanitizeInputs(teamMemberSchema.TeamMemberAuthenticate.body), async (req, res) => {
-  // const authenticateSchemaCheck = authenticateSchema.validate(req.body);
-  // if (authenticateSchemaCheck.error) {
-  //   res.status(400).json({ error: authenticateSchemaCheck.error.message }).end();
-  //   return;
-  // }
-
-  const user = await api.call(`teammember/${req.body.email}/email`, "GET");
+  const user = await api.call(`teamMember/${req.body.email}/email`, "GET");
   if (user.status === 200) {
     const isMatch = await bcrypt.compare(req.body.password, user.body.password);
     if (isMatch) {
@@ -34,7 +26,7 @@ teamMember.post("/authenticate", sanitizeInputs(teamMemberSchema.TeamMemberAuthe
           id: user.body.member_id,
           isLead: user.body.is_lead,
           APIKey: user.body.api_key,
-        },
+        }
       };
       jwt.sign(payload, "VerBigSuperScarySecret", { expiresIn: "30m" }, (err, token) => {
         if (err) res.status(500).send("Error!").end();
@@ -51,30 +43,26 @@ teamMember.post("/authenticate", sanitizeInputs(teamMemberSchema.TeamMemberAuthe
           })
           .end();
       });
-    } else res.status(401).send({ error: "Password is incorrect!" }).end();
-  } else {
-    res.status(user.status).json({ error: "Error status: " + user.status });
+    }
+    else res.status(401).send({ error: "Password is incorrect!" }).end();
   }
+  else res.status(user.status).json({ error: "Error status: " + user.status }).end();
 });
 
 //Get all team members
 teamMember.get("/all", withAnyAuth, async (req, res) => {
-  const users = await api.call(`teammember/AllTeamMembers`, "GET", {
+  const users = await api.call(`teamMember/AllTeamMembers`, "GET", {
     searchParams: {
       APIKey: req.user.APIKey,
-    },
+    }
   });
   if (users.status === 200) res.status(200).json(users.body).end();
-  else {
-    res.status(users.status).json("Error status: " + users.status);
-  }
+  else res.status(users.status).json("Error status: " + users.status);
 });
-
-const defaultTeamName = "Schulich Racing";
 
 //Sign up
 teamMember.post("/", sanitizeInputs(teamMemberSchema.TeamMemberSignUp), async (req, res) => {
-  const response = await api.call(`teammember/`, "POST", {
+  const response = await api.call(`teamMember/`, "POST", {
     json: {
       firstName: req.body.firstName,
       lastName: req.body.lastName,
@@ -82,20 +70,20 @@ teamMember.post("/", sanitizeInputs(teamMemberSchema.TeamMemberSignUp), async (r
       password: req.body.password,
       subteamName: req.body.subteamName,
       teamName: "Schulich Racing",
-    },
+    }
   });
   res.status(response.status).json(response.body).end();
 });
 
 teamMember.put("/:member/approve", withAdminAuth, async (req, res) => {
   const response = await api.call(`teammember/${req.params.member}/approve`, "PUT", {
-    searchParams: { APIKey: req.user.APIKey },
+    searchParams: { APIKey: req.user.APIKey }
   });
   res.status(response.status).json(res.body).end();
 });
 
 teamMember.put("/:memberID", [withAdminAuth, sanitizeInputs(teamMemberSchema.TeammemberPut)], async (req, res) => {
-  response = await api.call(`teammember/${req.params.memberID}`, "PUT", {
+  response = await api.call(`teamMember/${req.params.memberID}`, "PUT", {
     json: {
       memberID: req.params.memberID,
       firstName: req.body.firstName,
@@ -104,13 +92,13 @@ teamMember.put("/:memberID", [withAdminAuth, sanitizeInputs(teamMemberSchema.Tea
       subteamName: req.body.subteamName,
       isLead: req.body.isLead,
       isApproved: req.body.isApproved,
-    },
+    }
   });
   res.status(reponse.status).json(reponse.body).end();
 });
 
 teamMember.delete("/:memberID", withAdminAuth, async (req, res) => {
-  const response = await api.call(`teammember/${req.params.memberID}`, "DELETE");
+  const response = await api.call(`teamMember/${req.params.memberID}`, "DELETE");
   res.status(response.status).json(response.body).end();
 });
 

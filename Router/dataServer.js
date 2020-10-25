@@ -1,11 +1,13 @@
+"use strict";
+
 const express = require("express");
 const dataServer = express.Router();
 const DATASERVERIP = 'http://localhost:4500';
 const fetch = require('node-fetch');
-const multer = require('multer')
-const storage = multer.memoryStorage()
-const upload = multer({ storage: storage })
-const FormData = require('form-data')
+const multer = require('multer');
+const storage = multer.memoryStorage();
+const upload = multer({ storage: storage });
+const FormData = require('form-data');
 
 dataServer.get("/getFiles", (req, res) => {
     fetch(DATASERVERIP + '/fileServer/getFiles', {
@@ -15,11 +17,10 @@ dataServer.get("/getFiles", (req, res) => {
         }
     })
         .then(response => response.json())
-        .then(response => res.send(response))
+        .then(response => res.send(response).end())
         .catch(err => {
-            console.log(err);
-            res.sendStatus(500)
-        })
+            res.sendStatus(500).end();
+        });
 });
 
 //Download file
@@ -30,16 +31,15 @@ dataServer.get("/getFile/:filename", (req, res) => {
         .then(response => response.body)
         .then(response => response.pipe(res))
         .catch(err => {
-            console.log(err);
             res.sendStatus(500)
-        })
-})
+        });
+});
 
 dataServer.post("/renameFile", (req, res) => {
     let postParams = {
         oldFilename: req.body.oldFilename,
         newFilename: req.body.newFilename
-    }
+    };
 
     fetch(DATASERVERIP + '/fileServer/renameFile', {
         method: 'POST',
@@ -55,8 +55,8 @@ dataServer.post("/renameFile", (req, res) => {
         .catch(err => {
             console.log(err)
             res.sendStatus(500)
-        })
-})
+        });
+});
 
 // Deletes file in storage. MUST contain full filename (including the file extension. e.g. '.csv').
 dataServer.get("/deleteFile/:filename", (req, res) => {
@@ -64,58 +64,45 @@ dataServer.get("/deleteFile/:filename", (req, res) => {
         method: 'GET'
     })
         .then(response => {
-            if (response.ok) {
-                res.sendStatus(200)
-            } else {
-                res.sendStatus(500)
-            }
+            if (response.ok) res.sendStatus(200).end();
+            else res.sendStatus(500).end();
         })
         .catch(err => {
-            console.log(err)
-            res.sendStatus(500)
-        })
-})
+            res.sendStatus(500).end();
+        });
+});
 
 //Upload file
 dataServer.post("/uploadFile/", upload.any(), (req, res) => {
-
     // Theres only one file but still need to iterate
     req.files.forEach(file => {
-        var form = new FormData()
-        form.append('data', file.buffer, file.originalname)
+        var form = new FormData();
+        form.append('data', file.buffer, file.originalname);
         fetch(DATASERVERIP + '/fileServer/uploadFile/', {
             method: 'POST',
             body: form
         })
-        .then(response => response.json())
+            .then(response => response.json())
             .then(response => {
-                //if (response.ok) {
-                console.log(response)
-                res.send({ ID: response.ID })
-                // } else {
-                //     res.sendStatus(500)
-                // }
+                if (response.ok) res.send({ ID: response.ID }).end();
+                else res.sendStatus(500).end();
             })
             .catch(err => {
-                console.log(err)
-                res.sendStatus(500)
-            })
-
-    })
-
-})
+                res.sendStatus(500).end();
+            });
+    });
+});
 
 //Updates attributes of the file (driver and car)
 dataServer.post("/updateMetadata", (req, res) => {
-    console.log(req.body)
-    let meta = {}
-    if (req.body.driver) meta['driver'] = req.body.driver
-    if (req.body.car) meta['car'] = req.body.car
+    let meta = {};
+    if (req.body.driver) meta['driver'] = req.body.driver;
+    if (req.body.car) meta['car'] = req.body.car;
 
     let postParams = {
         filename: req.body.filename,
         metadata: meta
-    }
+    };
 
     fetch(DATASERVERIP + '/fileServer/updateMetadata', {
         method: 'POST',
@@ -125,16 +112,13 @@ dataServer.post("/updateMetadata", (req, res) => {
         body: JSON.stringify(postParams)
     })
         .then(async response => {
-            if (response.ok) {
-                res.sendStatus(200);
-            }
-            else res.sendStatus(500)
+            if (response.ok) res.sendStatus(200).end();
+            else res.sendStatus(500).end();
         })
         .catch(err => {
-            console.log(err)
-            res.sendStatus(500)
-        })
-})
+            res.sendStatus(500).end();
+        });
+});
 
 dataServer.get("/getComments/:id", (req, res) => {
     fetch(DATASERVERIP + '/comments/getComments/' + req.params.id, {
@@ -143,16 +127,13 @@ dataServer.get("/getComments/:id", (req, res) => {
         .then(response => {
             if (response.ok) {
                 response.json()
-                    .then(response => res.send(response))
-            } else {
-                res.sendStatus(500)
-            }
+                    .then(response => res.send(response).end())
+            } else res.sendStatus(500).end();
         })
         .catch(err => {
-            console.log(err)
-            res.sendStatus(500)
-        })
-})
+            res.sendStatus(500).end();
+        });
+});
 
 dataServer.post("/addComment", (req, res) => {
     let postParams = {
@@ -160,7 +141,7 @@ dataServer.post("/addComment", (req, res) => {
         content: req.body.content,
         commenter: req.body.commenter,
         commenterID: req.body.commenterID
-    }
+    };
 
     fetch(DATASERVERIP + '/comments/addComment', {
         method: 'POST',
@@ -171,19 +152,18 @@ dataServer.post("/addComment", (req, res) => {
     })
         .then(response => response.json())
         .then(response => {
-            res.send(response)
+            res.send(response).end();
         })
         .catch(err => {
-            console.log(err)
-            res.sendStatus(500)
-        })
-})
+            res.sendStatus(500).end();
+        });
+});
 
 dataServer.delete("/deleteComment", (req, res) => {
     let postParams = {
         fileID: req.body.fileID,
         commentID: req.body.commentID
-    }
+    };
 
     fetch(DATASERVERIP + '/comments/deleteComment', {
         method: 'DELETE',
@@ -193,13 +173,12 @@ dataServer.delete("/deleteComment", (req, res) => {
         body: JSON.stringify(postParams)
     })
         .then(response => {
-            if (response.ok) res.sendStatus(200);
-            else res.sendStatus(500)
+            if (response.ok) res.sendStatus(200).end();
+            else res.sendStatus(500).end();
         })
         .catch(err => {
-            console.log(err)
-            res.sendStatus(500)
-        })
-})
+            res.sendStatus(500).end();
+        });
+});
 
 module.exports = dataServer;

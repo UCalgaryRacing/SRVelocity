@@ -1,3 +1,5 @@
+"use strict";
+
 const Joi = require("@hapi/joi");
 
 const LogPost = {
@@ -6,9 +8,9 @@ const LogPost = {
     value: Joi.number().required(),
     raceId: Joi.number().integer().required(),
     sensorId: Joi.number().integer().required(),
-  }),
+  })
 };
 
 module.exports = {
-  LogPost,
+  LogPost
 };

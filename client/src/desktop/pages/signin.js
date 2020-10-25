@@ -20,6 +20,7 @@ class SignInPage extends React.Component {
 
 	handleSignIn = async () => {
 		try {
+			console.log("here")
 			const res = await fetch("/teamMember/authenticate", {
 				method: "POST",
 				credentials: "include",
@@ -32,6 +33,7 @@ class SignInPage extends React.Component {
 				}),
 			});
 			const resJSON = await res.json();
+			console.log(resJSON)
 			if (!res.ok) {
 				this.setState({ showErrorMessage: true, showConfirmationMessage: false });
 				throw new Error(res.status);

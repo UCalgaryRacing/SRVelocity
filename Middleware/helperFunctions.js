@@ -1,3 +1,5 @@
+"use strict";
+
 /**
  * Sanitize inputs. Takes in the req and res objects, along with a Joi blueprint
  * that specifies the required schema of the reqest.
@@ -14,34 +16,6 @@
  * @param {Integer} checkParamsNotBody If 1 we check req.params, otherwise we check req.body.
  *
  **/
-// const sanitizeInputs = async function (
-//   req,
-//   res,
-//   apiKeySchema,
-//   reqSchema,
-//   checkParamsNotBody
-// ) {
-//   const apiKeyCheck = apiKeySchema.validate(req.user);
-//   if (apiKeyCheck.error) {
-//     res.status(400).json({ error: apiKeyCheck.error.message }).end();
-//     return -1;
-//   }
-
-//   if (reqSchema) {
-//     let reqSchemaCheck;
-//     if (checkParamsNotBody === 1) {
-//       reqSchemaCheck = reqSchema.validate(req.params);
-//     } else {
-//       reqSchemaCheck = reqSchema.validate(req.body);
-//     }
-
-//     if (reqSchemaCheck.error) {
-//       res.status(400).json({ error: reqSchemaCheck.error.message }).end();
-//       return -1;
-//     }
-//   }
-//   return 0;
-// };
 
 const sanitizeInputs = function (reqSchemaBody, reqSchemaParams) {
   return async (req, res, next) => {

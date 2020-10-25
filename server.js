@@ -1,13 +1,13 @@
+"use strict";
+
 const express = require("express");
 const app = express();
 const session = require("express-session");
 const cookieParser = require("cookie-parser");
-const helmet = require("helmet");
-const lusca = require("lusca");
 const cors = require("cors");
 const path = require("path");
 const socketIOClient = require("socket.io-client");
-const api = require("./Util/call");
+const api = require("./Utilities/call");
 const PORT = 5000;
 
 //Setup
@@ -15,6 +15,8 @@ api.setPrefixURL("http://localhost:7000");
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cors());
+
+// What the fuck
 app.use(express.static(path.join(__dirname, "client/build")));
 app.get("/", (req, res) => {
   res.sendFile(path.join(__dirname, "client", "build", "index.html"));
@@ -52,17 +54,12 @@ app.use(
 app.use(cookieParser());
 
 //Import routes
-const pgDatabase = require("./Router/pgDatabase");
 const dataServer = require("./Router/dataServer");
 
 //Setup routes
-app.use("/api/pgdb", pgDatabase);
 app.use("/historical", dataServer);
 
 //Import Routes
-// const team = require("./Router/team");
-const log = require("./Router/log");
-const race = require("./Router/race");
 const vehicle = require("./Router/vehicle");
 const subteam = require("./Router/subteam");
 const sensor = require("./Router/sensor");
@@ -70,9 +67,6 @@ const teamMember = require("./Router/teamMember");
 const driver = require("./Router/driver");
 
 //Add Routes
-// app.use("/team", team);
-app.use("/log", log);
-app.use("/race", race);
 app.use("/vehicle", vehicle);
 app.use("/subteam", subteam);
 app.use("/sensor", sensor);
@@ -83,12 +77,12 @@ app.use("/driver", driver);
 var io = require("socket.io")(4000);
 
 //Socket to connect to run_data server
-
 const socket = socketIOClient("http://127.0.0.1:5500", {
   //CHANGE WHEN DEPLOYING!
   reconnection: true,
 });
 
+// Forward incoming data to React
 socket.on("new data", (data) => {
   io.emit(data);
 });

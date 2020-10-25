@@ -1,10 +1,12 @@
+"use strict";
+
 const Joi = require("@hapi/joi");
 
 const TeamMemberAuthenticate = {
   body: Joi.object({
     email: Joi.string().email().required(),
     password: Joi.string().required(),
-  }),
+  })
 };
 
 const TeamMemberSignUp = {
@@ -14,7 +16,7 @@ const TeamMemberSignUp = {
     firstName: Joi.string().alphanum().max(50).required(),
     lastName: Joi.string().alphanum().max(50).required(),
     subteamName: Joi.string().max(50).required(),
-  }),
+  })
 };
 
 const TeamMemberPut = {
@@ -28,11 +30,11 @@ const TeamMemberPut = {
   }),
   params: Joi.object({
     memberID: Joi.required(),
-  }),
+  })
 };
 
 module.exports = {
   TeamMemberAuthenticate,
   TeamMemberSignUp,
-  TeamMemberPut,
+  TeamMemberPut
 };

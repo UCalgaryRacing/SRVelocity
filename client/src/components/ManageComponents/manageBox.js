@@ -1,7 +1,7 @@
 import React from "react";
 import { Button } from "react-bootstrap";
 import ManageEdit from "./manageEdit";
-import ConfirmationModal from "../confirmationModal";
+import ConfirmationModal from "./confirmationModal";
 import "./manageBox.css";
 
 export default class ManageBox extends React.Component {

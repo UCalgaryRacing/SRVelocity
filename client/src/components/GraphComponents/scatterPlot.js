@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import { ColorRGBA, IndividualPointFill, PointShape, lightningChart, emptyTick, AxisScrollStrategies, SolidFill, ColorHEX, AutoCursorModes, SolidLine, FontSettings } from '@arction/lcjs';
 
-
 const theme = {
     whiteFill: new SolidFill({ color: ColorHEX('#FFFFFF') }),
     lightGrayFill: new SolidFill({ color: ColorHEX('#A0A0A0A0') }),

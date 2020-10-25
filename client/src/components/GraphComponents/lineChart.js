@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { Button } from 'react-bootstrap';
 import { lightningChart, emptyTick, DataPatterns, AxisScrollStrategies, SolidLine, SolidFill, ColorHEX, VisibleTicks, FontSettings, emptyLine } from '@arction/lcjs';
 import './lineChart.css';
-import { Figure, Container, Card, CardGroup, CardDeck } from 'react-bootstrap';
+import { Card, CardDeck } from 'react-bootstrap';
 
 const theme = {
     whiteFill: new SolidFill({ color: ColorHEX('#FFFFFF') }),

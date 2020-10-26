@@ -1,7 +1,7 @@
 import React from 'react';
 import { Button } from 'react-bootstrap'
 import { GATEWAYSERVERIP } from '../../../dataServerEnv'
-import './CSVBox.css'
+import './_styling/CSVBox.css'
 import download from 'downloadjs'
 import RenameFileModal from './renameFileModal'
 import Quill from './quill';

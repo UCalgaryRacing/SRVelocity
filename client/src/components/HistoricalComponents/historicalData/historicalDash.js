@@ -3,7 +3,7 @@ import { GATEWAYSERVERIP } from '../../../dataServerEnv';
 import CSVBox from './CSVBox';
 import { Button, Form } from 'react-bootstrap';
 import UploadFileModal from './uploadFileModal';
-import './historicalDash.css'
+import './_styling/historicalDash.css'
 var _ = require('lodash');
 
 export default class HistoricalContent extends React.Component {

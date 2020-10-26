@@ -5,7 +5,7 @@ import SensorData from '../../constants';
 import ScatterPlot from './scatterPlot';
 import { ColorHEX } from '@arction/lcjs';
 import { Button, ButtonGroup } from 'react-bootstrap';
-import './heatMap.css';
+import './_styling/heatMap.css';
 
 const colors = colormap({
     colormap: 'jet',

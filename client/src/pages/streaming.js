@@ -2,6 +2,7 @@ import React from "react";
 import StreamingSideNav from "../components/NavigationComponents/streamingSideNav";
 import StreamingContent from "../components/StreamingComponents/streamingContent";
 import "./_styling/streaming.css";
+import TopNav from "../components/NavigationComponents/topNav";
 
 export default class StreamingPage extends React.Component {
   constructor(props) {

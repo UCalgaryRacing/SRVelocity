@@ -4,7 +4,7 @@ import { Switch, BrowserRouter as Router, Route } from "react-router-dom";
 import ReactGA from "react-ga";
 import "./index.css";
 
-import "./wTopBar/css/normalize.css";
+//import "./wTopBar/css/normalize.css";
 
 //Import desktop pages
 import HomePage from "./pages/home";

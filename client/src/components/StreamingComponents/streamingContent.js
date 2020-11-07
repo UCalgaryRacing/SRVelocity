@@ -1,6 +1,7 @@
 import React from "react";
 import StreamingDash from "./streamingDash";
 import BottomNav from '../NavigationComponents/bottomNav';
+import TopNav from '../NavigationComponents/topNav';
 
 export default class StreamingContent extends React.Component {
   constructor(props) {
@@ -48,6 +49,7 @@ export default class StreamingContent extends React.Component {
         style={{ transition: "all 0.15s", marginLeft: this.state.marginLeft}}
       >
         {this.state.content === "Dash" ? <StreamingDash marginLeft={this.state.marginLeft} refreshPage={this.props.refreshPage}/> : null}
+        <TopNav/>
         <BottomNav/>
       </div>
     );

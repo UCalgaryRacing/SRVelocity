@@ -31,7 +31,7 @@ export default class HistoricalSideNav extends React.Component {
                         </NavItem>
                         <NavItem eventKey="Data Analysis">
                             <NavIcon>
-                                <img src={require('../../assets/inspect.svg')} style={{ marginLeft: '-34px', marginTop: '10px', transform: 'scaleX(-1)'}} alt='Data Analysis' />
+                                <img src={require('../../assets/inspect.svg')} style={{ marginLeft: '-15px', marginRight: '20px', marginTop: '10px', transform: 'scaleX(-1)'}} alt='Data Analysis' />
                             </NavIcon>
                             <NavText>
                                 <b>&nbsp;&nbsp;&nbsp;Data Analysis</b>

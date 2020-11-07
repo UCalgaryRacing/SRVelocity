@@ -46,6 +46,11 @@ export default class AboutPage extends React.Component {
 
         this.teamLeads = [
             {
+                name: 'Kevin',
+                src: require('../assets/teamPictures/Kevin.jpg'),
+                description: 'Electrical Lead'
+            },
+            {
                 name: 'Tyler',
                 src: require('../assets/teamPictures/Tyler.jpg'),
                 description: 'Electrical Lead',
@@ -56,15 +61,15 @@ export default class AboutPage extends React.Component {
                 src: require('../assets/teamPictures/Justin.jpg'),
                 description: 'Software Lead',
                 linkedin: 'https://www.linkedin.com/in/justintijun/'
+            },
+            {
+                name: 'Jeremy',
+                src: require('../assets/teamPictures/Jeremy.jpg'),
+                description: 'Software Lead'
             }
         ];
 
         this.teamMembers = [
-            {
-                name: 'Jeremy',
-                src: require('../assets/teamPictures/Jeremy.jpg'),
-                description: 'Software'
-            },
             {
                 name: 'Ryan',
                 src: require('../assets/teamPictures/Ryan.jpg'),
@@ -74,7 +79,26 @@ export default class AboutPage extends React.Component {
             {
                 name: 'James',
                 src: require('../assets/teamPictures/James.jpg'),
-                description: 'Software'
+                description: 'Software',
+                linkedin: 'https://www.linkedin.com/in/james-nguy-4629a11b9/'
+            },
+            {
+                name: 'Camilla',
+                src: require('../assets/teamPictures/Camilla.jpg'),
+                description: 'Software',
+                linkedin: 'https://www.linkedin.com/in/camilla-abdrazakov-4b077b1b2/'
+            },
+            {
+                name: 'Jon',
+                src: require('../assets/teamPictures/nopic.png'),
+                description: 'Software',
+                linkedin: 'https://www.linkedin.com/in/jonathan-mulyk-2b91471b2/'
+            },
+            {
+                name: 'Justin',
+                src: require('../assets/teamPictures/nopic.png'),
+                description: 'Software',
+                linkedin: 'www.linkedin.com/in/justinf34'
             },
             {
                 name: 'Arham',
@@ -82,34 +106,29 @@ export default class AboutPage extends React.Component {
                 description: 'Software'
             },
             {
-                name: 'Will',
-                src: require('../assets/teamPictures/Will.jpg'),
-                description: 'Electrical/Software'
-            },
-            {
-                name: 'Kevin',
-                src: require('../assets/teamPictures/Kevin.jpg'),
+                name: 'Aidan',
+                src: require('../assets/teamPictures/Aidan.jpg'),
                 description: 'Electrical'
             },
-            {
-                name: 'Evan',
-                src: require('../assets/teamPictures/Evan.jpg'),
-                description: 'Electrical'
-            },
-            {
+            { 
                 name: 'Yashvin',
                 src: require('../assets/teamPictures/Yashvin.jpg'),
                 description: 'Electrical'
             },
             {
-                name: 'Aidan',
-                src: require('../assets/teamPictures/Aidan.jpg'),
-                description: 'Electrical'
+                name: 'Will',
+                src: require('../assets/teamPictures/Will.jpg'),
+                description: 'Electrical/Software Alumni'
+            },
+            {
+                name: 'Evan',
+                src: require('../assets/teamPictures/Evan.jpg'),
+                description: 'Electrical Alumni'
             },
             {
                 name: 'Graison',
                 src: require('../assets/teamPictures/nopic.png'),
-                description: 'Electrical'
+                description: 'Electrical Alumni'
             }
         ];
 

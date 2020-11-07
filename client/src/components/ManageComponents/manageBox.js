@@ -96,7 +96,6 @@ export default class ManageBox extends React.Component {
         >
           <img
             id="logoImg"
-            width="40px"
             style={{ marginTop: "2px" }}
             src={require("../../assets/delete-x.svg")}
           />

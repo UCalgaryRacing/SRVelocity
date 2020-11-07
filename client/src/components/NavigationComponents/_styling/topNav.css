@@ -1,18 +1,17 @@
 #top {
     margin-top: auto;
-    /*
-    color: black;
-    background-color: black;
-    */
 }
-/*
-#top .responsive-navbar-nav {
-    color: black;
-    background-color: black;
+
+#top .mr-auto {
+    text-align: center;
 }
-*/
+
+#top .about {
+    text-align: center;
+}
+
 #top .link-0 {
-    font-size: 32px;
+    font-size: 28px;
     padding-right: 1rem;
 
 }

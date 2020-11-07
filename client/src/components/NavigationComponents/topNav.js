@@ -8,7 +8,7 @@ export default class TopNav extends React.Component {
         return (
             <header>
                 <Navbar id='top' collapseOnSelect expand="sm" bg="dark" variant="dark" fixed="top">
-                    <Navbar.Brand className="link-0" href="/">SR Velocity</Navbar.Brand>
+                    <Navbar.Brand className="link-0" href="/"><b>SR Velocity</b></Navbar.Brand>
                     <Navbar.Toggle aria-controls="responsive-navbar-nav" />
                     <Navbar.Collapse id="responsive-navbar-nav">
                     <Nav className='mr-auto'>
@@ -16,7 +16,7 @@ export default class TopNav extends React.Component {
                         <Nav.Link className="link-2" href="/historical">Historical</Nav.Link> 
                         <Nav.Link className="link-3" href="/manage">Manage</Nav.Link>
                     </Nav>
-                    <Nav>
+                    <Nav className='about'>
                         <Nav.Link className="link-4" href="/about">About</Nav.Link>
                     </Nav>
                     </Navbar.Collapse>

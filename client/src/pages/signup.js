@@ -1,5 +1,6 @@
 import React from "react";
 import BottomNav from "../components/NavigationComponents/bottomNav";
+import TopNav from "../components/NavigationComponents/topNav";
 import { Jumbotron, Row, Col, FormGroup, Form, Button } from "react-bootstrap";
 import { withRouter } from "react-router-dom";
 import "./_styling/signup.css";
@@ -100,6 +101,7 @@ class SignUpPage extends React.Component {
   render = () => {
     return (
       <div id="signUp">
+        <TopNav />
         <React.Fragment>
           <Jumbotron style={{ background: "white" }}>
             <Row id="row">

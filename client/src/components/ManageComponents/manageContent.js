@@ -4,6 +4,7 @@ import SensorDash from "./sensorComponents/sensorDash";
 import VehicleDash from "./vehicleComponents/vehicleDash";
 import DriverDash from "./driverComponents/driverDash";
 import BottomNav from '../NavigationComponents/bottomNav';
+import TopNav from '../NavigationComponents/topNav';
 
 export default class ManageContent extends React.Component {
 	constructor(props) {
@@ -52,6 +53,7 @@ export default class ManageContent extends React.Component {
 					marginLeft: this.state.marginLeft,
 				}}
 			>
+				<TopNav />
 				{this.state.content === "Sensors" ? <SensorDash marginLeft={this.state.marginLeft} /> : null}
 				{this.state.content === "Drivers" ? <DriverDash marginLeft={this.state.marginLeft}/> : null}
 				{this.state.content === "Vehicles" ? <VehicleDash marginLeft={this.state.marginLeft}/> : null}

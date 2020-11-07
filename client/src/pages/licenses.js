@@ -1,5 +1,6 @@
 import React from 'react';
 import BottomNav from '../components/NavigationComponents/bottomNav';
+import TopNav from '../components/NavigationComponents/topNav';
 import { Jumbotron, Row, Col, Container } from 'react-bootstrap';
 import './_styling/licenses.css';
 
@@ -164,6 +165,7 @@ export default class LicensesPage extends React.Component {
                         <a id='linkFont' href='https://github.com/chronosis/uuid-apikey/blob/master/LICENSE' target='_blank' rel='noopener noreferrer'>MIT License</a><p></p><br />
                     </Container>
                 </Jumbotron>
+                <TopNav/>
                 <BottomNav/>
             </div>
         );

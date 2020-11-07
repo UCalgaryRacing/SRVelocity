@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Button } from 'react-bootstrap';
-import { lightningChart, emptyTick, DataPatterns, AxisScrollStrategies, SolidLine, SolidFill, ColorHEX, VisibleTicks, FontSettings, emptyLine } from '@arction/lcjs';
+import { lightningChart, emptyTick, DataPatterns, AxisScrollStrategies, SolidLine, SolidFill, ColorHEX, FontSettings, emptyLine } from '@arction/lcjs';
 import './_styling/lineChart.css';
 import { Card, CardDeck } from 'react-bootstrap';
 
@@ -290,7 +290,7 @@ export default class LineChart extends Component {
                                             <b style={{ fontSize: '1rem', float: 'right', display: 'inline-block', marginTop: '3px', cursor: 'pointer', textDecoration: this.lineSeries[sensor] !== undefined && this.lineSeries[sensor].isDisposed() ? 'line-through': 'none' }} onClick={() => this.toggleSeries(sensor)}>{sensors[sensor].name}:</b>
                                         </div>
                                         <div class='col-xs' style={{ fontStyle: 'bold', textAlign: 'center', padding: '0', fontSize: '1rem', width: '70px', display: 'inline-block' }}><b style={{ verticalAlign: 'middle' }}>{(data === undefined) ? '0' : data[sensor]}</b></div>
-                                        <div class='col-xs' style={{ fontStyle: 'bold', textAlign: 'left', padding: '0', fontSize: '1rem', display: 'inline-block', marginBottom: '5px', width: '100px' }}><b style={{ verticalAlign: 'middle', marginTop: '3px' }}>{sensors[0].output_unit}</b></div>
+                                        <div class='col-xs' style={{ fontStyle: 'bold', textAlign: 'left', padding: '0', fontSize: '1rem', display: 'inline-block', marginBottom: '5px' }}><b style={{ verticalAlign: 'middle', marginTop: '3px' }}>{sensors[0].output_unit}</b></div>
                                     </div>
                                 </div>
                                 {

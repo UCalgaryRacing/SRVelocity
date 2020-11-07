@@ -1,6 +1,6 @@
 import React from "react";
 import BottomNav from "../components/NavigationComponents/bottomNav";
-import { Jumbotron, Row, Col, Form, Button } from "react-bootstrap";
+import { Jumbotron, Row, Col, Form, Button, FormGroup } from "react-bootstrap";
 import { withRouter } from "react-router-dom";
 import "./_styling/signin.css";
 
@@ -15,7 +15,15 @@ class SignInPage extends React.Component {
 		};
 	}
 
-	handleEnterKey = async () => { };
+	handleEnterKey = async (e) => {
+		e.preventDefault();
+		console.log("here")
+		if (this.emailForm.current.value === "") {
+
+		} else if (this.passwordForm.current.value === "") {
+
+		} else this.handleSignIn();
+	};
 
 	handleSignIn = async () => {
 		try {
@@ -31,7 +39,6 @@ class SignInPage extends React.Component {
 				}),
 			});
 			const resJSON = await res.json();
-			console.log(resJSON)
 			if (!res.ok) {
 				this.setState({ showErrorMessage: true, showConfirmationMessage: false });
 				throw new Error(res.status);
@@ -57,34 +64,38 @@ class SignInPage extends React.Component {
 							<img id="logoImg" src={require("../assets/logo.svg")} />
 						</Col>
 					</Row>
-					<p style={{textAlign: 'center'}}>Looking to log in? Email: guest@sv.com ; Password: fsae2020</p>
-					<Row id="row2">
-						<Col>
-							<Form className="emailForm">
-								<Form.Control
-									className="emailFormControl"
-									ref={this.emailForm}
-									autoComplete="on"
-									placeHolder="Email"
-									required
-								/>
-							</Form>
-						</Col>
-					</Row>
-					<Row>
-						<Col>
-							<Form className="passwordForm">
-								<Form.Control
-									className="passwordFormControl"
-									ref={this.passwordForm}
-									type="password"
-									autoComplete="on"
-									placeHolder="Password"
-									required
-								/>
-							</Form>
-						</Col>
-					</Row>
+					<p style={{ textAlign: 'center' }}>Looking to log in? Email: guest@sv.com ; Password: fsae2020</p>
+					<FormGroup onSubmit={this.handleEnterKey}>
+						<Row id="row2">
+							<Col>
+								<Form className="emailForm">
+									<Form.Control
+										className="emailFormControl"
+										ref={this.emailForm}
+										autoComplete="on"
+										placeHolder="Email"
+										required
+										onSubmit={this.handleEnterKey}
+									/>
+								</Form>
+							</Col>
+						</Row>
+						<Row>
+							<Col>
+								<Form className="passwordForm">
+									<Form.Control
+										className="passwordFormControl"
+										ref={this.passwordForm}
+										type="password"
+										autoComplete="on"
+										placeHolder="Password"
+										required
+										onSubmit={this.handleEnterKey}
+									/>
+								</Form>
+							</Col>
+						</Row>
+					</FormGroup>
 					<Row>
 						<Col>
 							{this.state.showErrorMessage ? <p><b>Oops! Please try again.</b></p> : null}

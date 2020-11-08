@@ -1,19 +1,31 @@
 // import { ReadError } from "got/dist/source";
 import React from "react";
 import { Card } from "react-bootstrap";
+import { GATEWAYSERVERIP } from "../../../dataServerEnv";
 
 export default function CSVoption(props) {
   const showPlots = (e) => {
+    // TODO: Needs to be refactored
     let reader = new FileReader();
 
     reader.addEventListener("loadend", (e) => {
       const CSVString = e.srcElement.result;
-      console.log(CSVString);
+      props.onSelect(CSVString, props.filename);
     });
+
+    // Retrieve the CSV file and read it as text
+    fetch(GATEWAYSERVERIP + "/historical/getFile/" + props.filename, {
+      method: "GET",
+    })
+      .then((res) => res.blob())
+      .then((blob) => reader.readAsText(blob))
+      .catch((err) => {
+        console.log(err);
+      });
   };
 
   return (
-    <div>
+    <div onClick={showPlots}>
       <Card>
         <Card.Body>
           <Card.Title>{props.filename}</Card.Title>

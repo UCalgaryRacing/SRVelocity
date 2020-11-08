@@ -3,6 +3,7 @@ import Select from "react-select";
 import { Row, Col, Container, Button, Modal, CardDeck } from "react-bootstrap";
 import ScatterPlot from "./historicalGraphComponents/scatterPlot";
 import CSVoption from "./CSVoption";
+import { readString } from "react-papaparse";
 
 export default class HistoricalPlotDash extends React.Component {
   constructor(props) {
@@ -15,6 +16,7 @@ export default class HistoricalPlotDash extends React.Component {
       yData: [],
       xData: [],
       show: false,
+      selectedCSV: [],
     };
   }
 
@@ -44,9 +46,25 @@ export default class HistoricalPlotDash extends React.Component {
       (dict) => dict[selectedOption.value]
     );
 
-    this.setState({
-      yAxis: selectedOption,
-      yData: tempData,
+    // this.setState({
+    //   yAxis: selectedOption,
+    //   yData: tempData,
+    // });
+
+    this.setState(function (prevState, prevProps) {
+      prevState.selectedCSV.forEach((csv, i, arr) => {
+        let csvTempData = csv.CSVdata.data.map(
+          (dict) => dict[selectedOption.value]
+        );
+
+        csv.yData = csvTempData;
+      });
+
+      return {
+        yAxis: selectedOption,
+        yData: tempData,
+        selectedCSV: prevState.selectedCSV,
+      };
     });
   };
 
@@ -55,9 +73,25 @@ export default class HistoricalPlotDash extends React.Component {
       (dict) => dict[selectedOption.value]
     );
 
-    this.setState({
-      xAxis: selectedOption,
-      xData: tempData,
+    // this.setState({
+    //   xAxis: selectedOption,
+    //   xData: tempData,
+    // });
+
+    this.setState(function (prevState, prevProps) {
+      prevState.selectedCSV.forEach((csv, i, arr) => {
+        let csvTempData = csv.CSVdata.data.map(
+          (dict) => dict[selectedOption.value]
+        );
+
+        csv.xData = csvTempData;
+      });
+
+      return {
+        xAxis: selectedOption,
+        xData: tempData,
+        selectedCSV: prevState.selectedCSV,
+      };
     });
   };
 
@@ -69,12 +103,12 @@ export default class HistoricalPlotDash extends React.Component {
     this.setState({ show: true });
   };
 
+  // TODO: Needs to be refactored
   showCSVFiles = () => {
-    console.log(this.props.currentCSVName);
     let files = [];
     let i = 0;
     for (let file of this.props.CSVFiles) {
-      if (file.name !== this.props.currentCSVName) {
+      if (file.metadata.id !== this.props.currentCSVid) {
         let date = new Date(parseInt(file.metadata.date));
         files.push(
           <CSVoption
@@ -85,6 +119,7 @@ export default class HistoricalPlotDash extends React.Component {
             ID={file.metadata.id}
             key={i}
             index={i}
+            onSelect={this.addCompareCSV}
           />
         );
         i++;
@@ -93,7 +128,40 @@ export default class HistoricalPlotDash extends React.Component {
     return files;
   };
 
+  // TODO: Needs to be refactored
+  addCompareCSV = (CSVSelected, filename) => {
+    const config = {
+      header: true,
+      dynamicTyping: true,
+    };
+
+    let parseResult = readString(CSVSelected, config);
+    console.log(this.state.xAxis, this.state.yAxis);
+
+    let tempXData = [];
+    let tempYData = [];
+
+    if (this.state.xAxis) {
+      tempXData = parseResult.data.map((dict) => dict[this.state.xAxis.value]);
+    }
+    if (this.state.yAxis) {
+      tempYData = parseResult.data.map((dict) => dict[this.state.yAxis.value]);
+    }
+
+    let new_csv = {
+      name: filename,
+      CSVdata: parseResult,
+      xData: tempXData,
+      yData: tempYData,
+    };
+
+    this.setState((prevState, props) => {
+      selectedCSV: prevState.selectedCSV.push(new_csv);
+    });
+  };
+
   render = () => {
+    console.log(this.state.selectedCSV);
     return (
       <div>
         <Container>

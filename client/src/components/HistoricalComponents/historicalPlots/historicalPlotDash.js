@@ -17,6 +17,8 @@ export default class HistoricalPlotDash extends React.Component {
       searchedFiles: [],
       showPlots: false,
       currentCSV: null,
+      CSVCompareFiles: [],
+      currentCSVName: null,
     };
   }
 
@@ -59,14 +61,15 @@ export default class HistoricalPlotDash extends React.Component {
           else if (tempA < tempB) return -1;
           else return 0;
         });
-        this.setState({ CSVFiles: files });
+        this.setState({ CSVFiles: files, CSVCompareFiles: res });
       })
       .catch((err) => {
         console.log(err);
       });
   };
 
-  showFilePlots = (CSVString) => {
+  showFilePlots = (CSVString, filename) => {
+    console.log(CSVString);
     const config = {
       header: true,
       dynamicTyping: true,
@@ -74,7 +77,11 @@ export default class HistoricalPlotDash extends React.Component {
 
     let parseResult = readString(CSVString, config);
 
-    this.setState({ currentCSV: parseResult, showPlots: true });
+    this.setState({
+      currentCSV: parseResult,
+      showPlots: true,
+      currentCSVName: filename,
+    });
   };
 
   search = (e) => {
@@ -160,7 +167,11 @@ export default class HistoricalPlotDash extends React.Component {
         </div>
         <div id="data">
           {this.state.showPlots ? (
-            <HistoricalPlot currentCSV={this.state.currentCSV} />
+            <HistoricalPlot
+              currentCSV={this.state.currentCSV}
+              currentCSVName={this.state.currentCSVName}
+              CSVFiles={this.state.CSVCompareFiles}
+            />
           ) : (
             <div>
               <p

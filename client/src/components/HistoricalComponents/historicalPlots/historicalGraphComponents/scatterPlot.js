@@ -167,6 +167,8 @@ export default class ScatterPlot extends Component {
     }
   };
 
+  addPlot = () => {};
+
   render() {
     return (
       <div id="historicalScatter" style={{ marginBottom: "20px" }}>

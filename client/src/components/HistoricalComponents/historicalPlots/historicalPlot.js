@@ -1,7 +1,8 @@
 import React from "react";
 import Select from "react-select";
-import { Row, Col, Container } from "react-bootstrap";
+import { Row, Col, Container, Button, Modal, CardDeck } from "react-bootstrap";
 import ScatterPlot from "./historicalGraphComponents/scatterPlot";
+import CSVoption from "./CSVoption";
 
 export default class HistoricalPlotDash extends React.Component {
   constructor(props) {
@@ -13,6 +14,7 @@ export default class HistoricalPlotDash extends React.Component {
       xAxis: null,
       yData: [],
       xData: [],
+      show: false,
     };
   }
 
@@ -59,6 +61,38 @@ export default class HistoricalPlotDash extends React.Component {
     });
   };
 
+  handleClose = () => {
+    this.setState({ show: false });
+  };
+
+  handleShow = () => {
+    this.setState({ show: true });
+  };
+
+  showCSVFiles = () => {
+    console.log(this.props.currentCSVName);
+    let files = [];
+    let i = 0;
+    for (let file of this.props.CSVFiles) {
+      if (file.name !== this.props.currentCSVName) {
+        let date = new Date(parseInt(file.metadata.date));
+        files.push(
+          <CSVoption
+            filename={file.name}
+            driver={file.metadata.driver}
+            car={file.metadata.car}
+            date={date.toLocaleDateString() + " " + date.toLocaleTimeString()}
+            ID={file.metadata.id}
+            key={i}
+            index={i}
+          />
+        );
+        i++;
+      }
+    }
+    return files;
+  };
+
   render = () => {
     return (
       <div>
@@ -80,9 +114,31 @@ export default class HistoricalPlotDash extends React.Component {
                 options={this.state.options}
               />
             </Col>
+            <Col>
+              <p>Click to add another CSV file:</p>
+              <Button onClick={this.handleShow}>
+                <b>Add</b>
+              </Button>
+            </Col>
           </Row>
         </Container>
         <ScatterPlot yData={this.state.yData} xData={this.state.xData} />
+
+        <Modal show={this.state.show} onHide={this.handleClose}>
+          <Modal.Header closeButton>
+            <Modal.Title>Select a CSV File</Modal.Title>
+          </Modal.Header>
+
+          <Modal.Body>
+            <div className="CSV-select-modal">{this.showCSVFiles()}</div>
+          </Modal.Body>
+
+          <Modal.Footer>
+            <Button variant="secondary" onClick={this.handleClose}>
+              Close
+            </Button>
+          </Modal.Footer>
+        </Modal>
       </div>
     );
   };

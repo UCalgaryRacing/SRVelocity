@@ -17,6 +17,7 @@ export default class HistoricalPlotDash extends React.Component {
       xData: [],
       show: false,
       selectedCSV: [],
+      plottedCSVFiles: [this.props.currentCSVid],
     };
   }
 
@@ -108,7 +109,7 @@ export default class HistoricalPlotDash extends React.Component {
     let files = [];
     let i = 0;
     for (let file of this.props.CSVFiles) {
-      if (file.metadata.id !== this.props.currentCSVid) {
+      if (!this.state.plottedCSVFiles.includes(file.metadata.id)) {
         let date = new Date(parseInt(file.metadata.date));
         files.push(
           <CSVoption
@@ -129,14 +130,14 @@ export default class HistoricalPlotDash extends React.Component {
   };
 
   // TODO: Needs to be refactored
-  addCompareCSV = (CSVSelected, filename) => {
+  addCompareCSV = (CSVSelected, filename, id) => {
+    this.handleClose();
     const config = {
       header: true,
       dynamicTyping: true,
     };
 
     let parseResult = readString(CSVSelected, config);
-    console.log(this.state.xAxis, this.state.yAxis);
 
     let tempXData = [];
     let tempYData = [];
@@ -155,8 +156,10 @@ export default class HistoricalPlotDash extends React.Component {
       yData: tempYData,
     };
 
-    this.setState((prevState, props) => {
-      selectedCSV: prevState.selectedCSV.push(new_csv);
+    this.setState(function (prevState, props) {
+      prevState.selectedCSV.push(new_csv);
+      prevState.plottedCSVFiles.push(id);
+      return {};
     });
   };
 

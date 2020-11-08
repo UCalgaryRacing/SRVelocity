@@ -10,7 +10,7 @@ export default function CSVoption(props) {
 
     reader.addEventListener("loadend", (e) => {
       const CSVString = e.srcElement.result;
-      props.onSelect(CSVString, props.filename);
+      props.onSelect(CSVString, props.filename, props.ID);
     });
 
     // Retrieve the CSV file and read it as text

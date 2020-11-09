@@ -173,17 +173,11 @@ export default class ScatterPlot extends Component {
         this.pointSeries.add(tempArray);
       }
 
-      // Need to do the same for the comparedCSV
+      this.comparedCSV.forEach((elem, i, arr) => {
+        elem.clear();
+      });
       this.props.compareCSV.forEach((elem, i, arr) => {
-        let col = null;
-        switch (i) {
-          case 0:
-            col = ColorHEX("#bfbfbf");
-            break;
-          case 1:
-            col = ColorHEX("2e3131");
-            break;
-        }
+        let col = ColorHEX(elem.color);
         let tempArray = [];
         for (const [index, data] of elem.xData.entries()) {
           let point = {};
@@ -195,7 +189,6 @@ export default class ScatterPlot extends Component {
         }
 
         if (tempArray.length > 0) {
-          this.comparedCSV[i].clear();
           this.comparedCSV[i].add(tempArray);
         }
       });

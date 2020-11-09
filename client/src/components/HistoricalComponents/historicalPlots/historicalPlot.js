@@ -18,7 +18,7 @@ export default class HistoricalPlotDash extends React.Component {
       show: false,
       selectedCSV: [],
       plottedCSVFiles: [this.props.currentCSVid],
-      CSVNames: [this.props.currentCSVname],
+      availableColours: ["#2e3131", "#bfbfbf"],
     };
   }
 
@@ -153,19 +153,37 @@ export default class HistoricalPlotDash extends React.Component {
       tempYData = parseResult.data.map((dict) => dict[this.state.yAxis.value]);
     }
 
-    let new_csv = {
-      name: filename,
-      CSVdata: parseResult,
-      xData: tempXData,
-      yData: tempYData,
-    };
-
     this.setState(function (prevState, props) {
-      prevState.selectedCSV.push(new_csv);
+      prevState.selectedCSV.push({
+        name: filename,
+        id: id,
+        CSVdata: parseResult,
+        xData: tempXData,
+        yData: tempYData,
+        color: prevState.availableColours.shift(),
+      });
       prevState.plottedCSVFiles.push(id);
-      prevState.CSVNames.push(filename);
       return {};
     });
+  };
+
+  removeCSV = (e) => {
+    const i = e.currentTarget.getAttribute("data-value");
+    console.log(i);
+    this.setState(function (prevState, prevProps) {
+      const col = prevState.selectedCSV[i].color;
+      prevState.availableColours.push(col);
+      prevState.availableColours.sort();
+
+      prevState.selectedCSV.splice(i, 1);
+
+      prevState.plottedCSVFiles.splice(i + 1, 1);
+
+      return {};
+    });
+    // Add colour back
+    // remove id
+    // remove from selectedCSV
   };
 
   legendGenerator = () => {
@@ -179,33 +197,15 @@ export default class HistoricalPlotDash extends React.Component {
     );
 
     this.state.selectedCSV.forEach((csv, i, arr) => {
-      let col = null;
-      switch (i) {
-        case 0:
-          col = "#bfbfbf";
-          break;
-        case 1:
-          col = "#2e3131";
-          break;
-      }
-
       labels.push(
-        <span
-          key={i}
-          onClick={(e) =>
-            console.log(
-              "Clicked label",
-              e.currentTarget.getAttribute("data-value")
-            )
-          }
-          data-value={i}
-        >
-          <Badge variant="primary" style={{ backgroundColor: col }}>
+        <span key={i} onClick={this.removeCSV} data-value={i}>
+          <Badge variant="primary" style={{ backgroundColor: csv.color }}>
             {csv.name}
           </Badge>
         </span>
       );
     });
+
     return labels;
   };
 

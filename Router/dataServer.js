@@ -181,4 +181,19 @@ dataServer.delete("/deleteComment", (req, res) => {
         });
 });
 
+dataServer.get("/getColumn/:filename/:column", (req, res) => {
+    fetch(DATASERVERIP + '/redis/getColumn/' + req.params.filename + "/" + req.params.column, {
+        method: 'GET'
+    })
+    .then(response => {
+        if (response.ok) {
+            response.json()
+                .then(response => res.send(response).end())
+        } else res.sendStatus(500).end();
+    })
+    .catch(err => {
+        res.sendStatus(500).end();
+    }); 
+})
+
 module.exports = dataServer;

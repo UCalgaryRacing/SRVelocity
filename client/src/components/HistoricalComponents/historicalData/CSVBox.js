@@ -186,7 +186,7 @@ export default class CSVBox extends React.Component {
                     <div style={{ color: '#C22E2D', width: '60px', position: 'absolute' }}>Driver:&nbsp;</div><div style={{ position: 'absolute', left: '65px', width: '160px' }}>{this.state.driver}</div>
                 </div>
                 <Button id='historicalButton' onClick={this.deleteFile} style={{ position: 'absolute', right: '20px' }}>
-                    <img id="logoImg" width="40px" style={{ marginTop: '2px' }} src={require('../../../assets/delete-x.svg')} />
+                    <img id="logoImg" style={{ marginTop: '2px' }} src={require('../../../assets/delete-x.svg')} />
                 </Button>
                 <Button id='historicalButton' onClick={() => this.setState({ showRenameModal: true })} style={{ position: 'absolute', right: '20px', marginTop: '46px' }}>
                     <img id="logoImg" width="27px" style={{ marginTop: '-14px', marginLeft: '-13px', position: 'absolute' }} src={require('../../../assets/edit.svg')} />

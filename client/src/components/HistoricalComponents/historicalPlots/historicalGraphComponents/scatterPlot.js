@@ -29,6 +29,7 @@ export default class ScatterPlot extends Component {
     this.padding = 0;
     this.zero = false;
     this.mouseInteraction = false;
+    this.comparedCSV = [];
   }
 
   componentDidMount = () => {
@@ -38,7 +39,10 @@ export default class ScatterPlot extends Component {
     this.chart.dispose();
   };
   componentDidUpdate = (prevProps) => {
-    if (prevProps !== this.props) this.updateData();
+    if (prevProps !== this.props) {
+      console.log("Updating....");
+      this.updateData();
+    }
   };
 
   createChart = () => {
@@ -50,6 +54,7 @@ export default class ScatterPlot extends Component {
     this.pointSeries = this.chart.addPointSeries({
       pointShape: PointShape.Circle,
     });
+
     this.individualStyle = new IndividualPointFill();
     this.individualStyle.setFallbackColor(ColorRGBA(255, 0, 0, 255));
     this.pointSeries
@@ -142,6 +147,9 @@ export default class ScatterPlot extends Component {
     this.chart.engine.container.onwheel = null;
     this.chart.engine.container.ontouchstart = null;
     this.chart.engine.container.ontouchmove = null;
+
+    this.addPlot();
+
     this.setupComplete = true;
   };
 
@@ -164,10 +172,54 @@ export default class ScatterPlot extends Component {
         this.pointSeries.clear();
         this.pointSeries.add(tempArray);
       }
+
+      // Need to do the same for the comparedCSV
+      this.props.compareCSV.forEach((elem, i, arr) => {
+        let col = null;
+        switch (i) {
+          case 0:
+            col = ColorHEX("#bfbfbf");
+            break;
+          case 1:
+            col = ColorHEX("2e3131");
+            break;
+        }
+        let tempArray = [];
+        for (const [index, data] of elem.xData.entries()) {
+          let point = {};
+          point.x = data;
+          point.y = elem.yData[index];
+          point.color = col;
+          if (point.x === undefined || point.y === undefined) continue;
+          tempArray.push(point);
+        }
+
+        if (tempArray.length > 0) {
+          this.comparedCSV[i].clear();
+          this.comparedCSV[i].add(tempArray);
+        }
+      });
     }
   };
 
-  addPlot = () => {};
+  addPlot = () => {
+    for (let i = 0; i < 2; i++) {
+      let newPointSeries = this.chart.addPointSeries({
+        pointShape: PointShape.Circle,
+      });
+
+      newPointSeries
+        .setPointSize(10.0)
+        .setPointFillStyle(this.individualStyle)
+        .setMouseInteractions(this.mouseInteraction);
+
+      newPointSeries.setCursorEnabled(true);
+
+      this.comparedCSV[i] = newPointSeries;
+    }
+  };
+
+  deletePlot = () => {};
 
   render() {
     return (

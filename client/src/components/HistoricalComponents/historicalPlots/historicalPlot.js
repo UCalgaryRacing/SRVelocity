@@ -1,6 +1,6 @@
 import React from "react";
 import Select from "react-select";
-import { Row, Col, Container, Button, Modal, CardDeck } from "react-bootstrap";
+import { Row, Col, Container, Button, Modal, Badge } from "react-bootstrap";
 import ScatterPlot from "./historicalGraphComponents/scatterPlot";
 import CSVoption from "./CSVoption";
 import { readString } from "react-papaparse";
@@ -18,6 +18,7 @@ export default class HistoricalPlotDash extends React.Component {
       show: false,
       selectedCSV: [],
       plottedCSVFiles: [this.props.currentCSVid],
+      CSVNames: [this.props.currentCSVname],
     };
   }
 
@@ -132,6 +133,9 @@ export default class HistoricalPlotDash extends React.Component {
   // TODO: Needs to be refactored
   addCompareCSV = (CSVSelected, filename, id) => {
     this.handleClose();
+
+    if (this.state.selectedCSV.length == 2) return;
+
     const config = {
       header: true,
       dynamicTyping: true,
@@ -159,12 +163,53 @@ export default class HistoricalPlotDash extends React.Component {
     this.setState(function (prevState, props) {
       prevState.selectedCSV.push(new_csv);
       prevState.plottedCSVFiles.push(id);
+      prevState.CSVNames.push(filename);
       return {};
     });
   };
 
+  legendGenerator = () => {
+    let labels = [];
+    labels.push(
+      <span key={"m"}>
+        <Badge variant="primary" style={{ backgroundColor: "#FF0000" }}>
+          {this.props.currentCSVname}
+        </Badge>
+      </span>
+    );
+
+    this.state.selectedCSV.forEach((csv, i, arr) => {
+      let col = null;
+      switch (i) {
+        case 0:
+          col = "#bfbfbf";
+          break;
+        case 1:
+          col = "#2e3131";
+          break;
+      }
+
+      labels.push(
+        <span
+          key={i}
+          onClick={(e) =>
+            console.log(
+              "Clicked label",
+              e.currentTarget.getAttribute("data-value")
+            )
+          }
+          data-value={i}
+        >
+          <Badge variant="primary" style={{ backgroundColor: col }}>
+            {csv.name}
+          </Badge>
+        </span>
+      );
+    });
+    return labels;
+  };
+
   render = () => {
-    console.log(this.state.selectedCSV);
     return (
       <div>
         <Container>
@@ -192,8 +237,18 @@ export default class HistoricalPlotDash extends React.Component {
               </Button>
             </Col>
           </Row>
+          <Row style={{ marginTop: "15px" }}>
+            <Col>
+              <p>Legend:</p>
+              {this.legendGenerator()}
+            </Col>
+          </Row>
         </Container>
-        <ScatterPlot yData={this.state.yData} xData={this.state.xData} />
+        <ScatterPlot
+          yData={this.state.yData}
+          xData={this.state.xData}
+          compareCSV={this.state.selectedCSV}
+        />
 
         <Modal show={this.state.show} onHide={this.handleClose}>
           <Modal.Header closeButton>

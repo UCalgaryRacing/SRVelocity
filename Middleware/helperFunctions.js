@@ -22,6 +22,7 @@ const sanitizeInputs = function (reqSchemaBody, reqSchemaParams) {
     if (reqSchemaBody) {
       const reqCheck = reqSchemaBody.validate(req.body);
       if (reqCheck.error) {
+        console.log(reqCheck.error);
         res.status(400).json({ error: reqCheck.error.message });
         return;
       }

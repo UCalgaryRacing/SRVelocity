@@ -9,7 +9,7 @@ class MemberApprove extends React.Component {
   }
 
   submitApproval = async () => {
-    const requestURL = "teamMember/approveTeamMember";
+    const requestURL = `teamMember/${this.props.member_id}/approve`;
     try {
       const req = await fetch(requestURL, {
         method: "PUT",
@@ -17,9 +17,7 @@ class MemberApprove extends React.Component {
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({
-          memberId: this.props.member_id,
-        }),
+        body: JSON.stringify({}),
       });
       if (req.ok) this.setState({ approved: true });
       else this.setState({ approved: false });

@@ -26,7 +26,7 @@ teamMember.post("/authenticate", sanitizeInputs(teamMemberSchema.TeamMemberAuthe
           id: user.body.member_id,
           isLead: user.body.is_lead,
           APIKey: user.body.api_key,
-        }
+        },
       };
       jwt.sign(payload, "VerBigSuperScarySecret", { expiresIn: "30m" }, (err, token) => {
         if (err) res.status(500).send("Error!").end();
@@ -43,10 +43,12 @@ teamMember.post("/authenticate", sanitizeInputs(teamMemberSchema.TeamMemberAuthe
           })
           .end();
       });
-    }
-    else res.status(401).send({ error: "Password is incorrect!" }).end();
-  }
-  else res.status(user.status).json({ error: "Error status: " + user.status }).end();
+    } else res.status(401).send({ error: "Password is incorrect!" }).end();
+  } else
+    res
+      .status(user.status)
+      .json({ error: "Error status: " + user.status })
+      .end();
 });
 
 //Get all team members
@@ -54,14 +56,14 @@ teamMember.get("/all", withAnyAuth, async (req, res) => {
   const users = await api.call(`teamMember/AllTeamMembers`, "GET", {
     searchParams: {
       APIKey: req.user.APIKey,
-    }
+    },
   });
   if (users.status === 200) res.status(200).json(users.body).end();
   else res.status(users.status).json("Error status: " + users.status);
 });
 
 //Sign up
-teamMember.post("/", sanitizeInputs(teamMemberSchema.TeamMemberSignUp), async (req, res) => {
+teamMember.post("/", sanitizeInputs(teamMemberSchema.TeamMemberSignUp.body), async (req, res) => {
   const response = await api.call(`teamMember/`, "POST", {
     json: {
       firstName: req.body.firstName,
@@ -70,14 +72,14 @@ teamMember.post("/", sanitizeInputs(teamMemberSchema.TeamMemberSignUp), async (r
       password: req.body.password,
       subteamName: req.body.subteamName,
       teamName: "Schulich Racing",
-    }
+    },
   });
   res.status(response.status).json(response.body).end();
 });
 
 teamMember.put("/:member/approve", withAdminAuth, async (req, res) => {
   const response = await api.call(`teammember/${req.params.member}/approve`, "PUT", {
-    searchParams: { APIKey: req.user.APIKey }
+    searchParams: { APIKey: req.user.APIKey },
   });
   res.status(response.status).json(res.body).end();
 });
@@ -92,7 +94,7 @@ teamMember.put("/:memberID", [withAdminAuth, sanitizeInputs(teamMemberSchema.Tea
       subteamName: req.body.subteamName,
       isLead: req.body.isLead,
       isApproved: req.body.isApproved,
-    }
+    },
   });
   res.status(reponse.status).json(reponse.body).end();
 });

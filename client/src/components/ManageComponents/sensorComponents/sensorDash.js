@@ -112,7 +112,7 @@ class SensorDash extends React.Component {
   };
 
   submitEdit = async (data, ID) => {
-    const requestURL = "/sensor/" + ID;
+    const requestURL = "/sensor/14/" + ID;
     return fetch(requestURL, {
       method: "PUT",
       credentials: "include",
@@ -125,7 +125,7 @@ class SensorDash extends React.Component {
         category: data[1],
         codeName: data[5],
         canId: data[3],
-        frequency: data[4],
+        frequency: parseInt(data[4]),
       }),
     })
       .then((res) => {

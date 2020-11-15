@@ -11,13 +11,14 @@ const sensor = express.Router();
 sensor.get("/vehicle/:vehicleId", withAnyAuth, async (req, res) => {
   const response = await api.call(`sensor/vehicle/${req.params.vehicleId}`, "GET", {
     searchParams: {
-      APIKey: req.user.APIKey
-    }
+      APIKey: req.user.APIKey,
+    },
   });
   res.status(response.status).json(response.body).end();
 });
 
 sensor.post("/", [withAdminAuth, sanitizeInputs(sensorSchema.SensorPost.body)], async (req, res) => {
+  //console.log(req.body);
   const response = await api.call(`sensor`, "POST", {
     json: {
       name: req.body.name,
@@ -26,16 +27,19 @@ sensor.post("/", [withAdminAuth, sanitizeInputs(sensorSchema.SensorPost.body)], 
       category: req.body.category,
       codeName: req.body.codeName,
       canId: req.body.canId,
-      frequency: req.body.frequency
-    }
+      frequency: req.body.frequency,
+    },
+    searchParams: {
+      APIKey: req.user.APIKey,
+    },
   });
   res.status(response.status).json(response.body).end();
 });
 
-sensor.put("/:sensorId", [withAdminAuth, sanitizeInputs(sensorSchema.SensorPut.body)], async (req, res) => {
-  const response = await api.call(`sensor/${req.params.sensorId}`, "PUT", {
+sensor.put("/:vehicleid/:sensorid", [withAdminAuth, sanitizeInputs(sensorSchema.SensorPut.body)], async (req, res) => {
+  const response = await api.call(`sensor/${req.params.vehicleid}/${req.params.sensorid}`, "PUT", {
     searchParams: {
-      APIKey: req.user.APIKey
+      APIKey: req.user.APIKey,
     },
     json: {
       name: req.body.name,
@@ -43,8 +47,8 @@ sensor.put("/:sensorId", [withAdminAuth, sanitizeInputs(sensorSchema.SensorPut.b
       category: req.body.category,
       codeName: req.body.codeName,
       canId: req.body.canId,
-      frequency: req.body.frequency
-    }
+      frequency: req.body.frequency,
+    },
   });
   res.status(response.status).json(response.body).end();
 });
@@ -52,8 +56,8 @@ sensor.put("/:sensorId", [withAdminAuth, sanitizeInputs(sensorSchema.SensorPut.b
 sensor.delete("/:sensorId", withAdminAuth, async (req, res) => {
   const response = await api.call(`sensor/${req.params.sensorId}`, "DELETE", {
     searchParams: {
-      APIKey: req.user.APIKey
-    }
+      APIKey: req.user.APIKey,
+    },
   });
   res.status(response.status).json(response.body).end();
 });

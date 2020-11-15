@@ -84,7 +84,7 @@ teamMember.put("/:member/approve", withAdminAuth, async (req, res) => {
   res.status(response.status).json(response.body).end();
 });
 
-teamMember.put("/:memberID", [withAdminAuth, sanitizeInputs(teamMemberSchema.TeammemberPut)], async (req, res) => {
+teamMember.put("/:memberID", [withAdminAuth, sanitizeInputs(teamMemberSchema.TeamMemberPut.body)], async (req, res) => {
   response = await api.call(`teamMember/${req.params.memberID}`, "PUT", {
     json: {
       memberID: req.params.memberID,

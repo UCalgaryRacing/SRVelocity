@@ -65,12 +65,11 @@ class SignUpPage extends React.Component {
 
   async fetchSubteams() {
     try {
-      let res = await fetch("/subteam/getSubteams", {
+      let res = await fetch("/subteam/schulichvelocity", {
         method: "GET",
         //credentials: "include",
         headers: {
           "Content-Type": "application/json",
-          apikey: "VQ2SBXW-1N14EQ7-PWX5JBZ-C5S45FA",
         },
       });
       res = await res.json();
@@ -197,8 +196,7 @@ class SignUpPage extends React.Component {
             {this.state.showConfirmation
               ? "Request completed! You will gain access once you are approved by an admin."
               : this.state.showError
-              ? "Invalid credentials. Please ensure all fields are filled in and try again. " +
-                this.state.errorMsg
+              ? "Invalid credentials. Please ensure all fields are filled in and try again. " + this.state.errorMsg
               : null}
           </Jumbotron>
           <BottomNav />

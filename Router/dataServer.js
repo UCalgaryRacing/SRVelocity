@@ -84,10 +84,10 @@ dataServer.post("/uploadFile/", upload.any(), (req, res) => {
         })
             .then(response => response.json())
             .then(response => {
-                if (response.ok) res.send({ ID: response.ID }).end();
-                else res.sendStatus(500).end();
+                res.json({ ID: response.ID }).end();
             })
             .catch(err => {
+                console.log(err)
                 res.sendStatus(500).end();
             });
     });

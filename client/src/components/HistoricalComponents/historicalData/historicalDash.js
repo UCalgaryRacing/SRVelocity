@@ -75,7 +75,7 @@ export default class HistoricalContent extends React.Component {
     addCSVBox = (filename, driver, vehicle, ID) => {
         let files = [...this.state.CSVFiles];
         let date = new Date();
-        files.push(
+        files.unshift(
             <CSVBox
                 filename={filename}
                 driver={driver}

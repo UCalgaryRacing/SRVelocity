@@ -7,8 +7,10 @@ const api = require("../Utilities/call");
 const bcrypt = require("bcryptjs");
 const sanitizeInputs = require("../Middleware/helperFunctions");
 const teamMemberSchema = require("../Middleware/schema/teamMemberSchema");
+const database = require("../Configuration/postgreSQL");
 const withAnyAuth = require("../Middleware/auth")[0];
 const withAdminAuth = require("../Middleware/auth")[1];
+const withCaptainAuth = require("../Middleware/auth")[2];
 
 //Login
 teamMember.post("/authenticate", sanitizeInputs(teamMemberSchema.TeamMemberAuthenticate.body), async (req, res) => {
@@ -24,7 +26,9 @@ teamMember.post("/authenticate", sanitizeInputs(teamMemberSchema.TeamMemberAuthe
           teamID: user.body.team_id,
           subteam: user.body.subteam_name,
           id: user.body.member_id,
+          isApproved: user.body.is_approved,
           isLead: user.body.is_lead,
+          isCaptain: user.body.is_captain,
           APIKey: user.body.api_key,
         },
       };
@@ -72,6 +76,15 @@ teamMember.post("/", sanitizeInputs(teamMemberSchema.TeamMemberSignUp.body), asy
       password: req.body.password,
       subteamName: req.body.subteamName,
       teamName: "Schulich Racing",
+    },
+  });
+  res.status(response.status).json(response.body).end();
+});
+
+teamMember.put("/:memberID/togglelead", withCaptainAuth, async (req, res) => {
+  const response = await api.call(`teamMember/${req.params.memberID}/togglelead`, "PUT", {
+    searchParams: {
+      APIKey: req.user.APIKey,
     },
   });
   res.status(response.status).json(response.body).end();

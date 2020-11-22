@@ -21,6 +21,7 @@
     "express-session": "^1.16.2",
     "got": "^11.8.0",
     "helmet": "^3.20.0",
+    "http2": "^3.3.7",
     "jsonwebtoken": "^8.5.1",
     "lusca": "^1.6.1",
     "multer": "^1.4.2",

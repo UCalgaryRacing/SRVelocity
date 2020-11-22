@@ -9,13 +9,13 @@ class Call {
     });
   }
 
-  setPrefixURL = (url) => {
+  setPrefixURL(url) {
     this.api = this.api.extend({
       prefixUrl: url,
     });
-  };
+  }
 
-  call = async (path, method = "GET", options = {}) => {
+  async call(path, method = "GET", options = {}) {
     options = options || {};
     const searchParams = options.searchParams || {};
     const headers = options.headers || {};
@@ -30,11 +30,11 @@ class Call {
       });
     } catch (error) {
       console.log(error);
-      return { status: 500 }
+      return { status: 500 };
     }
     res = { status: res.statusCode, body: res.body };
     return res;
-  };
+  }
 }
 
 var api = new Call();

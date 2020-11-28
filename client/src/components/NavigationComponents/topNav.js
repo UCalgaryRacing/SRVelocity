@@ -12,15 +12,14 @@ export default class TopNav extends React.Component {
       //editMode: false,
       //optionRender: [],
       isLoggedIn: false,
-      name: "",
     };
 
     this.name = sessionStorage.getItem("Name");
     
-    if(this.name == "")
+    if(this.name == "" || this.name == null)
     {
         this.isLoggedIn = false;
-        this.name = "Login"
+        //this.name = "Login"
     }
     else
     {
@@ -41,8 +40,6 @@ handleLogout = async () => {
 
             sessionStorage.clear();
 
-			sessionStorage.setItem("Name", "");
-			sessionStorage.setItem("ID", "");
 			this.props.refreshPage();
         
 		} catch (err) {
@@ -50,7 +47,6 @@ handleLogout = async () => {
 		}
 	}
     
-
 
     render = () => {
         return (
@@ -60,15 +56,33 @@ handleLogout = async () => {
                     <Navbar.Toggle aria-controls="responsive-navbar-nav" />
                     <Navbar.Collapse id="responsive-navbar-nav">
                     <Nav className='mr-auto'>
-                        <Nav.Link className="link-1" href="/streaming">Streaming</Nav.Link> 
-                        <Nav.Link className="link-2" href="/historical">Historical</Nav.Link> 
-                        <Nav.Link className="link-3" href="/manage">Manage</Nav.Link>
+                        <Nav.Link className="link-streaming" href="/streaming">Streaming</Nav.Link> 
+                        <Nav.Link className="link-historical" href="/historical">Historical</Nav.Link> 
+                        <Nav.Link className="link-manage" href="/manage">Manage</Nav.Link>
                     </Nav>
                     <Nav className='about'>
-                        <Nav.Link className="link-4" href="/signin" placeholder="Login"> {this.isLoggedIn ? this.name : 'Login'}</Nav.Link>
+                        {/*<Nav.Link className="link-4" href="/signin" placeholder="Login"> {this.isLoggedIn ? this.name : 'Login'}</Nav.Link>*/}
                         {/*<Nav.Link className="link-5" href="/signup" active="true" hidden="true" >Sign Up</Nav.Link>*/}
-                        <Nav.Link className="link-6" href = "/" onClick={this.handleLogout}>Logout</Nav.Link>  
-                        <Nav.Link className="link-7" href="/about">About</Nav.Link>
+                        <div>
+                            {this.isLoggedIn ? 
+                                <Nav.Link className="link-user" href="/">{this.name}</Nav.Link>
+                                :   <Nav.Link className="link-login" href="/signin">Login</Nav.Link> 
+                            }
+                        </div>
+                        
+                        <div>
+                            {this.isLoggedIn ?
+                            <Nav.Link className="link-logout" href = "/" onClick={this.handleLogout}>Logout</Nav.Link>  
+                            : <></>
+                            }
+                        </div>
+                        <div>
+                            {this.isLoggedIn ?
+                            <></>
+                            : <Nav.Link className="link-signup" href = "/signup">Sign Up</Nav.Link>  
+                            }
+                        </div> 
+                        <Nav.Link className="link-about" href="/about">About</Nav.Link>
                     </Nav>
                     </Navbar.Collapse>
                </Navbar> 

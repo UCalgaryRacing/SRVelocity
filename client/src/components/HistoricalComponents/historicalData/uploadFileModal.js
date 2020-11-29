@@ -2,8 +2,16 @@ import React from 'react';
 import { Button, Modal, Form } from 'react-bootstrap'
 import Dropzone from 'react-dropzone'
 import { GATEWAYSERVERIP } from '../../../dataServerEnv'
+import { useAlert } from "react-alert";
 
-export default class UploadFileModal extends React.Component {
+function AlertHOC(Component) {
+    return function WrappedComponent(props) {
+      const alert = useAlert();
+      return <Component {...props} alert={alert} />;
+    };
+  }
+
+class UploadFileModal extends React.Component {
     constructor(props) {
         super(props);
         this.driver = React.createRef();
@@ -60,9 +68,11 @@ export default class UploadFileModal extends React.Component {
                         body: JSON.stringify(meta)
                     })
                         .then(res => {
+                            //Doesnt reach here
                             this.props.addCSVBox(filename, driver, vehicle, ID);
                             this.setState({ showEmpty: false});
                             this.props.onHide();
+                            this.props.alert.show("Successfully uploaded!")
                         })
                         .catch(err => {
                             this.props.onHide();
@@ -124,9 +134,10 @@ export default class UploadFileModal extends React.Component {
                 </Modal.Body>
                 <Modal.Footer>
                     {this.state.showFailure && <p style={{ textAlign: 'center' }}>Something went wrong. Ensure the name is not a duplicate.</p>}
-                    <Button style={{ width: '100%', height: '36px', background: '#C22E2D', borderColor: '#C22E2D', marginTop: '10px' }} onClick={this.uploadFile}><b>Upload</b></Button>
+                    <Button style={{ width: '100%', height: '36px', background: '#C22E2D', borderColor: '#C22E2D', marginTop: '10px' }} onClick={this.uploadFile} onClick={() => this.props.alert.show("Successfully uploaded!")}><b>Upload</b></Button>
                 </Modal.Footer>
             </Modal>
         );
     }
 }
+export default AlertHOC(UploadFileModal)

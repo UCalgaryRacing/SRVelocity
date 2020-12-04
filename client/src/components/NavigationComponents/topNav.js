@@ -11,7 +11,7 @@ export default class TopNav extends React.Component {
     this.state = {
       //editMode: false,
       //optionRender: [],
-      isLoggedIn: false,
+      //isLoggedIn: false,
     };
 
     this.name = sessionStorage.getItem("Name");
@@ -19,7 +19,6 @@ export default class TopNav extends React.Component {
     if(this.name == "" || this.name == null)
     {
         this.isLoggedIn = false;
-        //this.name = "Login"
     }
     else
     {
@@ -32,7 +31,8 @@ handleLogout = async () => {
 		try{
 			    const res = await fetch("/teamMember/logout", )
             
-                this.setState({isLoggedIn: false})
+                //this.setState({isLoggedIn: false})
+                this.isLoggedIn = false;
 
                 if (!res.ok) {
                     throw new Error(res.status);
@@ -69,16 +69,9 @@ handleLogout = async () => {
                                 :   <Nav.Link className="link-login" href="/signin">Login</Nav.Link> 
                             }
                         </div>
-                        
                         <div>
                             {this.isLoggedIn ?
                             <Nav.Link className="link-logout" href = "/" onClick={this.handleLogout}>Logout</Nav.Link>  
-                            : <></>
-                            }
-                        </div>
-                        <div>
-                            {this.isLoggedIn ?
-                            <></>
                             : <Nav.Link className="link-signup" href = "/signup">Sign Up</Nav.Link>  
                             }
                         </div> 

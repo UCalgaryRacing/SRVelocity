@@ -182,7 +182,23 @@ dataServer.delete("/deleteComment", (req, res) => {
 });
 
 dataServer.get("/getColumn/:filename/:column", (req, res) => {
+    console.log("here")
     fetch(DATASERVERIP + '/redis/getColumn/' + req.params.filename + "/" + req.params.column, {
+        method: 'GET'
+    })
+    .then(response => {
+        if (response.ok) {
+            response.json()
+                .then(response => res.send(response).end())
+        } else res.sendStatus(500).end();
+    })
+    .catch(err => {
+        res.sendStatus(500).end();
+    }); 
+})
+
+dataServer.get("/getHeader/:filename", (req, res) => {
+    fetch(DATASERVERIP + '/redis/getHeader/' + req.params.filename, {
         method: 'GET'
     })
     .then(response => {

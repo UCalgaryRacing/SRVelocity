@@ -3,6 +3,8 @@ import ReactDOM from "react-dom";
 import { Switch, BrowserRouter as Router, Route } from "react-router-dom";
 import ReactGA from "react-ga";
 import "./index.css";
+import { positions, Provider } from "react-alert";
+import AlertTemplate from "./components/HistoricalComponents/AlertTemplate";
 
 //import "./wTopBar/css/normalize.css";
 
@@ -16,6 +18,8 @@ import ManagePage from "./pages/manage";
 import LicensesPage from "./pages/licenses";
 import ErrorPage from "./pages/error";
 import SignUpPage from "./pages/signup";
+
+
 
 class App extends React.Component {
   constructor() {
@@ -64,7 +68,9 @@ class App extends React.Component {
               exact
               path="/historical"
               component={() => (
-                <HistoricalPage refreshPage={this.refreshPage} />
+                <Provider template={AlertTemplate} timeout={5000} position={positions.BOTTOM_CENTER}>
+                        <HistoricalPage refreshPage={this.refreshPage} />
+                    </Provider>
               )}
             />
             <Route

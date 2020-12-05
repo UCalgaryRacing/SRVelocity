@@ -1,0 +1,20 @@
+{
+	"folders": [
+		{
+			"path": "..\\..\\SRVDatabaseMS"
+		},
+		{
+			"name": "SRVelocity",
+			"path": ".."
+		},
+		{
+			"name": "SRVDataMS",
+			"path": "..\\..\\SRVDataMS"
+		},
+		{
+			"name": "SRVRelayMS",
+			"path": "..\\..\\SRVRelayMS"
+		}
+	],
+	"settings": {}
+}

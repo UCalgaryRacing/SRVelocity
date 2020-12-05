@@ -13,7 +13,10 @@ const withAdminAuth = require("../Middleware/auth")[1];
 //Login
 teamMember.post("/authenticate", sanitizeInputs(teamMemberSchema.TeamMemberAuthenticate.body), async (req, res) => {
   const user = await api.call(`teamMember/${req.body.email}/email`, "GET");
+  console.log("here")
+  console.log(user)
   if (user.status === 200) {
+    console.log("working")
     const isMatch = await bcrypt.compare(req.body.password, user.body.password);
     if (isMatch) {
       const payload = {

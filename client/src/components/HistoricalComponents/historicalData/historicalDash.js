@@ -4,6 +4,7 @@ import CSVBox from './CSVBox';
 import { Button, Form } from 'react-bootstrap';
 import UploadFileModal from './uploadFileModal';
 import './_styling/historicalDash.css'
+
 var _ = require('lodash');
 
 export default class HistoricalContent extends React.Component {
@@ -151,6 +152,7 @@ export default class HistoricalContent extends React.Component {
     }
 
     render = () => {
+
         return (
             <div id='historicalDash'>
                 <div id='top' style={{
@@ -185,7 +187,9 @@ export default class HistoricalContent extends React.Component {
                     <UploadFileModal show={this.state.showUploadModal} onHide={() => this.setState({ showUploadModal: false })} addCSVBox={this.addCSVBox} />
                     {this.state.showSearched ? this.state.searchedFiles : this.state.CSVFiles}
                 </div>
+
             </div>
+
         );
     }
 }

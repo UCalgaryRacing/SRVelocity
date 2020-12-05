@@ -182,7 +182,6 @@ dataServer.delete("/deleteComment", (req, res) => {
 });
 
 dataServer.get("/getColumn/:filename/:column", (req, res) => {
-    console.log("here")
     fetch(DATASERVERIP + '/redis/getColumn/' + req.params.filename + "/" + req.params.column, {
         method: 'GET'
     })

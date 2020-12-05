@@ -112,8 +112,7 @@ dataServer.post("/updateMetadata", (req, res) => {
         body: JSON.stringify(postParams)
     })
         .then(async response => {
-            if (response.ok) res.sendStatus(200).end();
-            else res.sendStatus(500).end();
+            res.sendStatus(200).end();
         })
         .catch(err => {
             res.sendStatus(500).end();

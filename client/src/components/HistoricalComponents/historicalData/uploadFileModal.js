@@ -134,7 +134,7 @@ class UploadFileModal extends React.Component {
                 </Modal.Body>
                 <Modal.Footer>
                     {this.state.showFailure && <p style={{ textAlign: 'center' }}>Something went wrong. Ensure the name is not a duplicate.</p>}
-                    <Button style={{ width: '100%', height: '36px', background: '#C22E2D', borderColor: '#C22E2D', marginTop: '10px' }} onClick={this.uploadFile} onClick={() => this.props.alert.show("Successfully uploaded!")}><b>Upload</b></Button>
+                    <Button style={{ width: '100%', height: '36px', background: '#C22E2D', borderColor: '#C22E2D', marginTop: '10px' }} onClick={this.uploadFile} ><b>Upload</b></Button>
                 </Modal.Footer>
             </Modal>
         );

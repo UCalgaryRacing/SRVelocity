@@ -5,7 +5,6 @@ const alertStyle = {
   backgroundColor: '#151515',
   color: 'white',
   padding: '10px',
-  textTransform: 'uppercase',
   borderRadius: '3px',
   display: 'flex',
   justifyContent: 'space-between',

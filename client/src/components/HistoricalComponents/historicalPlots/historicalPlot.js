@@ -1,13 +1,19 @@
-import React from "react";
-import Select from "react-select";
-import { Row, Col, Container, Button, Modal, Badge } from "react-bootstrap";
-import ScatterPlot from "./historicalGraphComponents/scatterPlot";
-import CSVoption from "./CSVoption";
-import { readString } from "react-papaparse";
+import React from 'react';
+import Select from 'react-select';
+import { Row, Col, Container, Button, Modal, Badge } from 'react-bootstrap';
+import ScatterPlot from './historicalGraphComponents/scatterPlot';
+import CSVoption from './CSVoption';
+import { readString } from 'react-papaparse';
+
+import { GATEWAYSERVERIP } from '../../../dataServerEnv';
 
 export default class HistoricalPlotDash extends React.Component {
   constructor(props) {
     super(props);
+
+    this.cache = new Map();
+    this.cache.set(this.props.currentCSVid, []);
+
     this.state = {
       currentCSV: this.props.currentCSV,
       options: [],
@@ -16,9 +22,9 @@ export default class HistoricalPlotDash extends React.Component {
       yData: [],
       xData: [],
       show: false,
-      selectedCSV: [],
-      plottedCSVFiles: [],
-      availableColours: ["#2e3131", "#bfbfbf"],
+      selectedCSV: [], // ids
+      plottedCSVFiles: [], //CSV object {CSVdata, color, id}
+      availableColours: ['#2e3131', '#bfbfbf'],
     };
   }
 
@@ -34,6 +40,10 @@ export default class HistoricalPlotDash extends React.Component {
     this.updateOptions();
   };
 
+  componentWillUnmount = () => {
+    console.log('Unmounting...');
+  };
+
   updateOptions = () => {
     let temp = this.state.currentCSV.meta.fields.map((field) => {
       return { value: field, label: field };
@@ -43,15 +53,39 @@ export default class HistoricalPlotDash extends React.Component {
     });
   };
 
-  handleYChange = (selectedOption) => {
-    let tempData = this.state.currentCSV.data.map(
-      (dict) => dict[selectedOption.value]
-    );
+  handleYChange = async (selectedOption) => {
+    // First check if we already have data for column
+    const hasValue = this.cache
+      .get(this.props.currentCSVid)
+      .findIndex((data) => data.name == selectedOption.value);
 
-    // this.setState({
-    //   yAxis: selectedOption,
-    //   yData: tempData,
-    // });
+    let tempData = null;
+    if (hasValue === -1) {
+      try {
+        let res = await fetch(
+          'http://localhost:5000/' +
+            'historical/getColumn/' +
+            this.props.currentCSVname +
+            '/' +
+            selectedOption.value
+        );
+        let resJson = await res.json();
+        let resData = resJson.map(Number);
+        tempData = resData;
+
+        // Cache managemnt
+        this.cache.get(this.props.currentCSVid).push({
+          name: selectedOption.value,
+          values: resData,
+        });
+      } catch (error) {
+        console.log(error);
+      }
+    } else {
+      tempData = this.cache.get(this.props.currentCSVid)[hasValue].values;
+    }
+
+    console.log(this.cache);
 
     this.setState(function (prevState, prevProps) {
       prevState.selectedCSV.forEach((csv, i, arr) => {
@@ -74,11 +108,6 @@ export default class HistoricalPlotDash extends React.Component {
     let tempData = this.state.currentCSV.data.map(
       (dict) => dict[selectedOption.value]
     );
-
-    // this.setState({
-    //   xAxis: selectedOption,
-    //   xData: tempData,
-    // });
 
     this.setState(function (prevState, prevProps) {
       prevState.selectedCSV.forEach((csv, i, arr) => {
@@ -120,7 +149,7 @@ export default class HistoricalPlotDash extends React.Component {
             filename={file.name}
             driver={file.metadata.driver}
             car={file.metadata.car}
-            date={date.toLocaleDateString() + " " + date.toLocaleTimeString()}
+            date={date.toLocaleDateString() + ' ' + date.toLocaleTimeString()}
             ID={file.metadata.id}
             key={i}
             index={i}
@@ -133,11 +162,35 @@ export default class HistoricalPlotDash extends React.Component {
     return files;
   };
 
+  initCSVCacheData = async (id, filename, col_name) => {
+    try {
+      let res = await fetch(
+        'http://localhost:5000/' +
+          'historical/getColumn/' +
+          filename +
+          '/' +
+          col_name
+      );
+      let resJson = await res.json();
+      let resData = resJson.map(Number);
+
+      // Cache managemnt
+      this.cache.get(id).push({
+        name: col_name,
+        values: resData,
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   // TODO: Needs to be refactored
   addCompareCSV = (CSVSelected, filename, id) => {
     this.handleClose();
 
     if (this.state.selectedCSV.length == 2) return;
+
+    this.cache.set(id, []); // Add to cache
 
     const config = {
       header: true,
@@ -145,15 +198,20 @@ export default class HistoricalPlotDash extends React.Component {
     };
 
     let parseResult = readString(CSVSelected, config);
-
     let tempXData = [];
     let tempYData = [];
 
     if (this.state.xAxis) {
       tempXData = parseResult.data.map((dict) => dict[this.state.xAxis.value]);
+      this.initCSVCacheData(id, filename, this.state.xAxis).catch((err) =>
+        console.log(err)
+      );
     }
     if (this.state.yAxis) {
       tempYData = parseResult.data.map((dict) => dict[this.state.yAxis.value]);
+      this.initCSVCacheData(id, filename, this.state.yAxis).catch((err) =>
+        console.log(err)
+      );
     }
 
     this.setState(function (prevState, props) {
@@ -171,29 +229,29 @@ export default class HistoricalPlotDash extends React.Component {
   };
 
   removeCSV = (e) => {
-    const i = e.currentTarget.getAttribute("data-value");
+    const i = e.currentTarget.getAttribute('data-value');
     console.log(i);
     this.setState(function (prevState, prevProps) {
+      // Remove from cache
+      const CSV_id = prevState.selectedCSV[i].id;
+      this.cache.delete(CSV_id);
+
       const col = prevState.selectedCSV[i].color;
       prevState.availableColours.push(col);
       prevState.availableColours.sort();
 
       prevState.selectedCSV.splice(i, 1);
-
       prevState.plottedCSVFiles.splice(i, 1);
 
       return {};
     });
-    // Add colour back
-    // remove id
-    // remove from selectedCSV
   };
 
   legendGenerator = () => {
     let labels = [];
     labels.push(
-      <span key={"m"}>
-        <Badge variant="primary" style={{ backgroundColor: "#FF0000" }}>
+      <span key={'m'}>
+        <Badge variant="primary" style={{ backgroundColor: '#FF0000' }}>
           {this.props.currentCSVname}
         </Badge>
       </span>
@@ -240,7 +298,7 @@ export default class HistoricalPlotDash extends React.Component {
               </Button>
             </Col>
           </Row>
-          <Row style={{ marginTop: "15px" }}>
+          <Row style={{ marginTop: '15px' }}>
             <Col>
               <p>Legend:</p>
               {this.legendGenerator()}

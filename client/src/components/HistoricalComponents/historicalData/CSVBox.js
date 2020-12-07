@@ -17,7 +17,8 @@ export default class CSVBox extends React.Component {
             date: this.props.date,
             showRenameModal: false,
             showComments: false,
-            commentData: {}
+            commentData: {},
+            confirmDelete: false
         }
         this.comments = [];
     }
@@ -68,12 +69,19 @@ export default class CSVBox extends React.Component {
             })
     }
 
+    confirmDelete = () => {
+        this.setState({ confirmDelete: true })
+    }
+
     deleteFile = () => {
         fetch(GATEWAYSERVERIP + '/historical/deleteFile/' + this.state.filename, {
             method: 'GET'
         })
             .then(response => {
-                if (response.ok) this.props.deleteFile(this.props.index)
+                if (response.ok){
+                    this.props.deleteFile(this.props.index);
+                    this.setState({ confirmDelete: false })
+                }
             })
             .catch(err => {
                 console.log(err)
@@ -173,40 +181,54 @@ export default class CSVBox extends React.Component {
     render = () => {
         return (
             <div id="CSVBox">
-                <div style={{ height: '36px', position: 'absolute', lineHeight: '36px', fontSize: '20px', cursor: 'pointer', textDecoration: 'underline' }}>
-                    {this.state.filename}
-                </div>
-                <div style={{ height: '36px', position: 'absolute', lineHeight: '36px', fontSize: '14px', marginTop: '46px', color: '#B0B0B0' }} >
-                    <div style={{ color: '#C22E2D', width: '60px', position: 'absolute' }}>Created:&nbsp;</div><div style={{ position: 'absolute', left: '65px', width: '160px' }}>{this.state.date}</div>
-                </div>
-                <div style={{ height: '36px', position: 'absolute', lineHeight: '36px', fontSize: '14px', marginTop: '92px', color: '#B0B0B0' }}>
-                    <div style={{ color: '#C22E2D', width: '60px', position: 'absolute' }}>Vehicle:&nbsp;</div><div style={{ position: 'absolute', left: '65px', width: '160px' }}>{this.state.car}</div>
-                </div>
-                <div style={{ height: '36px', position: 'absolute', lineHeight: '36px', fontSize: '14px', marginTop: '138px', color: '#B0B0B0' }}>
-                    <div style={{ color: '#C22E2D', width: '60px', position: 'absolute' }}>Driver:&nbsp;</div><div style={{ position: 'absolute', left: '65px', width: '160px' }}>{this.state.driver}</div>
-                </div>
-                <Button id='historicalButton' onClick={this.deleteFile} style={{ position: 'absolute', right: '20px' }}>
-                    <img id="logoImg" style={{ marginTop: '2px' }} src={require('../../../assets/delete-x.svg')} />
-                </Button>
-                <Button id='historicalButton' onClick={() => this.setState({ showRenameModal: true })} style={{ position: 'absolute', right: '20px', marginTop: '46px' }}>
-                    <img id="logoImg" width="27px" style={{ marginTop: '-14px', marginLeft: '-13px', position: 'absolute' }} src={require('../../../assets/edit.svg')} />
-                </Button>
-                <Button id='historicalButton' onClick={this.downloadFile} style={{ position: 'absolute', right: '20px', marginTop: '92px' }}>
-                    <img id="logoImg" width="20px" style={{ marginTop: '-10px', marginLeft: '-10px', position: 'absolute' }} src={require('../../../assets/download.svg')} />
-                </Button>
-                <Button id='historicalButton' onClick={this.toggleComments} style={{ position: 'absolute', right: '20px', marginTop: '138px' }}>
-                    <img id="logoImg" width="20px" style={{ marginTop: '-10px', marginLeft: '-10px', position: 'absolute' }} src={require('../../../assets/comment.svg')} />
-                </Button>
-                <div id='comments' style={{ display: this.state.showComments ? '' : 'none', marginTop: '184px', paddingTop: '10px', borderTop: '1px solid', width: '100%', minHeight: 'calc(100% + 46px)' }}>
-                    <div style={{ height: '36px', lineHeight: '36px', fontSize: '20px' }}>
-                        Comments
+                {this.state.confirmDelete ? 
+                    <div style={{ position: 'relative' }}>
+                        <div style={{ height: '36px', width: '100%', position: 'absolute', lineHeight: '36px', fontSize: '20px', cursor: 'pointer', textAlign: 'center'}}>
+                            <b>Are you sure you want to delete the CSV file?</b>
+                        </div>
+                        <div>
+                            <Button style={{ width: '100%', height: '36px', background: '#C22E2D', borderColor: '#C22E2D', marginTop: '90px', display: 'inline-block' }} onClick={this.deleteFile}><b>Yes</b></Button>
+                            <Button style={{ width: '100%', height: '36px', background: '#C22E2D', borderColor: '#C22E2D', marginTop: '10px', display: 'inline-block' }} onClick={() => this.setState({ confirmDelete: false })}><b>Cancel</b></Button>
+                        </div>
+                    </div>    
+                    :
+                    <div>
+                        <div style={{ height: '36px', position: 'absolute', lineHeight: '36px', fontSize: '20px', cursor: 'pointer', textDecoration: 'underline' }}>
+                            {this.state.filename}
+                        </div>
+                        <div style={{ height: '36px', position: 'absolute', lineHeight: '36px', fontSize: '14px', marginTop: '46px', color: '#B0B0B0' }} >
+                            <div style={{ color: '#C22E2D', width: '60px', position: 'absolute' }}>Created:&nbsp;</div><div style={{ position: 'absolute', left: '65px', width: '160px' }}>{this.state.date}</div>
+                        </div>
+                        <div style={{ height: '36px', position: 'absolute', lineHeight: '36px', fontSize: '14px', marginTop: '92px', color: '#B0B0B0' }}>
+                            <div style={{ color: '#C22E2D', width: '60px', position: 'absolute' }}>Vehicle:&nbsp;</div><div style={{ position: 'absolute', left: '65px', width: '160px' }}>{this.state.car}</div>
+                        </div>
+                        <div style={{ height: '36px', position: 'absolute', lineHeight: '36px', fontSize: '14px', marginTop: '138px', color: '#B0B0B0' }}>
+                            <div style={{ color: '#C22E2D', width: '60px', position: 'absolute' }}>Driver:&nbsp;</div><div style={{ position: 'absolute', left: '65px', width: '160px' }}>{this.state.driver}</div>
+                        </div>
+                        <Button id='historicalButton' onClick={this.confirmDelete} style={{ position: 'absolute', right: '20px' }}>
+                            <img id="logoImg" style={{ marginTop: '2px' }} src={require('../../../assets/delete-x.svg')} />
+                        </Button>
+                        <Button id='historicalButton' onClick={() => this.setState({ showRenameModal: true })} style={{ position: 'absolute', right: '20px', marginTop: '46px' }}>
+                            <img id="logoImg" width="27px" style={{ marginTop: '-14px', marginLeft: '-13px', position: 'absolute' }} src={require('../../../assets/edit.svg')} />
+                        </Button>
+                        <Button id='historicalButton' onClick={this.downloadFile} style={{ position: 'absolute', right: '20px', marginTop: '92px' }}>
+                            <img id="logoImg" width="20px" style={{ marginTop: '-10px', marginLeft: '-10px', position: 'absolute' }} src={require('../../../assets/download.svg')} />
+                        </Button>
+                        <Button id='historicalButton' onClick={this.toggleComments} style={{ position: 'absolute', right: '20px', marginTop: '138px' }}>
+                            <img id="logoImg" width="20px" style={{ marginTop: '-10px', marginLeft: '-10px', position: 'absolute' }} src={require('../../../assets/comment.svg')} />
+                        </Button>
+                        <div id='comments' style={{ display: this.state.showComments ? '' : 'none', marginTop: '184px', paddingTop: '10px', borderTop: '1px solid', width: '100%', minHeight: 'calc(100% + 46px)' }}>
+                            <div style={{ height: '36px', lineHeight: '36px', fontSize: '20px' }}>
+                                Comments
+                            </div>
+                            <div >
+                                {this.comments.length > 0 ? this.comments : (<div style={{ color: '#B0B0B0' }}>Nothing Yet!</div>)}
+                            </div>
+                            <Quill pushComment={this.pushComment} />
+                        </div>
+                        <RenameFileModal currentName={this.state.filename} showRenameModal={this.state.showRenameModal} onHide={() => this.setState({ showRenameModal: false })} renameFile={this.renameFile} />
                     </div>
-                    <div >
-                        {this.comments.length > 0 ? this.comments : (<div style={{ color: '#B0B0B0' }}>Nothing Yet!</div>)}
-                    </div>
-                    <Quill pushComment={this.pushComment} />
-                </div>
-                <RenameFileModal currentName={this.state.filename} showRenameModal={this.state.showRenameModal} onHide={() => this.setState({ showRenameModal: false })} renameFile={this.renameFile} />
+                }
             </div>
         );
     }

@@ -3,10 +3,6 @@ import { Card } from 'react-bootstrap';
 import { GATEWAYSERVERIP } from '../../../dataServerEnv';
 
 export default class SimpleCSVBox extends React.Component {
-  constructor(props) {
-    super(props);
-  }
-
   downloadFile = () => {
     fetch(GATEWAYSERVERIP + '/historical/getFile/' + this.props.filename, {
       method: 'GET',
@@ -19,18 +15,22 @@ export default class SimpleCSVBox extends React.Component {
   };
 
   showPlots = (e) => {
-    let reader = new FileReader();
+    // let reader = new FileReader();
 
-    reader.addEventListener('loadend', (e) => {
-      const CSVString = e.srcElement.result;
-      this.props.showFilePlot(CSVString, this.props.filename, this.props.ID);
-    });
+    // reader.addEventListener('loadend', (e) => {
+    //   const CSVString = e.srcElement.result;
+    //   console.log(Array.isArray(CSVString));
+    //   this.props.showFilePlot(CSVString, this.props.filename, this.props.ID);
+    // });
 
-    fetch(GATEWAYSERVERIP + '/historical/getFile/' + this.props.filename, {
+    fetch(GATEWAYSERVERIP + '/historical/getHeader/' + this.props.filename, {
       method: 'GET',
     })
-      .then((res) => res.blob())
-      .then((blob) => reader.readAsText(blob))
+      .then((res) => res.json())
+      .then((res_json) => {
+        console.log(Array.isArray(res_json));
+        this.props.showFilePlot(res_json, this.props.filename, this.props.ID);
+      })
       .catch((err) => {
         console.log(err);
       });

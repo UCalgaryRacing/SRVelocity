@@ -70,15 +70,19 @@ export default class HistoricalPlotDash extends React.Component {
   };
 
   showFilePlots = (CSVString, CSV_name, CSV_id) => {
-    const config = {
-      header: true,
-      dynamicTyping: true,
-    };
+    // const config = {
+    //   header: true,
+    //   dynamicTyping: true,
+    // };
 
-    let parseResult = readString(CSVString, config);
+    // let parseResult = readString(CSVString, config);
 
     this.setState({
-      currentCSV: parseResult,
+      currentCSV: {
+        fields: CSVString,
+        name: CSV_name,
+        id: CSV_id,
+      },
       showPlots: true,
       currentCSVid: CSV_id,
       currentCSVname: CSV_name,

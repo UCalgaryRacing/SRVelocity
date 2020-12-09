@@ -28,7 +28,6 @@ export default class SimpleCSVBox extends React.Component {
     })
       .then((res) => res.json())
       .then((res_json) => {
-        console.log(Array.isArray(res_json));
         this.props.showFilePlot(res_json, this.props.filename, this.props.ID);
       })
       .catch((err) => {

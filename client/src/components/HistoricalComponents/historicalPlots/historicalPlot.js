@@ -54,41 +54,16 @@ export default class HistoricalPlotDash extends React.Component {
   };
 
   handleYChange = async (selectedOption) => {
-    // First check if we already have data for column
-    const hasValue = this.cache
-      .get(this.props.currentCSVid)
-      .findIndex((data) => data.name === selectedOption.value);
-
-    let tempData = null;
-    if (hasValue === -1) {
-      tempData = await this.initCSVCacheData(
-        this.props.currentCSVid,
-        this.props.currentCSVname,
-        selectedOption.value
-      );
-    } else {
-      tempData = this.cache.get(this.props.currentCSVid)[hasValue].values;
-    }
+    const tempData = await this.checkCache(
+      this.props.currentCSVid,
+      this.props.currentCSVname,
+      selectedOption.value
+    );
 
     console.log(this.cache);
 
     const promises = this.state.selectedCSV.map(async (csv) => {
-      const hasCol = this.cache
-        .get(csv.id)
-        .findIndex((data) => data.name === selectedOption.value);
-
-      let csvTempData = null;
-      if (hasCol === -1) {
-        csvTempData = await this.initCSVCacheData(
-          csv.id,
-          csv.name,
-          selectedOption.value
-        );
-      } else {
-        csvTempData = this.cache.get(csv.id)[hasCol].values;
-      }
-
-      csv.yData = csvTempData;
+      csv.yData = await this.checkCache(csv.id, csv.name, selectedOption.value);
     });
 
     Promise.all(promises).then(() => {
@@ -100,41 +75,16 @@ export default class HistoricalPlotDash extends React.Component {
   };
 
   handleXChange = async (selectedOption) => {
-    // First check if we already have data for column
-    const hasValue = this.cache
-      .get(this.props.currentCSVid)
-      .findIndex((data) => data.name === selectedOption.value);
+    const tempData = await this.checkCache(
+      this.props.currentCSVid,
+      this.props.currentCSVname,
+      selectedOption.value
+    );
 
-    let tempData = null;
-    if (hasValue === -1) {
-      tempData = await this.initCSVCacheData(
-        this.props.currentCSVid,
-        this.props.currentCSVname,
-        selectedOption.value
-      );
-    } else {
-      tempData = this.cache.get(this.props.currentCSVid)[hasValue].values;
-    }
-
-    console.log(this.cache);
+    // console.log(this.cache);
 
     const promises = this.state.selectedCSV.map(async (csv) => {
-      const hasCol = this.cache
-        .get(csv.id)
-        .findIndex((data) => data.name === selectedOption.value);
-
-      let csvTempData = null;
-      if (hasCol === -1) {
-        csvTempData = await this.initCSVCacheData(
-          csv.id,
-          csv.name,
-          selectedOption.value
-        );
-      } else {
-        csvTempData = this.cache.get(csv.id)[hasCol].values;
-      }
-
-      csv.xData = csvTempData;
+      csv.xData = await this.checkCache(csv.id, csv.name, selectedOption.value);
     });
 
     Promise.all(promises).then(() => {
@@ -143,6 +93,25 @@ export default class HistoricalPlotDash extends React.Component {
         xData: tempData,
       });
     });
+  };
+
+  checkCache = async (id, filename, col_name) => {
+    const hasCol = this.cache
+      .get(id)
+      .findIndex((data) => data.name === col_name);
+
+    let data = null;
+    if (hasCol === -1) {
+      data = await this.initCSVCacheData(id, filename, col_name);
+    } else {
+      const cache = this.cache.get(id);
+      data = cache[hasCol].values;
+
+      cache.unshift(cache[hasCol]);
+      this.cache.get(id).splice(hasCol, 1);
+    }
+
+    return data;
   };
 
   handleClose = () => {
@@ -194,7 +163,12 @@ export default class HistoricalPlotDash extends React.Component {
       let resData = resJson.map(Number);
 
       // Cache managemnt
-      this.cache.get(id).push({
+      if (this.cache.get(id).length === 3) {
+        const last = this.cache.get(id).pop();
+      }
+
+      // Push to the front of array
+      this.cache.get(id).unshift({
         name: col_name,
         values: resData,
       });

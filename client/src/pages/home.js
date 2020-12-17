@@ -25,7 +25,7 @@ export default class HomePage extends React.Component {
                 id="welcomeHeader"
                 style={{ fontSize: "calc(0.9vw + 0.4vh + 0.8em)" }}
               >
-                <b>Welcome to Schulich Velocity!</b>
+                <b>Welcome to SR Velocity!</b>
               </p>
               <p
                 id="infoPara"
@@ -34,12 +34,13 @@ export default class HomePage extends React.Component {
                   textAlign: "justify",
                 }}
               >
-                Schulich Velocity is telemetry software created for the SR-21.
-                It is capable of receiving data from the SR-21 at 60 Hz. This
+                SR Velocity is telemetry software created for current and future
+                vehicles from the Schulich Racing team.
+                It is capable of receiving data from the vehicle at a variable rate
+                up to 60 Hz. This
                 data is stored, plotted, and analyzed in various ways to help us
-                make data driven decisions. We also have an internal system for
-                documenting and managing our data, along with a plug and play
-                sensor functionality on our vehicle.
+                make data driven decisions. We also have various internal systems
+                that help us create, interpret, and distribute data. 
               </p>
               <Button
                 id="streamingButton"

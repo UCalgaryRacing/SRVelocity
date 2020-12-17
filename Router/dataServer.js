@@ -84,10 +84,10 @@ dataServer.post("/uploadFile/", upload.any(), (req, res) => {
         })
             .then(response => response.json())
             .then(response => {
-                if (response.ok) res.send({ ID: response.ID }).end();
-                else res.sendStatus(500).end();
+                res.json({ ID: response.ID }).end();
             })
             .catch(err => {
+                console.log(err)
                 res.sendStatus(500).end();
             });
     });
@@ -112,8 +112,7 @@ dataServer.post("/updateMetadata", (req, res) => {
         body: JSON.stringify(postParams)
     })
         .then(async response => {
-            if (response.ok) res.sendStatus(200).end();
-            else res.sendStatus(500).end();
+            res.sendStatus(200).end();
         })
         .catch(err => {
             res.sendStatus(500).end();
@@ -183,6 +182,21 @@ dataServer.delete("/deleteComment", (req, res) => {
 
 dataServer.get("/getColumn/:filename/:column", (req, res) => {
     fetch(DATASERVERIP + '/redis/getColumn/' + req.params.filename + "/" + req.params.column, {
+        method: 'GET'
+    })
+    .then(response => {
+        if (response.ok) {
+            response.json()
+                .then(response => res.send(response).end())
+        } else res.sendStatus(500).end();
+    })
+    .catch(err => {
+        res.sendStatus(500).end();
+    }); 
+})
+
+dataServer.get("/getHeader/:filename", (req, res) => {
+    fetch(DATASERVERIP + '/redis/getHeader/' + req.params.filename, {
         method: 'GET'
     })
     .then(response => {

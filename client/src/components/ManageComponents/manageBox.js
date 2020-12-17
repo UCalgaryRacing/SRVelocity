@@ -27,11 +27,7 @@ export default class ManageBox extends React.Component {
     var margin = 30;
     while (i < this.state.labels.length) {
       this.info.push(
-        <div
-          id="column"
-          style={{ marginTop: margin + "px" }}
-          onClick={this.downloadFile}
-        >
+        <div id="column" style={{ marginTop: margin + "px" }} onClick={this.downloadFile}>
           <div id="label">{this.state.labels[i]}:&nbsp;</div>
           <div id="value">{this.state.values[i]}</div>
         </div>
@@ -94,11 +90,7 @@ export default class ManageBox extends React.Component {
           }}
           style={{ position: "absolute", right: "20px" }}
         >
-          <img
-            id="logoImg"
-            style={{ marginTop: "2px" }}
-            src={require("../../assets/delete-x.svg")}
-          />
+          <img id="logoImg" style={{ marginTop: "2px" }} src={require("../../assets/delete-x.svg")} />
         </Button>
         <Button
           id="boxButton"
@@ -117,11 +109,9 @@ export default class ManageBox extends React.Component {
           />
         </Button>
         {this.state.showEdit ? (
-          <ManageEdit
-            labels={this.state.labels}
-            values={this.state.values}
-            submitEdit={this.submitEdit}
-          />
+          <ManageEdit labels={this.state.labels} values={this.state.values} submitEdit={this.submitEdit}>
+            {this.props.editComponents}
+          </ManageEdit>
         ) : null}
         <ConfirmationModal
           showModal={this.state.showConfirmation}

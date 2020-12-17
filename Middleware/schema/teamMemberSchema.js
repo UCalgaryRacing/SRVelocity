@@ -24,8 +24,6 @@ const TeamMemberPut = {
     firstName: Joi.string().alphanum().max(50).required(),
     lastName: Joi.string().alphanum().max(50).required(),
     subteamName: Joi.string().max(50).required(),
-    isLead: Joi.boolean().required(),
-    isApproved: Joi.boolean().required(),
   }),
   params: Joi.object({
     memberID: Joi.required(),

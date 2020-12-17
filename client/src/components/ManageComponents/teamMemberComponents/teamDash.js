@@ -5,6 +5,7 @@ import ManageBox from "../manageBox";
 import ManageAddModal from "../manageAddModal";
 import { withRouter } from "react-router-dom";
 import MemberApprove from "./memberApprove";
+import MemberPrivilegeEdit from "./memberPrivilegeEdit";
 var _ = require("lodash");
 
 class TeamDash extends React.Component {
@@ -63,9 +64,12 @@ class TeamDash extends React.Component {
             key={ele.member_id}
             delete={this.deleteMember}
             submitEdit={this.submitEdit}
-          >
-            {ele.is_approved ? null : <MemberApprove member_id={ele.member_id} submit={this.submitApproval} />}
-          </ManageBox>
+            editComponents={
+              <React.Fragment>
+                <MemberPrivilegeEdit member_id={ele.member_id} is_approved={ele.is_approved} is_lead={ele.is_lead} />
+              </React.Fragment>
+            }
+          ></ManageBox>
         );
       });
     }
@@ -85,8 +89,6 @@ class TeamDash extends React.Component {
         lastName: data[1],
         email: data[2],
         subteamName: data[3],
-        isLead: false,
-        isApproved: false,
       }),
     })
       .then((res) => {

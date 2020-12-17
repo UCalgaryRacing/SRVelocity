@@ -79,6 +79,7 @@ export default class ManageEdit extends React.Component {
         >
           <b>Submit Changes</b>
         </Button>
+        {this.props.children}
       </div>
     );
   };

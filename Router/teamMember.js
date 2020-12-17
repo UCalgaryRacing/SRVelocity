@@ -15,10 +15,7 @@ const withCaptainAuth = require("../Middleware/auth")[2];
 //Login
 teamMember.post("/authenticate", sanitizeInputs(teamMemberSchema.TeamMemberAuthenticate.body), async (req, res) => {
   const user = await api.call(`teamMember/${req.body.email}/email`, "GET");
-  console.log("here")
-  console.log(user)
   if (user.status === 200) {
-    console.log("working")
     const isMatch = await bcrypt.compare(req.body.password, user.body.password);
     if (isMatch) {
       const payload = {
@@ -101,18 +98,17 @@ teamMember.put("/:member/approve", withAdminAuth, async (req, res) => {
 });
 
 teamMember.put("/:memberID", [withAdminAuth, sanitizeInputs(teamMemberSchema.TeamMemberPut.body)], async (req, res) => {
-  response = await api.call(`teamMember/${req.params.memberID}`, "PUT", {
+  const response = await api.call(`teamMember/${req.params.memberID}`, "PUT", {
     json: {
       memberID: req.params.memberID,
       firstName: req.body.firstName,
       lastName: req.body.lastName,
       email: req.body.email,
       subteamName: req.body.subteamName,
-      isLead: req.body.isLead,
-      isApproved: req.body.isApproved,
     },
+    searchParams: { APIKey: req.user.APIKey },
   });
-  res.status(reponse.status).json(reponse.body).end();
+  res.status(response.status).json(response.body).end();
 });
 
 teamMember.delete("/:memberID", withAdminAuth, async (req, res) => {

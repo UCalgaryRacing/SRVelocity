@@ -1,11 +1,11 @@
-import React from "react";
-import { GATEWAYSERVERIP } from "../../../dataServerEnv";
-import { Button, Form, CardDeck } from "react-bootstrap";
-import { readString } from "react-papaparse";
-import SimpleCSVBox from "./SimpleCSVBox";
-import HistoricalPlot from "./historicalPlot";
-import "./historicalPlotDash.css";
-var _ = require("lodash");
+import React from 'react';
+import { GATEWAYSERVERIP } from '../../../dataServerEnv';
+import { Button, Form, CardDeck } from 'react-bootstrap';
+import { readString } from 'react-papaparse';
+import SimpleCSVBox from './SimpleCSVBox';
+import HistoricalPlot from './historicalPlot';
+import './historicalPlotDash.css';
+var _ = require('lodash');
 
 export default class HistoricalPlotDash extends React.Component {
   constructor(props) {
@@ -28,10 +28,10 @@ export default class HistoricalPlotDash extends React.Component {
   };
 
   getAllFiles = () => {
-    fetch(GATEWAYSERVERIP + "/historical/getFiles", {
-      method: "GET",
+    fetch(GATEWAYSERVERIP + '/historical/getFiles', {
+      method: 'GET',
       headers: {
-        "Content-Type": "application/json",
+        'Content-Type': 'application/json',
       },
     })
       .then((res) => res.json())
@@ -45,7 +45,7 @@ export default class HistoricalPlotDash extends React.Component {
               filename={file.name}
               driver={file.metadata.driver}
               car={file.metadata.car}
-              date={date.toLocaleDateString() + " " + date.toLocaleTimeString()}
+              date={date.toLocaleDateString() + ' ' + date.toLocaleTimeString()}
               ID={file.metadata.id}
               key={i}
               index={i}
@@ -70,15 +70,19 @@ export default class HistoricalPlotDash extends React.Component {
   };
 
   showFilePlots = (CSVString, CSV_name, CSV_id) => {
-    const config = {
-      header: true,
-      dynamicTyping: true,
-    };
+    // const config = {
+    //   header: true,
+    //   dynamicTyping: true,
+    // };
 
-    let parseResult = readString(CSVString, config);
+    // let parseResult = readString(CSVString, config);
 
     this.setState({
-      currentCSV: parseResult,
+      currentCSV: {
+        fields: CSVString,
+        name: CSV_name,
+        id: CSV_id,
+      },
       showPlots: true,
       currentCSVid: CSV_id,
       currentCSVname: CSV_name,
@@ -88,7 +92,7 @@ export default class HistoricalPlotDash extends React.Component {
   search = (e) => {
     e.preventDefault();
     const text = e.target.value;
-    if (text === "") {
+    if (text === '') {
       this.setState({ showSearched: false });
       return;
     }
@@ -98,13 +102,13 @@ export default class HistoricalPlotDash extends React.Component {
         file.props[param].toLowerCase().includes(value.toLowerCase())
       );
     }
-    var fileFilter = filterParam("filename", text);
-    var driverFilter = filterParam("driver", text);
-    var carFilter = filterParam("car", text);
-    var dateFilter = filterParam("date", text);
-    let temp1 = _.unionBy(fileFilter, driverFilter, "key");
+    var fileFilter = filterParam('filename', text);
+    var driverFilter = filterParam('driver', text);
+    var carFilter = filterParam('car', text);
+    var dateFilter = filterParam('date', text);
+    let temp1 = _.unionBy(fileFilter, driverFilter, 'key');
     let temp2 = _.unionBy(carFilter, dateFilter);
-    filtered = _.unionBy(temp1, temp2, "key");
+    filtered = _.unionBy(temp1, temp2, 'key');
     this.setState({
       searchedFiles: filtered,
       showSearched: true,
@@ -117,24 +121,24 @@ export default class HistoricalPlotDash extends React.Component {
         <div
           id="top"
           style={{
-            position: "fixed",
-            top: "56px",
-            right: "0",
-            left: "0",
-            zIndex: "999",
+            position: 'fixed',
+            top: '56px',
+            right: '0',
+            left: '0',
+            zIndex: '999',
             height:
-              this.state.typeOption === "plotting" &&
+              this.state.typeOption === 'plotting' &&
               this.state.showBottomNav &&
               window.innerWidth < 1000
-                ? "102px"
-                : "56px",
-            paddingLeft: "calc(" + this.props.marginLeft + " + 10px)",
-            paddingTop: "10px",
-            background: "#F5F5F5",
-            borderColor: "#C22D2D",
-            borderWidth: "0",
-            borderBottomWidth: "1px",
-            borderStyle: "solid",
+                ? '102px'
+                : '56px',
+            paddingLeft: 'calc(' + this.props.marginLeft + ' + 10px)',
+            paddingTop: '10px',
+            background: '#F5F5F5',
+            borderColor: '#C22D2D',
+            borderWidth: '0',
+            borderBottomWidth: '1px',
+            borderStyle: 'solid',
           }}
         >
           {this.state.showPlots ? (
@@ -152,7 +156,7 @@ export default class HistoricalPlotDash extends React.Component {
               &nbsp;&nbsp;
               <Form
                 className="searchForm"
-                style={{ position: "absolute", top: "10px", right: "10px" }}
+                style={{ position: 'absolute', top: '10px', right: '10px' }}
               >
                 <Form.Control
                   onChange={this.search}
@@ -178,9 +182,9 @@ export default class HistoricalPlotDash extends React.Component {
             <div>
               <p
                 style={{
-                  textAlign: "center",
-                  fontFamily: "Helvetica",
-                  fontSize: "large",
+                  textAlign: 'center',
+                  fontFamily: 'Helvetica',
+                  fontSize: 'large',
                 }}
               >
                 Click on a box to view custom plots

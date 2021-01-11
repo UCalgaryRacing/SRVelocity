@@ -180,11 +180,11 @@ dataServer.delete('/deleteComment', (req, res) => {
     });
 });
 
-dataServer.get('/getColumn/:filename/:column', (req, res) => {
+dataServer.get('/getColumn/:fileId/:column', (req, res) => {
   fetch(
     DATASERVERIP +
       '/redis/getColumn/' +
-      req.params.filename +
+      req.params.fileId +
       '/' +
       req.params.column,
     {
@@ -201,8 +201,8 @@ dataServer.get('/getColumn/:filename/:column', (req, res) => {
     });
 });
 
-dataServer.get('/getHeader/:filename', (req, res) => {
-  fetch(DATASERVERIP + '/redis/getHeader/' + req.params.filename, {
+dataServer.get('/getHeader/:fileId', (req, res) => {
+  fetch(DATASERVERIP + '/redis/getHeader/' + req.params.fileId, {
     method: 'GET',
   })
     .then((response) => {

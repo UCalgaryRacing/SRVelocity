@@ -23,7 +23,7 @@ export default class SimpleCSVBox extends React.Component {
     //   this.props.showFilePlot(CSVString, this.props.filename, this.props.ID);
     // });
 
-    fetch(GATEWAYSERVERIP + '/historical/getHeader/' + this.props.filename, {
+    fetch(GATEWAYSERVERIP + '/historical/getHeader/' + this.props.ID, {
       method: 'GET',
     })
       .then((res) => res.json())

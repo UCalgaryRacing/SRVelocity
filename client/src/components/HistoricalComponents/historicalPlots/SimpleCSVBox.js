@@ -38,7 +38,7 @@ export default class SimpleCSVBox extends React.Component {
   render = () => {
     return (
       <div id="SimpleCSVBox" onClick={this.showPlots}>
-        <Card>
+        <Card border='dark' style={{width:'300px', height:'300px', marginBottom:'25px'}}>
           <Card.Body>
             <Card.Title>{this.props.filename}</Card.Title>
             <Card.Text style={{ color: '#C22E2D' }}>Created:</Card.Text>

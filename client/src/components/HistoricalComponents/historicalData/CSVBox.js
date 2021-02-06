@@ -1,6 +1,7 @@
 import React from 'react';
 import { Button } from 'react-bootstrap'
 import { GATEWAYSERVERIP } from '../../../dataServerEnv'
+import { fetchWrapper } from '../../fetchWrapper'
 import './_styling/CSVBox.css'
 import download from 'downloadjs'
 import RenameFileModal from './renameFileModal'
@@ -28,13 +29,10 @@ export default class CSVBox extends React.Component {
     }
 
     downloadFile = () => {
-        fetch(GATEWAYSERVERIP + '/historical/getFile/' + this.state.filename, {
-            method: 'GET'
-        })
+        fetchWrapper.get(GATEWAYSERVERIP + '/historical/getFile/' + this.state.filename)
             .then(res => res.blob())
             .then(blob => download(blob, this.state.filename))
             .catch(err => { console.log(err) });
-
     }
 
     renameFile = (newName) => {
@@ -44,48 +42,34 @@ export default class CSVBox extends React.Component {
             newFilename: newName
         }
 
-        fetch(GATEWAYSERVERIP + '/historical/renameFile/', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(postParams)
-        })
-            .then(response => {
-                if (response.ok) {
-                    this.setState({
+        fetchWrapper.post(GATEWAYSERVERIP + '/historical/renameFile', postParams)
+            .then(res => {
+                if(res.ok){
+                    this.setState({ 
                         filename: newName,
                         showRenameModal: false
-                    })
+                    });
                 }
-                else {
-                    this.setState({
-                        showRenameModal: false
-                    })
+                else{
+                    this.setState({ showRenameModal: false });
                 }
             })
-            .catch(err => {
-                console.log(err)
-            })
+            .catch(err => { console.log(err) });
     }
 
     confirmDelete = () => {
-        this.setState({ confirmDelete: true })
+        this.setState({ confirmDelete: true });
     }
 
     deleteFile = () => {
-        fetch(GATEWAYSERVERIP + '/historical/deleteFile/' + this.state.filename, {
-            method: 'GET'
-        })
-            .then(response => {
-                if (response.ok){
+        fetchWrapper.get(GATEWAYSERVERIP + '/historical/deleteFile/' + this.state.filename)
+            .then(res => {
+                if(res.ok){
                     this.props.deleteFile(this.props.index);
-                    this.setState({ confirmDelete: false })
+                    this.setState({ confirmDelete: false });
                 }
             })
-            .catch(err => {
-                console.log(err)
-            })
+            .catch(err => { console.log(err) })
     }
 
     deleteComment = (ID) => {

@@ -1,17 +1,13 @@
 import React from 'react';
 import { Card } from 'react-bootstrap';
 import { GATEWAYSERVERIP } from '../../../dataServerEnv';
+import { fetchWrapper } from '../../fetchWrapper';
 
 export default class SimpleCSVBox extends React.Component {
   downloadFile = () => {
-    fetch(GATEWAYSERVERIP + '/historical/getFile/' + this.props.filename, {
-      method: 'GET',
-    })
+    fetchWrapper.get(GATEWAYSERVERIP + '/historical/getFile/' + this.props.filename)
       .then((res) => res.blob())
-      //.then(blob => download(blob, this.state.filename))
-      .catch((err) => {
-        console.log(err);
-      });
+      .catch((err) => { console.log(err) });
   };
 
   showPlots = (e) => {
@@ -23,16 +19,12 @@ export default class SimpleCSVBox extends React.Component {
     //   this.props.showFilePlot(CSVString, this.props.filename, this.props.ID);
     // });
 
-    fetch(GATEWAYSERVERIP + '/historical/getHeader/' + this.props.filename, {
-      method: 'GET',
-    })
-      .then((res) => res.json())
+    fetchWrapper.get(GATEWAYSERVERIP + '/historical/getHeader/' + this.props.filename)
+      .then((res => res.json()))
       .then((res_json) => {
         this.props.showFilePlot(res_json, this.props.filename, this.props.ID);
       })
-      .catch((err) => {
-        console.log(err);
-      });
+      .catch((err) => { console.log(err) });
   };
 
   render = () => {

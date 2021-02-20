@@ -6,6 +6,7 @@ import CSVoption from './CSVoption';
 import { readString } from 'react-papaparse';
 
 import { GATEWAYSERVERIP } from '../../../dataServerEnv';
+import { fetchWrapper } from '../../fetchWrapper';
 
 export default class HistoricalPlotDash extends React.Component {
   constructor(props) {
@@ -152,13 +153,7 @@ export default class HistoricalPlotDash extends React.Component {
 
   initCSVCacheData = async (id, filename, col_name) => {
     try {
-      let res = await fetch(
-        'http://localhost:5000/' +
-          'historical/getColumn/' +
-          filename +
-          '/' +
-          col_name
-      );
+      let res = await fetchWrapper.get('http://localhost:5000/' + 'historical/getColumn/' + filename + '/' + col_name);
       let resJson = await res.json();
       let resData = resJson.map(Number);
 

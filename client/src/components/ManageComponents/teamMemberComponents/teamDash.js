@@ -6,6 +6,7 @@ import ManageAddModal from "../manageAddModal";
 import { withRouter } from "react-router-dom";
 import MemberApprove from "./memberApprove";
 import MemberPrivilegeEdit from "./memberPrivilegeEdit";
+import { fetchWrapper } from '../../fetchWrapper';
 var _ = require("lodash");
 
 class TeamDash extends React.Component {
@@ -34,13 +35,8 @@ class TeamDash extends React.Component {
 
   fetchTeamMembers = async () => {
     try {
-      let res = await fetch("/teamMember/all", {
-        method: "GET",
-        credentials: "include",
-        headers: {
-          "Content-Type": "application/json",
-        },
-      });
+      let res = await fetchWrapper.get('/teamMember/all');
+      console.log('got team')
       if (res.status == 401) {
         console.log("LOG IN REQUIRED");
         this.props.history.push("/signin");
@@ -78,58 +74,39 @@ class TeamDash extends React.Component {
 
   submitEdit = async (data, ID) => {
     const requestURL = "/teamMember/" + ID;
-    return fetch(requestURL, {
-      method: "PUT",
-      credentials: "include",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        firstName: data[0],
-        lastName: data[1],
-        email: data[2],
-        subteamName: data[3],
-      }),
-    })
-      .then((res) => {
-        if (res.ok) return true;
-        else {
-          //show error
-          return false;
-        }
+    let body = {
+      firstName: data[0],
+      lastName: data[1],
+      email: data[2],
+      subteamName: data[3]
+    }
+    return fetchWrapper.put(requestURL, body)
+      .then(res => {
+        if(res.ok) { return true; }
+        else{ return false; }
       })
-      .catch((err) => {
+      .catch(err => {
+        console.log(err);
         return false;
       });
   };
 
   deleteMember = (ID) => {
     const requestURL = "/teamMember/" + ID;
-    fetch(requestURL, {
-      method: "DELETE",
-      credentials: "include",
-      headers: {
-        "Content-Type": "application/json",
-      },
-    })
-      .then((res) => {
-        if (res.ok) {
-          for (var el in this.state.memberRender) {
-            if (parseInt(this.state.memberRender[el].key) === ID) {
-              let temp = this.state.memberRender;
-              temp.splice(el, 1);
-              this.setState({ memberRender: temp });
-              break;
+    fetchWrapper.delete(requestURL)
+      .then(res => {
+          if (res.ok) {
+            for (var el in this.state.memberRender) {
+              if (parseInt(this.state.memberRender[el].key) === ID) {
+                let temp = this.state.memberRender;
+                temp.splice(el, 1);
+                this.setState({ memberRender: temp });
+                break;
+              }
             }
           }
-        } else {
-          //show error
-        }
       })
-      .catch((error) => {
-        //show error
-        console.log(error);
-      });
+      .catch((err) => { console.log(err) });
   };
 
   search = (e) => {

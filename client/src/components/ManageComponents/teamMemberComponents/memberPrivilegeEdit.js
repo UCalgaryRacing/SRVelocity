@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { Container, Row, Col } from "react-bootstrap";
+import { fetchWrapper } from '../../fetchWrapper';
 import Switch from "react-switch";
 
 class MemberPrivilegeEdit extends Component {
@@ -17,44 +18,22 @@ class MemberPrivilegeEdit extends Component {
 
   handleApproveChange(is_approved) {
     const requestURL = "/teamMember/" + this.props.member_id + "/approve";
-    fetch(requestURL, {
-      method: "PUT",
-      credentials: "include",
-      headers: {
-        "Content-Type": "application/json",
-      },
-    })
-      .then((res) => {
-        if (res.ok) {
-          this.setState({ is_approved });
-        } else {
-          this.setState({ approve_perms: false });
-        }
+    fetchWrapper.put(requestURL)
+      .then(res => {
+        if (res.ok) { this.setState({ is_approved }); } 
+        else { this.setState({ approve_perms: false }); }
       })
-      .catch((err) => {
-        this.setState({ approve_perms: false });
-      });
+      .catch((err) => { this.setState({ approve_perms: false }); });
   }
 
   handleLeadChange(is_lead) {
     const requestURL = "/teamMember/" + this.props.member_id + "/togglelead";
-    fetch(requestURL, {
-      method: "PUT",
-      credentials: "include",
-      headers: {
-        "Content-Type": "application/json",
-      },
-    })
-      .then((res) => {
-        if (res.ok) {
-          this.setState({ is_lead });
-        } else {
-          this.setState({ lead_perms: false });
-        }
+    fetchWrapper.put(requestURL)
+      .then(res => {
+        if (res.ok) { this.setState({ is_lead }); } 
+        else { this.setState({ lead_perms: false }); }
       })
-      .catch((err) => {
-        this.setState({ lead_perms: false });
-      });
+      .catch(err => { this.setState({ lead_perms: false }); });
   }
 
   render() {

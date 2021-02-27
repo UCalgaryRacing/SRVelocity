@@ -2,6 +2,7 @@ import React from "react";
 import { Row, Col, Table, Button, Form, Modal } from "react-bootstrap";
 import ManageBox from "../manageBox";
 import ManageAddModal from "../manageAddModal";
+import { fetchWrapper } from '../../fetchWrapper';
 var _ = require("lodash");
 
 class VehicleDash extends React.Component {
@@ -32,13 +33,7 @@ class VehicleDash extends React.Component {
   fetchVehicles = async () => {
     try {
       const requesturl = "/vehicle/";
-      let res = await fetch(requesturl, {
-        method: "GET",
-        credentials: "include",
-        headers: {
-          "Content-Type": "application/json",
-        },
-      });
+      let res = await fetchWrapper.get(requesturl);
       if (res.status == 401) {
         console.log("LOG IN REQUIRED");
         this.props.history.push("/signin");
@@ -70,27 +65,17 @@ class VehicleDash extends React.Component {
 
   addVehicle = (data) => {
     const requestURL = "/vehicle/";
-    fetch(requestURL, {
-      method: "POST",
-      credentials: "include",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        name: data[0],
-      }),
-    })
-      .then((res) => res.json())
-      .then((res) => {
-        if (!res.ok) {
-          //show error
-          return;
-        }
+    let body = {
+      name: data[0]
+    }
+    fetchWrapper.post(requestURL, body)
+      .then(res => {
+        if(!res.ok) { return; }
         let box = (
           <ManageBox
             labels={["Name"]}
             values={[data[0]]}
-            ID={res.ID} //Get from req
+            ID={res.ID}
             key={res.ID}
             delete={this.deleteVehicle}
             submitEdit={this.submitEdit}
@@ -99,44 +84,27 @@ class VehicleDash extends React.Component {
         let temp = this.state.vehicleRender;
         temp.push(box);
         this.setState({ sensorRender: temp });
-      });
+      })
+      .catch(err => { console.log(err) });
   };
 
   submitEdit = async (data, ID) => {
     const requestURL = "/vehicle/" + ID;
-    return fetch(requestURL, {
-      method: "PUT",
-      credentials: "include",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        name: data[0],
-      }),
-    })
-      .then((res) => {
-        if (res.ok) return true;
-        else {
-          //show error
-          return false;
-        }
+    let body = {
+      name: data[0]
+    }
+    return fetchWrapper.put(requestURL, body)
+      .then(res => {
+        if(res.ok) { return true; }
+        else { return false; }
       })
-      .catch((err) => {
-        //show error
-        return false;
-      });
+      .catch(err => { console.log(err) });
   };
 
   deleteVehicle = (ID) => {
     const requestURL = "/vehicle/" + ID;
-    fetch(requestURL, {
-      method: "DELETE",
-      credentials: "include",
-      headers: {
-        "Content-Type": "application/json",
-      },
-    })
-      .then((res) => {
+    fetchWrapper.delete(requestURL)
+      .then(res => {
         if (res.ok) {
           for (var el in this.state.vehicleRender) {
             if (parseInt(this.state.vehicleRender[el].key) === ID) {
@@ -146,14 +114,9 @@ class VehicleDash extends React.Component {
               break;
             }
           }
-        } else {
-          //show error
         }
       })
-      .catch((error) => {
-        //show error
-        console.log(error);
-      });
+      .catch(err => { console.log(err) });
   };
 
   toggleAddModal = () => {

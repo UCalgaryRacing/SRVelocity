@@ -3,6 +3,7 @@ import { Button, Modal, Form } from 'react-bootstrap'
 import Dropzone from 'react-dropzone'
 import { GATEWAYSERVERIP } from '../../../dataServerEnv'
 import { useAlert } from "react-alert";
+import { fetchWrapper } from '../../fetchWrapper';
 
 function AlertHOC(Component) {
     return function WrappedComponent(props) {
@@ -55,32 +56,19 @@ class UploadFileModal extends React.Component {
                 filename: filename
             }
 
-            fetch(GATEWAYSERVERIP + '/historical/uploadFile/', {
-                method: 'POST',
-                body: formData
-            })
-                .then(response => response.json())
+            fetchWrapper.post(GATEWAYSERVERIP + '/historical/uploadFile/', formData)
                 .then(response => {
                     let ID = response.ID;
-                    fetch(GATEWAYSERVERIP + '/historical/updateMetadata', {
-                        method: 'POST',
-                        headers: { 'Content-Type': 'application/json' },
-                        body: JSON.stringify(meta)
-                    })
+                    fetchWrapper.post(GATEWAYSERVERIP + '/historical/updateMetadata', meta)
                         .then(res => {
-                            //Doesnt reach here
                             this.props.addCSVBox(filename, driver, vehicle, ID);
                             this.setState({ showEmpty: false});
                             this.props.onHide();
                             this.props.alert.show("Successfully uploaded!")
                         })
-                        .catch(err => {
-                            this.props.onHide();
-                        })
+                        .catch(err => { this.props.onHide(); });
                 })
-                .catch(err => {
-                    console.log(err)
-                })
+                .catch(err => { console.log(err) });
         }
 
         reader.readAsText(this.state.file)

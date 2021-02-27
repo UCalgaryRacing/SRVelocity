@@ -3,6 +3,7 @@ import { GATEWAYSERVERIP } from '../../../dataServerEnv';
 import CSVBox from './CSVBox';
 import { Button, Form } from 'react-bootstrap';
 import UploadFileModal from './uploadFileModal';
+import { fetchWrapper } from '../../fetchWrapper';
 import './_styling/historicalDash.css';
 
 var _ = require('lodash');
@@ -34,14 +35,9 @@ export default class HistoricalContent extends React.Component {
   };
 
   getAllFiles = () => {
-    fetch(GATEWAYSERVERIP + '/historical/getFiles', {
-      method: 'GET',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-    })
-      .then((res) => res.json())
-      .then((res) => {
+    fetchWrapper.get(GATEWAYSERVERIP + '/historical/getFiles')
+      .then(res => res.json())
+      .then(res => {
         var files = [];
         let i = 0;
         for (var file of res) {
@@ -62,7 +58,6 @@ export default class HistoricalContent extends React.Component {
           i++;
         }
         files.sort(function (a, b) {
-          //Newest first
           var tempA = b.props.realDate;
           var tempB = a.props.realDate;
           if (tempA > tempB) return 1;
@@ -71,9 +66,7 @@ export default class HistoricalContent extends React.Component {
         });
         this.setState({ CSVFiles: files });
       })
-      .catch((err) => {
-        console.log(err);
-      });
+      .catch(err => { console.log(err) });
   };
 
   addCSVBox = (filename, driver, vehicle, ID) => {

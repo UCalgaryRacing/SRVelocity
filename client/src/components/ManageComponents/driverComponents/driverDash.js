@@ -3,6 +3,7 @@ import ManageBox from "../manageBox";
 import ManageAddModal from "../manageAddModal";
 import { Row, Col, Button, Form } from "react-bootstrap";
 import "./driverDash.css";
+import { fetchWrapper } from '../../fetchWrapper';
 var _ = require("lodash");
 
 class DriverDash extends React.Component {
@@ -33,13 +34,7 @@ class DriverDash extends React.Component {
   fetchDrivers = async () => {
     try {
       const requesturl = "/driver/";
-      let res = await fetch(requesturl, {
-        method: "GET",
-        credentials: "include",
-        headers: {
-          "Content-Type": "application/json",
-        },
-      });
+      let res = await fetchWrapper.get(requesturl);
       if (res.status == 401) {
         console.log("LOG IN REQUIRED");
         this.props.history.push("/signin");
@@ -71,28 +66,19 @@ class DriverDash extends React.Component {
 
   addDriver = async (data) => {
     const requestURL = "/driver/";
-    fetch(requestURL, {
-      method: "POST",
-      credentials: "include",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        firstName: data[0],
-        lastName: data[1],
-      }),
-    })
-      .then((res) => res.json())
-      .then((res) => {
-        if (!res.ok) {
-          //show error
-          return;
-        } else {
+    let body = {
+      firstName: data[0],
+      lastName: data[1]
+    }
+    fetchWrapper.post(requestURL, body)
+      .then(res => {
+        if(!res.ok){ return; }
+        else{
           let box = (
             <ManageBox
               labels={["First Name", "Last Name"]}
               values={[data[0], data[1]]}
-              ID={res.ID} //Get from req
+              ID={res.ID}
               key={res.ID}
               delete={this.deleteDriver}
               submitEdit={this.submitEdit}
@@ -103,49 +89,32 @@ class DriverDash extends React.Component {
           this.setState({ sensorRender: temp });
         }
       })
-      .catch((err) => {
-        //show error
-      });
+      .catch(err => { console.log(err) });
   };
 
   submitEdit = async (data, ID) => {
     const requestURL = "/driver/" + ID;
-    return fetch(requestURL, {
-      method: "PUT",
-      credentials: "include",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        firstName: data[0],
-        lastName: data[1],
-      }),
-    })
-      .then((res) => {
-        if (res.ok) return true;
-        else {
-          //Show error
-          return false;
-        }
+    let body = {
+      firstName: data[0],
+      lastName: data[1]
+    }
+    return fetchWrapper.put(requestURL, body)
+      .then(res => {
+        if(res.ok) { return true; }
+        else{ return false; }
       })
-      .catch((err) => {
-        //show error
-        return false;
+      .catch(err => { 
+        console.log(err); 
+        return false; 
       });
   };
 
   deleteDriver = (ID) => {
     const requestURL = "/driver/" + ID;
-    fetch(requestURL, {
-      method: "DELETE",
-      credentials: "include",
-      headers: {
-        "Content-Type": "application/json",
-      },
-    })
-      .then((res) => {
-        if (res.ok) {
-          for (var el in this.state.driverRender) {
+    fetchWrapper.delete(requestURL)
+      .then(res => {
+        if(res.ok){
+          for(var el in this.state.driverRender){
             if (parseInt(this.state.driverRender[el].key) === ID) {
               let temp = this.state.driverRender;
               temp.splice(el, 1);
@@ -153,14 +122,9 @@ class DriverDash extends React.Component {
               break;
             }
           }
-        } else {
-          //show error
         }
       })
-      .catch((error) => {
-        //show error
-        console.log(error);
-      });
+      .catch(err => { console.log(err) });
   };
 
   toggleAddModal = () => {

@@ -339,6 +339,10 @@ export default class HistoricalContent extends React.Component {
     this.setState({ CSVFiles: filtered })
   };
 
+  changeView = () => {
+    this.setState((prevState) => ({view: !prevState.view}))
+  };
+
 
   render = () => {
     return (

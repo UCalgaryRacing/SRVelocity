@@ -1,10 +1,12 @@
 import React from 'react';
 import { GATEWAYSERVERIP } from '../../../dataServerEnv';
 import CSVBox from './CSVBox';
-import sessionBox from './sessionBox';
+import sessionBox from './SessionBox';
 import { Button, Form, Jumbotron, Accordion, Card, ListGroup } from 'react-bootstrap';
 import UploadFileModal from './uploadFileModal';
 import './_styling/historicalDash.css';
+import Dropdown from 'react-bootstrap/Dropdown';
+
 
 import firebase from 'firebase/app';
 import 'firebase/database';
@@ -44,6 +46,7 @@ export default class HistoricalContent extends React.Component {
       showSearched: false,
       searchedFiles: [],
       showSearchModal: false,
+      view: true, 
 
       setOpen: false,
       open: false,
@@ -300,7 +303,42 @@ export default class HistoricalContent extends React.Component {
     });
   };
 
-  //const [open, setOpen] = useState(false);
+  sortByDriver = () => {
+    var filtered = [...this.state.CSVFiles];
+    filtered.sort((a,b) => a.props.driver.toUpperCase() < b.props.driver.toUpperCase() ? -1 : 1 )
+    this.setState({ CSVFiles: filtered })
+  };
+
+  sortByOldestDate = () => {
+    var filtered = [...this.state.CSVFiles];
+    filtered.sort((a,b) => a.props.realDate < b.props.realDate ? -1 : 1 )
+    this.setState({ CSVFiles: filtered })
+  };
+
+  sortByNewestDate = () => {
+    var filtered = [...this.state.CSVFiles];
+    filtered.sort((a,b) => a.props.realDate < b.props.realDate ? 1 : -1 )
+    this.setState({ CSVFiles: filtered })
+  };
+
+  sortByFileNameA = () => {
+    var filtered = [...this.state.CSVFiles];
+    filtered.sort((a,b) => a.props.filename.toUpperCase() < b.props.filename.toUpperCase() ? -1 : 1 )
+    this.setState({ CSVFiles: filtered })
+  };
+
+  sortByFileNameZ = () => {
+    var filtered = [...this.state.CSVFiles];
+    filtered.sort((a,b) => a.props.filename.toUpperCase() < b.props.filename.toUpperCase() ? 1 : -1 )
+    this.setState({ CSVFiles: filtered })
+  };
+
+  sortByVehicle = () => {
+    var filtered = [...this.state.CSVFiles];
+    filtered.sort((a,b) => a.props.car.toUpperCase() < b.props.car.toUpperCase() ? -1 : 1 )
+    this.setState({ CSVFiles: filtered })
+  };
+
 
   render = () => {
     return (
@@ -337,10 +375,26 @@ export default class HistoricalContent extends React.Component {
             <b>Upload CSV</b>
           </Button>
           &nbsp;&nbsp;
-          <Button id="sortButton" onClick={this.changeType}>
-            <b>Sort Data</b>
+          <Button id="toggleButton" onClick={this.changeView}>
+            <b>Toggle View</b>
           </Button>
           &nbsp;&nbsp;
+          <Dropdown style={{left: '370px', top: '-36px'}}>
+            <Dropdown.Toggle variant="danger" id="dropdown-basic">
+            <b>Sort by</b>
+            </Dropdown.Toggle>
+
+            <Dropdown.Menu>
+              <Dropdown.Item href="#/action-1" onClick={this.sortByOldestDate}>Date Added (Oldest)</Dropdown.Item>
+              <Dropdown.Item href="#/action-2" onClick={this.sortByNewestDate}>Date Added (Newest)</Dropdown.Item>
+              <Dropdown.Item href="#/action-3" onClick={this.sortByDriver}>Driver</Dropdown.Item>
+              <Dropdown.Item href="#/action-4" onClick={this.sortByVehicle}>Vehicle</Dropdown.Item>
+              <Dropdown.Item href="#/action-5" onClick={this.sortByFileNameA}>File Name (A-Z)</Dropdown.Item>
+              <Dropdown.Item href="#/action-6" onClick={this.sortByFileNameZ}>File Name (Z-A)</Dropdown.Item>
+            </Dropdown.Menu>
+          </Dropdown>
+          &nbsp;&nbsp;
+
           <Form
             className="searchForm"
             style={{ position: 'absolute', top: '10px', right: '10px' }}
@@ -362,10 +416,12 @@ export default class HistoricalContent extends React.Component {
             addCSVBox={this.addCSVBox}
             addSessionBox={this.addSessionBox}
           />
-          {this.state.showSearched
+          {this.state.view ? 
+          
+          (this.state.showSearched
             ? this.state.searchedFiles
-            : this.state.CSVFiles}
-            {this.state.Sessions}
+            : this.state.CSVFiles) : this.state.Sessions}
+            {/* {this.state.Sessions} */}
         </div>
         <div>
             {/*

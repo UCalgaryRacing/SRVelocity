@@ -1,7 +1,7 @@
 import React from 'react';
 import { Button, Jumbotron, ListGroup } from 'react-bootstrap';
 import { GATEWAYSERVERIP } from '../../../dataServerEnv';
-import './_styling/sessionBox.css';
+import './_styling/SessionBox.css';
 import download from 'downloadjs';
 import RenameFileModal from './renameFileModal';
 import Quill from './quill';
@@ -40,7 +40,7 @@ export default class sessionBox extends React.Component {
 
   render = () => {
     return (
-      <div>
+      <div id="SessionBox">
         <Jumbotron>
           <h1>
             {this.state.name}

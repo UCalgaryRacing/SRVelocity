@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { Container, Row, Col } from "react-bootstrap";
-import { Switch } from "react-bootstrap";
+import {Switch} from "react-router";
 
 class MemberPrivilegeEdit extends Component {
   constructor(props) {

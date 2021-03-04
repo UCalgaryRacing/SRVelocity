@@ -182,7 +182,11 @@ export default class CSVBox extends React.Component {
 
   render = () => {
     return (
-      <div id="CSVBox">
+      <div id="CSVBox" 
+        style={{
+          display: 'true',
+        }}
+      >
         {this.state.confirmDelete ? (
           <div style={{ position: 'relative' }}>
             <div

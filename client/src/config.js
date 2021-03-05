@@ -11,9 +11,9 @@ const firebaseConfig = {
   measurementId: "G-ZSGK8C63GM"
 };
 
-firebase.initializeApp(firebaseConfig);
+var fbApp = firebase.initializeApp(firebaseConfig);
 
 // Get a reference to the database service
-var database = firebase.database();
+//var database = firebase.database();
 
-//export {database};
+export default fbApp;

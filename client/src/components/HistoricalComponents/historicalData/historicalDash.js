@@ -1,34 +1,17 @@
 import React from 'react';
 import { GATEWAYSERVERIP } from '../../../dataServerEnv';
 import CSVBox from './CSVBox';
-import sessionBox from './sessionBox';
+import SessionBox from './SessionBox';
 import { Button, Form, Jumbotron, Accordion, Card, ListGroup } from 'react-bootstrap';
 import UploadFileModal from './uploadFileModal';
 import './_styling/historicalDash.css';
 
+
 import firebase from 'firebase/app';
 import 'firebase/database';
-//import { database } from '../../../config.js';
+import fbApp from '../../../../src/config.js';
 
-/*
-var firebase = require('firebase/app');
-require('firebase/database');
-*/
-const firebaseConfig = {
-  apiKey: "AIzaSyA_rSnvjJ0IsGQymwTFqo5pqKNtVYobeuQ",
-  authDomain: "schulich-velocity.firebaseapp.com",
-  databaseURL: "https://schulich-velocity.firebaseio.com",
-  projectId: "schulich-velocity",
-  storageBucket: "schulich-velocity.appspot.com",
-  messagingSenderId: "627030248616",
-  appId: "1:627030248616:web:fd34df45c87f3a2a3b069d",
-  measurementId: "G-ZSGK8C63GM"
-};
-
-firebase.initializeApp(firebaseConfig);
-
-// Get a reference to the database service
-var database = firebase.database();
+import Sessions from './Sessions.js';
 
 export default class HistoricalContent extends React.Component {
   constructor(props) {
@@ -38,7 +21,7 @@ export default class HistoricalContent extends React.Component {
       marginLeft: this.props.marginLeft,
       toggleDash: false,
       CSVFiles: [],
-      Sessions: [],
+      SessionFiles: [],
       showUploadModal: false,
       sideOpen: false,
       showSearched: false,
@@ -48,10 +31,10 @@ export default class HistoricalContent extends React.Component {
       setOpen: false,
       open: false,
 
-			//delete
+      //delete
       name: "",
 
-      csvid: [],
+      csvId: [],
       date: [],
       id: [],
       sessionNames: [],
@@ -62,79 +45,9 @@ export default class HistoricalContent extends React.Component {
   }
 
 
-	renderSession = () => {
-		return(
-    <div>
-			{this.state.sessionNames.map(name => 
-				<Jumbotron key={name}> 
-						<h1><u>
-								{name}
-						</u></h1>
-				</Jumbotron>)}
-		</div>);
-	}
-
-  getSessionField = (sessionKey, field, ref) => {
-    ref.on('value', (snapshot) => {
-      this.setState({
-        field: snapshot.child('Session').child(sessionKey).child(field).val()
-      });
-    });
-  };
-
   componentDidMount = () => {
+    this.getSessions();
     this.getAllFiles();
-
-    const rootRef = firebase.database().ref();
-    const sessionRef = rootRef.child('Session');
-
-
-    var sessionFiles = [];
-    //iterate through every session ID
-    sessionRef.once('value', (snapshot) => {
-      snapshot.forEach((childSnapshot) => {
-        //add the add the session keys to the sessionIDs array
-        this.state.sessionIDs.push(childSnapshot.key);
-        var sessionKey = childSnapshot.key;
-
-        var sessionName = childSnapshot.child('name').val();
-        var sessionSubteam = childSnapshot.child('subteam').val();
-        var sessionDate = childSnapshot.child('date').val();
-
-				//var sessionDateFormatted = new Date(sessionDate)
-				//sessionDateFormatted =  sessionDateFormatted.toLocaleDateString() + ' ' + sessionDateFormatted.toLocaleTimeString();
-				var date = new Date(sessionDate * 1);
-
-        this.state.sessionNames.push(sessionName);
-        this.state.subteam.push(sessionSubteam);
-				this.state.date.push(date.toLocaleDateString());
-
-
-        sessionFiles.push(
-            <sessionBox
-                csvid={""}
-                date={""}
-                id={""}
-                name={sessionName}
-                subteam={sessionSubteam}
-            />
-        );
-
-        rootRef.on('value', (snapshot) => {
-          this.setState({
-            sName: snapshot.child('Session').child(sessionKey).child('name').val(),
-          });
-        });
-      });
-    });
-   
-    //this.getSessionField('abdff979-6198-47de-b2af-ca5f6c5b33e0', 'name', rootRef);
-
-
-   
-    console.log("================================================\nNAME: " + this.state.name);
-    console.log("SESSIONS =" + this.state.sessionIDs);
-    console.log("ARRAY LENGTH: " + this.state.sessionIDs.length);
   };
 
   changeContent = (newContent) => {
@@ -146,6 +59,55 @@ export default class HistoricalContent extends React.Component {
     this.state.sessionAttributes.push(this.state.sessionIDS);
   }
 
+  getSessions = () => {
+    // Get a reference to the database service
+    var database = fbApp.database();
+
+    const rootRef = firebase.database().ref();
+    const sessionRef = rootRef.child('Session');
+
+
+    var sessionList = [];
+    var date = new Date();
+    let i = 0;
+    //iterate through every session ID
+    sessionRef.once('value', (snapshot) => {
+      snapshot.forEach((childSnapshot) => {
+        //add the add the session keys to the sessionIDs array
+        //this.state.sessionIDs.push(childSnapshot.key);
+        /*
+        var sessionKey = childSnapshot.key;
+
+        
+        var sessionName = childSnapshot.child('name').val();
+        var sessionSubteam = childSnapshot.child('subteam').val();
+        var sessionDate = childSnapshot.child('date').val();
+
+        //var sessionDateFormatted = new Date(sessionDate)
+        //sessionDateFormatted =  sessionDateFormatted.toLocaleDateString() + ' ' + sessionDateFormatted.toLocaleTimeString();
+        var date = new Date(sessionDate * 1);
+
+        this.state.sessionNames.push(sessionName);
+        this.state.subteam.push(sessionSubteam);
+        this.state.date.push(date.toLocaleDateString());
+        */
+        sessionList.push(
+          <SessionBox
+            csvId={childSnapshot.child('csvId').val()}
+            //date={childSnapshot.child('date').val().toLocaleDateString()}
+            date={childSnapshot.child('date').val()}
+            id={childSnapshot.child('id').val()}
+            sessionName={childSnapshot.child('name').val()}
+            subteams={childSnapshot.child('subteam').val()}
+            key={i}
+            index={i}
+          />
+        );
+        i++;
+      });
+    });
+    this.setState({ SessionFiles : sessionList });
+  }
 
   getAllFiles = () => {
     fetch(GATEWAYSERVERIP + '/historical/getFiles', {
@@ -210,21 +172,41 @@ export default class HistoricalContent extends React.Component {
     );
     this.setState({ CSVFiles: files }, this.forceUpdate());
   };
-
-  addSessionBox = (sessionName, ID) => {
-    let sessionFiles = [...this.state.Sessions];
-    let date = new Date();
-    sessionFiles.unshift(
-      <sessionBox
-      sessionName={sessionName}
-      ID={ID}
-      key={sessionName}
-      index={this.state.Sessions.length + 1}
-      />
+/*
+  addSessionBox = (csvId, date, id, sessionName, subteams) => {
+    let sessionList = [...this.state.SessionFiles];
+    sessionList.unshift(
+      <SessionBox
+        csvId={csvId}
+        date={date}
+        id={id}
+        sessionName={sessionName}
+        subteams={subteams}
+        key={id}
+        index={this.state.SessionFiles.length + 1}
+      /> 
     );
-    this.setState({ Sessions: sessionFiles }, this.forceUpdate());
-  };
+    this.setState({ SessionFiles: sessionList }, this.forceUpdate());
 
+    console.log("==========================================================================");
+    console.log(this.state.SessionFiles);
+  }*/
+
+  /*
+    addSessionBox = (sessionName, ID) => {
+      let sessionFiles = [...this.state.Sessions];
+      let date = new Date();
+      sessionFiles.unshift(
+        <SessionBox
+        sessionName={sessionName}
+        ID={ID}
+        key={sessionName}
+        index={this.state.Sessions.length + 1}
+        />
+      );
+      this.setState({ Sessions: sessionFiles }, this.forceUpdate());
+    };
+  */
   deleteFile = (index) => {
     this.setState({
       CSVFiles: this.state.CSVFiles.filter(
@@ -291,7 +273,7 @@ export default class HistoricalContent extends React.Component {
     var driverFilter = filterParam('driver', text);
     var carFilter = filterParam('car', text);
     var dateFilter = filterParam('date', text);
-   // let temp1 = _.unionBy(fileFilter, driverFilter, 'key');
+    // let temp1 = _.unionBy(fileFilter, driverFilter, 'key');
     //let temp2 = _.unionBy(carFilter, dateFilter);
     //filtered = _.unionBy(temp1, temp2, 'key');
     this.setState({
@@ -300,11 +282,16 @@ export default class HistoricalContent extends React.Component {
     });
   };
 
+
   //const [open, setOpen] = useState(false);
 
   render = () => {
     return (
       <div id="historicalDash">
+        <div>
+          {/*{this.state.SessionFiles}*/}
+          {/*<Sessions /> */}
+        </div>
         <div
           id="top"
           style={{
@@ -315,8 +302,8 @@ export default class HistoricalContent extends React.Component {
             zIndex: '999',
             height:
               this.state.typeOption === 'plotting' &&
-              this.state.showBottomNav &&
-              window.innerWidth < 1000
+                this.state.showBottomNav &&
+                window.innerWidth < 1000
                 ? '102px'
                 : '56px',
             paddingLeft: 'calc(' + this.props.marginLeft + ' + 10px)',
@@ -360,99 +347,12 @@ export default class HistoricalContent extends React.Component {
             show={this.state.showUploadModal}
             onHide={() => this.setState({ showUploadModal: false })}
             addCSVBox={this.addCSVBox}
-            addSessionBox={this.addSessionBox}
           />
           {this.state.showSearched
             ? this.state.searchedFiles
             : this.state.CSVFiles}
-            {this.state.Sessions}
         </div>
-        <div>
-            {/*
-          <Jumbotron>
-            <h1 id="sessionName">{this.state.name}</h1>
-            <h5>Date: {this.state.date}</h5>
-            <h5>Subteam(s): {this.state.subteam}</h5>
-            {/*
-            <p>
-              <ListGroup>
-                <ListGroup.Item>
-                  <Button variant="outline-dark" size="lg" block>CSV0</Button>
-                </ListGroup.Item>
-                <ListGroup.Item>
-                  <Button variant="outline-dark" size="lg" block>CSV1</Button>
-                </ListGroup.Item>
-                <ListGroup.Item>
-                  <Button variant="outline-dark" size="lg" block>CSV2</Button>
-                </ListGroup.Item>
-                <ListGroup.Item>
-                  <Button variant="outline-dark" size="lg" block>CSV3</Button>
-                </ListGroup.Item>
-                </ListGroup>
-            </p> */}
-            {/*
-            <p>
-              <Accordion>
-                <Card>
-                  <Accordion.Toggle as={Button} variant="outline-dark" size="lg" eventKey="0">
-                    CSV0 Name = {this.state.name}
-                  </Accordion.Toggle>
-                  <Accordion.Collapse eventKey="0">
-                    <Card.Body>CSV0 Information</Card.Body>
-                  </Accordion.Collapse>
-                </Card>
-                <Card>
-                  <Accordion.Toggle as={Button} variant="outline-dark" size="lg" eventKey="0">
-                    CSV1 Name
-                  </Accordion.Toggle>
-                  <Accordion.Collapse eventKey="0">
-                    <Card.Body>CSV1 Information</Card.Body>
-                  </Accordion.Collapse>
-                </Card>
-              </Accordion>
-              <Button variant="primary">Learn more</Button>
-            </p>
-            </Jumbotron>*/}
-            {/*
-          <div>
-              {this.state.sessionIDs.map(session => 
-                <Jumbotron key={session}> 
-                    <h1>
-                        {session} 
-                    </h1>
-                </Jumbotron>)}
-              </div>*/}
-							{/*
-          <div>
-              {this.state.sessionNames.map(name => 
-                <Jumbotron key={name}> 
-                    <h1><u>
-                        {name}
-                    </u></h1>
-              {this.state.subteam.map(teams =>
-              <h3 key={teams}>
-                  {teams}
-              </h3>
-              )}
-                </Jumbotron>)}
-							</div>*/}
-					<div>
-						{[...this.state.sessionNames].map((x,i) =>
-						<Jumbotron key={i}> 
-							<h1><u>
-								{this.state.sessionNames[i]}
-							</u></h1>
-							<h4>
-								Subteam: {this.state.subteam[i]}
-							</h4>
-							<h4>
-								Date: {this.state.date[i]}
-							</h4>
-						</Jumbotron>
-						)}
-					</div>
         </div>
-      </div>
     );
   };
 }

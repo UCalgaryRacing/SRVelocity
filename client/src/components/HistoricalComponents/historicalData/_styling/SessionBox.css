@@ -1,0 +1,50 @@
+#SessionBox .box {
+    /*background-color;*/
+    /*border-style: solid;*/
+    border-style: solid;
+    border-width: 1px;
+    border-radius: 0.5rem;
+    padding: 45px;
+    padding-right: 2rem;
+    padding-left: 2rem;
+    padding-top: 20px;
+    margin-bottom: 20px;
+    min-height: 200px;
+}
+
+#SessionBox .sessionName {
+    background: transparent;
+    border: 0px solid transparent;
+    font-style: bold;
+    font-size: calc(1.2rem + 1vw);
+    padding-right: 1rem;
+    margin-left: 0 !important;
+    color: #343a40;
+}
+
+#SessionBox #subfields {
+    background: transparent;
+    border: 0px solid transparent;
+    font-style: bold;
+    font-size: calc(0.65rem + 0.8vw);
+    padding-right: 15px;
+    color: #5d6166;
+    text-indent: 10px;
+}
+
+#SessionBox #subfields .subteam {
+    padding-top: 12px;
+}
+
+#SessionBox #subfields .subteam-span {
+    /*color:red;*/
+}
+
+#SessionBox #subfields .date {
+}
+
+#SessionBox #subfields .id {
+}
+
+#SessionBox #subfields .csvId {
+}

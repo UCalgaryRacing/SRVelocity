@@ -3,6 +3,7 @@ import HistoricalDash from './historicalData/historicalDash';
 import BottomNav from '../NavigationComponents/bottomNav';
 import TopNav from '../NavigationComponents/topNav';
 import HistoricalPlotDash from './historicalPlots/historicalPlotDash'
+import Sessions from './historicalData/Sessions.js';
 import './historicalContent.css';
 
 export default class StreamingContent extends React.Component {
@@ -51,6 +52,7 @@ export default class StreamingContent extends React.Component {
       >
         <TopNav/>
         {this.state.content === "Data" ? <HistoricalDash marginLeft={this.state.marginLeft}/> : null}
+        {this.state.content === "Sessions" ? <Sessions marginLeft={this.state.marginLeft}/> : null}
         {this.state.content === "Create Plots" ? <HistoricalPlotDash marginLeft={this.state.marginLeft}/> : null}
         <BottomNav/>
       </div>

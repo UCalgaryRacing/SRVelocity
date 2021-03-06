@@ -21,6 +21,14 @@ export default class HistoricalSideNav extends React.Component {
                                 <b>&nbsp;&nbsp;&nbsp;Historical Data</b>
                             </NavText>
                         </NavItem>
+                        <NavItem eventKey="Sessions">
+                            <NavIcon>
+                                <img src={require('../../assets/data.svg')} style={{ marginLeft: '14px', marginTop: '8px' }} alt='Dash' />
+                            </NavIcon>
+                            <NavText>
+                                <b>&nbsp;&nbsp;&nbsp;Sessions</b>
+                            </NavText>
+                        </NavItem>
                         <NavItem eventKey="Create Plots">
                             <NavIcon>
                                 <img src={require('../../assets/chart.svg')} style={{ marginLeft: '19px', marginTop: '10px' }} alt='Custom Plots' />

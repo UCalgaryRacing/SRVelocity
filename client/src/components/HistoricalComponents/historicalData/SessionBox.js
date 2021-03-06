@@ -1,5 +1,4 @@
 import React from 'react';
-import { Button, Jumbotron, ListGroup } from 'react-bootstrap';
 import { GATEWAYSERVERIP } from '../../../dataServerEnv';
 import './_styling/SessionBox.css';
 import download from 'downloadjs';
@@ -7,7 +6,6 @@ import RenameFileModal from './renameFileModal';
 import Quill from './quill';
 import Comment from './comment';
 
-export default class sessionBox extends React.Component {
 import { Button, Form, Jumbotron, Accordion, Card, ListGroup } from 'react-bootstrap';
 import './_styling/SessionBox.css';
 /*
@@ -95,16 +93,6 @@ export default class SessionBox extends React.Component {
 
   render = () => {
     return (
-      <div id="SessionBox">
-        <Jumbotron>
-          <h1>
-            {this.state.name}
-          </h1>
-          <h2>
-            Subteams: {this.state.subteams}
-          </h2>
-        </Jumbotron>
-      <div>
         <div id='SessionBox'>
           <Jumbotron className='box'>
             <div className='sessionName' style={{ marginTop: this.margin + "px", cursor: "pointer"}}><u>
@@ -175,7 +163,6 @@ export default class SessionBox extends React.Component {
             />
           </Button>
         </div>
-      </div>
     );
   };
 }

@@ -132,7 +132,7 @@ export default class Sessions extends React.Component {
   render = () => {
     return (
       <div id="Sessions">
-        <div id="top"
+        {/*<div id="top"
           style={{
             position: 'fixed',
             top: '56px',
@@ -140,7 +140,7 @@ export default class Sessions extends React.Component {
             left: '0',
             zIndex: '999',
             height:
-              this.state.typeOption === 'plotting' &&
+              this.state.typeOption === 'data' &&
                 this.state.showBottomNav &&
                 window.innerWidth < 1000
                 ? '102px'
@@ -163,7 +163,7 @@ export default class Sessions extends React.Component {
               <b>Add Session</b>
             </Button>
             &nbsp;&nbsp;
-        </div>
+            </div>*/}
           <div>
           <div id="data">
             {this.state.showSearched ? this.state.searchedSessionFiles : this.state.SessionFiles}

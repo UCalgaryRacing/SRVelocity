@@ -1,4 +1,9 @@
 #Sessions {
+  /*margin-top: 57px;*/
+  margin-top: -700px;
+}
+/*
+#Sessions {
     margin-top: 57px;
     min-height: calc(100vh - 112px);
 }
@@ -30,6 +35,8 @@
     position: absolute;
     left: 10px;
     top: 10px;*/
+    /*
     display: none;
   }
 }
+*/

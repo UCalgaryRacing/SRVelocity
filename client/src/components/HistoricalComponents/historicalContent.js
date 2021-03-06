@@ -51,9 +51,8 @@ export default class StreamingContent extends React.Component {
         style={{ transition: "all 0.15s", marginLeft: this.state.marginLeft}}
       >
         <TopNav/>
-        <Sessions />
-        {this.state.content === "Data" ? <Sessions marginLeft={this.state.marginLeft}/> : null}
         {this.state.content === "Data" ? <HistoricalDash marginLeft={this.state.marginLeft}/> : null}
+        {this.state.content === "Sessions" ? <Sessions marginLeft={this.state.marginLeft}/> : null}
         {this.state.content === "Create Plots" ? <HistoricalPlotDash marginLeft={this.state.marginLeft}/> : null}
         <BottomNav/>
       </div>

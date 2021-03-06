@@ -30,41 +30,38 @@ export default class SessionBox extends React.Component {
       id: this.props.id,
       sessionName: this.props.sessionName,
       subteams: this.props.subteams,
-
-      sessionIDS: [],
-
-      apples: 0,
     };
+
+    this.info = [];
   }
 
-  componentDidMount = () => {
-    /*
-    const rootRef = firebase.database().ref();
-    const sessionRef = rootRef.child('Session');
 
-    var sessionFiles = [];
-    //iterate through every session ID
-    sessionRef.once('value', (snapshot) => {
-      snapshot.forEach((childSnapshot) => {
-        //add the add the session keys to the sessionIDs array
-        //this.state.sessionIDs.push(childSnapshot.key);
-        var sessionKey = childSnapshot.key;
+  componentWillMount = () => {
+    this.generateBox();
+  }
 
-        var sessionName = childSnapshot.child('name').val();
-        var sessionSubteam = childSnapshot.child('subteam').val();
-        var sessionDate = childSnapshot.child('date').val();
+  generateBox = () => {
+    var labels = ["Subteam", "Date", "id", "csvid"];
+    var values = [this.state.subteams, this.state.date, this.state.id, this.state.csvid];
 
-        //var sessionDateFormatted = new Date(sessionDate)
-        //sessionDateFormatted =  sessionDateFormatted.toLocaleDateString() + ' ' + sessionDateFormatted.toLocaleTimeString();
-        var date = new Date(sessionDate * 1);
-
-        this.state.sessionNames.push(sessionName);
-        this.state.subteam.push(sessionSubteam);
-        this.state.date.push(date.toLocaleDateString());
-
-      });
-    });
-    */
+    var i = 0;
+    var margin = 30;
+    while(i < labels.length) {
+      this.info.push(
+        <div id="column" style={{marginTop: margin + "px" }} >
+          <div id="label">{labels[i]}:&nbsp;</div>
+          <div id="subfields">{values[i]}</div>
+        </div>
+      );
+      margin += 30;
+      i++
+    }
+    this.info.push(
+      <div id="column" style={{ marginTop: margin + "px" }}>
+        {this.props.children}
+      </div>
+    )
+    this.forceUpdate();
   }
 
   nameSession = (name) => {
@@ -87,21 +84,79 @@ export default class SessionBox extends React.Component {
 
   }
 
-
   render = () => {
     return (
-      <div id='SessionBox'>
-        <Jumbotron className='box'>
-          <h1 className='sessionName'><u>
-            {this.state.sessionName}
-          </u></h1>
-          <h4 id='subfields'>
-            <p className='subteam'> <span className='subteam-span'>Subteam:</span> {this.state.subteams} </p>
-            <p className='date'> Date: {this.state.date} </p>
-            <p className='id'> id: {this.state.id} </p>
-            <p className='csvId'> csvId: {this.state.csvId} </p>
-          </h4>
-        </Jumbotron>
+      <div>
+        <div id='SessionBox'>
+          <Jumbotron className='box'>
+            <div className='sessionName' style={{ marginTop: this.margin + "px", cursor: "pointer"}}><u>
+              {this.state.sessionName}
+            </u></div>
+            <div id='subfields'
+            style={{
+            height: '36px',
+            position: 'absolute',
+            lineHeight: '36px',
+            fontSize: '20px',
+            }}
+            >
+              <div className='subteam'> <span className='label-span'>Subteam:</span> {this.state.subteams} </div>
+              <div className='date'> <span className='label-span'>Date: </span>{this.state.date} </div>
+              <div className='id'> <span className='label-span'>id: </span>{this.state.id} </div>
+              <div className='csvId'> <span className='label-span'> csvId: </span>{this.state.csvId} </div>
+            </div>
+            <div>
+            </div>
+          </Jumbotron>
+          <Button 
+            id="boxButton"
+            style={{ position: 'absolute', right: '20px', marginTop: '-245px' }}
+          >
+            <img
+            id="logoImg"
+            width="27px"
+            style={{
+              marginTop: '-14px',
+              marginLeft: '-13px',
+              position: 'absolute',
+            }}
+            //placeholder, change this
+            src={require('../../../assets/edit.svg')}
+            />
+          </Button>
+          <Button 
+            id="boxButton"
+            style={{ position: 'absolute', right: '20px', marginTop: '-199px' }}
+          >
+            <img
+            id="logoImg"
+            width="27px"
+            style={{
+              marginTop: '-14px',
+              marginLeft: '-13px',
+              position: 'absolute',
+            }}
+            //placeholder, change this
+            src={require('../../../assets/edit.svg')}
+            />
+          </Button>
+          <Button 
+            id="boxButton"
+            style={{ position: 'absolute', right: '20px', marginTop: '-153px' }}
+          >
+            <img
+            id="logoImg"
+            width="27px"
+            style={{
+              marginTop: '-14px',
+              marginLeft: '-13px',
+              position: 'absolute',
+            }}
+            //placeholder, change this
+            src={require('../../../assets/edit.svg')}
+            />
+          </Button>
+        </div>
       </div>
     );
   };

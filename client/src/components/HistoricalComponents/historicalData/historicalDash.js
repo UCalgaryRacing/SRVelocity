@@ -1,6 +1,7 @@
 import React from 'react';
 import { GATEWAYSERVERIP } from '../../../dataServerEnv';
 import CSVBox from './CSVBox';
+import sessionRenderer from './Session';
 import { Button, Form } from 'react-bootstrap';
 import UploadFileModal from './uploadFileModal';
 import './_styling/historicalDash.css';
@@ -15,6 +16,7 @@ export default class HistoricalContent extends React.Component {
       marginLeft: this.props.marginLeft,
       toggleDash: false,
       CSVFiles: [],
+      sessions: [],
       showUploadModal: false,
       sideOpen: false,
       showSearched: false,
@@ -33,47 +35,78 @@ export default class HistoricalContent extends React.Component {
     this.forceUpdate();
   };
 
-  getAllFiles = () => {
-    fetch(GATEWAYSERVERIP + '/historical/getFiles', {
-      method: 'GET',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-    })
-      .then((res) => res.json())
-      .then((res) => {
-        var files = [];
-        let i = 0;
-        for (var file of res) {
-          let date = new Date(parseInt(file.metadata.date));
-          files.push(
-            <CSVBox
-              filename={file.name}
-              driver={file.metadata.driver}
-              car={file.metadata.car}
-              date={date.toLocaleDateString() + ' ' + date.toLocaleTimeString()}
-              realDate={date}
-              deleteFile={this.deleteFile}
-              ID={file.metadata.id}
-              key={i}
-              index={i}
-            />
-          );
-          i++;
-        }
-        files.sort(function (a, b) {
-          //Newest first
-          var tempA = b.props.realDate;
-          var tempB = a.props.realDate;
-          if (tempA > tempB) return 1;
-          else if (tempA < tempB) return -1;
-          else return 0;
-        });
-        this.setState({ CSVFiles: files });
-      })
-      .catch((err) => {
-        console.log(err);
+  getAllFiles = async () => {
+    try {
+      let csvFiles = await this.getCSVFiles();
+      let sessions = await this.getSessions();
+
+      this.setState({
+        CSVFiles: csvFiles,
+        sessions: sessions,
       });
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  getSessions = async () => {
+    try {
+      const rawSession = await fetch(GATEWAYSERVERIP + '/session/getSessions', {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      });
+
+      const csvSessions = await rawSession.json();
+      return sessionRenderer(csvSessions);
+    } catch (error) {
+      throw error;
+    }
+  };
+
+  getCSVFiles = async () => {
+    try {
+      const rawCSV = await fetch(GATEWAYSERVERIP + '/historical/getFiles', {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      });
+
+      const csvJson = await rawCSV.json();
+
+      var files = [];
+      let i = 0;
+      for (var file of csvJson) {
+        let date = new Date(parseInt(file.metadata.date));
+        files.push(
+          <CSVBox
+            filename={file.name}
+            driver={file.metadata.driver}
+            car={file.metadata.car}
+            date={date.toLocaleDateString() + ' ' + date.toLocaleTimeString()}
+            realDate={date}
+            deleteFile={this.deleteCSV}
+            ID={file.metadata.id}
+            key={i}
+            index={i}
+          />
+        );
+        i++;
+      }
+      files.sort(function (a, b) {
+        //Newest first
+        var tempA = b.props.realDate;
+        var tempB = a.props.realDate;
+        if (tempA > tempB) return 1;
+        else if (tempA < tempB) return -1;
+        else return 0;
+      });
+      return files;
+    } catch (error) {
+      throw error;
+    }
   };
 
   addCSVBox = (filename, driver, vehicle, ID) => {
@@ -86,7 +119,7 @@ export default class HistoricalContent extends React.Component {
         car={vehicle}
         date={date.toLocaleDateString() + ' ' + date.toLocaleTimeString()}
         realDate={date}
-        deleteFile={this.deleteFile}
+        deleteFile={this.deleteCSV}
         ID={ID}
         key={filename}
         index={this.state.CSVFiles.length + 1}
@@ -95,7 +128,7 @@ export default class HistoricalContent extends React.Component {
     this.setState({ CSVFiles: files }, this.forceUpdate());
   };
 
-  deleteFile = (index) => {
+  deleteCSV = (index) => {
     this.setState({
       CSVFiles: this.state.CSVFiles.filter(
         (file) => file.props.index !== index
@@ -229,9 +262,10 @@ export default class HistoricalContent extends React.Component {
             onHide={() => this.setState({ showUploadModal: false })}
             addCSVBox={this.addCSVBox}
           />
-          {this.state.showSearched
+          {this.state.sessions}
+          {/* {this.state.showSearched
             ? this.state.searchedFiles
-            : this.state.CSVFiles}
+            : this.state.CSVFiles} */}
         </div>
       </div>
     );

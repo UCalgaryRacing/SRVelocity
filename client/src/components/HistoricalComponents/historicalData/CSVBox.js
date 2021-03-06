@@ -73,13 +73,13 @@ export default class CSVBox extends React.Component {
     this.setState({ confirmDelete: true });
   };
 
-  deleteFile = () => {
+  deleteCSV = () => {
     fetch(GATEWAYSERVERIP + '/historical/deleteFile/' + this.props.ID, {
       method: 'GET',
     })
       .then((response) => {
         if (response.ok) {
-          this.props.deleteFile(this.props.index);
+          this.props.deleteCSV(this.props.index);
           this.setState({ confirmDelete: false });
         }
       })
@@ -208,7 +208,7 @@ export default class CSVBox extends React.Component {
                   marginTop: '90px',
                   display: 'inline-block',
                 }}
-                onClick={this.deleteFile}
+                onClick={this.deleteCSV}
               >
                 <b>Yes</b>
               </Button>

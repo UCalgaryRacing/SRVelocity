@@ -1,6 +1,5 @@
 import React from "react";
 import { Row, Col, Table, Button, Form, Modal } from "react-bootstrap";
-import './_styling/addSessionModal.css';
 import modalStyling from './_styling/modalStyling.module.css';
 
 export default class AddSessionModal extends React.Component {
@@ -26,7 +25,6 @@ export default class AddSessionModal extends React.Component {
     let subteam = this.name.current.value;
 
     this.props.submit(name, subteam);
-    //this.props.submit(this.formData[0], this.formData[1]);
     this.props.hide();
   };
 

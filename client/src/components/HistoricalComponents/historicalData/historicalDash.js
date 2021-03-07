@@ -26,16 +26,6 @@ export default class HistoricalContent extends React.Component {
 
       setOpen: false,
       open: false,
-
-      //delete
-      name: "",
-
-      csvId: [],
-      date: [],
-      id: [],
-      sessionNames: [],
-      subteam: [],
-      sessionIDs: [],
     };
     this.comments = [];
   }
@@ -273,8 +263,6 @@ export default class HistoricalContent extends React.Component {
     return (
       <div id="historicalDash">
         <div>
-          {/*{this.state.SessionFiles}*/}
-          {/*<Sessions /> */}
         </div>
         <div
           id="top"
@@ -362,7 +350,9 @@ export default class HistoricalContent extends React.Component {
           
           (this.state.showSearched
             ? this.state.searchedFiles
-            : this.state.CSVFiles) : this.state.Sessions}
+            : this.state.CSVFiles) : null }
+            {/*// : this.state.Sessions}*/}
+          
             {/* {this.state.Sessions} */}
         </div>
         </div>

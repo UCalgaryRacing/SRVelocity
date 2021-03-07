@@ -1,20 +1,11 @@
 import React from 'react';
 import { GATEWAYSERVERIP } from '../../../dataServerEnv';
 import CSVBox from './CSVBox';
-import sessionBox from './SessionBox';
-import SessionBox from './SessionBox';
-import { Button, Form, Jumbotron, Accordion, Card, ListGroup } from 'react-bootstrap';
+import { Modal, Button, Form, Jumbotron, Accordion, Card, ListGroup } from 'react-bootstrap';
 import UploadFileModal from './uploadFileModal';
 import './_styling/historicalDash.css';
 import Dropdown from 'react-bootstrap/Dropdown';
-
-
-
-import firebase from 'firebase/app';
-import 'firebase/database';
-import fbApp from '../../../../src/config.js';
-
-import Sessions from './Sessions.js';
+import AddSessionModal from './addSessionModal.js';
 
 export default class HistoricalContent extends React.Component {
   constructor(props) {
@@ -26,6 +17,7 @@ export default class HistoricalContent extends React.Component {
       CSVFiles: [],
       SessionFiles: [],
       showUploadModal: false,
+      showAddSessionModal: false,
       sideOpen: false,
       showSearched: false,
       searchedFiles: [],
@@ -134,6 +126,37 @@ export default class HistoricalContent extends React.Component {
     });
   };
 
+  addSession = async (name, subteam) => {
+    let body = {
+      name: name,
+      subteam: "1,2,3",
+    }
+
+
+    fetch(GATEWAYSERVERIP + '/session/createSession', {
+      method: "POST",
+      credentials: "include",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(body),
+    })
+      .then((res) => res.json())
+      .then((res) => {
+        if(!res.ok) {
+          return;
+        }
+        let newSession = (0
+         //create susson here 
+        );
+
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
+
   insert = (box, temp, startIndex, endIndex) => {
     var length = temp.length;
     var start = typeof startIndex != 'undefined' ? startIndex : 0;
@@ -174,6 +197,10 @@ export default class HistoricalContent extends React.Component {
       return;
     }
   };
+
+  toggleAddSession = () => {
+    this.setState({ showAddSessionModal : !this.state.showAddSessionModal });
+  }
 
   search = (e) => {
     e.preventDefault();
@@ -285,8 +312,12 @@ export default class HistoricalContent extends React.Component {
             <b>Toggle View</b>
           </Button>
           &nbsp;&nbsp;
-          <Dropdown style={{left: '370px', top: '-36px'}}>
-            <Dropdown.Toggle variant="danger" id="dropdown-basic">
+          <Button id="addSessionButton" onClick={this.toggleAddSession}>
+            <b>Add Session</b>
+          </Button>
+          &nbsp;&nbsp;
+          <Dropdown style={{left: '480px', top: '-36px'}}>
+            <Dropdown.Toggle variant="danger" id="dropdown-basic" id="sortDropdown">
             <b>Sort by</b>
             </Dropdown.Toggle>
 
@@ -320,6 +351,12 @@ export default class HistoricalContent extends React.Component {
             show={this.state.showUploadModal}
             onHide={() => this.setState({ showUploadModal: false })}
             addCSVBox={this.addCSVBox}
+          />
+          <AddSessionModal
+            show={this.state.showAddSessionModal}
+            hide={this.toggleAddSession}
+            fields={["Name","Subteam"]}
+            submit={this.addSession}
           />
           {this.state.view ? 
           

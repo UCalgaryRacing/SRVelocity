@@ -23,6 +23,29 @@
     border: 0px;
 }
 
+#historicalDash #top #toggleButton {
+    width: 150px;
+    height: 36px;
+    background: #C22E2D;
+    border: 0px;
+}
+
+#historicalDash #top #addSessionButton {
+    width: 150px;
+    height: 36px;
+    background: #C22E2D;
+    border: 0px;
+}
+
+#historicalDash #top #sortDropdown {
+    width: 150px;
+    height: 36px;
+    background: #C22E2D;
+    border: 0px;
+
+}
+
+
 #historicalDash #top .form-control:focus {
     box-shadow: 0 0 0 0.2rem rgba(194, 45, 45, 0.6);
     border: 0px solid;

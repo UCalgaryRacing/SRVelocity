@@ -3,6 +3,7 @@ import React, { useState, useEffect } from 'react';
 import { Accordion, Card, Button, useAccordionToggle } from 'react-bootstrap';
 import { GATEWAYSERVERIP } from '../../../../dataServerEnv';
 import Comment from './Comment';
+import EditModal from './EditModal';
 import QuillCanvas from './QuillCanvas';
 import classes from './styles/session.module.css';
 
@@ -38,7 +39,7 @@ function CommentsToggle({ children, eventKey }) {
 export default function Session({ id, name, date, subteam, index }) {
   const [runs, setRuns] = useState([]);
   const [comments, setComments] = useState([]);
-  const [commentElements, setCommentElements] = useState([]);
+  const [showEditModal, setShowEditModal] = useState(false);
 
   useEffect(() => {
     getComments().then((res) => {
@@ -115,6 +116,42 @@ export default function Session({ id, name, date, subteam, index }) {
     });
   };
 
+  const onHideModal = () => {
+    setShowEditModal(false);
+  };
+
+  const editSession = async (newName, newSubteam) => {
+    let postParams = {
+      sessionId: id,
+      name: newName,
+      subteam: newSubteam,
+    };
+    try {
+      let res = await fetch(
+        GATEWAYSERVERIP + '/session/updateSessionMetadata',
+        {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(postParams),
+        }
+      );
+
+      //TODO: Have a better way to handle errors
+      // maybe do fetch loading and error message in modal?
+      if (res.ok) {
+        console.log('Updated in DB!!!');
+        setShowEditModal(false);
+      } else {
+        console.log('Something went wrong!');
+        setShowEditModal(false);
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   return (
     <>
       <Accordion>
@@ -145,7 +182,10 @@ export default function Session({ id, name, date, subteam, index }) {
                     src={require('../../../../assets/delete-x.svg')}
                   />
                 </Button>
-                <Button className={classes.histBtn}>
+                <Button
+                  className={classes.histBtn}
+                  onClick={() => setShowEditModal(true)}
+                >
                   <img
                     width="20px"
                     src={require('../../../../assets/edit.svg')}
@@ -175,6 +215,13 @@ export default function Session({ id, name, date, subteam, index }) {
           </Accordion.Collapse>
         </Card>
       </Accordion>
+      <EditModal
+        show={showEditModal}
+        currName={name}
+        currSubteams={subteam}
+        onHide={onHideModal}
+        onSubmit={editSession}
+      />
     </>
   );
 }

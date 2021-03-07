@@ -3,6 +3,7 @@ import React, { useState, useEffect } from 'react';
 import { Accordion, Card, Button, useAccordionToggle } from 'react-bootstrap';
 import { GATEWAYSERVERIP } from '../../../../dataServerEnv';
 import Comment from './Comment';
+import QuillCanvas from './QuillCanvas';
 import classes from './styles/session.module.css';
 
 const subteam_enum = function (num) {
@@ -34,9 +35,16 @@ function CommentsToggle({ children, eventKey }) {
   );
 }
 
+function useForceUpdate() {
+  const [value, setValue] = useState(0);
+  return () => setValue((value) => ++value);
+}
+
 export default function Session({ id, name, date, subteam, index }) {
   const [runs, setRuns] = useState([]);
   const [comments, setComments] = useState([]);
+
+  const forceUpdate = useForceUpdate();
 
   useEffect(() => {
     getComments().then((res) => {
@@ -44,9 +52,6 @@ export default function Session({ id, name, date, subteam, index }) {
         setComments(res);
       }
     });
-    // Fetch for runs here
-    // Should return
-    //[{id, name, car, driver}]
   }, []);
 
   const getSubteamNames = (subteams) => {
@@ -73,6 +78,37 @@ export default function Session({ id, name, date, subteam, index }) {
     }
   };
 
+  const pushComment = async (content) => {
+    try {
+      let comment = {
+        sessionId: id,
+        content: content,
+        commenter: sessionStorage.getItem('Name'),
+        commenterID: sessionStorage.getItem('ID'),
+      };
+
+      let res = await fetch(GATEWAYSERVERIP + '/session/addComment', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(comment),
+      });
+
+      res = await res.json();
+      if (res.ok) {
+        let temp = comments.slice();
+        temp.push(res);
+        setComments(temp);
+        forceUpdate(); //TODO: Investigate why we have to force update
+      }
+      //TODO: find a way to handle non-OK responses
+    } catch (error) {
+      //TODO: Have a better way to handle errors
+      console.log(error);
+    }
+  };
+
   const renderComments = () => {
     return comments.map((comment, index) => {
       const date = new Date(parseInt(comment.date));
@@ -80,6 +116,7 @@ export default function Session({ id, name, date, subteam, index }) {
         <Comment
           content={comment.content}
           commenter={comment.commenter}
+          commenterID={comment.commenterID}
           date={`${date.toLocaleDateString()} ${date.toLocaleTimeString()}`}
           key={index}
         />
@@ -142,6 +179,7 @@ export default function Session({ id, name, date, subteam, index }) {
                   renderComments()
                 )}
               </div>
+              <QuillCanvas pushComment={pushComment} />
             </Card.Body>
           </Accordion.Collapse>
         </Card>

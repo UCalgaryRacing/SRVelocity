@@ -2,11 +2,10 @@ import React from 'react';
 import { GATEWAYSERVERIP } from '../../../dataServerEnv';
 import CSVBox from './CSVBox';
 import sessionRenderer from './Session';
-import { Button, Form } from 'react-bootstrap';
+import { Button, Form, Dropdown } from 'react-bootstrap';
 import UploadFileModal from './uploadFileModal';
 import './_styling/historicalDash.css';
-
-var _ = require('lodash');
+import AddSessionModal from './addSessionModal.js';
 
 export default class HistoricalContent extends React.Component {
   constructor(props) {
@@ -18,10 +17,14 @@ export default class HistoricalContent extends React.Component {
       CSVFiles: [],
       sessions: [],
       showUploadModal: false,
+      showAddSessionModal: false,
       sideOpen: false,
       showSearched: false,
       searchedFiles: [],
       showSearchModal: false,
+      view: true,
+      setOpen: false,
+      open: false,
     };
     this.comments = [];
   }
@@ -136,6 +139,33 @@ export default class HistoricalContent extends React.Component {
     });
   };
 
+  addSession = async (name, subteam) => {
+    let body = {
+      name: name,
+      subteam: '1,2,3',
+    };
+
+    fetch(GATEWAYSERVERIP + '/session/createSession', {
+      method: 'POST',
+      credentials: 'include',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(body),
+    })
+      .then((res) => res.json())
+      .then((res) => {
+        if (!res.ok) {
+          return;
+        }
+        let newSession = 0;
+        //create susson here
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
   insert = (box, temp, startIndex, endIndex) => {
     var length = temp.length;
     var start = typeof startIndex != 'undefined' ? startIndex : 0;
@@ -177,6 +207,10 @@ export default class HistoricalContent extends React.Component {
     }
   };
 
+  toggleAddSession = () => {
+    this.setState({ showAddSessionModal: !this.state.showAddSessionModal });
+  };
+
   search = (e) => {
     e.preventDefault();
     const text = e.target.value;
@@ -194,18 +228,67 @@ export default class HistoricalContent extends React.Component {
     var driverFilter = filterParam('driver', text);
     var carFilter = filterParam('car', text);
     var dateFilter = filterParam('date', text);
-    let temp1 = _.unionBy(fileFilter, driverFilter, 'key');
-    let temp2 = _.unionBy(carFilter, dateFilter);
-    filtered = _.unionBy(temp1, temp2, 'key');
+    // let temp1 = _.unionBy(fileFilter, driverFilter, 'key');
+    //let temp2 = _.unionBy(carFilter, dateFilter);
+    //filtered = _.unionBy(temp1, temp2, 'key');
     this.setState({
       searchedFiles: filtered,
       showSearched: true,
     });
   };
 
+  sortByDriver = () => {
+    var filtered = [...this.state.CSVFiles];
+    filtered.sort((a, b) =>
+      a.props.driver.toUpperCase() < b.props.driver.toUpperCase() ? -1 : 1
+    );
+    this.setState({ CSVFiles: filtered });
+  };
+
+  sortByOldestDate = () => {
+    var filtered = [...this.state.CSVFiles];
+    filtered.sort((a, b) => (a.props.realDate < b.props.realDate ? -1 : 1));
+    this.setState({ CSVFiles: filtered });
+  };
+
+  sortByNewestDate = () => {
+    var filtered = [...this.state.CSVFiles];
+    filtered.sort((a, b) => (a.props.realDate < b.props.realDate ? 1 : -1));
+    this.setState({ CSVFiles: filtered });
+  };
+
+  sortByFileNameA = () => {
+    var filtered = [...this.state.CSVFiles];
+    filtered.sort((a, b) =>
+      a.props.filename.toUpperCase() < b.props.filename.toUpperCase() ? -1 : 1
+    );
+    this.setState({ CSVFiles: filtered });
+  };
+
+  sortByFileNameZ = () => {
+    var filtered = [...this.state.CSVFiles];
+    filtered.sort((a, b) =>
+      a.props.filename.toUpperCase() < b.props.filename.toUpperCase() ? 1 : -1
+    );
+    this.setState({ CSVFiles: filtered });
+  };
+
+  sortByVehicle = () => {
+    var filtered = [...this.state.CSVFiles];
+    filtered.sort((a, b) =>
+      a.props.car.toUpperCase() < b.props.car.toUpperCase() ? -1 : 1
+    );
+    this.setState({ CSVFiles: filtered });
+  };
+
+  changeView = () => {
+    this.setState((prevState) => ({ view: !prevState.view }));
+  };
+
   render = () => {
     return (
       <div id="historicalDash">
+        <div></div>
         <div
           id="top"
           style={{
@@ -238,9 +321,44 @@ export default class HistoricalContent extends React.Component {
             <b>Upload CSV</b>
           </Button>
           &nbsp;&nbsp;
-          <Button id="sortButton" onClick={this.changeType}>
-            <b>Sort Data</b>
+          <Button id="toggleButton" onClick={this.changeView}>
+            <b>Toggle View</b>
           </Button>
+          &nbsp;&nbsp;
+          <Button id="addSessionButton" onClick={this.toggleAddSession}>
+            <b>Add Session</b>
+          </Button>
+          &nbsp;&nbsp;
+          <Dropdown style={{ left: '480px', top: '-36px' }}>
+            <Dropdown.Toggle
+              variant="danger"
+              id="dropdown-basic"
+              id="sortDropdown"
+            >
+              <b>Sort by</b>
+            </Dropdown.Toggle>
+
+            <Dropdown.Menu>
+              <Dropdown.Item href="#/action-1" onClick={this.sortByOldestDate}>
+                Date Added (Oldest)
+              </Dropdown.Item>
+              <Dropdown.Item href="#/action-2" onClick={this.sortByNewestDate}>
+                Date Added (Newest)
+              </Dropdown.Item>
+              <Dropdown.Item href="#/action-3" onClick={this.sortByDriver}>
+                Driver
+              </Dropdown.Item>
+              <Dropdown.Item href="#/action-4" onClick={this.sortByVehicle}>
+                Vehicle
+              </Dropdown.Item>
+              <Dropdown.Item href="#/action-5" onClick={this.sortByFileNameA}>
+                File Name (A-Z)
+              </Dropdown.Item>
+              <Dropdown.Item href="#/action-6" onClick={this.sortByFileNameZ}>
+                File Name (Z-A)
+              </Dropdown.Item>
+            </Dropdown.Menu>
+          </Dropdown>
           &nbsp;&nbsp;
           <Form
             className="searchForm"
@@ -253,6 +371,7 @@ export default class HistoricalContent extends React.Component {
               autoComplete="on"
               placeHolder="Search"
               required
+              disabled={!this.state.view}
             />
           </Form>
         </div>
@@ -262,10 +381,17 @@ export default class HistoricalContent extends React.Component {
             onHide={() => this.setState({ showUploadModal: false })}
             addCSVBox={this.addCSVBox}
           />
-          {this.state.sessions}
-          {/* {this.state.showSearched
-            ? this.state.searchedFiles
-            : this.state.CSVFiles} */}
+          <AddSessionModal
+            show={this.state.showAddSessionModal}
+            hide={this.toggleAddSession}
+            fields={['Name', 'Subteam']}
+            submit={this.addSession}
+          />
+          {this.state.view
+            ? this.state.showSearched
+              ? this.state.searchedFiles
+              : this.state.CSVFiles
+            : this.state.sessions}
         </div>
       </div>
     );

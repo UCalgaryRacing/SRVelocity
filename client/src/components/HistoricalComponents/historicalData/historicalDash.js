@@ -6,6 +6,7 @@ import { Button, Form, Dropdown } from 'react-bootstrap';
 import UploadFileModal from './uploadFileModal';
 import './_styling/historicalDash.css';
 import AddSessionModal from './addSessionModal.js';
+import fetch from 'node-fetch';
 
 export default class HistoricalContent extends React.Component {
   constructor(props) {
@@ -145,25 +146,25 @@ export default class HistoricalContent extends React.Component {
       subteam: '1,2,3',
     };
 
-    fetch(GATEWAYSERVERIP + '/session/createSession', {
-      method: 'POST',
-      credentials: 'include',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(body),
-    })
-      .then((res) => res.json())
-      .then((res) => {
-        if (!res.ok) {
-          return;
-        }
-        let newSession = 0;
-        //create susson here
-      })
-      .catch((err) => {
-        console.log(err);
+    try {
+      let res = await fetch(GATEWAYSERVERIP + '/session/createSession', {
+        method: 'POST',
+        credentials: 'include',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(body),
       });
+
+      res = await res.json();
+
+      let newSessions = await this.getSessions();
+      this.setState({ sessions: newSessions });
+    } catch (error) {
+      //TODO: should catch specific error instead of general error
+      //the error could occur while retrieving sessions
+      console.log(error);
+    }
   };
 
   insert = (box, temp, startIndex, endIndex) => {

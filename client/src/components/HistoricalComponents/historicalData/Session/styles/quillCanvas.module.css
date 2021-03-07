@@ -1,0 +1,14 @@
+.container {
+  width: 100%;
+  height: 100px;
+  margin-top: 10px;
+  margin-bottom: 89px;
+}
+
+.submitBtn {
+  width: 100%;
+  height: 36px;
+  background: #c22e2d !important;
+  border-color: #c22e2d !important;
+  margin-top: 10px;
+}

@@ -1,10 +1,10 @@
 import React from 'react';
 import { GATEWAYSERVERIP } from '../../../dataServerEnv';
 import CSVBox from './CSVBox';
-import { Modal, Button, Form, Jumbotron, Accordion, Card, ListGroup } from 'react-bootstrap';
+import sessionRenderer from './Session';
+import { Button, Form, Dropdown } from 'react-bootstrap';
 import UploadFileModal from './uploadFileModal';
 import './_styling/historicalDash.css';
-import Dropdown from 'react-bootstrap/Dropdown';
 import AddSessionModal from './addSessionModal.js';
 
 export default class HistoricalContent extends React.Component {
@@ -15,21 +15,19 @@ export default class HistoricalContent extends React.Component {
       marginLeft: this.props.marginLeft,
       toggleDash: false,
       CSVFiles: [],
-      SessionFiles: [],
+      sessions: [],
       showUploadModal: false,
       showAddSessionModal: false,
       sideOpen: false,
       showSearched: false,
       searchedFiles: [],
       showSearchModal: false,
-      view: true, 
-
+      view: true,
       setOpen: false,
       open: false,
     };
     this.comments = [];
   }
-
 
   componentDidMount = () => {
     this.getAllFiles();
@@ -40,54 +38,79 @@ export default class HistoricalContent extends React.Component {
     this.forceUpdate();
   };
 
-  createSessionArray = () => {
-    this.state.sessionAttributes.push(this.state.sessionIDS);
-  }
+  getAllFiles = async () => {
+    try {
+      let csvFiles = await this.getCSVFiles();
+      let sessions = await this.getSessions();
 
-  getAllFiles = () => {
-    fetch(GATEWAYSERVERIP + '/historical/getFiles', {
-      method: 'GET',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-    })
-      .then((res) => res.json())
-      .then((res) => {
-        var files = [];
-        let i = 0;
-        for (var file of res) {
-          let date = new Date(parseInt(file.metadata.date));
-          files.push(
-            <CSVBox
-              filename={file.name}
-              driver={file.metadata.driver}
-              car={file.metadata.car}
-              date={date.toLocaleDateString() + ' ' + date.toLocaleTimeString()}
-              realDate={date}
-              deleteFile={this.deleteFile}
-              ID={file.metadata.id}
-              key={i}
-              index={i}
-            />
-          );
-          i++;
-        }
-        files.sort(function (a, b) {
-          //Newest first
-          var tempA = b.props.realDate;
-          var tempB = a.props.realDate;
-          if (tempA > tempB) return 1;
-          else if (tempA < tempB) return -1;
-          else return 0;
-        });
-        this.setState({ CSVFiles: files });
-      })
-      .catch((err) => {
-        console.log(err);
+      this.setState({
+        CSVFiles: csvFiles,
+        sessions: sessions,
       });
+    } catch (error) {
+      console.log(error);
+    }
   };
 
+  getSessions = async () => {
+    try {
+      const rawSession = await fetch(GATEWAYSERVERIP + '/session/getSessions', {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      });
 
+      const csvSessions = await rawSession.json();
+      return sessionRenderer(csvSessions);
+    } catch (error) {
+      throw error;
+    }
+  };
+
+  getCSVFiles = async () => {
+    try {
+      const rawCSV = await fetch(GATEWAYSERVERIP + '/historical/getFiles', {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      });
+
+      const csvJson = await rawCSV.json();
+
+      var files = [];
+      let i = 0;
+      for (var file of csvJson) {
+        let date = new Date(parseInt(file.metadata.date));
+        files.push(
+          <CSVBox
+            filename={file.name}
+            driver={file.metadata.driver}
+            car={file.metadata.car}
+            date={date.toLocaleDateString() + ' ' + date.toLocaleTimeString()}
+            realDate={date}
+            deleteFile={this.deleteCSV}
+            ID={file.metadata.id}
+            key={i}
+            index={i}
+          />
+        );
+        i++;
+      }
+      files.sort(function (a, b) {
+        //Newest first
+        var tempA = b.props.realDate;
+        var tempB = a.props.realDate;
+        if (tempA > tempB) return 1;
+        else if (tempA < tempB) return -1;
+        else return 0;
+      });
+      return files;
+    } catch (error) {
+      throw error;
+    }
+  };
 
   addCSVBox = (filename, driver, vehicle, ID) => {
     let files = [...this.state.CSVFiles];
@@ -99,7 +122,7 @@ export default class HistoricalContent extends React.Component {
         car={vehicle}
         date={date.toLocaleDateString() + ' ' + date.toLocaleTimeString()}
         realDate={date}
-        deleteFile={this.deleteFile}
+        deleteFile={this.deleteCSV}
         ID={ID}
         key={filename}
         index={this.state.CSVFiles.length + 1}
@@ -108,7 +131,7 @@ export default class HistoricalContent extends React.Component {
     this.setState({ CSVFiles: files }, this.forceUpdate());
   };
 
-  deleteFile = (index) => {
+  deleteCSV = (index) => {
     this.setState({
       CSVFiles: this.state.CSVFiles.filter(
         (file) => file.props.index !== index
@@ -119,33 +142,29 @@ export default class HistoricalContent extends React.Component {
   addSession = async (name, subteam) => {
     let body = {
       name: name,
-      subteam: "1,2,3",
-    }
-
+      subteam: '1,2,3',
+    };
 
     fetch(GATEWAYSERVERIP + '/session/createSession', {
-      method: "POST",
-      credentials: "include",
+      method: 'POST',
+      credentials: 'include',
       headers: {
-        "Content-Type": "application/json",
+        'Content-Type': 'application/json',
       },
       body: JSON.stringify(body),
     })
       .then((res) => res.json())
       .then((res) => {
-        if(!res.ok) {
+        if (!res.ok) {
           return;
         }
-        let newSession = (0
-         //create susson here 
-        );
-
+        let newSession = 0;
+        //create susson here
       })
       .catch((err) => {
         console.log(err);
       });
   };
-
 
   insert = (box, temp, startIndex, endIndex) => {
     var length = temp.length;
@@ -189,8 +208,8 @@ export default class HistoricalContent extends React.Component {
   };
 
   toggleAddSession = () => {
-    this.setState({ showAddSessionModal : !this.state.showAddSessionModal });
-  }
+    this.setState({ showAddSessionModal: !this.state.showAddSessionModal });
+  };
 
   search = (e) => {
     e.preventDefault();
@@ -220,50 +239,56 @@ export default class HistoricalContent extends React.Component {
 
   sortByDriver = () => {
     var filtered = [...this.state.CSVFiles];
-    filtered.sort((a,b) => a.props.driver.toUpperCase() < b.props.driver.toUpperCase() ? -1 : 1 )
-    this.setState({ CSVFiles: filtered })
+    filtered.sort((a, b) =>
+      a.props.driver.toUpperCase() < b.props.driver.toUpperCase() ? -1 : 1
+    );
+    this.setState({ CSVFiles: filtered });
   };
 
   sortByOldestDate = () => {
     var filtered = [...this.state.CSVFiles];
-    filtered.sort((a,b) => a.props.realDate < b.props.realDate ? -1 : 1 )
-    this.setState({ CSVFiles: filtered })
+    filtered.sort((a, b) => (a.props.realDate < b.props.realDate ? -1 : 1));
+    this.setState({ CSVFiles: filtered });
   };
 
   sortByNewestDate = () => {
     var filtered = [...this.state.CSVFiles];
-    filtered.sort((a,b) => a.props.realDate < b.props.realDate ? 1 : -1 )
-    this.setState({ CSVFiles: filtered })
+    filtered.sort((a, b) => (a.props.realDate < b.props.realDate ? 1 : -1));
+    this.setState({ CSVFiles: filtered });
   };
 
   sortByFileNameA = () => {
     var filtered = [...this.state.CSVFiles];
-    filtered.sort((a,b) => a.props.filename.toUpperCase() < b.props.filename.toUpperCase() ? -1 : 1 )
-    this.setState({ CSVFiles: filtered })
+    filtered.sort((a, b) =>
+      a.props.filename.toUpperCase() < b.props.filename.toUpperCase() ? -1 : 1
+    );
+    this.setState({ CSVFiles: filtered });
   };
 
   sortByFileNameZ = () => {
     var filtered = [...this.state.CSVFiles];
-    filtered.sort((a,b) => a.props.filename.toUpperCase() < b.props.filename.toUpperCase() ? 1 : -1 )
-    this.setState({ CSVFiles: filtered })
+    filtered.sort((a, b) =>
+      a.props.filename.toUpperCase() < b.props.filename.toUpperCase() ? 1 : -1
+    );
+    this.setState({ CSVFiles: filtered });
   };
 
   sortByVehicle = () => {
     var filtered = [...this.state.CSVFiles];
-    filtered.sort((a,b) => a.props.car.toUpperCase() < b.props.car.toUpperCase() ? -1 : 1 )
-    this.setState({ CSVFiles: filtered })
+    filtered.sort((a, b) =>
+      a.props.car.toUpperCase() < b.props.car.toUpperCase() ? -1 : 1
+    );
+    this.setState({ CSVFiles: filtered });
   };
 
   changeView = () => {
-    this.setState((prevState) => ({view: !prevState.view}))
+    this.setState((prevState) => ({ view: !prevState.view }));
   };
-
 
   render = () => {
     return (
       <div id="historicalDash">
-        <div>
-        </div>
+        <div></div>
         <div
           id="top"
           style={{
@@ -274,8 +299,8 @@ export default class HistoricalContent extends React.Component {
             zIndex: '999',
             height:
               this.state.typeOption === 'plotting' &&
-                this.state.showBottomNav &&
-                window.innerWidth < 1000
+              this.state.showBottomNav &&
+              window.innerWidth < 1000
                 ? '102px'
                 : '56px',
             paddingLeft: 'calc(' + this.props.marginLeft + ' + 10px)',
@@ -304,22 +329,37 @@ export default class HistoricalContent extends React.Component {
             <b>Add Session</b>
           </Button>
           &nbsp;&nbsp;
-          <Dropdown style={{left: '480px', top: '-36px'}}>
-            <Dropdown.Toggle variant="danger" id="dropdown-basic" id="sortDropdown">
-            <b>Sort by</b>
+          <Dropdown style={{ left: '480px', top: '-36px' }}>
+            <Dropdown.Toggle
+              variant="danger"
+              id="dropdown-basic"
+              id="sortDropdown"
+            >
+              <b>Sort by</b>
             </Dropdown.Toggle>
 
             <Dropdown.Menu>
-              <Dropdown.Item href="#/action-1" onClick={this.sortByOldestDate}>Date Added (Oldest)</Dropdown.Item>
-              <Dropdown.Item href="#/action-2" onClick={this.sortByNewestDate}>Date Added (Newest)</Dropdown.Item>
-              <Dropdown.Item href="#/action-3" onClick={this.sortByDriver}>Driver</Dropdown.Item>
-              <Dropdown.Item href="#/action-4" onClick={this.sortByVehicle}>Vehicle</Dropdown.Item>
-              <Dropdown.Item href="#/action-5" onClick={this.sortByFileNameA}>File Name (A-Z)</Dropdown.Item>
-              <Dropdown.Item href="#/action-6" onClick={this.sortByFileNameZ}>File Name (Z-A)</Dropdown.Item>
+              <Dropdown.Item href="#/action-1" onClick={this.sortByOldestDate}>
+                Date Added (Oldest)
+              </Dropdown.Item>
+              <Dropdown.Item href="#/action-2" onClick={this.sortByNewestDate}>
+                Date Added (Newest)
+              </Dropdown.Item>
+              <Dropdown.Item href="#/action-3" onClick={this.sortByDriver}>
+                Driver
+              </Dropdown.Item>
+              <Dropdown.Item href="#/action-4" onClick={this.sortByVehicle}>
+                Vehicle
+              </Dropdown.Item>
+              <Dropdown.Item href="#/action-5" onClick={this.sortByFileNameA}>
+                File Name (A-Z)
+              </Dropdown.Item>
+              <Dropdown.Item href="#/action-6" onClick={this.sortByFileNameZ}>
+                File Name (Z-A)
+              </Dropdown.Item>
             </Dropdown.Menu>
           </Dropdown>
           &nbsp;&nbsp;
-
           <Form
             className="searchForm"
             style={{ position: 'absolute', top: '10px', right: '10px' }}
@@ -331,6 +371,7 @@ export default class HistoricalContent extends React.Component {
               autoComplete="on"
               placeHolder="Search"
               required
+              disabled={!this.state.view}
             />
           </Form>
         </div>
@@ -343,19 +384,16 @@ export default class HistoricalContent extends React.Component {
           <AddSessionModal
             show={this.state.showAddSessionModal}
             hide={this.toggleAddSession}
-            fields={["Name","Subteam"]}
+            fields={['Name', 'Subteam']}
             submit={this.addSession}
           />
-          {this.state.view ? 
-          
-          (this.state.showSearched
-            ? this.state.searchedFiles
-            : this.state.CSVFiles) : null }
-            {/*// : this.state.Sessions}*/}
-          
-            {/* {this.state.Sessions} */}
+          {this.state.view
+            ? this.state.showSearched
+              ? this.state.searchedFiles
+              : this.state.CSVFiles
+            : this.state.sessions}
         </div>
-        </div>
+      </div>
     );
   };
 }

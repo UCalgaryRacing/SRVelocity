@@ -1,5 +1,8 @@
+import fetch from 'node-fetch';
 import React, { useState, useEffect } from 'react';
 import { Accordion, Card, Button, useAccordionToggle } from 'react-bootstrap';
+import { GATEWAYSERVERIP } from '../../../../dataServerEnv';
+import Comment from './Comment';
 import classes from './styles/session.module.css';
 
 const subteam_enum = function (num) {
@@ -33,8 +36,14 @@ function CommentsToggle({ children, eventKey }) {
 
 export default function Session({ id, name, date, subteam, index }) {
   const [runs, setRuns] = useState([]);
+  const [comments, setComments] = useState([]);
 
   useEffect(() => {
+    getComments().then((res) => {
+      if (res) {
+        setComments(res);
+      }
+    });
     // Fetch for runs here
     // Should return
     //[{id, name, car, driver}]
@@ -48,6 +57,34 @@ export default function Session({ id, name, date, subteam, index }) {
     });
 
     return teams;
+  };
+
+  const getComments = async () => {
+    try {
+      let res = await fetch(GATEWAYSERVERIP + `/session/getComments/${id}`, {
+        method: 'GET',
+      });
+
+      res = await res.json();
+      return res;
+    } catch (error) {
+      console.log(error);
+      return false;
+    }
+  };
+
+  const renderComments = () => {
+    return comments.map((comment, index) => {
+      const date = new Date(parseInt(comment.date));
+      return (
+        <Comment
+          content={comment.content}
+          commenter={comment.commenter}
+          date={`${date.toLocaleDateString()} ${date.toLocaleTimeString()}`}
+          key={index}
+        />
+      );
+    });
   };
 
   return (
@@ -99,7 +136,11 @@ export default function Session({ id, name, date, subteam, index }) {
             <Card.Body>
               <div>
                 <div className={classes.title}>Comments</div>
-                <div>Nothing Yet!</div>
+                {comments.length === 0 ? (
+                  <div>Nothing Yet!</div>
+                ) : (
+                  renderComments()
+                )}
               </div>
             </Card.Body>
           </Accordion.Collapse>

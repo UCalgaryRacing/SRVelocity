@@ -35,16 +35,10 @@ function CommentsToggle({ children, eventKey }) {
   );
 }
 
-function useForceUpdate() {
-  const [value, setValue] = useState(0);
-  return () => setValue((value) => ++value);
-}
-
 export default function Session({ id, name, date, subteam, index }) {
   const [runs, setRuns] = useState([]);
   const [comments, setComments] = useState([]);
-
-  const forceUpdate = useForceUpdate();
+  const [commentElements, setCommentElements] = useState([]);
 
   useEffect(() => {
     getComments().then((res) => {
@@ -96,13 +90,10 @@ export default function Session({ id, name, date, subteam, index }) {
       });
 
       res = await res.json();
-      if (res.ok) {
-        let temp = comments.slice();
-        temp.push(res);
-        setComments(temp);
-        forceUpdate(); //TODO: Investigate why we have to force update
-      }
-      //TODO: find a way to handle non-OK responses
+
+      let newComments = [...comments];
+      newComments.push(res);
+      setComments(newComments);
     } catch (error) {
       //TODO: Have a better way to handle errors
       console.log(error);

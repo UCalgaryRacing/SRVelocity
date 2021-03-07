@@ -1,5 +1,6 @@
 import fetch from 'node-fetch';
 import React, { useState, useEffect } from 'react';
+import ReactDOM from 'react-dom';
 import { Accordion, Card, Button, useAccordionToggle } from 'react-bootstrap';
 import { GATEWAYSERVERIP } from '../../../../dataServerEnv';
 import Comment from './Comment';
@@ -38,6 +39,8 @@ function CommentsToggle({ children, eventKey }) {
 
 export default function Session({ id, name, date, subteam, index }) {
   const [runs, setRuns] = useState([]);
+  const [sessionName, setSessionName] = useState(name);
+  const [sessionSubteam, setSessionSubteam] = useState(subteam);
   const [comments, setComments] = useState([]);
   const [showEditModal, setShowEditModal] = useState(false);
 
@@ -142,7 +145,11 @@ export default function Session({ id, name, date, subteam, index }) {
       // maybe do fetch loading and error message in modal?
       if (res.ok) {
         console.log('Updated in DB!!!');
-        setShowEditModal(false);
+        ReactDOM.unstable_batchedUpdates(() => {
+          setShowEditModal(false);
+          setSessionName(newName);
+          setSessionSubteam(newSubteam);
+        });
       } else {
         console.log('Something went wrong!');
         setShowEditModal(false);
@@ -159,7 +166,7 @@ export default function Session({ id, name, date, subteam, index }) {
           <Card.Header className={classes.cardBody}>
             <div className={classes.container}>
               <div className={classes.infoContainer}>
-                <div className={classes.title}>{name}</div>
+                <div className={classes.title}>{sessionName}</div>
 
                 <div className={classes.info}>
                   <div className={classes.label}>Created:</div>
@@ -171,7 +178,9 @@ export default function Session({ id, name, date, subteam, index }) {
                 </div>
                 <div className={classes.info}>
                   <div className={classes.label}>Subteam:</div>
-                  <div className={classes.text}>{getSubteamNames(subteam)}</div>
+                  <div className={classes.text}>
+                    {getSubteamNames(sessionSubteam)}
+                  </div>
                 </div>
               </div>
 

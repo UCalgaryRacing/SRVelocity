@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { Accordion, Card, Button, useAccordionToggle } from 'react-bootstrap';
 import classes from './styles/session.module.css';
 
@@ -32,6 +32,14 @@ function CommentsToggle({ children, eventKey }) {
 }
 
 export default function Session({ id, name, date, subteam, index }) {
+  const [runs, setRuns] = useState([]);
+
+  useEffect(() => {
+    // Fetch for runs here
+    // Should return
+    //[{id, name, car, driver}]
+  }, []);
+
   const getSubteamNames = (subteams) => {
     const teamNums = subteams.split(',');
     let teams = '';

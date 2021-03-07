@@ -93,6 +93,25 @@ sessionServer.post('/updateSessionMetadata', (req, res) => {
     });
 });
 
+sessionServer.post('/getRuns', (req, res) => {
+  let postParams = {
+    runs: req.body.runs,
+  };
+
+  fetch(DATASERVERIP + '/session/getRuns', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(postParams),
+  })
+    .then((response) => response.json())
+    .then((response) => res.send(response).end())
+    .catch((err) => {
+      res.sendStatus(500).end();
+    });
+});
+
 sessionServer.post('/addRun', (req, res) => {
   fetch(DATASERVERIP + '/session/addRun', {
     method: 'POST',
@@ -132,8 +151,41 @@ sessionServer.post('/removeRun', (req, res) => {
     });
 });
 
+sessionServer.get('/getComments/:sessionId', (req, res) => {
+  fetch(DATASERVERIP + '/session/getComments/' + req.params.sessionId, {
+    method: 'GET',
+  })
+    .then(async (response) => {
+      const result = await response.json();
+      if (response.ok) {
+        res.send(result).end();
+      } else {
+        res.status(400).send(result.message);
+      }
+    })
+    .catch((err) => {
+      console.log(err);
+      res.sendStatus(500).end();
+    });
+});
+
 /* For adding comments to session */
-sessionServer.post('/addComment', (req, res) => {});
+sessionServer.post('/addComment', (req, res) => {
+  fetch(DATASERVERIP + '/session/addComment', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(req.body),
+  })
+    .then((response) => response.json())
+    .then((response) => {
+      res.send(response);
+    })
+    .catch((err) => {
+      res.sendStatus(500).end();
+    });
+});
 
 /* For removing comments from session */
 sessionServer.post('/removeComment', (req, res) => {});

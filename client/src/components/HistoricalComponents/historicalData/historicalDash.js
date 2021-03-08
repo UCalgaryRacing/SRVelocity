@@ -142,7 +142,7 @@ export default class HistoricalContent extends React.Component {
   addSession = async (name, subteam) => {
     let body = {
       name: name,
-      subteam: '1,2,3',
+      subteam: subteam,
     };
 
     fetch(GATEWAYSERVERIP + '/session/createSession', {
@@ -384,8 +384,12 @@ export default class HistoricalContent extends React.Component {
           <AddSessionModal
             show={this.state.showAddSessionModal}
             hide={this.toggleAddSession}
-            fields={['Name', 'Subteam']}
             submit={this.addSession}
+            /*show={this.state.showAddSessionModal}
+            onHide={this.toggleAddSession}
+            onSubmit={this.addSession}
+            currName="Session"
+            currSubteams=""*/
           />
           {this.state.view
             ? this.state.showSearched

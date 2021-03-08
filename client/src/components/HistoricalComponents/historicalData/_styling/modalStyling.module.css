@@ -1,15 +1,12 @@
-.submitButton {
-  background-color: #C22E2D;
+.addSessionModal .form-control-focus {
+  box-shadow: 0 0 0 0.2rem rgba(194, 45, 45, 0.6);
   border: 0px solid;
+}
+
+.submitButton {
   width: 100%;
   height: 36px;
+  background: #c22e2d !important;
+  border-color: #c22e2d !important;
   margin-top: 10px;
-}
-
-.submitButton:hover {
-  background-color: #C22E2D;
-}
-
-.forms {
-
 }

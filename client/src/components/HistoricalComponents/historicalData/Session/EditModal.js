@@ -50,10 +50,9 @@ export default function EditModal({
 
   const handleSubmit = () => {
     let newSubteams = subteams === '' ? currSubteams : subteams;
-
-    if (name !== '') {
-      console.log(`${name} ${newSubteams}`);
-      onSubmit(name, newSubteams);
+    let newName = name === '' ? currName : name;
+    if (name !== '' || subteams !== '') {
+      onSubmit(newName, newSubteams);
     }
   };
 

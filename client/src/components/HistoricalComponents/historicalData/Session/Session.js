@@ -37,12 +37,47 @@ function CommentsToggle({ children, eventKey }) {
   );
 }
 
-export default function Session({ id, name, date, subteam, index }) {
+function DeleteConfirm({ onSubmit, onCancel }) {
+  return (
+    <div className={classes.deleteContainer}>
+      <div className={classes.deleteMsg}>
+        <b>Are you sure you want to delete this session?</b>
+      </div>
+      <div className={classes.deleteContainer}>
+        <Button
+          className={classes.deleteBtn}
+          style={{ marginTop: '90px' }}
+          onClick={onSubmit}
+        >
+          <b>Yes</b>
+        </Button>
+        <Button
+          className={classes.deleteBtn}
+          style={{ marginTop: '10px' }}
+          onClick={onCancel}
+        >
+          <b>No</b>
+        </Button>
+      </div>
+    </div>
+  );
+}
+
+export default function Session({
+  id,
+  name,
+  date,
+  subteam,
+  index,
+  onEdit,
+  onDelete,
+}) {
   const [runs, setRuns] = useState([]);
-  const [sessionName, setSessionName] = useState(name);
-  const [sessionSubteam, setSessionSubteam] = useState(subteam);
+  // const [sessionName, setSessionName] = useState(name);
+  // const [sessionSubteam, setSessionSubteam] = useState(subteam);
   const [comments, setComments] = useState([]);
   const [showEditModal, setShowEditModal] = useState(false);
+  const [showConfirmDelete, setShowConfirmDelete] = useState(false);
 
   useEffect(() => {
     getComments().then((res) => {
@@ -144,12 +179,8 @@ export default function Session({ id, name, date, subteam, index }) {
       //TODO: Have a better way to handle errors
       // maybe do fetch loading and error message in modal?
       if (res.ok) {
-        console.log('Updated in DB!!!');
-        ReactDOM.unstable_batchedUpdates(() => {
-          setShowEditModal(false);
-          setSessionName(newName);
-          setSessionSubteam(newSubteam);
-        });
+        onEdit();
+        setShowEditModal(false);
       } else {
         console.log('Something went wrong!');
         setShowEditModal(false);
@@ -159,54 +190,74 @@ export default function Session({ id, name, date, subteam, index }) {
     }
   };
 
+  const onHideDelete = () => {
+    setShowConfirmDelete(false);
+  };
+
+  const onDeleteSession = () => {
+    onDelete(id);
+    onHideDelete();
+  };
+
   return (
     <>
       <Accordion>
         <Card className={classes.csvBox}>
           <Card.Header className={classes.cardBody}>
             <div className={classes.container}>
-              <div className={classes.infoContainer}>
-                <div className={classes.title}>{sessionName}</div>
-
-                <div className={classes.info}>
-                  <div className={classes.label}>Created:</div>
-                  <div className={classes.text}>
-                    {date.toLocaleDateString() +
-                      ' ' +
-                      date.toLocaleTimeString()}
+              {showConfirmDelete ? (
+                <DeleteConfirm
+                  onCancel={onHideDelete}
+                  onSubmit={onDeleteSession}
+                />
+              ) : (
+                <>
+                  <div className={classes.infoContainer}>
+                    <div className={classes.title}>{name}</div>
+                    <div className={classes.info}>
+                      <div className={classes.label}>Created:</div>
+                      <div className={classes.text}>
+                        {date.toLocaleDateString() +
+                          ' ' +
+                          date.toLocaleTimeString()}
+                      </div>
+                    </div>
+                    <div className={classes.info}>
+                      <div className={classes.label}>Subteam:</div>
+                      <div className={classes.text}>
+                        {getSubteamNames(subteam)}
+                      </div>
+                    </div>
                   </div>
-                </div>
-                <div className={classes.info}>
-                  <div className={classes.label}>Subteam:</div>
-                  <div className={classes.text}>
-                    {getSubteamNames(sessionSubteam)}
-                  </div>
-                </div>
-              </div>
 
-              <div className={classes.btnContainer}>
-                <Button className={classes.histBtn}>
-                  <img
-                    width="20px"
-                    src={require('../../../../assets/delete-x.svg')}
-                  />
-                </Button>
-                <Button
-                  className={classes.histBtn}
-                  onClick={() => setShowEditModal(true)}
-                >
-                  <img
-                    width="20px"
-                    src={require('../../../../assets/edit.svg')}
-                  />
-                </Button>
-                <CommentsToggle eventKey="0">
-                  <img
-                    width="20px"
-                    src={require('../../../../assets/comment.svg')}
-                  />
-                </CommentsToggle>
-              </div>
+                  <div className={classes.btnContainer}>
+                    <Button
+                      className={classes.histBtn}
+                      onClick={() => setShowConfirmDelete(true)}
+                    >
+                      <img
+                        width="20px"
+                        src={require('../../../../assets/delete-x.svg')}
+                      />
+                    </Button>
+                    <Button
+                      className={classes.histBtn}
+                      onClick={() => setShowEditModal(true)}
+                    >
+                      <img
+                        width="20px"
+                        src={require('../../../../assets/edit.svg')}
+                      />
+                    </Button>
+                    <CommentsToggle eventKey="0">
+                      <img
+                        width="20px"
+                        src={require('../../../../assets/comment.svg')}
+                      />
+                    </CommentsToggle>
+                  </div>
+                </>
+              )}
             </div>
           </Card.Header>
           <Accordion.Collapse eventKey="0">

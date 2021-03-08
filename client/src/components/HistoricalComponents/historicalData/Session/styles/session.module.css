@@ -49,3 +49,24 @@
   justify-content: center;
   align-items: center;
 }
+
+/* Delete Cofirmation Styling */
+.deleteContainer {
+  width: 100%;
+}
+
+.deleteMsg {
+  height: 36px;
+  width: 100%;
+  line-height: 36px;
+  font-size: 20px;
+  cursor: pointer;
+  text-align: center;
+}
+
+.deleteBtn {
+  width: 100%;
+  height: 36px;
+  background: #c22e2d !important;
+  border-color: #c22e2d !important;
+}

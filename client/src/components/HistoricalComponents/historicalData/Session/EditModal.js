@@ -37,6 +37,9 @@ export default function EditModal({
 
   const getSubteamFromValue = (selectedValues) => {
     let subteam = [];
+
+    if (!selectedValues) return '';
+
     selectedValues.forEach((selected) => {
       subteam.push(selected.value);
     });

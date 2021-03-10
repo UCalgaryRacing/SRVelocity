@@ -385,11 +385,6 @@ export default class HistoricalContent extends React.Component {
             show={this.state.showAddSessionModal}
             hide={this.toggleAddSession}
             submit={this.addSession}
-            /*show={this.state.showAddSessionModal}
-            onHide={this.toggleAddSession}
-            onSubmit={this.addSession}
-            currName="Session"
-            currSubteams=""*/
           />
           {this.state.view
             ? this.state.showSearched

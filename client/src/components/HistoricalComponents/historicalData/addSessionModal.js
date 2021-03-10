@@ -13,39 +13,48 @@ const subTeamOptions = [
 export default class AddSessionModal extends React.Component {
   constructor(props) {
     super(props);
-    this.name = React.createRef();
     this.state = {
-      show: this.props.show,
-      hide: this.props.hide,
+      name: '',
       subteam: [],
     };
   }
 
-  componentDidMount = () => {
+  resetState = () => {
+    this.setState({name: '', subteam : []});
+    this.props.hide();
   };
 
   submit = async () => {
-    if(this.name.current.value !== '' && this.state.subteam.length !== 0)
+    if(this.state.name !== '')
     {
-      let name = this.name.current.value;
       let subteam = this.state.subteam.join();
 
-      this.props.submit(name, subteam);
-      this.props.hide();
+      this.props.submit(this.state.name, subteam);
+      this.resetState();
     }
   };
 
-
   onChangeSubteam = (selectedOption) => {
-    this.state.subteam = [];
+    var subteamList = [];
+    if(selectedOption == null)
+      this.setState({subteams: subteamList})
+    else
+    {
     selectedOption.forEach((selected) => {
-      this.state.subteam.push(selected.value);
+      subteamList.push(selected.value);
     });
+
+    this.setState({subteam : subteamList})
+    }
+  };
+
+  setName = (inputName) => {
+    this.setState({name : inputName.target.value});
   };
 
   render = () => {
     return (
-    <Modal show={this.props.show} onHide={this.props.hide} centered className={modalStyling.addSessionModal}>
+    <Modal show={this.props.show} onHide={this.resetState} centered className={modalStyling.addSessionModal}>
       <Modal.Header closeButton>
         <Modal.Title>Add Session</Modal.Title>
       </Modal.Header>
@@ -57,7 +66,7 @@ export default class AddSessionModal extends React.Component {
               className="searchFormControl"
               style={{ textAlign: 'center' }}
               placeHolder="Session Name"
-              ref={this.name}
+              onChange={this.setName}
               required
             />
           </Form>

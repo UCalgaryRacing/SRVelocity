@@ -140,21 +140,6 @@ export default function Session({
     }
   };
 
-  const renderComments = () => {
-    return comments.map((comment, index) => {
-      const date = new Date(parseInt(comment.date));
-      return (
-        <Comment
-          content={comment.content}
-          commenter={comment.commenter}
-          commenterID={comment.commenterID}
-          date={`${date.toLocaleDateString()} ${date.toLocaleTimeString()}`}
-          key={index}
-        />
-      );
-    });
-  };
-
   const onHideModal = () => {
     setShowEditModal(false);
   };
@@ -198,6 +183,53 @@ export default function Session({
   const onDeleteSession = () => {
     onDelete(id);
     onHideDelete();
+  };
+
+  const onDeleteComment = async (commentId) => {
+    let postParams = {
+      commentId: commentId,
+      sessionId: id,
+    };
+
+    try {
+      let res = await fetch(GATEWAYSERVERIP + '/session/removeComment', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(postParams),
+      });
+
+      //TODO: Have a better way to handle errors
+      // maybe do fetch loading and error message?
+      if (res.ok) {
+        let commentsAfter = await getComments();
+        if (commentsAfter) {
+          setComments(commentsAfter);
+        }
+      } else {
+        console.log('Something went wrong!');
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const renderComments = () => {
+    return comments.map((comment, index) => {
+      const date = new Date(parseInt(comment.date));
+      return (
+        <Comment
+          id={comment.id}
+          content={comment.content}
+          commenter={comment.commenter}
+          commenterID={comment.commenterID}
+          date={`${date.toLocaleDateString()} ${date.toLocaleTimeString()}`}
+          onDelete={onDeleteComment}
+          key={index}
+        />
+      );
+    });
   };
 
   return (

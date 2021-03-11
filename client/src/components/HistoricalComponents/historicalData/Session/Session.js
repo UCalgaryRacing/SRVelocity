@@ -4,6 +4,7 @@ import ReactDOM from 'react-dom';
 import { Accordion, Card, Button, useAccordionToggle } from 'react-bootstrap';
 import { GATEWAYSERVERIP } from '../../../../dataServerEnv';
 import Comment from './Comment';
+import CSVBox from '../CSVBox';
 import EditModal from './EditModal';
 import QuillCanvas from './QuillCanvas';
 import classes from './styles/session.module.css';
@@ -36,6 +37,16 @@ function CommentsToggle({ children, eventKey }) {
     </Button>
   );
 }
+
+function CSVToggle({ children, eventKey }) {
+  const toggleCSV = useAccordionToggle(eventKey, null);
+  return (
+    <Button className={classes.histBtn} onClick={toggleCSV}>
+      {children}
+    </Button>
+  );
+}
+
 
 export default function Session({ id, name, date, subteam, index }) {
   const [runs, setRuns] = useState([]);
@@ -115,6 +126,25 @@ export default function Session({ id, name, date, subteam, index }) {
           date={`${date.toLocaleDateString()} ${date.toLocaleTimeString()}`}
           key={index}
         />
+      );
+    });
+  };
+
+  const renderRuns = () => {
+    return runs.map((run, index) => {
+      const date = new Date(parseInt(run.date));
+      return (
+        <CSVBox
+        filename={run.filename}
+        driver={run.driver}
+        car={run.vehicle}
+        date={date.toLocaleDateString() + ' ' + date.toLocaleTimeString()}
+        realDate={date}
+        deleteFile={this.deleteCSV}
+        ID={run.ID}
+        key={run.filename}
+        index={this.state.CSVFiles.length + 1}
+      />
       );
     });
   };
@@ -206,9 +236,23 @@ export default function Session({ id, name, date, subteam, index }) {
                     src={require('../../../../assets/comment.svg')}
                   />
                 </CommentsToggle>
+                <CSVToggle eventKey="1">
+                  <img
+                    width="20px"
+                    src={require('../../../../assets/plus.svg')}
+                  />
+                </CSVToggle>
               </div>
             </div>
           </Card.Header>
+          <Accordion.Collapse eventKey="1">
+            <Card.Body>
+              <div>
+                <h5>CSV files in Session:</h5>
+                {renderRuns()} 
+              </div>
+            </Card.Body>
+          </Accordion.Collapse>
           <Accordion.Collapse eventKey="0">
             <Card.Body>
               <div>

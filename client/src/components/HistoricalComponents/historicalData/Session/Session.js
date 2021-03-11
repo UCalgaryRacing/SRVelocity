@@ -90,6 +90,7 @@ export default function Session({
   const getSubteamNames = (subteams) => {
     const teamNums = subteams.split(',');
     let teams = '';
+    if (!subteams) return 'No subteams assigned';
     teamNums.forEach((num, index) => {
       teams += `${index !== 0 ? ', ' : ''}${subteam_enum(parseInt(num))}`;
     });
@@ -201,7 +202,7 @@ export default function Session({
 
   return (
     <>
-      <Accordion>
+      <Accordion className={classes.mainContainer}>
         <Card className={classes.csvBox}>
           <Card.Header className={classes.cardBody}>
             <div className={classes.container}>

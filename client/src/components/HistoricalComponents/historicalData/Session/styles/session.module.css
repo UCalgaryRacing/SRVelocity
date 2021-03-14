@@ -48,9 +48,15 @@
   background-color: #c22e2d !important;
   border-color: #c22e2d !important;
   border: 0px solid;
-  display: flex;
+  /* display: flex;
   justify-content: center;
-  align-items: center;
+  align-items: center; */
+}
+
+.btnIcon {
+  margin-top: -10px;
+  margin-left: -10px;
+  position: absolute;
 }
 
 /* Delete Cofirmation Styling */

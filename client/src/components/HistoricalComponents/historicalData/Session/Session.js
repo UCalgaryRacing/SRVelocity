@@ -7,6 +7,7 @@ import Comment from './Comment';
 import EditModal from './EditModal';
 import QuillCanvas from './QuillCanvas';
 import classes from './styles/session.module.css';
+import AddRunModal from './AddRunModal';
 
 const subteam_enum = function (num) {
   switch (num) {
@@ -73,19 +74,112 @@ export default function Session({
   onDelete,
 }) {
   const [runs, setRuns] = useState([]);
-  // const [sessionName, setSessionName] = useState(name);
-  // const [sessionSubteam, setSessionSubteam] = useState(subteam);
   const [comments, setComments] = useState([]);
   const [showEditModal, setShowEditModal] = useState(false);
   const [showConfirmDelete, setShowConfirmDelete] = useState(false);
+  const [showAddRunModal, setShowAddRunModal] = useState(false);
 
   useEffect(() => {
-    getComments().then((res) => {
-      if (res) {
-        setComments(res);
+    const fetchData = async () => {
+      try {
+        let sessionComments = await getComments();
+        let sessionCsvs = await getRuns();
+
+        ReactDOM.unstable_batchedUpdates(() => {
+          setComments(sessionComments);
+          setRuns(sessionCsvs);
+        });
+      } catch (error) {
+        //TODO: find a more graceful way to handle errors
+        console.log(error);
       }
-    });
+    };
+
+    fetchData();
   }, []);
+
+  const getRuns = async () => {
+    try {
+      let res = await fetch(GATEWAYSERVERIP + `/session/getRuns`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ sessionId: id }),
+      });
+
+      res = await res.json();
+      let ids = res.map((csv) => csv.id);
+      return ids;
+    } catch (error) {
+      throw error;
+    }
+  };
+
+  const addRun = async (csvId) => {
+    let postParams = {
+      csvId: csvId,
+      sessionId: id,
+    };
+    try {
+      let res = await fetch(GATEWAYSERVERIP + '/session/addRun', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(postParams),
+      });
+      if (res.ok) {
+        let newRuns = await getRuns();
+        ReactDOM.unstable_batchedUpdates(() => {
+          setShowAddRunModal(false);
+          setRuns(newRuns);
+        });
+      } else {
+        setShowAddRunModal(false);
+        console.log('Something went wrong!');
+      }
+    } catch (error) {
+      //TODO: Find a better way to handle errors
+      setShowAddRunModal(false);
+      console.log(error);
+    }
+  };
+
+  const removeRun = async (csvId) => {
+    let postParams = {
+      csvId: csvId,
+      sessionId: id,
+    };
+    try {
+      let res = await fetch(GATEWAYSERVERIP + '/session/removeRun', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(postParams),
+      });
+      if (res.ok) {
+        let newRuns = await getRuns();
+        ReactDOM.unstable_batchedUpdates(() => {
+          //TODO: would be nice to show sucess on modal
+          setRuns(newRuns);
+          setShowAddRunModal(false);
+        });
+      } else {
+        setShowAddRunModal(false);
+        console.log('Something went wrong!');
+      }
+    } catch (error) {
+      //TODO: Find a better way to handle errors
+      setShowAddRunModal(false);
+      console.log(error);
+    }
+  };
+
+  const onHideAddRunModal = () => {
+    setShowAddRunModal(false);
+  };
 
   const getSubteamNames = (subteams) => {
     const teamNums = subteams.split(',');
@@ -107,8 +201,7 @@ export default function Session({
       res = await res.json();
       return res;
     } catch (error) {
-      console.log(error);
-      return false;
+      throw error;
     }
   };
 
@@ -138,6 +231,55 @@ export default function Session({
       //TODO: Have a better way to handle errors
       console.log(error);
     }
+  };
+
+  const onDeleteComment = async (commentId) => {
+    let postParams = {
+      commentId: commentId,
+      sessionId: id,
+    };
+
+    try {
+      let res = await fetch(GATEWAYSERVERIP + '/session/removeComment', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(postParams),
+      });
+
+      //TODO: Have a better way to handle errors
+      // maybe do fetch loading and error message?
+      if (res.ok) {
+        let commentsAfter = await getComments();
+        if (commentsAfter) {
+          setComments(commentsAfter);
+        }
+      } else {
+        //TODO: Find a better way to handle errors
+        console.log('Something went wrong!');
+      }
+    } catch (error) {
+      //TODO: Find a better way to handle errors
+      console.log(error);
+    }
+  };
+
+  const renderComments = () => {
+    return comments.map((comment, index) => {
+      const date = new Date(parseInt(comment.date));
+      return (
+        <Comment
+          id={comment.id}
+          content={comment.content}
+          commenter={comment.commenter}
+          commenterID={comment.commenterID}
+          date={`${date.toLocaleDateString()} ${date.toLocaleTimeString()}`}
+          onDelete={onDeleteComment}
+          key={index}
+        />
+      );
+    });
   };
 
   const onHideModal = () => {
@@ -185,53 +327,6 @@ export default function Session({
     onHideDelete();
   };
 
-  const onDeleteComment = async (commentId) => {
-    let postParams = {
-      commentId: commentId,
-      sessionId: id,
-    };
-
-    try {
-      let res = await fetch(GATEWAYSERVERIP + '/session/removeComment', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(postParams),
-      });
-
-      //TODO: Have a better way to handle errors
-      // maybe do fetch loading and error message?
-      if (res.ok) {
-        let commentsAfter = await getComments();
-        if (commentsAfter) {
-          setComments(commentsAfter);
-        }
-      } else {
-        console.log('Something went wrong!');
-      }
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
-  const renderComments = () => {
-    return comments.map((comment, index) => {
-      const date = new Date(parseInt(comment.date));
-      return (
-        <Comment
-          id={comment.id}
-          content={comment.content}
-          commenter={comment.commenter}
-          commenterID={comment.commenterID}
-          date={`${date.toLocaleDateString()} ${date.toLocaleTimeString()}`}
-          onDelete={onDeleteComment}
-          key={index}
-        />
-      );
-    });
-  };
-
   return (
     <>
       <Accordion className={classes.mainContainer}>
@@ -270,6 +365,7 @@ export default function Session({
                     >
                       <img
                         width="20px"
+                        className={classes.btnIcon}
                         src={require('../../../../assets/delete-x.svg')}
                       />
                     </Button>
@@ -279,15 +375,27 @@ export default function Session({
                     >
                       <img
                         width="20px"
+                        className={classes.btnIcon}
                         src={require('../../../../assets/edit.svg')}
                       />
                     </Button>
                     <CommentsToggle eventKey="0">
                       <img
                         width="20px"
+                        className={classes.btnIcon}
                         src={require('../../../../assets/comment.svg')}
                       />
                     </CommentsToggle>
+                    <Button
+                      className={classes.histBtn}
+                      onClick={() => setShowAddRunModal(true)}
+                    >
+                      <img
+                        width="20px"
+                        className={classes.btnIcon}
+                        src={require('../../../../assets/plus.svg')}
+                      />
+                    </Button>
                   </div>
                 </>
               )}
@@ -314,6 +422,12 @@ export default function Session({
         currSubteams={subteam}
         onHide={onHideModal}
         onSubmit={editSession}
+      />
+      <AddRunModal
+        show={showAddRunModal}
+        onHide={onHideAddRunModal}
+        onSubmit={addRun}
+        runs={runs}
       />
     </>
   );

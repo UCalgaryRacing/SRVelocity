@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Button, Modal, Form } from 'react-bootstrap';
 import Select from 'react-select';
 import classes from './styles/editModal.module.css';
@@ -19,7 +19,6 @@ export default function EditModal({
   onSubmit,
 }) {
   const [name, setName] = useState('');
-
   const [subteams, setSubteams] = useState('');
 
   const handleNameChange = (event) => {

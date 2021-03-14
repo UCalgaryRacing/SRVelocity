@@ -95,7 +95,7 @@ sessionServer.post('/updateSessionMetadata', (req, res) => {
 
 sessionServer.post('/getRuns', (req, res) => {
   let postParams = {
-    runs: req.body.runs,
+    sessionId: req.body.sessionId,
   };
 
   fetch(DATASERVERIP + '/session/getRuns', {
@@ -196,8 +196,9 @@ sessionServer.post('/removeComment', (req, res) => {
     },
     body: JSON.stringify({
       commentId: req.body.commentId,
-      sessionId: req.body.sessionId }),
-    }) 
+      sessionId: req.body.sessionId,
+    }),
+  })
     .then((response) => {
       res.sendStatus(response.status);
     })

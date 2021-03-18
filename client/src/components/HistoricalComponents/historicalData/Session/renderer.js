@@ -1,7 +1,7 @@
 import React from 'react';
 import Session from './Session';
 
-function renderer(sessions) {
+function renderer(sessions, onEdit, onDelete) {
   return sessions.map((session, i) => {
     let date = new Date(parseInt(session.date));
     return (
@@ -12,6 +12,8 @@ function renderer(sessions) {
         subteam={session.subteam}
         key={i}
         index={i}
+        onEdit={onEdit}
+        onDelete={onDelete}
       />
     );
   });

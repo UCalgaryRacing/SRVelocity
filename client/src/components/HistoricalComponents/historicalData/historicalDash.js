@@ -6,6 +6,7 @@ import { Button, Form, Dropdown } from 'react-bootstrap';
 import UploadFileModal from './uploadFileModal';
 import './_styling/historicalDash.css';
 import AddSessionModal from './addSessionModal.js';
+import fetch from 'node-fetch';
 
 export default class HistoricalContent extends React.Component {
   constructor(props) {
@@ -62,7 +63,11 @@ export default class HistoricalContent extends React.Component {
       });
 
       const csvSessions = await rawSession.json();
-      return sessionRenderer(csvSessions);
+      return sessionRenderer(
+        csvSessions,
+        this.onEditSession,
+        this.deleteSession
+      );
     } catch (error) {
       throw error;
     }
@@ -142,28 +147,63 @@ export default class HistoricalContent extends React.Component {
   addSession = async (name, subteam) => {
     let body = {
       name: name,
-      subteam: '1,2,3',
+      subteam: subteam,
     };
 
-    fetch(GATEWAYSERVERIP + '/session/createSession', {
-      method: 'POST',
-      credentials: 'include',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(body),
-    })
-      .then((res) => res.json())
-      .then((res) => {
-        if (!res.ok) {
-          return;
-        }
-        let newSession = 0;
-        //create susson here
-      })
-      .catch((err) => {
-        console.log(err);
+    try {
+      let res = await fetch(GATEWAYSERVERIP + '/session/createSession', {
+        method: 'POST',
+        credentials: 'include',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(body),
       });
+
+      res = await res.json();
+
+      let newSessions = await this.getSessions();
+      this.setState({ sessions: newSessions });
+    } catch (error) {
+      //TODO: should catch specific error instead of general error
+      //the error could occur while retrieving sessions
+      console.log(error);
+    }
+  };
+
+  deleteSession = async (id) => {
+    let body = {
+      sessionId: id,
+    };
+
+    try {
+      let res = await fetch(GATEWAYSERVERIP + '/session/deleteSession', {
+        method: 'POST',
+        credentials: 'include',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(body),
+      });
+
+      if (res.ok) {
+        //TODO: Send all the sessions instead of queryng for them again?
+        let newSessions = await this.getSessions();
+        this.setState({ sessions: newSessions });
+      } else {
+        //TODO: find a better way to handle errors
+        throw 'Something went wrong with deleting';
+      }
+    } catch (error) {
+      //TODO: should catch specific error instead of general error
+      //the error could occur while retrieving sessions
+      console.log(error);
+    }
+  };
+
+  onEditSession = async () => {
+    let newSessions = await this.getSessions();
+    this.setState({ sessions: newSessions });
   };
 
   insert = (box, temp, startIndex, endIndex) => {
@@ -384,7 +424,6 @@ export default class HistoricalContent extends React.Component {
           <AddSessionModal
             show={this.state.showAddSessionModal}
             hide={this.toggleAddSession}
-            fields={['Name', 'Subteam']}
             submit={this.addSession}
           />
           {this.state.view

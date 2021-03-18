@@ -95,7 +95,7 @@ sessionServer.post('/updateSessionMetadata', (req, res) => {
 
 sessionServer.post('/getRuns', (req, res) => {
   let postParams = {
-    runs: req.body.runs,
+    sessionId: req.body.sessionId,
   };
 
   fetch(DATASERVERIP + '/session/getRuns', {
@@ -188,6 +188,23 @@ sessionServer.post('/addComment', (req, res) => {
 });
 
 /* For removing comments from session */
-sessionServer.post('/removeComment', (req, res) => {});
+sessionServer.post('/removeComment', (req, res) => {
+  fetch(DATASERVERIP + '/session/removeComment', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({
+      commentId: req.body.commentId,
+      sessionId: req.body.sessionId,
+    }),
+  })
+    .then((response) => {
+      res.sendStatus(response.status);
+    })
+    .catch((err) => {
+      res.sendStatus(500).end();
+    });
+});
 
 module.exports = sessionServer;

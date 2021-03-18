@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Button, Modal, Form } from 'react-bootstrap';
 import Select from 'react-select';
 import classes from './styles/editModal.module.css';
@@ -19,7 +19,6 @@ export default function EditModal({
   onSubmit,
 }) {
   const [name, setName] = useState('');
-
   const [subteams, setSubteams] = useState('');
 
   const handleNameChange = (event) => {
@@ -37,6 +36,9 @@ export default function EditModal({
 
   const getSubteamFromValue = (selectedValues) => {
     let subteam = [];
+
+    if (!selectedValues) return '';
+
     selectedValues.forEach((selected) => {
       subteam.push(selected.value);
     });
@@ -50,10 +52,9 @@ export default function EditModal({
 
   const handleSubmit = () => {
     let newSubteams = subteams === '' ? currSubteams : subteams;
-
-    if (name !== '') {
-      console.log(`${name} ${newSubteams}`);
-      onSubmit(name, newSubteams);
+    let newName = name === '' ? currName : name;
+    if (name !== '' || subteams !== '') {
+      onSubmit(newName, newSubteams);
     }
   };
 

@@ -1,7 +1,14 @@
 import React from 'react';
 import classes from './styles/comment.module.css';
 
-export default function Comment({ content, commenter, commenterID, date }) {
+export default function Comment({
+  id,
+  content,
+  commenter,
+  commenterID,
+  date,
+  onDelete,
+}) {
   return (
     <div className={classes.container}>
       <div className={classes.commenter}>{commenter}</div>
@@ -9,7 +16,9 @@ export default function Comment({ content, commenter, commenterID, date }) {
       <div className={classes.bottomContainer}>
         <div className={classes.date}>{date}</div>
         {commenterID === sessionStorage.getItem('ID') ? (
-          <div className={classes.delete}>DELETE</div>
+          <div className={classes.delete} onClick={() => onDelete(id)}>
+            DELETE
+          </div>
         ) : (
           ''
         )}

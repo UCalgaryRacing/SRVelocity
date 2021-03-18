@@ -1,7 +1,7 @@
 import fetch from 'node-fetch';
 import React, { useState, useEffect } from 'react';
 import ReactDOM from 'react-dom';
-import { Accordion, Card, Button, useAccordionToggle } from 'react-bootstrap';
+import { Accordion, Card, Button, useAccordionToggle, ListGroup } from 'react-bootstrap';
 import { GATEWAYSERVERIP } from '../../../../dataServerEnv';
 import Comment from './Comment';
 import EditModal from './EditModal';
@@ -109,8 +109,7 @@ export default function Session({
       });
 
       res = await res.json();
-      let ids = res.map((csv) => csv.id);
-      return ids;
+      return res;
     } catch (error) {
       throw error;
     }
@@ -282,6 +281,18 @@ export default function Session({
     });
   };
 
+  const renderRuns = () => {
+    return <ListGroup> {runs.map((run, index) => {
+      const date = new Date(parseInt(run.date));
+      return (
+        <ListGroup.Item>{run.name}
+        </ListGroup.Item>
+      );
+    })
+  }
+  </ListGroup>
+};
+  
   const onHideModal = () => {
     setShowEditModal(false);
   };
@@ -379,6 +390,12 @@ export default function Session({
                         src={require('../../../../assets/edit.svg')}
                       />
                     </Button>
+                    <CommentsToggle eventKey="1">
+                    <img
+                      width="20px"
+                      src={require('../../../../assets/f1.svg')}
+                    />
+                    </CommentsToggle>
                     <CommentsToggle eventKey="0">
                       <img
                         width="20px"
@@ -401,6 +418,14 @@ export default function Session({
               )}
             </div>
           </Card.Header>
+          <Accordion.Collapse eventKey="1">
+            <Card.Body>
+              <div>
+                <h5>CSV files in Session:</h5>
+                {renderRuns()} 
+              </div>
+            </Card.Body>
+          </Accordion.Collapse>
           <Accordion.Collapse eventKey="0">
             <Card.Body>
               <div>

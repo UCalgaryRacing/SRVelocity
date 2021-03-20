@@ -79,3 +79,9 @@
   background: #c22e2d !important;
   border-color: #c22e2d !important;
 }
+
+.runContainer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}

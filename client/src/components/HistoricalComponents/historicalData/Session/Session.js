@@ -1,13 +1,20 @@
 import fetch from 'node-fetch';
 import React, { useState, useEffect } from 'react';
 import ReactDOM from 'react-dom';
-import { Accordion, Card, Button, useAccordionToggle, ListGroup } from 'react-bootstrap';
+import {
+  Accordion,
+  Card,
+  Button,
+  useAccordionToggle,
+  ListGroup,
+} from 'react-bootstrap';
 import { GATEWAYSERVERIP } from '../../../../dataServerEnv';
 import Comment from './Comment';
 import EditModal from './EditModal';
 import QuillCanvas from './QuillCanvas';
 import classes from './styles/session.module.css';
 import AddRunModal from './AddRunModal';
+import { ReactComponent as deleteIcon } from '../../../../assets/delete-x.svg';
 
 const subteam_enum = function (num) {
   switch (num) {
@@ -29,7 +36,7 @@ const subteam_enum = function (num) {
   }
 };
 
-function CommentsToggle({ children, eventKey }) {
+function Toggle({ children, eventKey }) {
   const toggleComments = useAccordionToggle(eventKey, null);
   return (
     <Button className={classes.histBtn} onClick={toggleComments}>
@@ -282,17 +289,33 @@ export default function Session({
   };
 
   const renderRuns = () => {
-    return <ListGroup> {runs.map((run, index) => {
-      const date = new Date(parseInt(run.date));
-      return (
-        <ListGroup.Item>{run.name}
-        </ListGroup.Item>
-      );
-    })
-  }
-  </ListGroup>
-};
-  
+    return (
+      <ListGroup>
+        {runs.length === 0 ? (
+          <ListGroup.Item key={-1}>
+            <div className={classes.runContainer}>
+              No runs with this sessions
+            </div>
+          </ListGroup.Item>
+        ) : (
+          runs.map((run, index) => {
+            const date = new Date(parseInt(run.date));
+            return (
+              <ListGroup.Item key={index}>
+                <div className={classes.runContainer}>
+                  <span>{run.name}</span>
+                  <Button variant="danger" onClick={() => removeRun(run.id)}>
+                    Remove
+                  </Button>
+                </div>
+              </ListGroup.Item>
+            );
+          })
+        )}
+      </ListGroup>
+    );
+  };
+
   const onHideModal = () => {
     setShowEditModal(false);
   };
@@ -390,19 +413,20 @@ export default function Session({
                         src={require('../../../../assets/edit.svg')}
                       />
                     </Button>
-                    <CommentsToggle eventKey="1">
-                    <img
-                      width="20px"
-                      src={require('../../../../assets/f1.svg')}
-                    />
-                    </CommentsToggle>
-                    <CommentsToggle eventKey="0">
+                    <Toggle eventKey="1">
+                      <img
+                        width="30px"
+                        className={classes.btnIcon}
+                        src={require('../../../../assets/data.svg')}
+                      />
+                    </Toggle>
+                    <Toggle eventKey="0">
                       <img
                         width="20px"
                         className={classes.btnIcon}
                         src={require('../../../../assets/comment.svg')}
                       />
-                    </CommentsToggle>
+                    </Toggle>
                     <Button
                       className={classes.histBtn}
                       onClick={() => setShowAddRunModal(true)}
@@ -422,7 +446,7 @@ export default function Session({
             <Card.Body>
               <div>
                 <h5>CSV files in Session:</h5>
-                {renderRuns()} 
+                {renderRuns()}
               </div>
             </Card.Body>
           </Accordion.Collapse>

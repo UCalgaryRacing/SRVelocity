@@ -49,9 +49,10 @@ export default function AddRunModal({ show, onHide, onSubmit, runs }) {
 
   const renderOption = () => {
     let options = [];
+    let runIds = runs.length === 0 ? [] : runs.map((run) => run.id);
     options.push(<option key={-1} value=""></option>);
     selection.csvs.forEach((csv, i) => {
-      if (!runs.includes(csv.metadata.id)) {
+      if (!runIds.includes(csv.metadata.id)) {
         options.push(
           <option value={csv.metadata.id} key={i}>
             {csv.name}

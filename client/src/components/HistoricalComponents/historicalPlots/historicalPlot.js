@@ -155,7 +155,7 @@ export default class HistoricalPlotDash extends React.Component {
   initCSVCacheData = async (id, filename, col_name) => {
     try {
       let res = await fetchWrapper.get(
-        'http://localhost:5000/' + 'historical/getColumn/' + id + '/' + col_name
+        GATEWAYSERVERIP + '/historical/getColumn/' + id + '/' + col_name
       );
       let resJson = await res.json();
       let resData = resJson.map(Number);

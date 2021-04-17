@@ -97,6 +97,9 @@ export default class HistoricalContent extends React.Component {
             realDate={date}
             deleteFile={this.deleteCSV}
             ID={file.metadata.id}
+            inProgress={
+              file.metadata.inProgress ? file.metadata.inProgress : false
+            }
             key={i}
             index={i}
           />

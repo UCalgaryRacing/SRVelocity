@@ -15,6 +15,7 @@ export default class CSVBox extends React.Component {
       driver: this.props.driver,
       car: this.props.car,
       date: this.props.date,
+      inProgress: this.props.inProgress,
       showRenameModal: false,
       showComments: false,
       commentData: {},
@@ -24,7 +25,12 @@ export default class CSVBox extends React.Component {
   }
 
   componentDidMount = () => {
+    //subscribe to changes to the CSV and check it if it is not inprogress anymore
     this.fetchComments();
+  };
+
+  componentWillUnmount = () => {
+    //unsubscribe
   };
 
   downloadFile = () => {
@@ -182,7 +188,8 @@ export default class CSVBox extends React.Component {
 
   render = () => {
     return (
-      <div id="CSVBox" 
+      <div
+        id="CSVBox"
         style={{
           display: 'true',
         }}
@@ -243,7 +250,8 @@ export default class CSVBox extends React.Component {
                 textDecoration: 'underline',
               }}
             >
-              {this.state.filename}
+              {this.state.filename}{' '}
+              {this.state.inProgress ? '(In Progress...)' : ''}
             </div>
             <div
               style={{
@@ -323,6 +331,7 @@ export default class CSVBox extends React.Component {
             <Button
               id="historicalButton"
               onClick={this.confirmDelete}
+              disabled={this.state.inProgress}
               style={{ position: 'absolute', right: '20px' }}
             >
               <img
@@ -334,6 +343,7 @@ export default class CSVBox extends React.Component {
             <Button
               id="historicalButton"
               onClick={() => this.setState({ showRenameModal: true })}
+              disabled={this.state.inProgress}
               style={{ position: 'absolute', right: '20px', marginTop: '46px' }}
             >
               <img
@@ -350,6 +360,7 @@ export default class CSVBox extends React.Component {
             <Button
               id="historicalButton"
               onClick={this.downloadFile}
+              disabled={this.state.inProgress}
               style={{ position: 'absolute', right: '20px', marginTop: '92px' }}
             >
               <img

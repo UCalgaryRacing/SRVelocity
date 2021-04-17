@@ -16,9 +16,6 @@ export default class HomePage extends React.Component {
               <div>
                 <img id="logoImg" src={require("../assets/logo.svg")} alt="Schulich Racing" />
               </div>
-              <div id="welcome">
-                <b>Welcome to SR Velocity!</b>
-              </div>
             </div>
           </Row>
           <Row id="row2">

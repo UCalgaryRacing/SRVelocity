@@ -1,6 +1,7 @@
 import React from 'react';
 import { Button } from 'react-bootstrap';
 import { GATEWAYSERVERIP } from '../../../dataServerEnv';
+import { fetchWrapper } from '../../fetchWrapper';
 import './_styling/CSVBox.css';
 import download from 'downloadjs';
 import RenameFileModal from './renameFileModal';
@@ -182,7 +183,8 @@ export default class CSVBox extends React.Component {
 
   render = () => {
     return (
-      <div id="CSVBox" 
+      <div
+        id="CSVBox"
         style={{
           display: 'true',
         }}

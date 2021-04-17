@@ -58,6 +58,7 @@ export default class ManageContent extends React.Component {
 				{this.state.content === "Drivers" ? <DriverDash marginLeft={this.state.marginLeft}/> : null}
 				{this.state.content === "Vehicles" ? <VehicleDash marginLeft={this.state.marginLeft}/> : null}
 				{this.state.content === "People" ? <TeamDash marginLeft={this.state.marginLeft}/> : null}
+				{this.state.content === "Subteams" ? <p style={{marginTop: '100px', marginBottom: '50px', textAlign: 'center', fontSize: 'xx-large', fontWeight:'bold'}}>Coming soon!</p> : null}
 				<BottomNav />
 			</div>
 		);

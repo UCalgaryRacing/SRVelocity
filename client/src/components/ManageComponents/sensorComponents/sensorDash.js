@@ -4,6 +4,7 @@ import { withRouter } from "react-router-dom";
 import ManageBox from "../manageBox";
 import ManageAddModal from "../manageAddModal";
 import "./sensorDash.css";
+import { fetchWrapper } from "../../fetchWrapper";
 var _ = require("lodash");
 
 class SensorDash extends React.Component {
@@ -34,13 +35,7 @@ class SensorDash extends React.Component {
   fetchVehicles = async () => {
     try {
       const requesturl = "/vehicle/";
-      let res = await fetch(requesturl, {
-        method: "GET",
-        credentials: "include",
-        headers: {
-          "Content-Type": "application/json",
-        },
-      });
+      let res = await fetchWrapper.get(requesturl);
       if (res.status == 401) {
         console.log("LOG IN REQUIRED");
         this.props.history.push("/signin");
@@ -54,13 +49,7 @@ class SensorDash extends React.Component {
   fetchSensors = async () => {
     try {
       const requesturl = "/sensor/vehicle/" + 14;
-      let res = await fetch(requesturl, {
-        method: "GET",
-        credentials: "include",
-        headers: {
-          "Content-Type": "application/json",
-        },
-      });
+      let res = await fetchWrapper.get(requesturl);
       if (res.status == 401) this.props.history.push("/signin");
       return await res.json();
     } catch (err) {
@@ -70,33 +59,23 @@ class SensorDash extends React.Component {
 
   addSensor = async (data) => {
     const requesturl = "/sensor/";
-    fetch(requesturl, {
-      method: "POST",
-      credentials: "include",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        name: data[0],
-        outputUnit: data[2],
-        category: data[1],
-        codeName: data[5],
-        canId: data[3],
-        frequency: parseInt(data[4]),
-        vehicleId: 14,
-      }),
-    })
-      .then((res) => res.json())
-      .then((res) => {
-        if (!res.ok) {
-          //show error
-          return;
-        }
+    let body = {
+      name: data[0],
+      outputUnit: data[2],
+      category: data[1],
+      codeName: data[5],
+      canId: data[3],
+      frequency: parseInt(data[4]),
+      vehicleId: 14
+    }
+    fetchWrapper.post(requesturl, body)
+      .then(res => {
+        if(!res.ok) { return; }
         let box = (
           <ManageBox
             labels={["Name", "Category", "Output Unit", "CAN ID", "Frequency", "Code Name"]}
             values={[data[0], data[1], data[2], data[3], data[4], data[5]]}
-            ID={res.ID} //Get from req
+            ID={res.ID}
             key={res.ID}
             delete={this.deleteSensor}
             submitEdit={this.submitEdit}
@@ -106,36 +85,26 @@ class SensorDash extends React.Component {
         this.insert(box, temp, 0, temp.length - 1);
         this.setState({ sensorRender: temp });
       })
-      .catch((err) => {
-        console.log(err);
-      });
+      .catch(err => { console.log(err) });
   };
 
   submitEdit = async (data, ID) => {
     const requestURL = "/sensor/14/" + ID;
-    return fetch(requestURL, {
-      method: "PUT",
-      credentials: "include",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        name: data[0],
-        outputUnit: data[2],
-        category: data[1],
-        codeName: data[5],
-        canId: data[3],
-        frequency: parseInt(data[4]),
-      }),
-    })
-      .then((res) => {
-        if (res.ok) return true;
-        else {
-          //show error
-          return false;
-        }
+    let body = {
+      name: data[0],
+      outputUnit: data[2],
+      category: data[1],
+      codeName: data[5],
+      canId: data[3],
+      frequency: parseInt(data[4])
+    }
+    return fetchWrapper.put(requestURL, body)
+      .then(res => {
+        if(res.ok) { return true; }
+        else { return false; }
       })
-      .catch((err) => {
+      .catch(err => {
+        console.log(err);
         return false;
       });
   };
@@ -173,15 +142,9 @@ class SensorDash extends React.Component {
 
   deleteSensor = (ID) => {
     const requestURL = "/sensor/" + ID;
-    fetch(requestURL, {
-      method: "DELETE",
-      credentials: "include",
-      headers: {
-        "Content-Type": "application/json",
-      },
-    })
-      .then((res) => {
-        if (res.ok) {
+    fetchWrapper.delete(requestURL)
+      .then(res => {
+        if(res.ok){
           for (var el in this.state.sensorRender) {
             if (parseInt(this.state.sensorRender[el].key) === ID) {
               let temp = this.state.sensorRender;
@@ -190,13 +153,9 @@ class SensorDash extends React.Component {
               break;
             }
           }
-        } else {
-          //Show error
         }
       })
-      .catch((error) => {
-        console.log(error);
-      });
+      .catch(err => { console.log(err) });
   };
 
   renderSensorTable = async (sensors) => {

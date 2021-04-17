@@ -48,7 +48,8 @@ export default class StreamingContent extends React.Component {
         id="streamingContent"
         style={{ transition: "all 0.15s", marginLeft: this.state.marginLeft}}
       >
-        {this.state.content === "Dash" ? <StreamingDash marginLeft={this.state.marginLeft} refreshPage={this.props.refreshPage}/> : null}
+        {this.state.content === "Dash" ? <StreamingDash marginLeft={this.state.marginLeft} refreshPage={this.props.refreshPage}/> :
+        <p style={{marginTop: '100px', marginBottom: '50px', textAlign: 'center', fontSize: 'xx-large', fontWeight:'bold'}}>Coming soon!</p>}
         <TopNav/>
         <BottomNav/>
       </div>

@@ -1,0 +1,29 @@
+.container {
+  margin: 10px;
+  padding-left: 10px;
+  border-left: 1px solid;
+  border-color: #c22e2d;
+}
+
+.commenter {
+  color: #c22e2d;
+  margin-bottom: 10px;
+  font-size: 12px;
+}
+
+.bottomContainer {
+  display: flex;
+}
+
+.date {
+  color: #b0b0b0;
+  font-size: 12px;
+  display: inline-block;
+}
+
+.delete {
+  color: #c22e2d;
+  font-size: 12px;
+  margin-left: 5px;
+  cursor: pointer;
+}

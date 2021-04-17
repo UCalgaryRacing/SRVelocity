@@ -29,6 +29,7 @@ export default class CSVBox extends React.Component {
   };
 
   downloadFile = () => {
+    console.log(this.props.ID)
     fetch(GATEWAYSERVERIP + '/historical/getFile/' + this.props.ID, {
       method: 'GET',
     })
@@ -80,7 +81,7 @@ export default class CSVBox extends React.Component {
     })
       .then((response) => {
         if (response.ok) {
-          this.props.deleteCSV(this.props.index);
+          this.props.deleteFile(this.props.index);
           this.setState({ confirmDelete: false });
         }
       })

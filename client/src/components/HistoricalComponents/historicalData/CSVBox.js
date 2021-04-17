@@ -29,7 +29,6 @@ export default class CSVBox extends React.Component {
   };
 
   downloadFile = () => {
-    console.log(this.props.ID)
     fetch(GATEWAYSERVERIP + '/historical/getFile/' + this.props.ID, {
       method: 'GET',
     })

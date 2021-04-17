@@ -9,57 +9,45 @@ export default class HomePage extends React.Component {
     return (
       <div id="homePage">
         <TopNav />
-        <Jumbotron>
-          <Row id="row1">
-            <Col>
-              <img
-                id="logoImg"
-                src={require("../assets/logo.svg")}
-                alt="Schulich Racing"
-              />
-            </Col>
+        <div id="content">
+          <Row id='row1'>
+            <div>
+              <img id="backgroundImg"/>
+              <div>
+                <img id="logoImg" src={require("../assets/logo.svg")} alt="Schulich Racing" />
+              </div>
+            </div>
           </Row>
           <Row id="row2">
             <Col>
-              <p
-                id="welcomeHeader"
-                style={{ fontSize: "calc(0.9vw + 0.4vh + 0.8em)" }}
-              >
-                <b>Welcome to SR Velocity!</b>
-              </p>
-              <p
-                id="infoPara"
-                style={{
-                  fontSize: "calc(0.9vw + 0.4vh + 0.8em)",
-                  textAlign: "justify",
-                }}
-              >
+              <h1 id="row2Title">What is SR Velocity?</h1>
+              <div id="row2Underline"> </div>
+            </Col>
+            <Col>
+              <p id="infoPara">
                 SR Velocity is telemetry software created for current and future
                 vehicles from the Schulich Racing team.
                 It is capable of receiving data from the vehicle at a variable rate
                 up to 60 Hz. This
                 data is stored, plotted, and analyzed in various ways to help us
                 make data driven decisions. We also have various internal systems
-                that help us create, interpret, and distribute data. 
+                that help us create, interpret, and distribute data.
               </p>
-              <Button
-                id="streamingButton"
-                href="/streaming"
-                style={{
-                  marginTop: "30px",
-                  width: "100%",
-                  fontSize: "calc(0.9vw + 0.4vh + 0.8em)",
-                }}
-              >
+              <Button id="streamingButton" href="/streaming">
                 <b>Go to Streaming</b>
               </Button>
-              <img
-                src={require("../assets/render.png")}
-                style={{ marginTop: "120px", width: "100%" }}
-              />
             </Col>
           </Row>
-        </Jumbotron>
+          <Row id="row3">
+            <Col>
+              <img id="sr20Render" src={require("../assets/render.png")}/>
+            </Col>
+            <Col>
+              <h1 id="row3Title">SR-20 Render</h1>
+              <div id="row3Underline"></div>
+            </Col>
+          </Row>
+        </div>
         <BottomNav />
       </div>
     );

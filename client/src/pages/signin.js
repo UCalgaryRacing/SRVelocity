@@ -18,7 +18,6 @@ class SignInPage extends React.Component {
 
 	handleEnterKey = async (e) => {
 		e.preventDefault();
-		console.log("here")
 		if (this.emailForm.current.value === "") {
 
 		} else if (this.passwordForm.current.value === "") {

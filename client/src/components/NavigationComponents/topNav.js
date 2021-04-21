@@ -1,5 +1,5 @@
 import React from 'react'
-import { Nav, Navbar, Button } from 'react-bootstrap';
+import { Nav, Navbar } from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './_styling/topNav.css';
 import handleLogout from '../../pages/signin'
@@ -61,8 +61,6 @@ handleLogout = async () => {
                         <Nav.Link className="link-manage" href="/manage">Manage</Nav.Link>
                     </Nav>
                     <Nav className='about'>
-                        {/*<Nav.Link className="link-4" href="/signin" placeholder="Login"> {this.isLoggedIn ? this.name : 'Login'}</Nav.Link>*/}
-                        {/*<Nav.Link className="link-5" href="/signup" active="true" hidden="true" >Sign Up</Nav.Link>*/}
                         <div>
                             {this.isLoggedIn ? 
                                 <Nav.Link className="link-user" href="/">{this.name}</Nav.Link>

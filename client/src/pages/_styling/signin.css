@@ -4,6 +4,7 @@
     flex-direction: column;
     height: 100vh;
     overflow: hidden;
+    top: 0;
 }
 #signIn .jumbotron {
     background: white;
@@ -11,7 +12,7 @@
     min-width: 320px;
     max-width: 70%;
     margin: auto;
-    margin-top: 50px;
+    padding: 0;
 }
 #signIn .emailFormControl {
     text-align: center;

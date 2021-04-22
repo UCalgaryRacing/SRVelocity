@@ -150,7 +150,7 @@ export default class HistoricalPlotDash extends React.Component {
                 <b>Sort Data</b>
               </Button>
               &nbsp;&nbsp;
-              <Form
+              {/* <Form
                 className="searchForm"
                 style={{ position: 'absolute', top: '10px', right: '10px' }}
               >
@@ -162,7 +162,7 @@ export default class HistoricalPlotDash extends React.Component {
                   placeHolder="Search"
                   required
                 />
-              </Form>
+              </Form> */}
             </div>
           )}
         </div>

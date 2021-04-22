@@ -234,7 +234,7 @@ export default class CSVBox extends React.Component {
             </div>
           </div>
         ) : (
-          <div>
+          <>
             <div
               style={{
                 height: '36px',
@@ -416,7 +416,7 @@ export default class CSVBox extends React.Component {
               onHide={() => this.setState({ showRenameModal: false })}
               renameFile={this.renameFile}
             />
-          </div>
+          </>
         )}
       </div>
     );

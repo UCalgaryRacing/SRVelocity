@@ -401,7 +401,7 @@ export default class HistoricalContent extends React.Component {
             </Dropdown.Menu>
           </Dropdown>
           &nbsp;&nbsp;
-          <Form
+          {/* <Form
             className="searchForm"
             style={{ position: 'absolute', top: '10px', right: '10px' }}
           >
@@ -414,7 +414,7 @@ export default class HistoricalContent extends React.Component {
               required
               disabled={!this.state.view}
             />
-          </Form>
+          </Form> */}
         </div>
         <div id="data">
           <UploadFileModal

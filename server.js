@@ -14,12 +14,7 @@ const PORT = 5000;
 api.setPrefixURL('http://localhost:7000');
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
-app.use(cors({
-  "origin": "*",
-  "methods": "GET,HEAD,PUT,PATCH,POST,DELETE",
-  "preflightContinue": false,
-  "optionsSuccessStatus": 204
-}));
+app.use(cors());
 
 // What the fuck
 app.use(express.static(path.join(__dirname, 'client/build')));

@@ -1,5 +1,6 @@
 import React from "react";
 import { Button } from "react-bootstrap";
+import { fetchWrapper } from '../../fetchWrapper';
 import "../manageBox.css";
 
 class MemberApprove extends React.Component {
@@ -10,15 +11,9 @@ class MemberApprove extends React.Component {
 
   submitApproval = async () => {
     const requestURL = `teamMember/${this.props.member_id}/approve`;
+    let body = { };
     try {
-      const req = await fetch(requestURL, {
-        method: "PUT",
-        credentials: "include",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({}),
-      });
+      const req = await fetchWrapper.put(requestURL, body);
       if (req.ok) this.setState({ approved: true });
       else this.setState({ approved: false });
     } catch (error) {

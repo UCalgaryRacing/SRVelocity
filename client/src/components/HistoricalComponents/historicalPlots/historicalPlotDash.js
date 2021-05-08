@@ -1,5 +1,6 @@
 import React from 'react';
 import { GATEWAYSERVERIP } from '../../../dataServerEnv';
+import { fetchWrapper } from '../../fetchWrapper';
 import { Button, Form, CardDeck } from 'react-bootstrap';
 import { readString } from 'react-papaparse';
 import SimpleCSVBox from './SimpleCSVBox';
@@ -28,17 +29,12 @@ export default class HistoricalPlotDash extends React.Component {
   };
 
   getAllFiles = () => {
-    fetch(GATEWAYSERVERIP + '/historical/getFiles', {
-      method: 'GET',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-    })
-      .then((res) => res.json())
-      .then((res) => {
+    fetchWrapper.get(GATEWAYSERVERIP + '/historical/getFiles')
+      .then(res => res.json())
+      .then(res => {
         var files = [];
         let i = 0;
-        for (var file of res) {
+        for(var file of res){
           let date = new Date(parseInt(file.metadata.date));
           files.push(
             <SimpleCSVBox
@@ -67,7 +63,7 @@ export default class HistoricalPlotDash extends React.Component {
       .catch((err) => {
         console.log(err);
       });
-  };
+  }
 
   showFilePlots = (CSVString, CSV_name, CSV_id) => {
     // const config = {
@@ -154,7 +150,7 @@ export default class HistoricalPlotDash extends React.Component {
                 <b>Sort Data</b>
               </Button>
               &nbsp;&nbsp;
-              <Form
+              {/* <Form
                 className="searchForm"
                 style={{ position: 'absolute', top: '10px', right: '10px' }}
               >
@@ -166,7 +162,7 @@ export default class HistoricalPlotDash extends React.Component {
                   placeHolder="Search"
                   required
                 />
-              </Form>
+              </Form> */}
             </div>
           )}
         </div>

@@ -52,6 +52,8 @@ export default class StreamingContent extends React.Component {
         <TopNav/>
         {this.state.content === "Data" ? <HistoricalDash marginLeft={this.state.marginLeft}/> : null}
         {this.state.content === "Create Plots" ? <HistoricalPlotDash marginLeft={this.state.marginLeft}/> : null}
+        {this.state.content !== "Data" && this.state.content !== "Create Plots" ? 
+        <p style={{marginTop: '100px', marginBottom: '50px', textAlign: 'center', fontSize: 'xx-large', fontWeight:'bold'}}>Coming soon!</p> : null}
         <BottomNav/>
       </div>
     );

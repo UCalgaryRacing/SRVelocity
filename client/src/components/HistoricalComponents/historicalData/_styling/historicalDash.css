@@ -1,6 +1,6 @@
 #historicalDash {
     margin-top: 57px;
-    min-height: calc(100vh - 112px);
+    min-height: calc(100vh - 132px);
 }
 
 #historicalDash #data {
@@ -42,9 +42,7 @@
     height: 36px;
     background: #C22E2D;
     border: 0px;
-
 }
-
 
 #historicalDash #top .form-control:focus {
     box-shadow: 0 0 0 0.2rem rgba(194, 45, 45, 0.6);

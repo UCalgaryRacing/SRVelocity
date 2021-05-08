@@ -3,6 +3,7 @@ import { Button, Modal, Form } from 'react-bootstrap';
 import Dropzone from 'react-dropzone';
 import { GATEWAYSERVERIP } from '../../../dataServerEnv';
 import { useAlert } from 'react-alert';
+import { fetchWrapper } from '../../fetchWrapper';
 
 function AlertHOC(Component) {
   return function WrappedComponent(props) {

@@ -1,6 +1,7 @@
 import React from 'react';
 import { Button } from 'react-bootstrap';
 import { GATEWAYSERVERIP } from '../../../dataServerEnv';
+import { fetchWrapper } from '../../fetchWrapper';
 import './_styling/CSVBox.css';
 import download from 'downloadjs';
 import RenameFileModal from './renameFileModal';
@@ -85,7 +86,7 @@ export default class CSVBox extends React.Component {
     })
       .then((response) => {
         if (response.ok) {
-          this.props.deleteCSV(this.props.index);
+          this.props.deleteFile(this.props.index);
           this.setState({ confirmDelete: false });
         }
       })
@@ -239,7 +240,7 @@ export default class CSVBox extends React.Component {
             </div>
           </div>
         ) : (
-          <div>
+          <>
             <div
               style={{
                 height: '36px',
@@ -425,7 +426,7 @@ export default class CSVBox extends React.Component {
               onHide={() => this.setState({ showRenameModal: false })}
               renameFile={this.renameFile}
             />
-          </div>
+          </>
         )}
       </div>
     );

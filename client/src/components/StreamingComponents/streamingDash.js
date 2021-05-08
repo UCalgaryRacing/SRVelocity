@@ -37,7 +37,6 @@ export default class StreamingDash extends React.Component {
     }
 
     doTestRun = () => {
-        this.props.refreshPage();
         Data.getInstance().doTestRun();
     }
 

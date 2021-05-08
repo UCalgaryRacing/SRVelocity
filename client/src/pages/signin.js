@@ -18,7 +18,6 @@ class SignInPage extends React.Component {
 
 	handleEnterKey = async (e) => {
 		e.preventDefault();
-		console.log("here")
 		if (this.emailForm.current.value === "") {
 
 		} else if (this.passwordForm.current.value === "") {
@@ -56,6 +55,34 @@ class SignInPage extends React.Component {
 
 	handleForgotPassword = () => { };
 
+	signInAsGuest = async () => {
+		try {
+			const res = await fetch("/teamMember/authenticate", {
+				method: "POST",
+				credentials: "include",
+				headers: {
+					"Content-Type": "application/json",
+				},
+				body: JSON.stringify({
+					email: "guest@sv.com",
+					password: "fsae2020",
+				}),
+			});
+			const resJSON = await res.json();
+			if (!res.ok) {
+				this.setState({ showErrorMessage: true, showConfirmationMessage: false });
+				throw new Error(res.status);
+			}
+			sessionStorage.setItem("Name", resJSON.firstName + " " + resJSON.lastName);
+			sessionStorage.setItem("ID", resJSON.ID);
+			this.setState({ isSignedIn: true, showErrorMessage: false });
+			this.props.refreshPage();
+			this.props.history.push('/historical')
+		} catch (err) {
+			console.log(err);
+		}
+	}
+
 	render = () => {
 		return (
 			<div id="signIn">
@@ -66,7 +93,6 @@ class SignInPage extends React.Component {
 							<img id="logoImg" src={require("../assets/logo.svg")} />
 						</Col>
 					</Row>
-					<p style={{ textAlign: 'center' }}>Looking to log in? Email: guest@sv.com ; Password: fsae2020</p>
 					<FormGroup onSubmit={this.handleEnterKey}>
 						<Row id="row2">
 							<Col>
@@ -101,6 +127,13 @@ class SignInPage extends React.Component {
 					<Row>
 						<Col>
 							{this.state.showErrorMessage ? <p><b>Oops! Please try again.</b></p> : null}
+						</Col>
+					</Row>
+					<Row>
+						<Col>
+							<Button className="signInButton" onClick={this.signInAsGuest}>
+								<b>Sign In As Guest</b>
+							</Button>
 						</Col>
 					</Row>
 					<Row>

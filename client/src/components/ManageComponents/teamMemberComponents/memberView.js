@@ -1,6 +1,7 @@
 import React from "react";
 import { Row, Col, Button, Jumbotron, Form } from "react-bootstrap";
 import { withRouter } from "react-router-dom";
+import { fetchWrapper } from '../../fetchWrapper';
 
 class Member extends React.Component {
   constructor(props) {
@@ -48,13 +49,7 @@ class Member extends React.Component {
 
   async fetchSubteams() {
     try {
-      let res = await fetch("18.217.215.72:7000/subteam/getSubteams", {
-        method: "GET",
-        credentials: "include",
-        headers: {
-          "Content-Type": "application/json",
-        },
-      });
+      let res = await fetchWrapper.get("18.217.215.72:7000/subteam/getSubteams");
       if (res.status == 401) {
         console.log("LOG IN REQUIRED");
         this.props.history.push("/signin");
@@ -98,23 +93,16 @@ class Member extends React.Component {
 
   async submit() {
     try {
-      const requestURL =
-        "18.217.215.72:7000/teamMember/" + this.props.member.member_id;
-      const res = await fetch(requestURL, {
-        method: "PUT",
-        credentials: "include",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          firstName: this.firstName.current.value,
-          lastName: this.lastName.current.value,
-          isLead: this.state.leadIsChecked,
-          isApproved: this.state.approvedIsChecked,
-          email: this.email.current.value,
-          subteamName: this.subteam.current.value,
-        }),
-      });
+      const requestURL = "18.217.215.72:7000/teamMember/" + this.props.member.member_id;
+      let body = {
+        firstName: this.firstName.current.value,
+        lastName: this.lastName.current.value,
+        isLead: this.state.leadIsChecked,
+        isApproved: this.state.approvedIsChecked,
+        email: this.email.current.value,
+        subteamName: this.subteam.current.value
+      }
+      const res = await fetchWrapper.put(requestURL, body);
       const resJSON = await res.json();
       this.errorDisplay(res, resJSON);
       // if (res.status == 401) {
@@ -135,15 +123,8 @@ class Member extends React.Component {
 
   async deleteMember() {
     try {
-      const requestURL =
-        "18.217.215.72:7000/teamMember/" + this.props.member.member_id;
-      const res = await fetch(requestURL, {
-        method: "DELETE",
-        credentials: "include",
-        headers: {
-          "Content-Type": "application/json",
-        },
-      });
+      const requestURL = "18.217.215.72:7000/teamMember/" + this.props.member.member_id;
+      const res = await fetchWrapper.delete(requestURL);
       const resJSON = res.json();
       this.errorDisplay(res, resJSON);
       // if (res.status == 401) {

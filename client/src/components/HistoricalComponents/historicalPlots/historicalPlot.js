@@ -4,8 +4,10 @@ import { Row, Col, Container, Button, Modal, Badge } from 'react-bootstrap';
 import ScatterPlot from './historicalGraphComponents/scatterPlot';
 import CSVoption from './CSVoption';
 import { readString } from 'react-papaparse';
+import './historicalPlot.css';
 
 import { GATEWAYSERVERIP } from '../../../dataServerEnv';
+import { fetchWrapper } from '../../fetchWrapper';
 
 export default class HistoricalPlotDash extends React.Component {
   constructor(props) {
@@ -152,8 +154,8 @@ export default class HistoricalPlotDash extends React.Component {
 
   initCSVCacheData = async (id, filename, col_name) => {
     try {
-      let res = await fetch(
-        'http://localhost:5000/' + 'historical/getColumn/' + id + '/' + col_name
+      let res = await fetchWrapper.get(
+        GATEWAYSERVERIP + '/historical/getColumn/' + id + '/' + col_name
       );
       let resJson = await res.json();
       let resData = resJson.map(Number);
@@ -253,7 +255,7 @@ export default class HistoricalPlotDash extends React.Component {
 
   render = () => {
     return (
-      <div>
+      <div id="historicalPlot">
         <Container>
           <Row>
             <Col>
@@ -274,7 +276,7 @@ export default class HistoricalPlotDash extends React.Component {
             </Col>
             <Col>
               <p>Click to add another CSV file:</p>
-              <Button onClick={this.handleShow}>
+              <Button id="addButton" onClick={this.handleShow}>
                 <b>Add</b>
               </Button>
             </Col>

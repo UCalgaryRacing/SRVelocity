@@ -4,6 +4,7 @@ import CSVBox from './CSVBox';
 import sessionRenderer from './Session';
 import { Button, Form, Dropdown } from 'react-bootstrap';
 import UploadFileModal from './uploadFileModal';
+import { fetchWrapper } from '../../fetchWrapper';
 import './_styling/historicalDash.css';
 import AddSessionModal from './addSessionModal.js';
 import fetch from 'node-fetch';
@@ -404,7 +405,7 @@ export default class HistoricalContent extends React.Component {
             </Dropdown.Menu>
           </Dropdown>
           &nbsp;&nbsp;
-          <Form
+          {/* <Form
             className="searchForm"
             style={{ position: 'absolute', top: '10px', right: '10px' }}
           >
@@ -417,7 +418,7 @@ export default class HistoricalContent extends React.Component {
               required
               disabled={!this.state.view}
             />
-          </Form>
+          </Form> */}
         </div>
         <div id="data">
           <UploadFileModal

@@ -1,14 +1,13 @@
 import React from 'react';
 import { Card } from 'react-bootstrap';
 import { GATEWAYSERVERIP } from '../../../dataServerEnv';
+import { fetchWrapper } from '../../fetchWrapper';
 
 export default class SimpleCSVBox extends React.Component {
   downloadFile = () => {
-    fetch(GATEWAYSERVERIP + '/historical/getFile/' + this.props.filename, {
-      method: 'GET',
-    })
+    fetchWrapper
+      .get(GATEWAYSERVERIP + '/historical/getFile/' + this.props.filename)
       .then((res) => res.blob())
-      //.then(blob => download(blob, this.state.filename))
       .catch((err) => {
         console.log(err);
       });
@@ -23,9 +22,8 @@ export default class SimpleCSVBox extends React.Component {
     //   this.props.showFilePlot(CSVString, this.props.filename, this.props.ID);
     // });
 
-    fetch(GATEWAYSERVERIP + '/historical/getHeader/' + this.props.ID, {
-      method: 'GET',
-    })
+    fetchWrapper
+      .get(GATEWAYSERVERIP + '/historical/getHeader/' + this.props.filename)
       .then((res) => res.json())
       .then((res_json) => {
         this.props.showFilePlot(res_json, this.props.filename, this.props.ID);
@@ -38,7 +36,10 @@ export default class SimpleCSVBox extends React.Component {
   render = () => {
     return (
       <div id="SimpleCSVBox" onClick={this.showPlots}>
-        <Card>
+        <Card
+          border="dark"
+          style={{ width: '300px', height: '300px', marginBottom: '25px' }}
+        >
           <Card.Body>
             <Card.Title>{this.props.filename}</Card.Title>
             <Card.Text style={{ color: '#C22E2D' }}>Created:</Card.Text>

@@ -16,6 +16,14 @@
   border: 0px;
 }
 
+#historicalPlotDash #backButton {
+  background: rgb(194, 45, 45);
+  border: 0px solid;
+  padding-left:0;
+  padding-right: 0;
+  width: 75px;
+}
+
 #historicalPlotDash #top .form-control:focus {
   box-shadow: 0 0 0 0.2rem rgba(194, 45, 45, 0.6);
   border: 0px solid;

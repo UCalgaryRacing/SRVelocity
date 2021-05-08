@@ -6,8 +6,6 @@ import "./index.css";
 import { positions, Provider } from "react-alert";
 import AlertTemplate from "./components/HistoricalComponents/AlertTemplate";
 
-//import "./wTopBar/css/normalize.css";
-
 //Import desktop pages
 import HomePage from "./pages/home";
 import StreamingPage from "./pages/streaming";
@@ -18,8 +16,6 @@ import ManagePage from "./pages/manage";
 import LicensesPage from "./pages/licenses";
 import ErrorPage from "./pages/error";
 import SignUpPage from "./pages/signup";
-
-
 
 class App extends React.Component {
   constructor() {

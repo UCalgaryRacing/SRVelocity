@@ -82,6 +82,7 @@ export default function Session({
   const [showConfirmDelete, setShowConfirmDelete] = useState(false);
   const [showAddRunModal, setShowAddRunModal] = useState(false);
 
+  // TODO: Need to use cancel tokens to prevent memory leaks
   useEffect(() => {
     const fetchData = async () => {
       try {

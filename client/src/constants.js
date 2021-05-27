@@ -1,12 +1,12 @@
-import { GATEWAYSERVERIP } from "./dataServerEnv";
+import { GATEWAYSERVERIP } from './dataServerEnv';
 
 export default class SensorData {
   static instance = null;
-  static sensors = fetch("/sensor/vehicle/14", {
-    method: "GET",
+  static sensors = fetch(`${GATEWAYSERVERIP}/sensor/vehicle/14`, {
+    method: 'GET',
     headers: {
-      "Content-Type": "application/json",
-      apikey: "VQ2SBXW-1N14EQ7-PWX5JBZ-C5S45FA",
+      'Content-Type': 'application/json',
+      apikey: 'VQ2SBXW-1N14EQ7-PWX5JBZ-C5S45FA',
     },
   })
     .then((res) => res.json())

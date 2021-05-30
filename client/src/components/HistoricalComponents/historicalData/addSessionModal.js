@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import { Row, Col, Table, Button, Form, Modal } from "react-bootstrap";
+import React from 'react';
+import { Button, Form, Modal } from 'react-bootstrap';
 import Select from 'react-select';
 import modalStyling from './_styling/modalStyling.module.css';
 
@@ -20,13 +20,12 @@ export default class AddSessionModal extends React.Component {
   }
 
   resetState = () => {
-    this.setState({name: '', subteam : []});
+    this.setState({ name: '', subteam: [] });
     this.props.hide();
   };
 
   submit = async () => {
-    if(this.state.name !== '')
-    {
+    if (this.state.name !== '') {
       let subteam = this.state.subteam.join();
 
       this.props.submit(this.state.name, subteam);
@@ -36,56 +35,59 @@ export default class AddSessionModal extends React.Component {
 
   onChangeSubteam = (selectedOption) => {
     var subteamList = [];
-    if(selectedOption == null)
-      this.setState({subteams: subteamList})
-    else
-    {
-    selectedOption.forEach((selected) => {
-      subteamList.push(selected.value);
-    });
+    if (selectedOption == null) this.setState({ subteams: subteamList });
+    else {
+      selectedOption.forEach((selected) => {
+        subteamList.push(selected.value);
+      });
 
-    this.setState({subteam : subteamList})
+      this.setState({ subteam: subteamList });
     }
   };
 
   setName = (inputName) => {
-    this.setState({name : inputName.target.value});
+    this.setState({ name: inputName.target.value });
   };
 
   render = () => {
     return (
-    <Modal show={this.props.show} onHide={this.resetState} centered className={modalStyling.addSessionModal}>
-      <Modal.Header closeButton>
-        <Modal.Title>Add Session</Modal.Title>
-      </Modal.Header>
-      <Modal.Body style={{ overflow: 'visible' }}>
-        <Form.Group>
-          <Form.Label>Name</Form.Label>
-          <Form className="searchForm">
-            <Form.Control
-              className="searchFormControl"
-              style={{ textAlign: 'center' }}
-              placeHolder="Session Name"
-              onChange={this.setName}
-              required
-            />
-          </Form>
-        </Form.Group>
+      <Modal
+        show={this.props.show}
+        onHide={this.resetState}
+        centered
+        className={modalStyling.addSessionModal}
+      >
+        <Modal.Header closeButton>
+          <Modal.Title>Add Session</Modal.Title>
+        </Modal.Header>
+        <Modal.Body style={{ overflow: 'visible' }}>
+          <Form.Group>
+            <Form.Label>Name</Form.Label>
+            <Form className="searchForm">
+              <Form.Control
+                className="searchFormControl"
+                style={{ textAlign: 'center' }}
+                placeHolder="Session Name"
+                onChange={this.setName}
+                required
+              />
+            </Form>
+          </Form.Group>
 
-        <Form.Label>Subteam</Form.Label>
-        <Select
-          isMulti
-          name="subteams"
-          options={subTeamOptions}
-          onChange={this.onChangeSubteam}
-        />
-      </Modal.Body>
-      <Modal.Footer>
-        <Button className={modalStyling.submitButton} onClick={this.submit}>
-          <b>Submit</b>
-        </Button>
-      </Modal.Footer>
-    </Modal>
+          <Form.Label>Subteam</Form.Label>
+          <Select
+            isMulti
+            name="subteams"
+            options={subTeamOptions}
+            onChange={this.onChangeSubteam}
+          />
+        </Modal.Body>
+        <Modal.Footer>
+          <Button className={modalStyling.submitButton} onClick={this.submit}>
+            <b>Submit</b>
+          </Button>
+        </Modal.Footer>
+      </Modal>
     );
   };
 }

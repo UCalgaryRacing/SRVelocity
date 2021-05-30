@@ -8,7 +8,10 @@ import RenameFileModal from './renameFileModal';
 import Quill from './quill';
 import Comment from './comment';
 
+import { SocketContext } from '../../../context/socket';
 export default class CSVBox extends React.Component {
+  static contextType = SocketContext;
+
   constructor(props) {
     super(props);
     this.state = {
@@ -16,16 +19,42 @@ export default class CSVBox extends React.Component {
       driver: this.props.driver,
       car: this.props.car,
       date: this.props.date,
+      inProgress: this.props.inProgress,
       showRenameModal: false,
       showComments: false,
       commentData: {},
       confirmDelete: false,
+      eventEnder: null,
     };
     this.comments = [];
   }
 
   componentDidMount = () => {
+    const context = this.context;
+    //subscribe to changes to the CSV and check it if it is not inprogress anymore
     this.fetchComments();
+    if (this.state.inProgress) {
+      document.addEventListener('runDone', this.endRun());
+      context.on('run done', () => {
+        this.setState({ inProgress: 0 });
+      });
+    }
+  };
+
+  componentWillUnmount = () => {
+    //unsubscribe
+    // if (this.state.eventEnder) {
+    //   this.context.off('run done');
+    // }
+  };
+
+  endRun = function () {
+    var handler = function (event) {
+      this.setState({ inProgress: 0 });
+      document.removeEventListener('click', handler);
+    };
+    this.setState({ eventEnder: handler });
+    return handler;
   };
 
   downloadFile = () => {
@@ -245,7 +274,8 @@ export default class CSVBox extends React.Component {
                 textDecoration: 'underline',
               }}
             >
-              {this.state.filename}
+              {this.state.filename}{' '}
+              {this.state.inProgress ? '(In Progress...)' : ''}
             </div>
             <div
               style={{
@@ -325,6 +355,7 @@ export default class CSVBox extends React.Component {
             <Button
               id="historicalButton"
               onClick={this.confirmDelete}
+              disabled={this.state.inProgress}
               style={{ position: 'absolute', right: '20px' }}
             >
               <img
@@ -336,6 +367,7 @@ export default class CSVBox extends React.Component {
             <Button
               id="historicalButton"
               onClick={() => this.setState({ showRenameModal: true })}
+              disabled={this.state.inProgress}
               style={{ position: 'absolute', right: '20px', marginTop: '46px' }}
             >
               <img
@@ -352,6 +384,7 @@ export default class CSVBox extends React.Component {
             <Button
               id="historicalButton"
               onClick={this.downloadFile}
+              disabled={this.state.inProgress}
               style={{ position: 'absolute', right: '20px', marginTop: '92px' }}
             >
               <img

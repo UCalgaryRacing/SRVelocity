@@ -98,6 +98,9 @@ export default class HistoricalContent extends React.Component {
             realDate={date}
             deleteFile={this.deleteCSV}
             ID={file.metadata.id}
+            inProgress={
+              file.metadata.inProgress ? file.metadata.inProgress : false
+            }
             key={i}
             index={i}
           />
@@ -265,10 +268,11 @@ export default class HistoricalContent extends React.Component {
         file.props[param].toLowerCase().includes(value.toLowerCase())
       );
     }
-    var fileFilter = filterParam('filename', text);
-    var driverFilter = filterParam('driver', text);
-    var carFilter = filterParam('car', text);
-    var dateFilter = filterParam('date', text);
+    //TODO: What are these? Can we delete them
+    // var fileFilter = filterParam('filename', text);
+    // var driverFilter = filterParam('driver', text);
+    // var carFilter = filterParam('car', text);
+    // var dateFilter = filterParam('date', text);
     // let temp1 = _.unionBy(fileFilter, driverFilter, 'key');
     //let temp2 = _.unionBy(carFilter, dateFilter);
     //filtered = _.unionBy(temp1, temp2, 'key');
@@ -373,7 +377,7 @@ export default class HistoricalContent extends React.Component {
           <Dropdown style={{ left: '480px', top: '-36px' }}>
             <Dropdown.Toggle
               variant="danger"
-              id="dropdown-basic"
+              // id="dropdown-basic"
               id="sortDropdown"
             >
               <b>Sort by</b>

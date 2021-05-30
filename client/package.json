@@ -2,7 +2,6 @@
   "name": "client",
   "version": "0.1.0",
   "private": false,
-  "proxy": "https://srvelocity.com",
   "dependencies": {
     "@arction/lcjs": "^1.2.2",
     "@material-ui/core": "^4.9.0",
@@ -33,7 +32,7 @@
     "react-switch": "^5.0.1",
     "react-transition-group": "4.3.0",
     "redux": "^4.0.5",
-    "socket.io-client": "^2.3.0"
+    "socket.io-client": "^2.4.0"
   },
   "scripts": {
     "start": "react-scripts start",

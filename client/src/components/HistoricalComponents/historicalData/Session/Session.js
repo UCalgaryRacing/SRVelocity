@@ -14,25 +14,21 @@ import EditModal from './EditModal';
 import QuillCanvas from './QuillCanvas';
 import classes from './styles/session.module.css';
 import AddRunModal from './AddRunModal';
-import { ReactComponent as deleteIcon } from '../../../../assets/delete-x.svg';
 
 const subteam_enum = function (num) {
   switch (num) {
     case 1:
       return 'Frame & Body';
-      break;
     case 2:
       return 'Suspension';
-      break;
     case 3:
       return 'Powertrain';
-      break;
     case 4:
       return 'Electrical';
-      break;
     case 5:
       return 'Aero';
-      break;
+    default:
+      return 0;
   }
 };
 
@@ -86,6 +82,7 @@ export default function Session({
   const [showConfirmDelete, setShowConfirmDelete] = useState(false);
   const [showAddRunModal, setShowAddRunModal] = useState(false);
 
+  // TODO: Need to use cancel tokens to prevent memory leaks
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -299,7 +296,6 @@ export default function Session({
           </ListGroup.Item>
         ) : (
           runs.map((run, index) => {
-            const date = new Date(parseInt(run.date));
             return (
               <ListGroup.Item key={index}>
                 <div className={classes.runContainer}>
@@ -400,6 +396,7 @@ export default function Session({
                       <img
                         width="20px"
                         className={classes.btnIcon}
+                        alt=""
                         src={require('../../../../assets/delete-x.svg')}
                       />
                     </Button>
@@ -410,6 +407,7 @@ export default function Session({
                       <img
                         width="20px"
                         className={classes.btnIcon}
+                        alt=""
                         src={require('../../../../assets/edit.svg')}
                       />
                     </Button>
@@ -417,6 +415,7 @@ export default function Session({
                       <img
                         width="30px"
                         className={classes.btnIcon}
+                        alt=""
                         src={require('../../../../assets/data.svg')}
                       />
                     </Toggle>
@@ -424,6 +423,7 @@ export default function Session({
                       <img
                         width="20px"
                         className={classes.btnIcon}
+                        alt=""
                         src={require('../../../../assets/comment.svg')}
                       />
                     </Toggle>
@@ -434,6 +434,7 @@ export default function Session({
                       <img
                         width="20px"
                         className={classes.btnIcon}
+                        alt=""
                         src={require('../../../../assets/plus.svg')}
                       />
                     </Button>

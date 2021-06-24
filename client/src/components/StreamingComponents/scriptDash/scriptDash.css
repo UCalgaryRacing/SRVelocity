@@ -1,0 +1,35 @@
+#scriptDash {
+  margin-top: 57px;
+  min-height: calc(100vh - 112px);
+}
+
+#scriptDash #top #uploadButton {
+  width: 190px;
+  height: 36px;
+  background: #c22e2d;
+  border: 0px;
+}
+
+#scriptDash #scriptContent {
+  padding-top: 35px;
+  margin-left: 10px;
+  margin-right: 10px;
+}
+
+#scriptBox {
+  margin: 10px;
+  padding: 10px;
+  border-width: 1px;
+  border-radius: 0.25rem;
+  border-style: solid;
+  border-color: #c22d2d;
+}
+
+#scriptBox #scriptName {
+  font-size: 20px;
+  text-decoration: underline;
+}
+
+#scriptBox #scriptLabels {
+  color: #c22d2d;
+}

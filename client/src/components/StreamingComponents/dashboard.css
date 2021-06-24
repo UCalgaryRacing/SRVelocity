@@ -1,232 +1,231 @@
 #dashboard {
-    margin-top: 57px;
-    min-height: calc(100vh - 112px);
+  margin-top: 57px;
+  min-height: calc(100vh - 112px);
 }
 
 #dashboard #defaultButton {
-    background: rgb(194, 45, 45, 0.5);
-    border: 0px solid;
-    padding: 0;
-    width: 75px;
+  background: rgb(194, 45, 45, 0.5);
+  border: 0px solid;
+  padding: 0;
+  width: 75px;
 }
 
 #dashboard #defaultButton:disabled {
-    background: rgb(194, 45, 45);
-    opacity: 1;
+  background: rgb(194, 45, 45);
+  opacity: 1;
 }
 
 #dashboard #customButton {
-    background: rgb(194, 45, 45, 0.5);
-    border: 0px solid;
-    padding-left:0;
-    padding-right: 0;
-    width: 75px;
+  background: rgb(194, 45, 45, 0.5);
+  border: 0px solid;
+  padding-left: 0;
+  padding-right: 0;
+  width: 75px;
 }
 
 #dashboard #customButton:disabled {
-    background: rgb(194, 45, 45);
-    opacity: 1;
+  background: rgb(194, 45, 45);
+  opacity: 1;
 }
 
 #dashboard #addGraph {
-    background: rgb(194, 45, 45);
-    opacity: 1;
-    border: 0px solid;
-    width: 150px;
+  background: rgb(194, 45, 45);
+  opacity: 1;
+  border: 0px solid;
+  width: 150px;
 }
 
 #dashboard #testButton {
-    background: rgb(194, 45, 45);
-    opacity: 1;
-    border: 0px solid;
-    width: 150px;
+  background: rgb(194, 45, 45);
+  opacity: 1;
+  border: 0px solid;
+  width: 150px;
 }
 
 @media only screen and (max-width: 1000px) {
-    #dashboard {
-        margin-top: 0px;
-    }
-    #dashboard #top {
-        position: relative !important;
-    }
+  #dashboard {
+    margin-top: 0px;
+  }
+  #dashboard #top {
+    position: relative !important;
+  }
 
-    #dashboard #dashSelector {
-        width: calc(50% - 16px);
-        position: absolute;
-        left: 10px;
-        margin: 0 !important;
-    }
+  #dashboard #dashSelector {
+    width: calc(50% - 16px);
+    position: absolute;
+    left: 10px;
+    margin: 0 !important;
+  }
 
-    #dashboard #typeSelector {
-        width: calc(50% - 16px);
-        position: absolute;
-        right: 10px;
-    }
+  #dashboard #typeSelector {
+    width: calc(50% - 16px);
+    position: absolute;
+    right: 10px;
+  }
 
-    #dashboard #addGraph {
-        left: 10px;
-        top: 56px;
-        width: calc(50% - 15px);
-    }
+  #dashboard #addGraph {
+    left: 10px;
+    top: 56px;
+    width: calc(50% - 15px);
+  }
 
-    #dashboard #testButton {
-        right: 10px;
-        top: 56px;
-        width: calc(50% - 15px);
-    }
+  #dashboard #testButton {
+    right: 10px;
+    top: 56px;
+    width: calc(50% - 15px);
+  }
 }
 
 #toggleButton {
-    background: rgb(194, 45, 45);
-    opacity: 1;
-    border: 0px solid;
-    width: 200px;
+  background: rgb(194, 45, 45);
+  opacity: 1;
+  border: 0px solid;
+  width: 200px;
 }
 
 #modalSelector #sensorButton {
-    background: rgb(194, 45, 45, 0.5);
-    border: 0px solid;
+  background: rgb(194, 45, 45, 0.5);
+  border: 0px solid;
 }
 
 #modalSelector #sensorButton:disabled {
-    background: rgb(194, 45, 45);
-    opacity: 1;
+  background: rgb(194, 45, 45);
+  opacity: 1;
 }
 
 #modalSelector #customButton {
-    background: rgb(194, 45, 45, 0.5);
-    border: 0px solid;
+  background: rgb(194, 45, 45, 0.5);
+  border: 0px solid;
 }
 
 #modalSelector #customButton:disabled {
-    background: rgb(194, 45, 45);
-    opacity: 1;
+  background: rgb(194, 45, 45);
+  opacity: 1;
 }
 
 /*Bottom half part*/
 
 #derivativeButton {
-    background: rgb(194, 45, 45);
-    opacity: 1;
-    border: 0px solid;
-    padding-left: 2px;
-    padding-right: 2px;
-    padding-top: 0px;
-    padding-bottom: 0px;
-    margin-right: 5px;
+  background: rgb(194, 45, 45);
+  opacity: 1;
+  border: 0px solid;
+  padding-left: 2px;
+  padding-right: 2px;
+  padding-top: 0px;
+  padding-bottom: 0px;
+  margin-right: 5px;
 }
 
 #trackMapButton {
-    background: rgb(194, 45, 45);
-    opacity: 1;
-    border: 0px solid;
-    width: 160px;
+  background: rgb(194, 45, 45);
+  opacity: 1;
+  border: 0px solid;
+  width: 160px;
 }
 
 #accelMapButton {
-    background: rgb(194, 45, 45);
-    opacity: 1;
-    border: 0px solid;
-    width: 160px;
-    right: 0;
+  background: rgb(194, 45, 45);
+  opacity: 1;
+  border: 0px solid;
+  width: 160px;
+  right: 0;
 }
 
 #trackMap {
-    position: fixed;
-    bottom: 40px;
-    left: 64px;
-    width: 370px;
-    height: 300px;
-    background-color: #FFF;
-    z-index: 1000;
-    border-color: #C22E2D;
-    border-top-width: 1px;
-    border-right-width: 1px;
-    border-left-width: 1px;
-    border-bottom-width: 0px;
-    border-style: solid;
-    border-radius: 0;
+  position: fixed;
+  bottom: 40px;
+  left: 64px;
+  width: 370px;
+  height: 300px;
+  background-color: #fff;
+  z-index: 1000;
+  border-color: #c22e2d;
+  border-top-width: 1px;
+  border-right-width: 1px;
+  border-left-width: 1px;
+  border-bottom-width: 0px;
+  border-style: solid;
+  border-radius: 0;
 }
 
 #trackMap #graphBox {
-    margin: 0px;
+  margin: 0px;
 }
 
 #trackMap #scatterPlot {
-    margin: 0 !important;
+  margin: 0 !important;
 }
 
 #trackMap #graphBox {
-    width: 270px;
-    height: 340px;
-    min-width: 100px !important;
-    border-width: 0px;
-    margin: auto !important;
+  width: 270px;
+  height: 340px;
+  min-width: 100px !important;
+  border-width: 0px;
+  margin: auto !important;
 }
 
 #trackMap canvas {
-    height: 230px !important;
+  height: 230px !important;
 }
 
 #accelMap {
-    position: fixed;
-    bottom: 0px;
-    right: 0px;
-    width: 370px;
-    height: 340px !important;
-    background-color: #FFF;
-    border-top-width: 1px;
-    border-left-width: 1px;
-    border-right-width: 0px;
-    border-bottom-width: 0px;
-    border-radius: 0;
-    border-color: #C22E2D;
-    border-style: solid;
+  position: fixed;
+  bottom: 0px;
+  right: 0px;
+  width: 370px;
+  height: 340px !important;
+  background-color: #fff;
+  border-top-width: 1px;
+  border-left-width: 1px;
+  border-right-width: 0px;
+  border-bottom-width: 0px;
+  border-radius: 0;
+  border-color: #c22e2d;
+  border-style: solid;
 }
 
 #accelMap canvas {
-    width: 320px !important;
-    margin-top: -200px;
+  width: 320px !important;
+  margin-top: -200px;
 }
 
 #accelMap .fill {
-    margin: auto !important;
-    width: 320px !important;
+  margin: auto !important;
+  width: 320px !important;
 }
 
 @media only screen and (max-width: 1000px) {
-    #trackMap {
-        left: 0px;
-        width: 100% !important;
-    }
-    #accelMap {
-        left: 0px;
-        width: 100% !important;
-    }
-    #trackMap #graphBox {
-        margin: auto !important;
-    }
-    #trackMapButton {
-        width: calc(50% - 15px);
-    }
-    #accelMapButton {
-        width: calc(50% - 15px);
-    }
+  #trackMap {
+    left: 0px;
+    width: 100% !important;
+  }
+  #accelMap {
+    left: 0px;
+    width: 100% !important;
+  }
+  #trackMap #graphBox {
+    margin: auto !important;
+  }
+  #trackMapButton {
+    width: calc(50% - 15px);
+  }
+  #accelMapButton {
+    width: calc(50% - 15px);
+  }
 }
 
 /* Landscape */
 
-@media screen and (orientation:landscape) and (max-width: 1000px) {
-    #topBar {
-        display: none;
-    }
+@media screen and (orientation: landscape) and (max-width: 1000px) {
+  #topBar {
+    display: none;
+  }
 
-    #top {
-        top: 0px !important;
-    }
+  #top {
+    top: 0px !important;
+  }
 
-    #plots {
-        padding-top: 0px !important;
-    }
+  #plots {
+    padding-top: 0px !important;
+  }
 }
-

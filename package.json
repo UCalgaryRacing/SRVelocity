@@ -34,7 +34,7 @@
     "react-alert": "^7.0.2",
     "react-alert-template-basic": "^1.0.0",
     "react-bootstrap": "^1.4.0",
-    "redis": "^2.8.0",
+    "redis": "^3.1.1",
     "redis-dump": "^0.1.10",
     "request": "^2.88.2",
     "socket.io": "^2.3.0",
